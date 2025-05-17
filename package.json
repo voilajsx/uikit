@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "React UI component library for admin dashboards and corporate websites",
   "main": "dist/index.js",
+  "style": "dist/uikit.css",
   "module": "dist/index.es.js",
   "files": [
     "dist"
@@ -31,6 +32,7 @@
     "react-dom": ">=17.0.0"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.7",
     "clsx": "^1.2.1",
     "recharts": "^2.5.0",
     "tailwind-merge": "^1.8.0"
@@ -55,7 +57,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-serve": "^3.0.0",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.1.7"
   },
   "repository": {
     "type": "git",
