@@ -1,0 +1,19 @@
+/* Example-specific styles */
+.dashboard-container {
+    min-height: 100vh;
+    background-color: var(--bg-light);
+  }
+  
+  /* Add any example-specific overrides or extensions here */
+  .example-header {
+    border-bottom: 1px solid var(--border-color-default);
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-4);
+  }
+  
+  /* Mobile responsiveness adjustments */
+  @media (max-width: 768px) {
+    .dashboard-stats {
+      grid-template-columns: 1fr;
+    }
+  }
