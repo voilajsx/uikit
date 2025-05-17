@@ -1,0 +1,21 @@
+/**
+ * @voilajsx/uikit main.css
+ * Main entry point for all styles
+ * Uses Tailwind CSS v4 directives and imports custom CSS in the correct order
+ */
+
+/* Tailwind Base Layer */
+@tailwind base;
+
+/* CSS Variables and Custom Base Styles */
+@import './variables.css';
+@import './base.css';
+
+/* Tailwind Components Layer */
+@tailwind components;
+
+/* Custom Utilities */
+@import './utilities.css';
+
+/* Tailwind Utilities Layer (highest specificity) */
+@tailwind utilities;

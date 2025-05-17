@@ -1,0 +1,140 @@
+/**
+ * @voilajsx/uikit base.css
+ * Applies foundational styles using CSS variables
+ * These styles establish the base typography and element styling
+ */
+
+ @layer base {
+    /* Document-level styling */
+    html, body {
+      font-family: var(--font-base);
+      color: var(--text-primary);
+      background-color: var(--bg-light);
+      line-height: var(--line-height-normal);
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      font-weight: var(--font-bold);
+      line-height: var(--line-height-tight);
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-4);
+    }
+    
+    h1 { font-size: var(--text-4xl); }
+    h2 { font-size: var(--text-3xl); }
+    h3 { font-size: var(--text-2xl); }
+    h4 { font-size: var(--text-xl); }
+    h5 { font-size: var(--text-lg); }
+    h6 { font-size: var(--text-base); }
+    
+    /* Links */
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition-property: color;
+      transition-duration: var(--duration-normal);
+      transition-timing-function: var(--timing-ease);
+    }
+    
+    a:hover {
+      color: var(--primary-dark);
+    }
+    
+    /* Paragraphs and spacing */
+    p {
+      margin-bottom: var(--spacing-4);
+    }
+    
+    /* Lists */
+    ul, ol {
+      margin-bottom: var(--spacing-4);
+      padding-left: var(--spacing-6);
+    }
+    
+    li {
+      margin-bottom: var(--spacing-2);
+    }
+    
+    /* Block elements */
+    blockquote {
+      border-left: var(--border-width-thick) solid var(--border-color-default);
+      padding-left: var(--spacing-4);
+      margin-left: 0;
+      margin-right: 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    
+    /* Code elements */
+    pre, code {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      background-color: var(--bg-subtle);
+      border-radius: var(--radius-default);
+    }
+    
+    code {
+      padding: 0.2em 0.4em;
+    }
+    
+    pre {
+      padding: var(--spacing-4);
+      overflow-x: auto;
+      margin-bottom: var(--spacing-4);
+    }
+    
+    pre code {
+      padding: 0;
+      background-color: transparent;
+    }
+    
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var(--spacing-4);
+    }
+    
+    th {
+      text-align: left;
+      font-weight: var(--font-semibold);
+      border-bottom: var(--border-width-thick) solid var(--border-color-default);
+      padding: var(--spacing-2) var(--spacing-3);
+    }
+    
+    td {
+      padding: var(--spacing-2) var(--spacing-3);
+      border-bottom: var(--border-width-thin) solid var(--border-color-default);
+    }
+    
+    /* Focus styles for keyboard navigation */
+    *:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+      border-radius: var(--radius-default);
+    }
+    
+    /* Default form elements */
+    input, select, textarea, button {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+    
+    /* Horizontal rule */
+    hr {
+      border: 0;
+      border-top: var(--border-width-thin) solid var(--border-color-default);
+      margin: var(--spacing-6) 0;
+    }
+    
+    /* Ensure form elements have consistent box-sizing */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+  }

@@ -1,0 +1,173 @@
+/**
+ * @voilajsx/uikit utilities.css
+ * Custom utility classes that complement Tailwind CSS's built-in utilities
+ * Only includes utilities specifically needed by the component library
+ */
+
+ @layer utilities {
+    /* ===== Animation Utilities ===== */
+    /* Used for components like accordions, dropdowns, and modals */
+    @keyframes accordion-down {
+      from { height: 0; }
+      to { height: var(--radix-accordion-content-height, auto); }
+    }
+  
+    @keyframes accordion-up {
+      from { height: var(--radix-accordion-content-height, auto); }
+      to { height: 0; }
+    }
+  
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  
+    @keyframes fade-out {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  
+    @keyframes slide-down {
+      from { transform: translateY(-10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  
+    @keyframes slide-up {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  
+    /* Animation utility classes */
+    .animate-accordion-down {
+      animation: accordion-down var(--duration-normal) var(--timing-ease-out);
+    }
+  
+    .animate-accordion-up {
+      animation: accordion-up var(--duration-normal) var(--timing-ease-in);
+    }
+  
+    .animate-fade-in {
+      animation: fade-in var(--duration-normal) var(--timing-ease-out);
+    }
+  
+    .animate-fade-out {
+      animation: fade-out var(--duration-normal) var(--timing-ease-in);
+    }
+  
+    .animate-slide-down {
+      animation: slide-down var(--duration-normal) var(--timing-ease-out);
+    }
+  
+    .animate-slide-up {
+      animation: slide-up var(--duration-normal) var(--timing-ease-out);
+    }
+  
+    /* ===== Accessibility Utilities ===== */
+    /* For elements that should only be visible to screen readers */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  
+    /* Make elements visible again when focused */
+    .not-sr-only {
+      position: static;
+      width: auto;
+      height: auto;
+      padding: 0;
+      margin: 0;
+      overflow: visible;
+      clip: auto;
+      white-space: normal;
+    }
+  
+    /* ===== Text Utilities ===== */
+    /* Text truncation with specific line counts */
+    .truncate-2-lines {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    .truncate-3-lines {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    /* ===== Layout Utilities ===== */
+    /* Responsive hide/show for specific screen sizes */
+    .hide-on-mobile {
+      @media (max-width: 640px) {
+        display: none !important;
+      }
+    }
+  
+    .show-on-mobile {
+      @media (min-width: 641px) {
+        display: none !important;
+      }
+    }
+  
+    /* Full-bleed layout for edge-to-edge design */
+    .full-bleed {
+      width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+  
+    /* Aspect ratio container */
+    .aspect-ratio-16-9 {
+      position: relative;
+      padding-top: 56.25%;
+    }
+  
+    .aspect-ratio-4-3 {
+      position: relative;
+      padding-top: 75%;
+    }
+  
+    .aspect-ratio-1-1 {
+      position: relative;
+      padding-top: 100%;
+    }
+  
+    .aspect-ratio-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+    }
+  
+    /* ===== Focus Utilities ===== */
+    /* Utility for handling focus within a container */
+    .focus-within-ring {
+      position: relative;
+    }
+    
+    .focus-within-ring:focus-within::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 0 0 2px var(--primary-color);
+      pointer-events: none;
+    }
+  }
