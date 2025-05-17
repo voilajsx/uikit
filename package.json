@@ -33,7 +33,6 @@
     "react-dom": ">=17.0.0"
   },
   "dependencies": {
-    "@voilajsx/uikit": "github:voilajsx/uikit",
     "clsx": "^1.2.1",
     "recharts": "^2.5.0",
     "tailwind-merge": "^1.8.0"

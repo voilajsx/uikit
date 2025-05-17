@@ -116,10 +116,6 @@ if (corporate) {
             find: '@voilajsx/uikit/icons',
             replacement: path.resolve(__dirname, 'src/components/icons'),
           },
-          {
-            find: '@voilajsx/uikit/styles',
-            replacement: path.resolve(__dirname, 'dist/uikit.css'),
-          },
         ],
       }),
       resolve({
