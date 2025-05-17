@@ -21,10 +21,8 @@
   "scripts": {
     "build": "rollup -c",
     "build:css": "npx @tailwindcss/cli -i ./src/styles/main.css -o ./dist/uikit.css --minify",
-    "build:all": "npm run build && npm run build:css",
+    "build:all": "npm run build:css && rollup -c",
     "dev": "rollup -c -w",
-    "dev:dashboard": "EXAMPLE=dashboard rollup -c rollup.examples.config.mjs -w",
-    "dev:corporate": "EXAMPLE=corporate rollup -c rollup.examples.config.mjs -w",
     "lint": "eslint src",
     "test": "jest"
   },
