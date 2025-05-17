@@ -3,12 +3,14 @@
  * 
  * A versatile container component that groups related content and actions.
  * Uses the compound component pattern with Header, Body, and Footer sub-components.
+ * Enhanced with theme customization support.
  * 
  * @module components/display/Card
  */
 
 import React, { forwardRef } from 'react';
 import { cn } from '../../utils/cn';
+import { useTheme } from '../../ThemeProvider';
 
 /**
  * Visual variants for the card
@@ -21,6 +23,16 @@ const variantMap = {
 };
 
 /**
+ * Helper function to get component styles from theme
+ */
+const getComponentStyles = (theme, componentName) => {
+  if (!theme?.components || !theme.components[componentName]) {
+    return null;
+  }
+  return theme.components[componentName];
+};
+
+/**
  * Card component for grouping related content and actions.
  * 
  * @param {'default'|'elevated'|'outline'|'filled'} variant - Visual style variant
@@ -28,6 +40,7 @@ const variantMap = {
  * @param {boolean} interactive - Whether the card is clickable
  * @param {Function} onClick - Click handler (used when interactive is true)
  * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Card content
  * @param {Object} props - Additional props for the element
  * @returns {JSX.Element} Card component
@@ -38,9 +51,16 @@ const Card = forwardRef(({
   interactive = false,
   onClick,
   className,
+  style,
   children,
   ...props
 }, ref) => {
+  // Get theme from context
+  const { theme } = useTheme() || {};
+  
+  // Get component styles from theme if available
+  const componentStyles = getComponentStyles(theme, 'Card');
+  
   // Determine element type based on interactive prop
   const Element = interactive ? 'button' : 'div';
   
@@ -57,8 +77,14 @@ const Card = forwardRef(({
           'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-color)] focus-visible:ring-offset-2',
           'w-full text-left'
         ],
+        componentStyles?.className, // Apply theme class if available
         className
       )}
+      // Merge inline styles with theme styles
+      style={{
+        ...componentStyles?.style,
+        ...style
+      }}
       type={interactive ? 'button' : undefined}
       {...props}
     >
@@ -71,75 +97,123 @@ const Card = forwardRef(({
  * Card header component
  * 
  * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Header content
  * @param {Object} props - Additional props for the div element
  * @returns {JSX.Element} Card header component
  */
 const CardHeader = ({ 
   className,
+  style,
   children,
   ...props 
-}) => (
-  <div 
-    className={cn(
-      'px-6 py-4 border-b border-[var(--border-color-default)]',
-      'font-medium text-lg',
-      className
-    )} 
-    {...props}
-  >
-    {children}
-  </div>
-);
+}) => {
+  // Get theme from context
+  const { theme } = useTheme() || {};
+  
+  // Get component styles from theme if available
+  const componentStyles = getComponentStyles(theme, 'CardHeader');
+  
+  return (
+    <div 
+      className={cn(
+        'px-6 py-4 border-b border-[var(--border-color-default)]',
+        'font-medium text-lg',
+        componentStyles?.className, // Apply theme class if available
+        className
+      )}
+      // Merge inline styles with theme styles
+      style={{
+        ...componentStyles?.style,
+        ...style
+      }}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
 
 /**
  * Card body component
  * 
  * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Body content
  * @param {Object} props - Additional props for the div element
  * @returns {JSX.Element} Card body component
  */
 const CardBody = ({ 
   className,
+  style,
   children,
   ...props 
-}) => (
-  <div 
-    className={cn(
-      'px-6 py-4',
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </div>
-);
+}) => {
+  // Get theme from context
+  const { theme } = useTheme() || {};
+  
+  // Get component styles from theme if available
+  const componentStyles = getComponentStyles(theme, 'CardBody');
+  
+  return (
+    <div 
+      className={cn(
+        'px-6 py-4',
+        componentStyles?.className, // Apply theme class if available
+        className
+      )}
+      // Merge inline styles with theme styles
+      style={{
+        ...componentStyles?.style,
+        ...style
+      }}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
 
 /**
  * Card footer component
  * 
  * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Footer content
  * @param {Object} props - Additional props for the div element
  * @returns {JSX.Element} Card footer component
  */
 const CardFooter = ({ 
   className,
+  style,
   children,
   ...props 
-}) => (
-  <div 
-    className={cn(
-      'px-6 py-4 border-t border-[var(--border-color-default)]',
-      'bg-[var(--bg-subtle)]',
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </div>
-);
+}) => {
+  // Get theme from context
+  const { theme } = useTheme() || {};
+  
+  // Get component styles from theme if available
+  const componentStyles = getComponentStyles(theme, 'CardFooter');
+  
+  return (
+    <div 
+      className={cn(
+        'px-6 py-4 border-t border-[var(--border-color-default)]',
+        'bg-[var(--bg-subtle)]',
+        componentStyles?.className, // Apply theme class if available
+        className
+      )}
+      // Merge inline styles with theme styles
+      style={{
+        ...componentStyles?.style,
+        ...style
+      }}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
 
 // Set display names for React DevTools
 Card.displayName = 'Card';

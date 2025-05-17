@@ -4,12 +4,14 @@
  * A versatile button component that serves as a primary call-to-action element.
  * Supports various styles, sizes, states, and icon placements to accommodate
  * different UI requirements across the application.
+ * Enhanced with theme customization support.
  * 
  * @module components/elements/Button
  */
 
 import React, { forwardRef } from 'react';
 import { cn } from '../../utils/cn';
+import { useTheme } from '../../ThemeProvider';
 
 /**
  * Size variants for the button
@@ -35,6 +37,34 @@ const variantMap = {
 };
 
 /**
+ * Helper function to get component styles from theme
+ */
+const getComponentStyles = (theme, componentName, variant = null) => {
+  if (!theme?.components) return null;
+  
+  // Get base component styles
+  const componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+  
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return {
+      ...componentStyles,
+      style: {
+        ...(componentStyles.style || {}),
+        ...(componentStyles.variants[variant].style || {})
+      },
+      className: cn(
+        componentStyles.className || '',
+        componentStyles.variants[variant].className || ''
+      )
+    };
+  }
+  
+  return componentStyles;
+};
+
+/**
  * Button component for user interactions.
  * 
  * @param {'primary'|'secondary'|'outline'|'ghost'|'link'|'danger'} variant - Visual style variant
@@ -47,6 +77,7 @@ const variantMap = {
  * @param {boolean} isLoading - Whether to show loading state
  * @param {string} loadingText - Text to display during loading (replaces children)
  * @param {string} className - Additional CSS classes to apply
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Button content
  * @param {Object} props - Additional props to pass to the button element
  * @returns {JSX.Element} Button component
@@ -62,9 +93,16 @@ const Button = forwardRef(({
   isLoading = false,
   loadingText = null,
   className,
+  style,
   children,
   ...props
 }, ref) => {
+  // Get theme from context
+  const { theme } = useTheme() || {};
+  
+  // Get component styles from theme, including variant-specific styles if available
+  const componentStyles = getComponentStyles(theme, 'Button', variant);
+  
   return (
     <button
       ref={ref}
@@ -84,9 +122,17 @@ const Button = forwardRef(({
         (disabled || isLoading) && 'opacity-60 cursor-not-allowed',
         fullWidth && 'w-full',
         
-        // Custom className
+        // Theme classes
+        componentStyles?.className,
+        
+        // Custom className (highest priority)
         className
       )}
+      // Merge theme styles with inline styles
+      style={{
+        ...componentStyles?.style,
+        ...style
+      }}
       {...props}
     >
       {/* Loading spinner */}

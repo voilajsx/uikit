@@ -19,3 +19,4 @@ export * from './contexts';
 
 // Export ThemeProvider
 export { default as ThemeProvider } from './ThemeProvider.jsx';
+export { default as useComponentStyles } from './hooks/useComponentStyles'; // Add this line
