@@ -24,17 +24,49 @@ const sizeMap = {
   '2xl': 'text-2xl px-8 py-4',
 };
 
+
+/**
+ * Style variants for the button
+ */
 /**
  * Style variants for the button
  */
 const variantMap = {
-  primary: 'bg-[var(--primary-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--primary-color)]',
-  secondary: 'bg-[var(--secondary-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--secondary-color)]',
-  outline: 'border border-[var(--primary-color)] text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-color)] hover:bg-opacity-10 focus-visible:ring-[var(--primary-color)]',
-  ghost: 'text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-color)] hover:bg-opacity-10 focus-visible:ring-[var(--primary-color)]',
-  link: 'text-[var(--primary-color)] underline bg-transparent p-0 hover:opacity-80 focus-visible:ring-[var(--primary-color)]',
-  danger: 'bg-[var(--danger-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--danger-color)]',
-};
+    // Solid variants
+    primary: 'bg-[var(--primary-color)] text-[var(--light-soft)] hover:bg-[var(--primary-dark)] transition-colors cursor-pointer focus-visible:ring-[var(--primary-color)]',
+    secondary: 'bg-[var(--secondary-color)] text-[var(--light-soft)] hover:bg-[var(--secondary-dark)] transition-colors cursor-pointer focus-visible:ring-[var(--secondary-color)]',
+    success: 'bg-[var(--success-color)] text-[var(--light-soft)] hover:bg-[var(--success-dark)] transition-colors cursor-pointer focus-visible:ring-[var(--success-color)]',
+    danger: 'bg-[var(--danger-color)] text-[var(--light-soft)] hover:bg-[var(--danger-dark)] transition-colors cursor-pointer focus-visible:ring-[var(--danger-color)]',
+    warning: 'bg-[var(--warning-color)] text-[var(--light-soft)] hover:bg-[var(--warning-dark)] transition-colors cursor-pointer focus-visible:ring-[var(--warning-color)]',
+    info: 'bg-[var(--info-color)] text-[var(--light-soft)] hover:bg-[var(--info-dark)] transition-colors cursor-pointer focus-visible:ring-[var(--info-color)]',
+    light: 'bg-[var(--light-color)] text-[var(--dark-color)] hover:bg-[var(--light-soft)] transition-colors cursor-pointer focus-visible:ring-[var(--primary-color)]',
+    dark: 'bg-[var(--dark-color)] text-[var(--light-soft)] hover:bg-[var(--text-secondary)] transition-colors cursor-pointer focus-visible:ring-[var(--dark-color)]',
+    
+    // Outline variants
+    'primary-outline': 'border border-[var(--primary-color)] text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--primary-color)]',
+    'secondary-outline': 'border border-[var(--secondary-color)] text-[var(--secondary-color)] bg-transparent hover:bg-[var(--secondary-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--secondary-color)]',
+    'success-outline': 'border border-[var(--success-color)] text-[var(--success-color)] bg-transparent hover:bg-[var(--success-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--success-color)]',
+    'danger-outline': 'border border-[var(--danger-color)] text-[var(--danger-color)] bg-transparent hover:bg-[var(--danger-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--danger-color)]',
+    'warning-outline': 'border border-[var(--warning-color)] text-[var(--warning-color)] bg-transparent hover:bg-[var(--warning-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--warning-color)]',
+    'info-outline': 'border border-[var(--info-color)] text-[var(--info-color)] bg-transparent hover:bg-[var(--info-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--info-color)]',
+    'light-outline': 'border border-[var(--light-color)] text-[var(--dark-color)] bg-transparent hover:bg-[var(--light-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--light-color)]',
+    'dark-outline': 'border border-[var(--dark-color)] text-[var(--dark-color)] bg-transparent hover:bg-[var(--light-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--dark-color)]',
+    
+    // Soft variants
+    'primary-soft': 'bg-[var(--primary-soft)] bg-opacity-10 text-[var(--primary-color)]  hover:opacity-80 transition-colors cursor-pointer focus-visible:ring-[var(--primary-color)]',
+    'secondary-soft': 'bg-[var(--secondary-soft)] bg-opacity-10 text-[var(--secondary-color)] hover:opacity-80 transition-colors cursor-pointer focus-visible:ring-[var(--secondary-color)]',
+    'success-soft': 'bg-[var(--success-soft)] bg-opacity-10 text-[var(--success-color)] hover:opacity-80 transition-colors cursor-pointer focus-visible:ring-[var(--success-color)]',
+    'danger-soft': 'bg-[var(--danger-soft)] bg-opacity-10 text-[var(--danger-color)] hover:opacity-80 transition-colors cursor-pointer focus-visible:ring-[var(--danger-color)]',
+    'warning-soft': 'bg-[var(--warning-soft)] bg-opacity-10 text-[var(--warning-color)] hover:opacity-80 transition-colors cursor-pointer focus-visible:ring-[var(--warning-color)]',
+    'info-soft': 'bg-[var(--info-soft)] bg-opacity-10 text-[var(--info-color)] hover:opacity-80 transition-colors cursor-pointer focus-visible:ring-[var(--info-color)]',
+    'light-soft': 'bg-[var(--light-soft)] bg-opacity-10 text-[var(--dark-color)] hover:opacity-80 transition-colors cursor-pointer focus-visible:ring-[var(--light-color)]',
+    'dark-soft': 'bg-[var(--dark-soft)] bg-opacity-10 text-[var(--light-soft)] hover:opacity-80 transition-colors cursor-pointer focus-visible:ring-[var(--dark-color)]',
+    
+    // Special variants
+    outline: 'border border-[var(--primary-color)] text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-soft)] transition-colors cursor-pointer focus-visible:ring-[var(--primary-color)]',
+    ghost: 'text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-soft)] hover:bg-opacity-10 transition-colors cursor-pointer focus-visible:ring-[var(--primary-color)]',
+    link: 'text-[var(--primary-color)] underline bg-transparent p-0 hover:text-[var(--primary-dark)] transition-colors cursor-pointer focus-visible:ring-[var(--primary-color)]'
+  }
 
 /**
  * Helper function to get component styles from theme

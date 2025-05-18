@@ -9,6 +9,7 @@
 
 /* CSS Variables and Custom Base Styles */
 @import './variables.css';
+@import './classes.css';
 @import './base.css';
 
 /* Custom Utilities */

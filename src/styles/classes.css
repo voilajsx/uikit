@@ -1,0 +1,114 @@
+/*
+classes.css
+Utility classes for the @voilajsx/uikit
+Provides background, text, and border classes for VoilaJSX colors
+Aligned with VoilaJSX UIKit Component Standards and Color System Guide
+Depends on variables.css for CSS variables
+*/
+
+@layer base {
+    /* Background classes */
+    .bg-primary { background-color: var(--primary-color); }
+    .bg-secondary { background-color: var(--secondary-color); }
+    .bg-success { background-color: var(--success-color); }
+    .bg-danger { background-color: var(--danger-color); }
+    .bg-warning { background-color: var(--warning-color); }
+    .bg-info { background-color: var(--info-color); }
+    
+    /* Background dark classes */
+    .bg-primary-dark { background-color: var(--primary-dark); }
+    .bg-secondary-dark { background-color: var(--secondary-dark); }
+    .bg-success-dark { background-color: var(--success-dark); }
+    .bg-danger-dark { background-color: var(--danger-dark); }
+    .bg-warning-dark { background-color: var(--warning-dark); }
+    .bg-info-dark { background-color: var(--info-dark); }
+    
+    /* Background soft classes */
+    .bg-primary-soft { background-color: var(--primary-soft); }
+    .bg-secondary-soft { background-color: var(--secondary-soft); }
+    .bg-success-soft { background-color: var(--success-soft); }
+    .bg-danger-soft { background-color: var(--danger-soft); }
+    .bg-warning-soft { background-color: var(--warning-soft); }
+    .bg-info-soft { background-color: var(--info-soft); }
+    
+    /* Background structural classes */
+    .bg-base { background-color: var(--base-color); }
+    .bg-surface { background-color: var(--surface-color); }
+    .bg-subtle { background-color: var(--subtle-color); }
+    .bg-accent { background-color: var(--accent-color); }
+    .bg-light { background-color: var(--light-color); }
+    .bg-dark { background-color: var(--dark-color); }
+  
+    /* Text classes */
+    .text-primary { color: var(--primary-color); }
+    .text-secondary { color: var(--secondary-color); }
+    .text-success { color: var(--success-color); }
+    .text-danger { color: var(--danger-color); }
+    .text-warning { color: var(--warning-color); }
+    .text-info { color: var(--info-color); }
+    
+    /* Text dark classes */
+    .text-primary-dark { color: var(--primary-dark); }
+    .text-secondary-dark { color: var(--secondary-dark); }
+    .text-success-dark { color: var(--success-dark); }
+    .text-danger-dark { color: var(--danger-dark); }
+    .text-warning-dark { color: var(--warning-dark); }
+    .text-info-dark { color: var(--info-dark); }
+    
+    /* Text soft classes */
+    .text-primary-soft { color: var(--primary-soft); }
+    .text-secondary-soft { color: var(--secondary-soft); }
+    .text-success-soft { color: var(--success-soft); }
+    .text-danger-soft { color: var(--danger-soft); }
+    .text-warning-soft { color: var(--warning-soft); }
+    .text-info-soft { color: var(--info-soft); }
+    
+    /* Text structural classes */
+    .text-base { color: var(--base-color); }
+    .text-surface { color: var(--surface-color); }
+    .text-subtle { color: var(--subtle-color); }
+    .text-accent { color: var(--accent-color); }
+    .text-light { color: var(--light-color); }
+    .text-dark { color: var(--dark-color); }
+    
+    /* Text functional classes */
+    .text-primary-text { color: var(--text-primary); }
+    .text-secondary-text { color: var(--text-secondary); }
+    .text-muted { color: var(--text-muted); }
+    .text-on-soft { color: var(--text-on-soft); }
+  
+    /* Border classes */
+    .border-primary { border-color: var(--primary-color); }
+    .border-secondary { border-color: var(--secondary-color); }
+    .border-success { border-color: var(--success-color); }
+    .border-danger { border-color: var(--danger-color); }
+    .border-warning { border-color: var(--warning-color); }
+    .border-info { border-color: var(--info-color); }
+    
+    /* Border dark classes */
+    .border-primary-dark { border-color: var(--primary-dark); }
+    .border-secondary-dark { border-color: var(--secondary-dark); }
+    .border-success-dark { border-color: var(--success-dark); }
+    .border-danger-dark { border-color: var(--danger-dark); }
+    .border-warning-dark { border-color: var(--warning-dark); }
+    .border-info-dark { border-color: var(--info-dark); }
+    
+    /* Border soft classes */
+    .border-primary-soft { border-color: var(--primary-soft); }
+    .border-secondary-soft { border-color: var(--secondary-soft); }
+    .border-success-soft { border-color: var(--success-soft); }
+    .border-danger-soft { border-color: var(--danger-soft); }
+    .border-warning-soft { border-color: var(--warning-soft); }
+    .border-info-soft { border-color: var(--info-soft); }
+    
+    /* Border structural classes */
+    .border-base { border-color: var(--base-color); }
+    .border-surface { border-color: var(--surface-color); }
+    .border-subtle { border-color: var(--subtle-color); }
+    .border-accent { border-color: var(--accent-color); }
+    .border-light { border-color: var(--light-color); }
+    .border-dark { border-color: var(--dark-color); }
+    .border-default { border-color: var(--border-color-default); }
+    .border-light-border { border-color: var(--border-color-light); }
+    .border-dark-border { border-color: var(--border-color-dark); }
+  }

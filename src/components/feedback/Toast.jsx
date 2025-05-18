@@ -1,18 +1,18 @@
 /**
  * Toast Component
  * 
- * A component to display brief, non-blocking notifications that appear temporarily.
- * Supports different styles, animation, and can be automatically dismissed.
- * Typically used with ToastContext for managing multiple notifications.
+ * Displays brief, non-blocking notifications.
+ * Part of the Toast system that manages the display and lifecycle of multiple toasts.
  * 
  * @module components/feedback/Toast
  */
 
 import React, { useEffect, useState } from 'react';
 import { cn } from '../../utils/cn';
+import { useTheme } from '../../ThemeProvider';
 
 /**
- * Variant-specific styling and icons
+ * Variant styling map for different toast types
  */
 const variantMap = {
   success: {
@@ -35,10 +35,10 @@ const variantMap = {
       </svg>
     ),
   },
-  error: {
-    bg: 'bg-[var(--error-color)] bg-opacity-10',
-    border: 'border-l-4 border-[var(--error-color)]',
-    text: 'text-[var(--error-color)]',
+  danger: {
+    bg: 'bg-[var(--danger-color)] bg-opacity-10',
+    border: 'border-l-4 border-[var(--danger-color)]',
+    text: 'text-[var(--danger-color)]',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -58,15 +58,43 @@ const variantMap = {
 };
 
 /**
- * Toast component for temporary notifications.
+ * Helper function to get component styles from theme
+ */
+const getComponentStyles = (theme, componentName, variant = null) => {
+  if (!theme?.components) return null;
+  
+  // Get base component styles
+  const componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+  
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return {
+      ...componentStyles,
+      style: {
+        ...(componentStyles.style || {}),
+        ...(componentStyles.variants[variant].style || {})
+      },
+      className: cn(
+        componentStyles.className || '',
+        componentStyles.variants[variant].className || ''
+      )
+    };
+  }
+  
+  return componentStyles;
+};
+
+/**
+ * Toast component for brief notifications
  * 
- * @param {'success'|'warning'|'error'|'info'} variant - Visual style variant
- * @param {string} title - Optional title for the toast
- * @param {React.ReactNode} icon - Optional custom icon to display
- * @param {Function} onClose - Callback function when toast is closed
- * @param {string} className - Additional CSS classes to apply
- * @param {React.ReactNode} children - Toast content
- * @param {Object} props - Additional props to pass to the container
+ * @param {'success'|'warning'|'danger'|'info'} variant - The visual style and meaning of the toast
+ * @param {string} title - Title for the toast
+ * @param {React.ReactNode} icon - Custom icon to replace the default variant icon
+ * @param {Function} onClose - Callback function when the toast is closed
+ * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
+ * @param {React.ReactNode} children - The toast message content
  * @returns {JSX.Element} Toast component
  */
 const Toast = ({
@@ -75,38 +103,29 @@ const Toast = ({
   icon = null,
   onClose,
   className,
+  style,
   children,
   ...props
 }) => {
-  // Get variant-specific styling
+  const { theme } = useTheme() || {};
+  const componentStyles = getComponentStyles(theme, 'Toast', variant);
+  
   const variantStyle = variantMap[variant];
-  
-  // Use custom icon if provided, otherwise use the default for the variant
   const customIcon = icon !== null ? icon : variantStyle.icon;
-  
-  // State for animation visibility
   const [isVisible, setIsVisible] = useState(false);
 
-  // Animate in on mount
+  // Animation on mount
   useEffect(() => {
-    // Use requestAnimationFrame to ensure the DOM has updated before adding the visible class
     requestAnimationFrame(() => {
       setIsVisible(true);
     });
   }, []);
 
-  /**
-   * Handle closing the toast with exit animation
-   */
+  // Animation on unmount
   const handleClose = () => {
-    // Start exit animation
     setIsVisible(false);
-    
-    // Wait for animation to complete before calling onClose
     setTimeout(() => {
-      if (onClose) {
-        onClose();
-      }
+      onClose?.();
     }, 300); // Match the CSS transition duration
   };
 
@@ -114,45 +133,48 @@ const Toast = ({
     <div
       role="alert"
       className={cn(
+        // Base styles
         'rounded-[var(--radius-lg)] p-4 shadow-[var(--shadow-lg)]',
         'transform transition-all duration-300 ease-[var(--timing-ease)]',
-        'bg-white',
-        // Animation classes based on visibility state
+        'bg-[var(--surface-color)]',
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0',
         variantStyle.border,
+        
+        // Theme classes
+        componentStyles?.className,
+        
+        // Custom className
         className
       )}
+      style={{
+        ...componentStyles?.style,
+        ...style
+      }}
       {...props}
     >
       <div className="flex">
-        {/* Icon section */}
         {customIcon && (
           <div className={cn('flex-shrink-0 mr-3', variantStyle.text)}>
             {customIcon}
           </div>
         )}
         
-        {/* Content section */}
         <div className="flex-1">
-          {/* Title if provided */}
           {title && (
             <h3 className={cn('font-medium mb-1', variantStyle.text)}>
               {title}
             </h3>
           )}
-          
-          {/* Main content */}
           <div className="text-[var(--text-primary)]">{children}</div>
         </div>
         
-        {/* Close button */}
         <button
           type="button"
           onClick={handleClose}
           className={cn(
             'ml-auto -mx-1.5 -my-1.5 p-1.5 rounded-lg',
             'focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]',
-            'hover:bg-opacity-20 hover:bg-[var(--bg-subtle)]',
+            'hover:bg-opacity-20 hover:bg-[var(--subtle-color)]',
             'text-[var(--text-secondary)]'
           )}
           aria-label="Close"

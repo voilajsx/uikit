@@ -1,0 +1,6 @@
+/* Import Tailwind directives first */
+@import "tailwindcss";
+
+/* Import your custom styles (which use @layer) */
+@import "./docs.css";
+@import "./tailwind.css";

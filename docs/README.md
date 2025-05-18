@@ -1,85 +1,12 @@
-# VoilaJSX UIKit Documentation
+# React + Vite
 
-This is the documentation site for the VoilaJSX UIKit, a modern React component library built with Tailwind CSS.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Overview
+Currently, two official plugins are available:
 
-The documentation site showcases the components, layouts, and utilities available in the VoilaJSX UIKit. It provides examples, usage guidelines, and API documentation to help developers use the library effectively.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Getting Started
+## Expanding the ESLint configuration
 
-### Prerequisites
-
-- Node.js 16.x or later
-- npm 8.x or later
-
-### Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/voilajsx/uikit.git
-cd uikit/docs
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the development server:
-
-```bash
-npm start
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) to view the documentation in your browser.
-
-## Building for Production
-
-To build the documentation site for production:
-
-```bash
-npm run build
-```
-
-The build files will be located in the `build` directory.
-
-## Deploying to GitHub Pages
-
-To deploy the documentation site to GitHub Pages:
-
-```bash
-npm run deploy
-```
-
-This will build the site and deploy it to the `gh-pages` branch of the repository.
-
-## Project Structure
-
-```
-docs/
-├── public/                 # Static files
-├── src/
-│   ├── components/         # React components for the documentation site
-│   │   ├── common/         # Common UI components used across the site
-│   │   ├── examples/       # Example implementations of UIKit components
-│   │   └── layout/         # Layout components for the site
-│   ├── data/               # Data files for documentation content
-│   ├── pages/              # Page components for different routes
-│   ├── styles/             # CSS and styling files
-│   ├── utils/              # Utility functions
-│   ├── App.js              # Main App component with routes
-│   └── index.js            # Entry point
-├── package.json            # Project dependencies and scripts
-└── README.md               # This file
-```
-
-## Contributing
-
-We welcome contributions to the documentation! Please see the [CONTRIBUTING.md](../CONTRIBUTING.md) file for guidelines.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

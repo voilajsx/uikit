@@ -16,20 +16,38 @@ import { useTheme } from '../../ThemeProvider';
  * Visual variants for the card
  */
 const variantMap = {
-  default: 'bg-white border border-[var(--border-color-default)] shadow-[var(--shadow-default)]',
-  elevated: 'bg-white border border-[var(--border-color-default)] shadow-[var(--shadow-lg)]',
-  outline: 'bg-white border-2 border-[var(--border-color-default)] shadow-none',
-  filled: 'bg-[var(--bg-subtle)] border border-[var(--border-color-default)] shadow-none',
+  default: 'bg-[var(--surface-color)] border border-[var(--border-color-default)] shadow-[var(--shadow-default)]',
+  elevated: 'bg-[var(--surface-color)] border border-[var(--border-color-default)] shadow-[var(--shadow-lg)]',
+  outline: 'bg-[var(--surface-color)] border-2 border-[var(--border-color-default)] shadow-none',
+  filled: 'bg-[var(--subtle-color)] border border-[var(--border-color-default)] shadow-none',
 };
 
 /**
  * Helper function to get component styles from theme
  */
-const getComponentStyles = (theme, componentName) => {
-  if (!theme?.components || !theme.components[componentName]) {
-    return null;
+const getComponentStyles = (theme, componentName, variant = null) => {
+  if (!theme?.components) return null;
+  
+  // Get base component styles
+  const componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+  
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return {
+      ...componentStyles,
+      style: {
+        ...(componentStyles.style || {}),
+        ...(componentStyles.variants[variant].style || {})
+      },
+      className: cn(
+        componentStyles.className || '',
+        componentStyles.variants[variant].className || ''
+      )
+    };
   }
-  return theme.components[componentName];
+  
+  return componentStyles;
 };
 
 /**
@@ -59,7 +77,7 @@ const Card = forwardRef(({
   const { theme } = useTheme() || {};
   
   // Get component styles from theme if available
-  const componentStyles = getComponentStyles(theme, 'Card');
+  const componentStyles = getComponentStyles(theme, 'Card', variant);
   
   // Determine element type based on interactive prop
   const Element = interactive ? 'button' : 'div';
@@ -199,7 +217,7 @@ const CardFooter = ({
     <div 
       className={cn(
         'px-6 py-4 border-t border-[var(--border-color-default)]',
-        'bg-[var(--bg-subtle)]',
+        'bg-[var(--subtle-color)]',
         componentStyles?.className, // Apply theme class if available
         className
       )}

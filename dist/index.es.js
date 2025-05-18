@@ -2767,62 +2767,6 @@ var Avatar = function Avatar(_ref) {
 Avatar.displayName = 'Avatar';
 var Avatar$1 = Avatar;
 
-var _excluded$17 = ["variant", "size", "className", "children"];
-
-/**
- * Style variants for the badge
- */
-var variantMap$a = {
-  primary: 'bg-[var(--primary-color)] text-white',
-  secondary: 'bg-[var(--secondary-color)] text-white',
-  success: 'bg-[var(--success-color)] text-white',
-  warning: 'bg-[var(--warning-color)] text-white',
-  error: 'bg-[var(--error-color)] text-white',
-  info: 'bg-[var(--info-color)] text-white'
-};
-
-/**
- * Size variants for the badge
- */
-var sizeMap$a = {
-  sm: 'text-xs px-1.5 py-0.5',
-  md: 'text-sm px-2 py-0.5',
-  lg: 'text-base px-2.5 py-0.5'
-};
-
-/**
- * Badge component for displaying status indicators, labels, or counts.
- * 
- * @param {'primary'|'secondary'|'success'|'warning'|'error'|'info'} variant - Color variant 
- * @param {'sm'|'md'|'lg'} size - Size of the badge
- * @param {string} className - Additional CSS classes to apply
- * @param {React.ReactNode} children - Badge content
- * @param {Object} props - Additional props to pass to the span element
- * @returns {JSX.Element} Badge component
- */
-var Badge = function Badge(_ref) {
-  var _ref$variant = _ref.variant,
-    variant = _ref$variant === void 0 ? 'primary' : _ref$variant,
-    _ref$size = _ref.size,
-    size = _ref$size === void 0 ? 'md' : _ref$size,
-    className = _ref.className,
-    children = _ref.children,
-    props = _objectWithoutProperties$q(_ref, _excluded$17);
-  return /*#__PURE__*/React.createElement("span", _extends$G({
-    className: cn(
-    // Base styles
-    'inline-flex items-center justify-center font-medium rounded-full',
-    // Size and variant
-    variantMap$a[variant], sizeMap$a[size],
-    // Custom className
-    className)
-  }, props), children);
-};
-
-// Set display name for React DevTools
-Badge.displayName = 'Badge';
-var Badge$1 = Badge;
-
 // Create context for theme
 var ThemeContext$2 = /*#__PURE__*/createContext({
   theme: null,
@@ -2837,7 +2781,7 @@ var useTheme$1 = function useTheme() {
   return useContext(ThemeContext$2);
 };
 var ThemeProvider = function ThemeProvider(_ref) {
-  var _currentTheme$meta3;
+  var _currentTheme$meta3, _currentTheme$meta4;
   var theme = _ref.theme,
     _ref$darkMode = _ref.darkMode,
     darkMode = _ref$darkMode === void 0 ? false : _ref$darkMode,
@@ -2870,7 +2814,7 @@ var ThemeProvider = function ThemeProvider(_ref) {
     });
   };
 
-  // ADDED: Apply global styles from theme if provided
+  // Apply global styles from theme if provided
   useEffect(function () {
     if (currentTheme !== null && currentTheme !== void 0 && currentTheme.globalStyles) {
       var _currentTheme$meta;
@@ -2891,60 +2835,86 @@ var ThemeProvider = function ThemeProvider(_ref) {
     }
   }, [currentTheme]);
 
-  // ADDED: Function to get component-specific styles
+  // Function to get component-specific styles
   var getComponentStyles = function getComponentStyles(componentName) {
+    var variant = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     if (!(currentTheme !== null && currentTheme !== void 0 && currentTheme.components) || !currentTheme.components[componentName]) {
       return {};
     }
-    return currentTheme.components[componentName];
+    var componentStyles = currentTheme.components[componentName];
+
+    // If variant is provided and variant styles exist, merge with base styles
+    if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+      return _objectSpread2(_objectSpread2({}, componentStyles), {}, {
+        style: _objectSpread2(_objectSpread2({}, componentStyles.style || {}), componentStyles.variants[variant].style || {}),
+        className: "".concat(componentStyles.className || '', " ").concat(componentStyles.variants[variant].className || '')
+      });
+    }
+    return componentStyles;
   };
 
   // Get effective CSS variables based on theme and dark mode
   var getThemeVariables = function getThemeVariables() {
     // Default variables if no theme is provided
     var defaultVariables = {
-      // Base color palette
-      '--purple-50': '#faf5ff',
-      '--purple-100': '#f3e8ff',
-      '--purple-200': '#e9d5ff',
-      '--purple-300': '#d8b4fe',
-      '--purple-400': '#c084fc',
-      '--purple-500': '#a855f7',
-      '--purple-600': '#9333ea',
-      '--purple-700': '#7e22ce',
-      '--purple-800': '#6b21a8',
-      '--purple-900': '#581c87',
-      // Semantic colors - using base palette variables
-      '--primary-color': '#9333ea',
-      // Same as purple-600
-      '--primary-light': '#c084fc',
-      // Same as purple-400
-      '--primary-dark': '#7e22ce',
-      // Same as purple-700
-      '--secondary-color': '#d946ef',
+      // Semantic colors
+      '--primary-color': '#db2777',
+      // Pink-600 - Main brand color
+      '--secondary-color': '#8b5cf6',
+      // Violet-500 - Supporting brand color
       '--success-color': '#10b981',
-      '--error-color': '#ef4444',
+      // Emerald-500 - Success states
+      '--danger-color': '#ef4444',
+      // Red-500 - Error states (renamed from error-color)
       '--warning-color': '#f59e0b',
+      // Amber-500 - Warning states
       '--info-color': '#3b82f6',
+      // Blue-500 - Information states
+
+      // Structural colors
+      '--base-color': '#f8fafc',
+      // Slate-50 - Main application background
+      '--surface-color': '#ffffff',
+      // White - Component surfaces (cards, dialogs)
+      '--subtle-color': '#f1f5f9',
+      // Slate-100 - Slight distinctions
+      '--accent-color': '#fce7f3',
+      // Pink-100 - Highlighted elements
+
+      // Basic colors
+      '--light-color': '#ffffff',
+      // White - Inverts in dark mode
+      '--dark-color': '#0f172a',
+      // Slate-900 - Inverts in dark mode
+
       // Text colors
-      '--text-primary': '#111827',
-      '--text-secondary': '#4b5563',
-      '--text-muted': '#9ca3af',
-      '--text-light': '#f9fafb',
-      // Background colors
-      '--bg-light': '#ffffff',
-      '--bg-dark': '#111827',
-      '--bg-subtle': '#f9fafb',
+      '--text-primary': '#0f172a',
+      // Dark color for main text
+      '--text-secondary': '#64748b',
+      // Slate-500
+      '--text-muted': '#94a3b8',
+      // Slate-400
+
+      // Background colors (compatibility with previous naming)
+      '--bg-light': 'var(--surface-color)',
+      '--bg-dark': 'var(--dark-color)',
+      '--bg-subtle': 'var(--subtle-color)',
       '--bg-muted': '#f3f4f6',
       // Border colors
-      '--border-color-default': '#e5e7eb',
-      '--border-color-light': '#f3f4f6',
-      '--border-color-dark': '#d1d5db',
+      '--border-color-default': '#e2e8f0',
+      // Slate-200
+      '--border-color-light': '#f1f5f9',
+      // Slate-100
+      '--border-color-dark': '#cbd5e1',
+      // Slate-300
+
       // Focus ring color
-      '--ring-color': 'rgba(147, 51, 234, 0.5)',
+      '--ring-color': 'rgba(219, 39, 119, 0.5)',
+      // primary-color with opacity
+
       // Font families
       '--font-base': 'system-ui, -apple-system, sans-serif',
-      '--font-heading': 'system-ui, -apple-system, sans-serif',
+      '--font-heading': 'var(--font-base)',
       '--font-mono': 'ui-monospace, monospace',
       // Font sizes
       '--text-xs': '0.75rem',
@@ -3046,15 +3016,26 @@ var ThemeProvider = function ThemeProvider(_ref) {
       '--content-width-xl': '80rem',
       '--content-width-full': '100%',
       '--container-padding': '2rem',
-      // Dark mode variants
-      '--primary-color-dark-mode': '#b794f4',
-      '--primary-light-dark-mode': '#d8b4fe',
-      '--primary-dark-dark-mode': '#a78bfa',
-      '--secondary-color-dark-mode': '#e879f9',
-      '--bg-light-dark-mode': '#1f2937',
-      '--text-primary-dark-mode': '#f9fafb',
-      '--text-secondary-dark-mode': '#e5e7eb',
-      '--border-color-dark-mode': '#374151'
+      // Dark mode variants (legacy support)
+      '--primary-color-dark-mode': '#f472b6',
+      // Pink-400
+      '--secondary-color-dark-mode': '#a78bfa',
+      // Violet-400
+      '--success-color-dark-mode': '#34d399',
+      // Emerald-400
+      '--danger-color-dark-mode': '#f87171',
+      // Red-400
+      '--warning-color-dark-mode': '#fbbf24',
+      // Amber-400
+      '--info-color-dark-mode': '#60a5fa',
+      // Blue-400
+      '--bg-light-dark-mode': '#0f172a',
+      // Slate-900
+      '--text-primary-dark-mode': '#f8fafc',
+      // Slate-50
+      '--text-secondary-dark-mode': '#cbd5e1',
+      // Slate-300
+      '--border-color-dark-mode': '#334155' // Slate-700
     };
 
     // Start with default variables
@@ -3066,13 +3047,59 @@ var ThemeProvider = function ThemeProvider(_ref) {
     }
 
     // Apply dark mode overrides if dark mode is enabled
-    if (isDarkMode && currentTheme !== null && currentTheme !== void 0 && currentTheme.darkModeStyles) {
-      Object.assign(variables, currentTheme.darkModeStyles);
+    if (isDarkMode) {
+      // First apply default dark mode variables
+      var darkModeVariables = {
+        '--primary-color': variables['--primary-color-dark-mode'] || '#f472b6',
+        '--secondary-color': variables['--secondary-color-dark-mode'] || '#a78bfa',
+        '--success-color': variables['--success-color-dark-mode'] || '#34d399',
+        '--danger-color': variables['--danger-color-dark-mode'] || '#f87171',
+        '--warning-color': variables['--warning-color-dark-mode'] || '#fbbf24',
+        '--info-color': variables['--info-color-dark-mode'] || '#60a5fa',
+        // Structural colors - dark mode variants
+        '--base-color': '#0f172a',
+        // Slate-900
+        '--surface-color': '#1e293b',
+        // Slate-800
+        '--subtle-color': '#334155',
+        // Slate-700
+        '--accent-color': '#831843',
+        // Pink-900
+
+        // Basic colors - inverted in dark mode
+        '--light-color': '#0f172a',
+        // Slate-900
+        '--dark-color': '#ffffff',
+        // White
+
+        // Text and background compatibility
+        '--text-primary': '#f8fafc',
+        // Slate-50
+        '--text-secondary': '#cbd5e1',
+        // Slate-300
+        '--text-muted': '#94a3b8',
+        // Slate-400
+        '--bg-light': 'var(--surface-color)',
+        '--bg-dark': 'var(--dark-color)',
+        '--bg-subtle': 'var(--subtle-color)',
+        // Border colors
+        '--border-color-default': '#334155',
+        // Slate-700
+        '--border-color-light': '#475569',
+        // Slate-600
+        '--border-color-dark': '#1e293b' // Slate-800
+      };
+      Object.assign(variables, darkModeVariables);
+
+      // Then apply theme-specific dark mode overrides if available
+      if (currentTheme !== null && currentTheme !== void 0 && currentTheme.darkModeStyles) {
+        Object.assign(variables, currentTheme.darkModeStyles);
+      }
     }
     return variables;
   };
 
-  // ADDED: Get theme name to use as a class
+  // Get theme name to use as a class
   var themeClassName = currentTheme !== null && currentTheme !== void 0 && (_currentTheme$meta3 = currentTheme.meta) !== null && _currentTheme$meta3 !== void 0 && _currentTheme$meta3.name ? "".concat(currentTheme.meta.name, "-theme") : '';
   return /*#__PURE__*/React.createElement(ThemeContext$2.Provider, {
     value: {
@@ -3080,14 +3107,105 @@ var ThemeProvider = function ThemeProvider(_ref) {
       darkMode: isDarkMode,
       setTheme: setCurrentTheme,
       toggleDarkMode: toggleDarkMode,
-      getComponentStyles: getComponentStyles // Expose the new function
+      getComponentStyles: getComponentStyles
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "".concat(isDarkMode ? 'dark-mode' : '', " ").concat(themeClassName),
-    style: getThemeVariables()
+    style: getThemeVariables(),
+    "data-theme": (currentTheme === null || currentTheme === void 0 || (_currentTheme$meta4 = currentTheme.meta) === null || _currentTheme$meta4 === void 0 ? void 0 : _currentTheme$meta4.name) || 'default',
+    "data-mode": isDarkMode ? 'dark' : 'light'
   }, children));
 };
 var ThemeProvider$1 = ThemeProvider;
+
+var _excluded$17 = ["variant", "size", "className", "style", "children"];
+
+/**
+ * Style variants for the badge
+ */
+var variantMap$a = {
+  primary: 'bg-[var(--primary-color)] text-[var(--light-color)]',
+  secondary: 'bg-[var(--secondary-color)] text-[var(--light-color)]',
+  success: 'bg-[var(--success-color)] text-[var(--light-color)]',
+  warning: 'bg-[var(--warning-color)] text-[var(--light-color)]',
+  danger: 'bg-[var(--danger-color)] text-[var(--light-color)]',
+  info: 'bg-[var(--info-color)] text-[var(--light-color)]'
+};
+
+/**
+ * Size variants for the badge
+ */
+var sizeMap$a = {
+  sm: 'text-xs px-1.5 py-0.5',
+  md: 'text-sm px-2 py-0.5',
+  lg: 'text-base px-2.5 py-0.5'
+};
+
+/**
+ * Helper function to get component styles from theme
+ */
+var getComponentStyles$4 = function getComponentStyles(theme, componentName) {
+  var variant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  if (!(theme !== null && theme !== void 0 && theme.components)) return null;
+
+  // Get base component styles
+  var componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return _objectSpread2(_objectSpread2({}, componentStyles), {}, {
+      style: _objectSpread2(_objectSpread2({}, componentStyles.style || {}), componentStyles.variants[variant].style || {}),
+      className: cn(componentStyles.className || '', componentStyles.variants[variant].className || '')
+    });
+  }
+  return componentStyles;
+};
+
+/**
+ * Badge component for displaying status indicators, labels, or counts.
+ * 
+ * @param {'primary'|'secondary'|'success'|'warning'|'danger'|'info'} variant - Color variant 
+ * @param {'sm'|'md'|'lg'} size - Size of the badge
+ * @param {string} className - Additional CSS classes to apply
+ * @param {Object} style - Additional inline styles
+ * @param {React.ReactNode} children - Badge content
+ * @param {Object} props - Additional props to pass to the span element
+ * @returns {JSX.Element} Badge component
+ */
+var Badge = function Badge(_ref) {
+  var _ref$variant = _ref.variant,
+    variant = _ref$variant === void 0 ? 'primary' : _ref$variant,
+    _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 'md' : _ref$size,
+    className = _ref.className,
+    style = _ref.style,
+    children = _ref.children,
+    props = _objectWithoutProperties$q(_ref, _excluded$17);
+  // Get theme from context
+  var _ref2 = useTheme$1() || {},
+    theme = _ref2.theme;
+
+  // Get component styles from theme, including variant-specific styles if available
+  var componentStyles = getComponentStyles$4(theme, 'Badge', variant);
+  return /*#__PURE__*/React.createElement("span", _extends$G({
+    className: cn(
+    // Base styles
+    'inline-flex items-center justify-center font-medium rounded-full',
+    // Size and variant
+    variantMap$a[variant], sizeMap$a[size], // Theme classes
+    componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    // Custom className (highest priority)
+    className)
+    // Merge theme styles with inline styles
+    ,
+    style: _objectSpread2(_objectSpread2({}, componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style), style)
+  }, props), children);
+};
+
+// Set display name for React DevTools
+Badge.displayName = 'Badge';
+var Badge$1 = Badge;
 
 var _excluded$16 = ["variant", "size", "type", "disabled", "fullWidth", "leftIcon", "rightIcon", "isLoading", "loadingText", "className", "style", "children"];
 
@@ -3118,7 +3236,7 @@ var variantMap$9 = {
 /**
  * Helper function to get component styles from theme
  */
-var getComponentStyles$2 = function getComponentStyles(theme, componentName) {
+var getComponentStyles$3 = function getComponentStyles(theme, componentName) {
   var variant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   if (!(theme !== null && theme !== void 0 && theme.components)) return null;
 
@@ -3181,7 +3299,7 @@ var Button = /*#__PURE__*/forwardRef(function (_ref, ref) {
     theme = _ref2.theme;
 
   // Get component styles from theme, including variant-specific styles if available
-  var componentStyles = getComponentStyles$2(theme, 'Button', variant);
+  var componentStyles = getComponentStyles$3(theme, 'Button', variant);
   return /*#__PURE__*/React.createElement("button", _extends$G({
     ref: ref,
     type: type,
@@ -4070,7 +4188,7 @@ var variantMap$4 = {
 /**
  * Helper function to get component styles from theme
  */
-var getComponentStyles$1 = function getComponentStyles(theme, componentName) {
+var getComponentStyles$2 = function getComponentStyles(theme, componentName) {
   var variant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   if (!(theme !== null && theme !== void 0 && theme.components)) return null;
 
@@ -4119,7 +4237,7 @@ var Alert = /*#__PURE__*/forwardRef(function (_ref, ref) {
     theme = _ref2.theme;
 
   // Get component styles from theme, including variant-specific styles if available
-  var componentStyles = getComponentStyles$1(theme, 'Alert', variant);
+  var componentStyles = getComponentStyles$2(theme, 'Alert', variant);
 
   // Get the variant style
   var variantStyle = variantMap$4[variant];
@@ -4172,10 +4290,10 @@ var Alert = /*#__PURE__*/forwardRef(function (_ref, ref) {
 Alert.displayName = 'Alert';
 var Alert$1 = Alert;
 
-var _excluded$U = ["variant", "title", "icon", "onClose", "className", "children"];
+var _excluded$U = ["variant", "title", "icon", "onClose", "className", "style", "children"];
 
 /**
- * Variant-specific styling and icons
+ * Variant styling map for different toast types
  */
 var variantMap$3 = {
   success: {
@@ -4212,10 +4330,10 @@ var variantMap$3 = {
       d: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
     }))
   },
-  error: {
-    bg: 'bg-[var(--error-color)] bg-opacity-10',
-    border: 'border-l-4 border-[var(--error-color)]',
-    text: 'text-[var(--error-color)]',
+  danger: {
+    bg: 'bg-[var(--danger-color)] bg-opacity-10',
+    border: 'border-l-4 border-[var(--danger-color)]',
+    text: 'text-[var(--danger-color)]',
     icon: /*#__PURE__*/React.createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -4249,15 +4367,36 @@ var variantMap$3 = {
 };
 
 /**
- * Toast component for temporary notifications.
+ * Helper function to get component styles from theme
+ */
+var getComponentStyles$1 = function getComponentStyles(theme, componentName) {
+  var variant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  if (!(theme !== null && theme !== void 0 && theme.components)) return null;
+
+  // Get base component styles
+  var componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return _objectSpread2(_objectSpread2({}, componentStyles), {}, {
+      style: _objectSpread2(_objectSpread2({}, componentStyles.style || {}), componentStyles.variants[variant].style || {}),
+      className: cn(componentStyles.className || '', componentStyles.variants[variant].className || '')
+    });
+  }
+  return componentStyles;
+};
+
+/**
+ * Toast component for brief notifications
  * 
- * @param {'success'|'warning'|'error'|'info'} variant - Visual style variant
- * @param {string} title - Optional title for the toast
- * @param {React.ReactNode} icon - Optional custom icon to display
- * @param {Function} onClose - Callback function when toast is closed
- * @param {string} className - Additional CSS classes to apply
- * @param {React.ReactNode} children - Toast content
- * @param {Object} props - Additional props to pass to the container
+ * @param {'success'|'warning'|'danger'|'info'} variant - The visual style and meaning of the toast
+ * @param {string} title - Title for the toast
+ * @param {React.ReactNode} icon - Custom icon to replace the default variant icon
+ * @param {Function} onClose - Callback function when the toast is closed
+ * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
+ * @param {React.ReactNode} children - The toast message content
  * @returns {JSX.Element} Toast component
  */
 var Toast = function Toast(_ref) {
@@ -4268,47 +4407,42 @@ var Toast = function Toast(_ref) {
     icon = _ref$icon === void 0 ? null : _ref$icon,
     onClose = _ref.onClose,
     className = _ref.className,
+    style = _ref.style,
     children = _ref.children,
     props = _objectWithoutProperties$q(_ref, _excluded$U);
-  // Get variant-specific styling
+  var _ref2 = useTheme$1() || {},
+    theme = _ref2.theme;
+  var componentStyles = getComponentStyles$1(theme, 'Toast', variant);
   var variantStyle = variantMap$3[variant];
-
-  // Use custom icon if provided, otherwise use the default for the variant
   var customIcon = icon !== null ? icon : variantStyle.icon;
-
-  // State for animation visibility
   var _useState = useState(false),
     _useState2 = _slicedToArray$e(_useState, 2),
     isVisible = _useState2[0],
     setIsVisible = _useState2[1];
 
-  // Animate in on mount
+  // Animation on mount
   useEffect(function () {
-    // Use requestAnimationFrame to ensure the DOM has updated before adding the visible class
     requestAnimationFrame(function () {
       setIsVisible(true);
     });
   }, []);
 
-  /**
-   * Handle closing the toast with exit animation
-   */
+  // Animation on unmount
   var handleClose = function handleClose() {
-    // Start exit animation
     setIsVisible(false);
-
-    // Wait for animation to complete before calling onClose
     setTimeout(function () {
-      if (onClose) {
-        onClose();
-      }
+      onClose === null || onClose === void 0 || onClose();
     }, 300); // Match the CSS transition duration
   };
   return /*#__PURE__*/React.createElement("div", _extends$G({
     role: "alert",
-    className: cn('rounded-[var(--radius-lg)] p-4 shadow-[var(--shadow-lg)]', 'transform transition-all duration-300 ease-[var(--timing-ease)]', 'bg-white',
-    // Animation classes based on visibility state
-    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0', variantStyle.border, className)
+    className: cn(
+    // Base styles
+    'rounded-[var(--radius-lg)] p-4 shadow-[var(--shadow-lg)]', 'transform transition-all duration-300 ease-[var(--timing-ease)]', 'bg-[var(--surface-color)]', isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0', variantStyle.border, // Theme classes
+    componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    // Custom className
+    className),
+    style: _objectSpread2(_objectSpread2({}, componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style), style)
   }, props), /*#__PURE__*/React.createElement("div", {
     className: "flex"
   }, customIcon && /*#__PURE__*/React.createElement("div", {
@@ -4322,7 +4456,7 @@ var Toast = function Toast(_ref) {
   }, children)), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: handleClose,
-    className: cn('ml-auto -mx-1.5 -my-1.5 p-1.5 rounded-lg', 'focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]', 'hover:bg-opacity-20 hover:bg-[var(--bg-subtle)]', 'text-[var(--text-secondary)]'),
+    className: cn('ml-auto -mx-1.5 -my-1.5 p-1.5 rounded-lg', 'focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]', 'hover:bg-opacity-20 hover:bg-[var(--subtle-color)]', 'text-[var(--text-secondary)]'),
     "aria-label": "Close"
   }, /*#__PURE__*/React.createElement("svg", {
     className: "w-4 h-4",
@@ -5385,20 +5519,31 @@ var _excluded$J = ["variant", "hoverable", "interactive", "onClick", "className"
  * Visual variants for the card
  */
 var variantMap = {
-  "default": 'bg-white border border-[var(--border-color-default)] shadow-[var(--shadow-default)]',
-  elevated: 'bg-white border border-[var(--border-color-default)] shadow-[var(--shadow-lg)]',
-  outline: 'bg-white border-2 border-[var(--border-color-default)] shadow-none',
-  filled: 'bg-[var(--bg-subtle)] border border-[var(--border-color-default)] shadow-none'
+  "default": 'bg-[var(--surface-color)] border border-[var(--border-color-default)] shadow-[var(--shadow-default)]',
+  elevated: 'bg-[var(--surface-color)] border border-[var(--border-color-default)] shadow-[var(--shadow-lg)]',
+  outline: 'bg-[var(--surface-color)] border-2 border-[var(--border-color-default)] shadow-none',
+  filled: 'bg-[var(--subtle-color)] border border-[var(--border-color-default)] shadow-none'
 };
 
 /**
  * Helper function to get component styles from theme
  */
 var getComponentStyles = function getComponentStyles(theme, componentName) {
-  if (!(theme !== null && theme !== void 0 && theme.components) || !theme.components[componentName]) {
-    return null;
+  var variant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  if (!(theme !== null && theme !== void 0 && theme.components)) return null;
+
+  // Get base component styles
+  var componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return _objectSpread2(_objectSpread2({}, componentStyles), {}, {
+      style: _objectSpread2(_objectSpread2({}, componentStyles.style || {}), componentStyles.variants[variant].style || {}),
+      className: cn(componentStyles.className || '', componentStyles.variants[variant].className || '')
+    });
   }
-  return theme.components[componentName];
+  return componentStyles;
 };
 
 /**
@@ -5431,7 +5576,7 @@ var Card = /*#__PURE__*/forwardRef(function (_ref, ref) {
     theme = _ref2.theme;
 
   // Get component styles from theme if available
-  var componentStyles = getComponentStyles(theme, 'Card');
+  var componentStyles = getComponentStyles(theme, 'Card', variant);
 
   // Determine element type based on interactive prop
   var Element = interactive ? 'button' : 'div';
@@ -5529,7 +5674,7 @@ var CardFooter = function CardFooter(_ref7) {
   // Get component styles from theme if available
   var componentStyles = getComponentStyles(theme, 'CardFooter');
   return /*#__PURE__*/React.createElement("div", _extends$G({
-    className: cn('px-6 py-4 border-t border-[var(--border-color-default)]', 'bg-[var(--bg-subtle)]', componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    className: cn('px-6 py-4 border-t border-[var(--border-color-default)]', 'bg-[var(--subtle-color)]', componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
     // Apply theme class if available
     className)
     // Merge inline styles with theme styles

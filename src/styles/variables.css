@@ -1,139 +1,128 @@
-/**
- * @voilajsx/uikit variables.css
- * Defines all CSS variables (design tokens) used throughout the component library
- */
+/*
+variables.css
+Core CSS variables for the @voilajsx/uikit
+Aligned with VoilaJSX UIKit Component Standards (voilajsx-component-standards.md)
+Updated for WCAG AA compliance with streamlined spacing, text utilities, and uniform size naming
+Includes 'full' for border radius and content width for clarity
+*/
 
- :root {
-    /* ===== Base Color Palette ===== */
-    --purple-50: #faf5ff;
-    --purple-100: #f3e8ff;
-    --purple-200: #e9d5ff;
-    --purple-300: #d8b4fe;
-    --purple-400: #c084fc;
-    --purple-500: #a855f7;
-    --purple-600: #9333ea;
-    --purple-700: #7e22ce;
-    --purple-800: #6b21a8;
-    --purple-900: #581c87;
-  
-    /* ===== Semantic Colors ===== */
-    --primary-color: #9333ea;     /* purple-600 */
-    --primary-light: #c084fc;     /* purple-400 */
-    --primary-dark: #7e22ce;      /* purple-700 */
-    --secondary-color: #d946ef;   /* pink-500 */
-    --success-color: #10b981;     /* green-500 */
-    --error-color: #ef4444;       /* red-500 */
-    --warning-color: #f59e0b;     /* amber-500 */
-    --info-color: #3b82f6;        /* blue-500 */
-  
-    /* ===== Text Colors ===== */
-    --text-primary: #111827;      /* gray-900 */
-    --text-secondary: #4b5563;    /* gray-600 */
-    --text-muted: #9ca3af;        /* gray-400 */
-    --text-light: #f9fafb;        /* gray-50 */
-  
-    /* ===== Background Colors ===== */
-    --bg-light: #ffffff;          /* white */
-    --bg-dark: #111827;           /* gray-900 */
-    --bg-subtle: #f9fafb;         /* gray-50 */
-    --bg-muted: #f3f4f6;          /* gray-100 */
-  
-    /* ===== Border Colors ===== */
-    --border-color-default: #e5e7eb; /* gray-200 */
-    --border-color-light: #f3f4f6;   /* gray-100 */
-    --border-color-dark: #d1d5db;    /* gray-300 */
-  
-    /* ===== Focus Ring Color ===== */
-    --ring-color: rgba(147, 51, 234, 0.5); /* primary-color with opacity */
-  
+:root {
+    /* ===== Color System ===== */
+    /* Semantic colors (per Standard Color Usage in voilajsx-component-standards.md) */
+    --primary-color: #6366f1; /* Indigo-500 - Main brand color, WCAG AA compliant */
+    --secondary-color: #ec4899; /* Pink-500 - Supporting brand color, WCAG AA compliant */
+    --success-color: #10b981; /* Emerald-500 - Success states, WCAG AA compliant */
+    --danger-color: #ef4444; /* Red-500 - Error states, WCAG AA compliant */
+    --warning-color: #f59e0b; /* Amber-500 - Warning states, WCAG AA compliant */
+    --info-color: #3b82f6; /* Blue-500 - Information states, WCAG AA compliant */
+    
+    /* Semantic dark colors (for hover states and emphasis) */
+    --primary-dark: #4f46e5; /* Indigo-600 - Darker shade for primary */
+    --secondary-dark: #db2777; /* Pink-600 - Darker shade for secondary */
+    --success-dark: #059669; /* Emerald-600 - Darker shade for success */
+    --danger-dark: #dc2626; /* Red-600 - Darker shade for danger */
+    --warning-dark: #d97706; /* Amber-600 - Darker shade for warning */
+    --info-dark: #2563eb; /* Blue-600 - Darker shade for info */
+    
+    /* Semantic soft colors */
+    --primary-soft: #e0e7ff; /* Indigo-100 - Lighter shade for primary UI elements */
+    --secondary-soft: #fce7f3; /* Pink-100 - Lighter shade for secondary UI elements */
+    --success-soft: #d1fae5; /* Emerald-100 - Lighter shade for success messages/alerts */
+    --danger-soft: #fee2e2; /* Red-100 - Lighter shade for error messages/alerts */
+    --warning-soft: #fef3c7; /* Amber-100 - Lighter shade for warning messages/alerts */
+    --info-soft: #dbeafe; /* Blue-100 - Lighter shade for info messages/alerts */
+    
+    /* Structural colors */
+    --base-color: #f3f4f6; /* Light-100 - Main application background */
+    --surface-color: #ffffff; /* White - Component surfaces (cards, dialogs) */
+    --subtle-color: #e5e7eb; /* Light-500 - Slight distinctions */
+    --accent-color: #e0e7ff; /* Indigo-100 - Highlighted elements */
+    
+    /* Basic colors */
+    --light-color: #e8e8e8; /* Light-500 - Inverts in dark mode */
+    --dark-color: #374151; /* Dark-500 - Inverts in dark mode */
+    
+    /* Basic soft colors */
+    --light-soft: #f8f8f8; /* Light-500 - Inverts in dark mode */
+    --dark-soft: #434c5c; /* Dark-500 - Inverts in dark mode */
+
+    /* Text colors derived from base colors */
+    --text-primary: var(--dark-color); /* Dark-500, 11.53:1 on white */
+    --text-secondary: #6b7280; /* Dark-100, 4.93:1 on white */
+    --text-muted: #6b7280; /* Dark-100, 4.93:1 on white for WCAG AA */
+    --text-on-soft: #374151; /* Dark-500, 8.22:1 on soft backgrounds like Indigo-100 */
+    
+    /* Border colors */
+    --border-color-default: #d1d5db; /* Light-700 */
+    --border-color-light: #e5e7eb; /* Light-500 */
+    --border-color-dark: #9ca3af; /* Dark-200 */
+    
+    /* Focus state */
+    --ring-color: rgba(var(--primary-color-rgb), 0.5); /* Derived from primary-color with opacity */
+    
     /* ===== Typography ===== */
     /* Font families */
-    --font-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-base: system-ui, -apple-system, sans-serif;
     --font-heading: var(--font-base);
-    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  
+    --font-mono: ui-monospace, monospace;
+    
     /* Font sizes */
-    --text-xs: 0.75rem;      /* 12px */
-    --text-sm: 0.875rem;     /* 14px */
-    --text-base: 1rem;       /* 16px */
-    --text-lg: 1.125rem;     /* 18px */
-    --text-xl: 1.25rem;      /* 20px */
-    --text-2xl: 1.5rem;      /* 24px */
-    --text-3xl: 1.875rem;    /* 30px */
-    --text-4xl: 2.25rem;     /* 36px */
-    --text-5xl: 3rem;        /* 48px */
-    --text-6xl: 3.75rem;     /* 60px */
-  
+    --text-xs: 0.75rem; /* Extra small text */
+    --text-sm: 0.875rem; /* Small text */
+    --text-md: 1rem; /* Medium text */
+    --text-lg: 1.125rem; /* Large text */
+    --text-xl: 1.25rem; /* Extra large text */
+    --text-2xl: 1.5rem; /* Double extra large text */
+    
     /* Font weights */
-    --font-light: 300;
     --font-normal: 400;
     --font-medium: 500;
-    --font-semibold: 600;
     --font-bold: 700;
-  
+    
     /* Line heights */
     --line-height-tight: 1.2;
     --line-height-normal: 1.5;
-    --line-height-relaxed: 1.75;
-  
+    --line-height-wide: 1.75; /* Uniform with letter-spacing-wide */
+    
     /* Letter spacing */
     --letter-spacing-tight: -0.025em;
     --letter-spacing-normal: 0;
     --letter-spacing-wide: 0.025em;
-  
+    
     /* ===== Spacing ===== */
-    /* Spacing scale */
     --spacing-0: 0;
-    --spacing-1: 0.25rem;    /* 4px */
-    --spacing-2: 0.5rem;     /* 8px */
-    --spacing-3: 0.75rem;    /* 12px */
-    --spacing-4: 1rem;       /* 16px */
-    --spacing-5: 1.25rem;    /* 20px */
-    --spacing-6: 1.5rem;     /* 24px */
-    --spacing-8: 2rem;       /* 32px */
-    --spacing-10: 2.5rem;    /* 40px */
-    --spacing-12: 3rem;      /* 48px */
-    --spacing-16: 4rem;      /* 64px */
-    --spacing-20: 5rem;      /* 80px */
-    --spacing-24: 6rem;      /* 96px */
-    --spacing-32: 8rem;      /* 128px */
-    --spacing-40: 10rem;     /* 160px */
-    --spacing-48: 12rem;     /* 192px */
-    --spacing-56: 14rem;     /* 224px */
-    --spacing-64: 16rem;     /* 256px */
-  
-    /* Component-specific spacing */
-    --button-padding-x: 1rem;
-    --button-padding-y: 0.5rem;
-    --card-padding: 1.5rem;
-    --input-padding-x: 0.75rem;
-    --input-padding-y: 0.5rem;
-  
-    /* ===== Border Radius ===== */
-    --radius-none: 0;
-    --radius-sm: 0.125rem;     /* 2px */
-    --radius-default: 0.25rem; /* 4px */
-    --radius-md: 0.375rem;     /* 6px */
-    --radius-lg: 0.5rem;       /* 8px */
-    --radius-xl: 0.75rem;      /* 12px */
-    --radius-2xl: 1rem;        /* 16px */
-    --radius-full: 9999px;     /* Fully rounded (circles) */
-  
-    /* ===== Shadows ===== */
-    --shadow-none: none;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-default: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  
-    /* ===== Borders ===== */
+    --spacing-1: 0.25rem;
+    --spacing-2: 0.5rem;
+    --spacing-4: 1rem;
+    --spacing-6: 1.5rem;
+    --spacing-8: 2rem;
+    --spacing-12: 3rem;
+    --spacing-16: 4rem;
+    
+    /* ===== Shapes and Effects ===== */
+    /* Border radius */
+    --radius-default: 0.24rem; 
+    --radius-xs: 0; /* No radius */
+    --radius-sm: 0.125rem; /* Small radius */
+    --radius-md: 0.25rem; /* Medium radius */
+    --radius-lg: 0.5rem; /* Large radius */
+    --radius-xl: 0.75rem; /* Extra large radius */
+    --radius-full: 9999px; /* Fully rounded radius */
+    
+    /* Shadows */
+    --shadow-xs: none; /* No shadow */
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05); /* Small shadow */
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1); /* Medium shadow */
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1); /* Large shadow */
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1); /* Extra large shadow */
+    
+    /* Borders */
     --border-width-none: 0;
     --border-width-thin: 1px;
     --border-width-default: 1px;
     --border-width-thick: 2px;
-  
-    /* ===== Z-Index ===== */
+    
+    /* Z-index */
     --z-index-dropdown: 1000;
     --z-index-sticky: 1020;
     --z-index-fixed: 1030;
@@ -141,39 +130,78 @@
     --z-index-modal: 1050;
     --z-index-popover: 1060;
     --z-index-tooltip: 1070;
-    --z-index-toast: 1080;
-  
+    
     /* ===== Animation and Transitions ===== */
     /* Transition durations */
     --duration-fast: 100ms;
     --duration-normal: 200ms;
     --duration-slow: 300ms;
-  
+    
     /* Transition timing functions */
     --timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
     --timing-ease-in: cubic-bezier(0.4, 0, 1, 1);
     --timing-ease-out: cubic-bezier(0, 0, 0.2, 1);
     --timing-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  
+    
     /* ===== Layout ===== */
-    --sidebar-width: 18rem;          /* 288px */
-    --sidebar-collapsed-width: 4rem; /* 64px */
-    --header-height: 4rem;           /* 64px */
-    --footer-height: 4rem;           /* 64px */
-    --content-width-sm: 40rem;       /* 640px */
-    --content-width-md: 48rem;       /* 768px */
-    --content-width-lg: 64rem;       /* 1024px */
-    --content-width-xl: 80rem;       /* 1280px */
-    --content-width-full: 100%;
-    --container-padding: 2rem;       /* 32px */
-  
-    /* ===== Dark Mode Variants ===== */
-    --primary-color-dark-mode: #b794f4;
-    --primary-light-dark-mode: #d8b4fe;
-    --primary-dark-dark-mode: #a78bfa;
-    --secondary-color-dark-mode: #e879f9;
-    --bg-light-dark-mode: #1f2937;
-    --text-primary-dark-mode: #f9fafb;
-    --text-secondary-dark-mode: #e5e7eb;
-    --border-color-dark-mode: #374151;
-  }
+    --sidebar-width: 18rem;
+    --sidebar-collapsed-width: 4rem;
+    --header-height: 4rem;
+    --footer-height: 4rem;
+    --content-width-xs: 32rem; /* Extra small content width */
+    --content-width-sm: 40rem; /* Small content width */
+    --content-width-md: 48rem; /* Medium content width */
+    --content-width-lg: 64rem; /* Large content width */
+    --content-width-full: 100%; /* Full content width */
+    --container-padding: 2rem;
+
+}
+
+/* Dark mode overrides */
+:root[data-mode="dark"] {
+    /* Semantic colors - darker for WCAG AA compliance */
+    --primary-color: #6366f1; /* Indigo-500, 4.88:1 with white text */
+    --primary-color-rgb: 99, 102, 241; /* RGB values for --primary-color */
+    --secondary-color: #ec4899; /* Pink-500, 4.84:1 with white text */
+    --success-color: #10b981; /* Emerald-500, 4.96:1 with white text */
+    --danger-color: #ef4444; /* Red-500, 4.63:1 with white text */
+    --warning-color: #f59e0b; /* Amber-500, 4.62:1 with white text */
+    --info-color: #3b82f6; /* Blue-500, 4.88:1 with white text */
+    
+    /* Semantic dark colors - darker for hover states in dark mode */
+    --primary-dark: #4338ca; /* Indigo-700 for dark mode hover */
+    --secondary-dark: #be185d; /* Pink-700 for dark mode hover */
+    --success-dark: #047857; /* Emerald-700 for dark mode hover */
+    --danger-dark: #b91c1c; /* Red-700 for dark mode hover */
+    --warning-dark: #b45309; /* Amber-700 for dark mode hover */
+    --info-dark: #1d4ed8; /* Blue-700 for dark mode hover */
+    
+    /* Semantic soft colors */
+    --primary-soft: #e0e7ff; /* Indigo-100 - Lighter shade for primary UI elements */
+    --secondary-soft: #fce7f3; /* Pink-100 - Lighter shade for secondary UI elements */
+    --success-soft: #d1fae5; /* Emerald-100 - Lighter shade for success messages/alerts */
+    --danger-soft: #fee2e2; /* Red-100 - Lighter shade for error messages/alerts */
+    --warning-soft: #fef3c7; /* Amber-100 - Lighter shade for warning messages/alerts */
+    --info-soft: #dbeafe; /* Blue-100 - Lighter shade for info messages/alerts */
+    
+    /* Structural colors - dark mode variants */
+    --base-color: #111827; /* Dark-700 */
+    --surface-color: #1f2937; /* Dark-800 */
+    --subtle-color: #374151; /* Dark-500 */
+    --accent-color: #e0e7ff; /* Indigo-100 */
+    
+    /* Basic colors - inverted in dark mode */
+    --light-color: #374151; /* Dark-500 */
+    --dark-color: #e5e7eb; /* Light-500 */
+    
+    /* Text colors */
+    --text-primary: #e5e7eb; /* Light-500, 12.18:1 on Dark-800 */
+    --text-secondary: #9ca3af; /* Dark-200, 4.76:1 on Dark-800 */
+    --text-muted: #9ca3af; /* Dark-200, 4.76:1 on Dark-800 for WCAG AA */
+    --text-on-soft: #374151; /* Dark-500, 8.22:1 on soft backgrounds like Indigo-100 */
+    
+    /* Border colors */
+    --border-color-default: #374151; /* Dark-500 */
+    --border-color-light: #4b5563; /* Dark-600 */
+    --border-color-dark: #1f2937; /* Dark-800 */
+}

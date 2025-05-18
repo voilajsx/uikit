@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.test-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.test-section {
+  margin-bottom: 3rem;
+}
+
+.test-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.test-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.test-item {
+  margin: 0.5rem;
+}
+
+.nav-tab {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-default);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nav-tab:hover {
+  background-color: var(--subtle-color);
+}
+
+.nav-tab.active {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+
+/* Example styles */
+.example-nav {
+  background-color: var(--subtle-color);
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.example-container {
+  background-color: var(--surface-color);
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color-default);
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.example-content {
+  padding: 1rem;
+}
+
+.example-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color-default);
+}
