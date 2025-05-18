@@ -7,6 +7,7 @@
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@tailwindcss/typography": "^0.5.16",
+    "@voilajsx/uikit": "github:voilajsx/uikit",
     "prism-react-renderer": "^2.4.1",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",

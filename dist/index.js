@@ -2832,7 +2832,273 @@ var Badge = function Badge(_ref) {
 Badge.displayName = 'Badge';
 var Badge$1 = Badge;
 
-var _excluded$16 = ["variant", "size", "type", "disabled", "fullWidth", "leftIcon", "rightIcon", "isLoading", "loadingText", "className", "children"];
+// Create context for theme
+var ThemeContext$2 = /*#__PURE__*/React.createContext({
+  theme: null,
+  darkMode: false,
+  setTheme: function setTheme() {},
+  toggleDarkMode: function toggleDarkMode() {},
+  getComponentStyles: function getComponentStyles() {
+    return {};
+  }
+});
+var useTheme$1 = function useTheme() {
+  return React.useContext(ThemeContext$2);
+};
+var ThemeProvider = function ThemeProvider(_ref) {
+  var _currentTheme$meta3;
+  var theme = _ref.theme,
+    _ref$darkMode = _ref.darkMode,
+    darkMode = _ref$darkMode === void 0 ? false : _ref$darkMode,
+    children = _ref.children;
+  var _useState = React.useState(theme),
+    _useState2 = _slicedToArray$e(_useState, 2),
+    currentTheme = _useState2[0],
+    setCurrentTheme = _useState2[1];
+  var _useState3 = React.useState(darkMode),
+    _useState4 = _slicedToArray$e(_useState3, 2),
+    isDarkMode = _useState4[0],
+    setIsDarkMode = _useState4[1];
+
+  // Effect to update theme when props change
+  React.useEffect(function () {
+    if (theme) {
+      setCurrentTheme(theme);
+    }
+  }, [theme]);
+
+  // Effect to update dark mode when props change
+  React.useEffect(function () {
+    setIsDarkMode(darkMode);
+  }, [darkMode]);
+
+  // Function to toggle dark mode
+  var toggleDarkMode = function toggleDarkMode() {
+    setIsDarkMode(function (prev) {
+      return !prev;
+    });
+  };
+
+  // ADDED: Apply global styles from theme if provided
+  React.useEffect(function () {
+    if (currentTheme !== null && currentTheme !== void 0 && currentTheme.globalStyles) {
+      var _currentTheme$meta;
+      // Create style element for global styles
+      var styleElement = document.createElement('style');
+      styleElement.setAttribute('data-theme-styles', (currentTheme === null || currentTheme === void 0 || (_currentTheme$meta = currentTheme.meta) === null || _currentTheme$meta === void 0 ? void 0 : _currentTheme$meta.name) || 'theme');
+      styleElement.textContent = currentTheme.globalStyles;
+      document.head.appendChild(styleElement);
+
+      // Clean up when theme changes or component unmounts
+      return function () {
+        var _currentTheme$meta2;
+        var element = document.querySelector("style[data-theme-styles=\"".concat((currentTheme === null || currentTheme === void 0 || (_currentTheme$meta2 = currentTheme.meta) === null || _currentTheme$meta2 === void 0 ? void 0 : _currentTheme$meta2.name) || 'theme', "\"]"));
+        if (element) {
+          document.head.removeChild(element);
+        }
+      };
+    }
+  }, [currentTheme]);
+
+  // ADDED: Function to get component-specific styles
+  var getComponentStyles = function getComponentStyles(componentName) {
+    if (!(currentTheme !== null && currentTheme !== void 0 && currentTheme.components) || !currentTheme.components[componentName]) {
+      return {};
+    }
+    return currentTheme.components[componentName];
+  };
+
+  // Get effective CSS variables based on theme and dark mode
+  var getThemeVariables = function getThemeVariables() {
+    // Default variables if no theme is provided
+    var defaultVariables = {
+      // Base color palette
+      '--purple-50': '#faf5ff',
+      '--purple-100': '#f3e8ff',
+      '--purple-200': '#e9d5ff',
+      '--purple-300': '#d8b4fe',
+      '--purple-400': '#c084fc',
+      '--purple-500': '#a855f7',
+      '--purple-600': '#9333ea',
+      '--purple-700': '#7e22ce',
+      '--purple-800': '#6b21a8',
+      '--purple-900': '#581c87',
+      // Semantic colors - using base palette variables
+      '--primary-color': '#9333ea',
+      // Same as purple-600
+      '--primary-light': '#c084fc',
+      // Same as purple-400
+      '--primary-dark': '#7e22ce',
+      // Same as purple-700
+      '--secondary-color': '#d946ef',
+      '--success-color': '#10b981',
+      '--error-color': '#ef4444',
+      '--warning-color': '#f59e0b',
+      '--info-color': '#3b82f6',
+      // Text colors
+      '--text-primary': '#111827',
+      '--text-secondary': '#4b5563',
+      '--text-muted': '#9ca3af',
+      '--text-light': '#f9fafb',
+      // Background colors
+      '--bg-light': '#ffffff',
+      '--bg-dark': '#111827',
+      '--bg-subtle': '#f9fafb',
+      '--bg-muted': '#f3f4f6',
+      // Border colors
+      '--border-color-default': '#e5e7eb',
+      '--border-color-light': '#f3f4f6',
+      '--border-color-dark': '#d1d5db',
+      // Focus ring color
+      '--ring-color': 'rgba(147, 51, 234, 0.5)',
+      // Font families
+      '--font-base': 'system-ui, -apple-system, sans-serif',
+      '--font-heading': 'system-ui, -apple-system, sans-serif',
+      '--font-mono': 'ui-monospace, monospace',
+      // Font sizes
+      '--text-xs': '0.75rem',
+      '--text-sm': '0.875rem',
+      '--text-base': '1rem',
+      '--text-lg': '1.125rem',
+      '--text-xl': '1.25rem',
+      '--text-2xl': '1.5rem',
+      '--text-3xl': '1.875rem',
+      '--text-4xl': '2.25rem',
+      '--text-5xl': '3rem',
+      '--text-6xl': '3.75rem',
+      // Font weights
+      '--font-light': '300',
+      '--font-normal': '400',
+      '--font-medium': '500',
+      '--font-semibold': '600',
+      '--font-bold': '700',
+      // Line heights
+      '--line-height-tight': '1.2',
+      '--line-height-normal': '1.5',
+      '--line-height-relaxed': '1.75',
+      // Letter spacing
+      '--letter-spacing-tight': '-0.025em',
+      '--letter-spacing-normal': '0',
+      '--letter-spacing-wide': '0.025em',
+      // Spacing scale
+      '--spacing-0': '0',
+      '--spacing-1': '0.25rem',
+      '--spacing-2': '0.5rem',
+      '--spacing-3': '0.75rem',
+      '--spacing-4': '1rem',
+      '--spacing-5': '1.25rem',
+      '--spacing-6': '1.5rem',
+      '--spacing-8': '2rem',
+      '--spacing-10': '2.5rem',
+      '--spacing-12': '3rem',
+      '--spacing-16': '4rem',
+      '--spacing-20': '5rem',
+      '--spacing-24': '6rem',
+      '--spacing-32': '8rem',
+      '--spacing-40': '10rem',
+      '--spacing-48': '12rem',
+      '--spacing-56': '14rem',
+      '--spacing-64': '16rem',
+      // Component-specific spacing
+      '--button-padding-x': '1rem',
+      '--button-padding-y': '0.5rem',
+      '--card-padding': '1.5rem',
+      '--input-padding-x': '0.75rem',
+      '--input-padding-y': '0.5rem',
+      // Border radius
+      '--radius-none': '0',
+      '--radius-sm': '0.125rem',
+      '--radius-default': '0.25rem',
+      '--radius-md': '0.375rem',
+      '--radius-lg': '0.5rem',
+      '--radius-xl': '0.75rem',
+      '--radius-2xl': '1rem',
+      '--radius-full': '9999px',
+      // Shadows
+      '--shadow-none': 'none',
+      '--shadow-sm': '0 1px 2px 0 rgba(0,0,0,0.05)',
+      '--shadow-default': '0 4px 6px -1px rgba(0,0,0,0.1)',
+      '--shadow-md': '0 10px 15px -3px rgba(0,0,0,0.1)',
+      '--shadow-lg': '0 20px 25px -5px rgba(0,0,0,0.1)',
+      '--shadow-xl': '0 25px 50px -12px rgba(0,0,0,0.25)',
+      // Borders
+      '--border-width-none': '0',
+      '--border-width-thin': '1px',
+      '--border-width-default': '1px',
+      '--border-width-thick': '2px',
+      // Z-index
+      '--z-index-dropdown': '1000',
+      '--z-index-sticky': '1020',
+      '--z-index-fixed': '1030',
+      '--z-index-modal-backdrop': '1040',
+      '--z-index-modal': '1050',
+      '--z-index-popover': '1060',
+      '--z-index-tooltip': '1070',
+      '--z-index-toast': '1080',
+      // Transition durations
+      '--duration-fast': '100ms',
+      '--duration-normal': '200ms',
+      '--duration-slow': '300ms',
+      // Transition timing functions
+      '--timing-ease': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      '--timing-ease-in': 'cubic-bezier(0.4, 0, 1, 1)',
+      '--timing-ease-out': 'cubic-bezier(0, 0, 0.2, 1)',
+      '--timing-ease-in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      // Layout
+      '--sidebar-width': '18rem',
+      '--sidebar-collapsed-width': '4rem',
+      '--header-height': '4rem',
+      '--footer-height': '4rem',
+      '--content-width-sm': '40rem',
+      '--content-width-md': '48rem',
+      '--content-width-lg': '64rem',
+      '--content-width-xl': '80rem',
+      '--content-width-full': '100%',
+      '--container-padding': '2rem',
+      // Dark mode variants
+      '--primary-color-dark-mode': '#b794f4',
+      '--primary-light-dark-mode': '#d8b4fe',
+      '--primary-dark-dark-mode': '#a78bfa',
+      '--secondary-color-dark-mode': '#e879f9',
+      '--bg-light-dark-mode': '#1f2937',
+      '--text-primary-dark-mode': '#f9fafb',
+      '--text-secondary-dark-mode': '#e5e7eb',
+      '--border-color-dark-mode': '#374151'
+    };
+
+    // Start with default variables
+    var variables = _objectSpread2({}, defaultVariables);
+
+    // Apply theme variables if available
+    if (currentTheme !== null && currentTheme !== void 0 && currentTheme.styles) {
+      Object.assign(variables, currentTheme.styles);
+    }
+
+    // Apply dark mode overrides if dark mode is enabled
+    if (isDarkMode && currentTheme !== null && currentTheme !== void 0 && currentTheme.darkModeStyles) {
+      Object.assign(variables, currentTheme.darkModeStyles);
+    }
+    return variables;
+  };
+
+  // ADDED: Get theme name to use as a class
+  var themeClassName = currentTheme !== null && currentTheme !== void 0 && (_currentTheme$meta3 = currentTheme.meta) !== null && _currentTheme$meta3 !== void 0 && _currentTheme$meta3.name ? "".concat(currentTheme.meta.name, "-theme") : '';
+  return /*#__PURE__*/React__default["default"].createElement(ThemeContext$2.Provider, {
+    value: {
+      theme: currentTheme,
+      darkMode: isDarkMode,
+      setTheme: setCurrentTheme,
+      toggleDarkMode: toggleDarkMode,
+      getComponentStyles: getComponentStyles // Expose the new function
+    }
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "".concat(isDarkMode ? 'dark-mode' : '', " ").concat(themeClassName),
+    style: getThemeVariables()
+  }, children));
+};
+var ThemeProvider$1 = ThemeProvider;
+
+var _excluded$16 = ["variant", "size", "type", "disabled", "fullWidth", "leftIcon", "rightIcon", "isLoading", "loadingText", "className", "style", "children"];
 
 /**
  * Size variants for the button
@@ -2842,26 +3108,48 @@ var sizeMap$9 = {
   sm: 'text-sm px-3 py-1.5',
   md: 'text-base px-4 py-2',
   lg: 'text-lg px-5 py-2.5',
-  xl: 'text-xl px-6 py-3'
+  xl: 'text-xl px-6 py-3',
+  '2xl': 'text-2xl px-8 py-4'
 };
 
 /**
  * Style variants for the button
  */
 var variantMap$9 = {
-  primary: 'bg-[var(--primary-color)] text-white hover:bg-opacity-90 focus-visible:ring-[var(--primary-color)]',
-  secondary: 'bg-[var(--secondary-color)] text-white hover:bg-opacity-90 focus-visible:ring-[var(--secondary-color)]',
+  primary: 'bg-[var(--primary-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--primary-color)]',
+  secondary: 'bg-[var(--secondary-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--secondary-color)]',
   outline: 'border border-[var(--primary-color)] text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-color)] hover:bg-opacity-10 focus-visible:ring-[var(--primary-color)]',
   ghost: 'text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-color)] hover:bg-opacity-10 focus-visible:ring-[var(--primary-color)]',
-  link: 'text-[var(--primary-color)] underline bg-transparent p-0 hover:text-[var(--primary-dark)] focus-visible:ring-[var(--primary-color)]',
-  danger: 'bg-[var(--error-color)] text-white hover:bg-opacity-90 focus-visible:ring-[var(--error-color)]'
+  link: 'text-[var(--primary-color)] underline bg-transparent p-0 hover:opacity-80 focus-visible:ring-[var(--primary-color)]',
+  danger: 'bg-[var(--danger-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--danger-color)]'
+};
+
+/**
+ * Helper function to get component styles from theme
+ */
+var getComponentStyles$2 = function getComponentStyles(theme, componentName) {
+  var variant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  if (!(theme !== null && theme !== void 0 && theme.components)) return null;
+
+  // Get base component styles
+  var componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return _objectSpread2(_objectSpread2({}, componentStyles), {}, {
+      style: _objectSpread2(_objectSpread2({}, componentStyles.style || {}), componentStyles.variants[variant].style || {}),
+      className: cn(componentStyles.className || '', componentStyles.variants[variant].className || '')
+    });
+  }
+  return componentStyles;
 };
 
 /**
  * Button component for user interactions.
  * 
  * @param {'primary'|'secondary'|'outline'|'ghost'|'link'|'danger'} variant - Visual style variant
- * @param {'xs'|'sm'|'md'|'lg'|'xl'} size - Size of the button
+ * @param {'xs'|'sm'|'md'|'lg'|'xl'|'2xl'} size - Size of the button
  * @param {'button'|'submit'|'reset'} type - HTML button type
  * @param {boolean} disabled - Whether the button is disabled
  * @param {boolean} fullWidth - Whether the button should take full width
@@ -2870,8 +3158,8 @@ var variantMap$9 = {
  * @param {boolean} isLoading - Whether to show loading state
  * @param {string} loadingText - Text to display during loading (replaces children)
  * @param {string} className - Additional CSS classes to apply
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Button content
- * @param {Object} props - Additional props to pass to the button element
  * @returns {JSX.Element} Button component
  */
 var Button = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
@@ -2894,21 +3182,33 @@ var Button = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
     _ref$loadingText = _ref.loadingText,
     loadingText = _ref$loadingText === void 0 ? null : _ref$loadingText,
     className = _ref.className,
+    style = _ref.style,
     children = _ref.children,
     props = _objectWithoutProperties$q(_ref, _excluded$16);
+  // Get theme from context
+  var _ref2 = useTheme$1() || {},
+    theme = _ref2.theme;
+
+  // Get component styles from theme, including variant-specific styles if available
+  var componentStyles = getComponentStyles$2(theme, 'Button', variant);
   return /*#__PURE__*/React__default["default"].createElement("button", _extends$G({
     ref: ref,
     type: type,
     disabled: disabled || isLoading,
     className: cn(
     // Base styles
-    'inline-flex items-center justify-center font-medium rounded-[var(--radius-default)]', 'transition duration-[var(--duration-normal)] ease-[var(--timing-ease)]', 'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+    'inline-flex items-center justify-center font-medium rounded-[var(--radius-default)]', 'transition-all duration-[var(--duration-normal)] ease-[var(--timing-ease)]', 'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
     // Size and variant
     sizeMap$9[size], variantMap$9[variant],
     // States
-    (disabled || isLoading) && 'opacity-60 cursor-not-allowed', fullWidth && 'w-full',
-    // Custom className
+    (disabled || isLoading) && 'opacity-60 cursor-not-allowed', fullWidth && 'w-full', // Theme classes
+    componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    // Custom className (highest priority)
     className)
+    // Merge theme styles with inline styles
+    ,
+    style: _objectSpread2(_objectSpread2({}, componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style), style),
+    "aria-disabled": disabled || isLoading
   }, props), isLoading && /*#__PURE__*/React__default["default"].createElement("svg", {
     className: "animate-spin -ml-1 mr-2 h-4 w-4",
     xmlns: "http://www.w3.org/2000/svg",
@@ -3700,10 +4000,10 @@ var FormHelperText = function FormHelperText(_ref) {
 FormHelperText.displayName = 'FormHelperText';
 var FormHelperText$1 = FormHelperText;
 
-var _excluded$V = ["variant", "title", "icon", "closable", "onClose", "className", "children"];
+var _excluded$V = ["variant", "title", "icon", "closable", "onClose", "className", "style", "children"];
 
 /**
- * Variant-specific styling and icons
+ * Variant styling map for different alert types
  */
 var variantMap$4 = {
   success: {
@@ -3740,10 +4040,10 @@ var variantMap$4 = {
       d: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
     }))
   },
-  error: {
-    bg: 'bg-[var(--error-color)] bg-opacity-10',
-    border: 'border-[var(--error-color)] border-opacity-30',
-    text: 'text-[var(--error-color)]',
+  danger: {
+    bg: 'bg-[var(--danger-color)] bg-opacity-10',
+    border: 'border-[var(--danger-color)] border-opacity-30',
+    text: 'text-[var(--danger-color)]',
     icon: /*#__PURE__*/React__default["default"].createElement("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -3777,19 +4077,40 @@ var variantMap$4 = {
 };
 
 /**
- * Alert component for displaying status messages, warnings, and other notifications.
+ * Helper function to get component styles from theme
+ */
+var getComponentStyles$1 = function getComponentStyles(theme, componentName) {
+  var variant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  if (!(theme !== null && theme !== void 0 && theme.components)) return null;
+
+  // Get base component styles
+  var componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return _objectSpread2(_objectSpread2({}, componentStyles), {}, {
+      style: _objectSpread2(_objectSpread2({}, componentStyles.style || {}), componentStyles.variants[variant].style || {}),
+      className: cn(componentStyles.className || '', componentStyles.variants[variant].className || '')
+    });
+  }
+  return componentStyles;
+};
+
+/**
+ * Alert component for displaying important messages with various states
  * 
- * @param {'success'|'warning'|'error'|'info'} variant - Visual style variant
+ * @param {'success'|'warning'|'danger'|'info'} variant - The visual style and meaning of the alert
  * @param {string} title - Optional title for the alert
- * @param {React.ReactNode} icon - Optional custom icon to display
- * @param {boolean} closable - Whether the alert can be closed
- * @param {Function} onClose - Callback function when close button is clicked
- * @param {string} className - Additional CSS classes to apply
- * @param {React.ReactNode} children - Alert content
- * @param {Object} props - Additional props to pass to the container
+ * @param {React.ReactNode} icon - Custom icon to replace the default variant icon
+ * @param {boolean} closable - Whether the alert can be dismissed
+ * @param {Function} onClose - Callback function when the alert is closed
+ * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
+ * @param {React.ReactNode} children - The alert message content
  * @returns {JSX.Element} Alert component
  */
-var Alert = function Alert(_ref) {
+var Alert = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
   var _ref$variant = _ref.variant,
     variant = _ref$variant === void 0 ? 'info' : _ref$variant,
     title = _ref.title,
@@ -3799,16 +4120,34 @@ var Alert = function Alert(_ref) {
     closable = _ref$closable === void 0 ? false : _ref$closable,
     onClose = _ref.onClose,
     className = _ref.className,
+    style = _ref.style,
     children = _ref.children,
     props = _objectWithoutProperties$q(_ref, _excluded$V);
-  // Get variant-specific styling
+  // Get theme from context
+  var _ref2 = useTheme$1() || {},
+    theme = _ref2.theme;
+
+  // Get component styles from theme, including variant-specific styles if available
+  var componentStyles = getComponentStyles$1(theme, 'Alert', variant);
+
+  // Get the variant style
   var variantStyle = variantMap$4[variant];
 
-  // Use custom icon if provided, otherwise use the default for the variant
+  // Use provided icon or default from variant
   var customIcon = icon !== null ? icon : variantStyle.icon;
   return /*#__PURE__*/React__default["default"].createElement("div", _extends$G({
+    ref: ref,
     role: "alert",
-    className: cn('rounded-[var(--radius-lg)] p-4 border', variantStyle.bg, variantStyle.border, className)
+    className: cn(
+    // Base styles
+    'rounded-[var(--radius-lg)] p-4 border', variantStyle.bg, variantStyle.border, // Theme classes
+    componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    // Custom className (highest priority)
+    className)
+    // Merge theme styles with inline styles
+    ,
+    style: _objectSpread2(_objectSpread2({}, componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style), style),
+    "aria-live": "polite"
   }, props), /*#__PURE__*/React__default["default"].createElement("div", {
     className: "flex"
   }, customIcon && /*#__PURE__*/React__default["default"].createElement("div", {
@@ -3836,7 +4175,7 @@ var Alert = function Alert(_ref) {
     strokeWidth: 2,
     d: "M6 18L18 6M6 6l12 12"
   })))));
-};
+});
 
 // Set display name for React DevTools
 Alert.displayName = 'Alert';
@@ -5046,10 +5385,10 @@ Tabs.Panels = TabsPanels;
 Tabs.Panel = TabPanel;
 var Tabs$1 = Tabs;
 
-var _excluded$J = ["variant", "hoverable", "interactive", "onClick", "className", "children"],
-  _excluded2$k = ["className", "children"],
-  _excluded3$9 = ["className", "children"],
-  _excluded4$6 = ["className", "children"];
+var _excluded$J = ["variant", "hoverable", "interactive", "onClick", "className", "style", "children"],
+  _excluded2$k = ["className", "style", "children"],
+  _excluded3$9 = ["className", "style", "children"],
+  _excluded4$6 = ["className", "style", "children"];
 
 /**
  * Visual variants for the card
@@ -5062,6 +5401,16 @@ var variantMap = {
 };
 
 /**
+ * Helper function to get component styles from theme
+ */
+var getComponentStyles = function getComponentStyles(theme, componentName) {
+  if (!(theme !== null && theme !== void 0 && theme.components) || !theme.components[componentName]) {
+    return null;
+  }
+  return theme.components[componentName];
+};
+
+/**
  * Card component for grouping related content and actions.
  * 
  * @param {'default'|'elevated'|'outline'|'filled'} variant - Visual style variant
@@ -5069,6 +5418,7 @@ var variantMap = {
  * @param {boolean} interactive - Whether the card is clickable
  * @param {Function} onClick - Click handler (used when interactive is true)
  * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Card content
  * @param {Object} props - Additional props for the element
  * @returns {JSX.Element} Card component
@@ -5082,14 +5432,27 @@ var Card = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
     interactive = _ref$interactive === void 0 ? false : _ref$interactive,
     onClick = _ref.onClick,
     className = _ref.className,
+    style = _ref.style,
     children = _ref.children,
     props = _objectWithoutProperties$q(_ref, _excluded$J);
+  // Get theme from context
+  var _ref2 = useTheme$1() || {},
+    theme = _ref2.theme;
+
+  // Get component styles from theme if available
+  var componentStyles = getComponentStyles(theme, 'Card');
+
   // Determine element type based on interactive prop
   var Element = interactive ? 'button' : 'div';
   return /*#__PURE__*/React__default["default"].createElement(Element, _extends$G({
     ref: ref,
     onClick: interactive ? onClick : undefined,
-    className: cn('rounded-[var(--radius-lg)] transition-all duration-[var(--duration-normal)]', variantMap[variant], hoverable && 'hover:shadow-[var(--shadow-lg)]', interactive && ['cursor-pointer hover:shadow-[var(--shadow-lg)]', 'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-color)] focus-visible:ring-offset-2', 'w-full text-left'], className),
+    className: cn('rounded-[var(--radius-lg)] transition-all duration-[var(--duration-normal)]', variantMap[variant], hoverable && 'hover:shadow-[var(--shadow-lg)]', interactive && ['cursor-pointer hover:shadow-[var(--shadow-lg)]', 'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-color)] focus-visible:ring-offset-2', 'w-full text-left'], componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    // Apply theme class if available
+    className)
+    // Merge inline styles with theme styles
+    ,
+    style: _objectSpread2(_objectSpread2({}, componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style), style),
     type: interactive ? 'button' : undefined
   }, props), children);
 });
@@ -5098,16 +5461,29 @@ var Card = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
  * Card header component
  * 
  * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Header content
  * @param {Object} props - Additional props for the div element
  * @returns {JSX.Element} Card header component
  */
-var CardHeader = function CardHeader(_ref2) {
-  var className = _ref2.className,
-    children = _ref2.children,
-    props = _objectWithoutProperties$q(_ref2, _excluded2$k);
+var CardHeader = function CardHeader(_ref3) {
+  var className = _ref3.className,
+    style = _ref3.style,
+    children = _ref3.children,
+    props = _objectWithoutProperties$q(_ref3, _excluded2$k);
+  // Get theme from context
+  var _ref4 = useTheme$1() || {},
+    theme = _ref4.theme;
+
+  // Get component styles from theme if available
+  var componentStyles = getComponentStyles(theme, 'CardHeader');
   return /*#__PURE__*/React__default["default"].createElement("div", _extends$G({
-    className: cn('px-6 py-4 border-b border-[var(--border-color-default)]', 'font-medium text-lg', className)
+    className: cn('px-6 py-4 border-b border-[var(--border-color-default)]', 'font-medium text-lg', componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    // Apply theme class if available
+    className)
+    // Merge inline styles with theme styles
+    ,
+    style: _objectSpread2(_objectSpread2({}, componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style), style)
   }, props), children);
 };
 
@@ -5115,16 +5491,29 @@ var CardHeader = function CardHeader(_ref2) {
  * Card body component
  * 
  * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Body content
  * @param {Object} props - Additional props for the div element
  * @returns {JSX.Element} Card body component
  */
-var CardBody = function CardBody(_ref3) {
-  var className = _ref3.className,
-    children = _ref3.children,
-    props = _objectWithoutProperties$q(_ref3, _excluded3$9);
+var CardBody = function CardBody(_ref5) {
+  var className = _ref5.className,
+    style = _ref5.style,
+    children = _ref5.children,
+    props = _objectWithoutProperties$q(_ref5, _excluded3$9);
+  // Get theme from context
+  var _ref6 = useTheme$1() || {},
+    theme = _ref6.theme;
+
+  // Get component styles from theme if available
+  var componentStyles = getComponentStyles(theme, 'CardBody');
   return /*#__PURE__*/React__default["default"].createElement("div", _extends$G({
-    className: cn('px-6 py-4', className)
+    className: cn('px-6 py-4', componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    // Apply theme class if available
+    className)
+    // Merge inline styles with theme styles
+    ,
+    style: _objectSpread2(_objectSpread2({}, componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style), style)
   }, props), children);
 };
 
@@ -5132,16 +5521,29 @@ var CardBody = function CardBody(_ref3) {
  * Card footer component
  * 
  * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Footer content
  * @param {Object} props - Additional props for the div element
  * @returns {JSX.Element} Card footer component
  */
-var CardFooter = function CardFooter(_ref4) {
-  var className = _ref4.className,
-    children = _ref4.children,
-    props = _objectWithoutProperties$q(_ref4, _excluded4$6);
+var CardFooter = function CardFooter(_ref7) {
+  var className = _ref7.className,
+    style = _ref7.style,
+    children = _ref7.children,
+    props = _objectWithoutProperties$q(_ref7, _excluded4$6);
+  // Get theme from context
+  var _ref8 = useTheme$1() || {},
+    theme = _ref8.theme;
+
+  // Get component styles from theme if available
+  var componentStyles = getComponentStyles(theme, 'CardFooter');
   return /*#__PURE__*/React__default["default"].createElement("div", _extends$G({
-    className: cn('px-6 py-4 border-t border-[var(--border-color-default)]', 'bg-[var(--bg-subtle)]', className)
+    className: cn('px-6 py-4 border-t border-[var(--border-color-default)]', 'bg-[var(--bg-subtle)]', componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className,
+    // Apply theme class if available
+    className)
+    // Merge inline styles with theme styles
+    ,
+    style: _objectSpread2(_objectSpread2({}, componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style), style)
   }, props), children);
 };
 
@@ -42770,247 +43172,39 @@ var ToastProvider = function ToastProvider(_ref) {
 ToastProvider.displayName = 'ToastProvider';
 var ToastProvider$1 = ToastProvider;
 
-/**
- * ThemeProvider component that enables theme switching, dark mode, and CSS variable injection.
- * Wraps the application to provide theme context to all children.
- * 
- * @param {Object} props - Component props
- * @param {Object} props.theme - Optional theme configuration object
- * @param {boolean} props.darkMode - Optional dark mode flag
- * @param {React.ReactNode} props.children - Child components
- */
-var ThemeProvider = function ThemeProvider(_ref) {
-  var theme = _ref.theme,
-    _ref$darkMode = _ref.darkMode,
-    darkMode = _ref$darkMode === void 0 ? false : _ref$darkMode,
-    children = _ref.children;
-  var _useState = React.useState(theme),
-    _useState2 = _slicedToArray$e(_useState, 2),
-    currentTheme = _useState2[0],
-    setCurrentTheme = _useState2[1];
-  var _useState3 = React.useState(darkMode),
-    _useState4 = _slicedToArray$e(_useState3, 2),
-    isDarkMode = _useState4[0],
-    setIsDarkMode = _useState4[1];
+function useComponentStyles(componentName) {
+  var _useTheme = useTheme$1(),
+    getComponentStyles = _useTheme.getComponentStyles;
+  var componentStyles = getComponentStyles(componentName);
 
-  // Effect to update theme when props change
-  React.useEffect(function () {
-    if (theme) {
-      setCurrentTheme(theme);
-    }
-  }, [theme]);
+  // Get component style object
+  var style = (componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.style) || {};
 
-  // Effect to update dark mode when props change
-  React.useEffect(function () {
-    setIsDarkMode(darkMode);
-  }, [darkMode]);
+  // Get component classes
+  var className = (componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.className) || '';
 
-  // Function to toggle dark mode
-  var toggleDarkMode = function toggleDarkMode() {
-    setIsDarkMode(function (prev) {
-      return !prev;
-    });
+  // Function to merge classes with component-specific classes
+  var getClassName = function getClassName() {
+    var additionalClasses = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    return cn(className, additionalClasses);
   };
 
-  /**
-   * Get effective CSS variables based on theme and dark mode
-   * @returns {Object} CSS variables as style object
-   */
-  var getThemeVariables = function getThemeVariables() {
-    // Default variables if no theme is provided
-    var defaultVariables = {
-      // Base color palette
-      '--purple-50': '#faf5ff',
-      '--purple-100': '#f3e8ff',
-      '--purple-200': '#e9d5ff',
-      '--purple-300': '#d8b4fe',
-      '--purple-400': '#c084fc',
-      '--purple-500': '#a855f7',
-      '--purple-600': '#9333ea',
-      '--purple-700': '#7e22ce',
-      '--purple-800': '#6b21a8',
-      '--purple-900': '#581c87',
-      // Semantic colors - using base palette variables
-      '--primary-color': '#9333ea',
-      // Same as purple-600
-      '--primary-light': '#c084fc',
-      // Same as purple-400
-      '--primary-dark': '#7e22ce',
-      // Same as purple-700
-      '--secondary-color': '#d946ef',
-      '--success-color': '#10b981',
-      '--error-color': '#ef4444',
-      '--warning-color': '#f59e0b',
-      '--info-color': '#3b82f6',
-      // Text colors
-      '--text-primary': '#111827',
-      '--text-secondary': '#4b5563',
-      '--text-muted': '#9ca3af',
-      '--text-light': '#f9fafb',
-      // Background colors
-      '--bg-light': '#ffffff',
-      '--bg-dark': '#111827',
-      '--bg-subtle': '#f9fafb',
-      '--bg-muted': '#f3f4f6',
-      // Border colors
-      '--border-color-default': '#e5e7eb',
-      '--border-color-light': '#f3f4f6',
-      '--border-color-dark': '#d1d5db',
-      // Focus ring color
-      '--ring-color': 'rgba(147, 51, 234, 0.5)',
-      // Font families
-      '--font-base': 'system-ui, -apple-system, sans-serif',
-      '--font-heading': 'system-ui, -apple-system, sans-serif',
-      '--font-mono': 'ui-monospace, monospace',
-      // Font sizes
-      '--text-xs': '0.75rem',
-      '--text-sm': '0.875rem',
-      '--text-base': '1rem',
-      '--text-lg': '1.125rem',
-      '--text-xl': '1.25rem',
-      '--text-2xl': '1.5rem',
-      '--text-3xl': '1.875rem',
-      '--text-4xl': '2.25rem',
-      '--text-5xl': '3rem',
-      '--text-6xl': '3.75rem',
-      // Font weights
-      '--font-light': '300',
-      '--font-normal': '400',
-      '--font-medium': '500',
-      '--font-semibold': '600',
-      '--font-bold': '700',
-      // Line heights
-      '--line-height-tight': '1.2',
-      '--line-height-normal': '1.5',
-      '--line-height-relaxed': '1.75',
-      // Letter spacing
-      '--letter-spacing-tight': '-0.025em',
-      '--letter-spacing-normal': '0',
-      '--letter-spacing-wide': '0.025em',
-      // Spacing scale
-      '--spacing-0': '0',
-      '--spacing-1': '0.25rem',
-      '--spacing-2': '0.5rem',
-      '--spacing-3': '0.75rem',
-      '--spacing-4': '1rem',
-      '--spacing-5': '1.25rem',
-      '--spacing-6': '1.5rem',
-      '--spacing-8': '2rem',
-      '--spacing-10': '2.5rem',
-      '--spacing-12': '3rem',
-      '--spacing-16': '4rem',
-      '--spacing-20': '5rem',
-      '--spacing-24': '6rem',
-      '--spacing-32': '8rem',
-      '--spacing-40': '10rem',
-      '--spacing-48': '12rem',
-      '--spacing-56': '14rem',
-      '--spacing-64': '16rem',
-      // Component-specific spacing
-      '--button-padding-x': '1rem',
-      '--button-padding-y': '0.5rem',
-      '--card-padding': '1.5rem',
-      '--input-padding-x': '0.75rem',
-      '--input-padding-y': '0.5rem',
-      // Border radius
-      '--radius-none': '0',
-      '--radius-sm': '0.125rem',
-      '--radius-default': '0.25rem',
-      '--radius-md': '0.375rem',
-      '--radius-lg': '0.5rem',
-      '--radius-xl': '0.75rem',
-      '--radius-2xl': '1rem',
-      '--radius-full': '9999px',
-      // Shadows
-      '--shadow-none': 'none',
-      '--shadow-sm': '0 1px 2px 0 rgba(0,0,0,0.05)',
-      '--shadow-default': '0 4px 6px -1px rgba(0,0,0,0.1)',
-      '--shadow-md': '0 10px 15px -3px rgba(0,0,0,0.1)',
-      '--shadow-lg': '0 20px 25px -5px rgba(0,0,0,0.1)',
-      '--shadow-xl': '0 25px 50px -12px rgba(0,0,0,0.25)',
-      // Borders
-      '--border-width-none': '0',
-      '--border-width-thin': '1px',
-      '--border-width-default': '1px',
-      '--border-width-thick': '2px',
-      // Z-index
-      '--z-index-dropdown': '1000',
-      '--z-index-sticky': '1020',
-      '--z-index-fixed': '1030',
-      '--z-index-modal-backdrop': '1040',
-      '--z-index-modal': '1050',
-      '--z-index-popover': '1060',
-      '--z-index-tooltip': '1070',
-      '--z-index-toast': '1080',
-      // Transition durations
-      '--duration-fast': '100ms',
-      '--duration-normal': '200ms',
-      '--duration-slow': '300ms',
-      // Transition timing functions
-      '--timing-ease': 'cubic-bezier(0.4, 0, 0.2, 1)',
-      '--timing-ease-in': 'cubic-bezier(0.4, 0, 1, 1)',
-      '--timing-ease-out': 'cubic-bezier(0, 0, 0.2, 1)',
-      '--timing-ease-in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
-      // Layout
-      '--sidebar-width': '18rem',
-      '--sidebar-collapsed-width': '4rem',
-      '--header-height': '4rem',
-      '--footer-height': '4rem',
-      '--content-width-sm': '40rem',
-      '--content-width-md': '48rem',
-      '--content-width-lg': '64rem',
-      '--content-width-xl': '80rem',
-      '--content-width-full': '100%',
-      '--container-padding': '2rem',
-      // Dark mode variants
-      '--primary-color-dark-mode': '#b794f4',
-      '--primary-light-dark-mode': '#d8b4fe',
-      '--primary-dark-dark-mode': '#a78bfa',
-      '--secondary-color-dark-mode': '#e879f9',
-      '--bg-light-dark-mode': '#1f2937',
-      '--text-primary-dark-mode': '#f9fafb',
-      '--text-secondary-dark-mode': '#e5e7eb',
-      '--border-color-dark-mode': '#374151'
-    };
-
-    // Start with default variables
-    var variables = _objectSpread2({}, defaultVariables);
-
-    // Apply theme variables if available
-    if (currentTheme !== null && currentTheme !== void 0 && currentTheme.styles) {
-      Object.assign(variables, currentTheme.styles);
-    }
-
-    // Apply dark mode overrides if dark mode is enabled
-    if (isDarkMode) {
-      // First, try to use theme-provided dark mode variables
-      var darkVariables = {
-        '--bg-light': variables['--bg-light-dark-mode'] || '#1f2937',
-        '--text-primary': variables['--text-primary-dark-mode'] || '#f9fafb',
-        '--text-secondary': variables['--text-secondary-dark-mode'] || '#e5e7eb',
-        '--border-color-default': variables['--border-color-dark-mode'] || '#374151',
-        '--primary-color': variables['--primary-color-dark-mode'] || '#b794f4',
-        '--primary-light': variables['--primary-light-dark-mode'] || '#d8b4fe',
-        '--primary-dark': variables['--primary-dark-dark-mode'] || '#a78bfa',
-        '--secondary-color': variables['--secondary-color-dark-mode'] || '#e879f9'
-      };
-      Object.assign(variables, darkVariables);
-    }
-    return variables;
+  // Function to merge styles with component-specific styles
+  var getStyles = function getStyles() {
+    var additionalStyles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return _objectSpread2(_objectSpread2({}, style), additionalStyles);
   };
-  return /*#__PURE__*/React__default["default"].createElement(ThemeContext$1.Provider, {
-    value: {
-      theme: currentTheme,
-      darkMode: isDarkMode,
-      setTheme: setCurrentTheme,
-      toggleDarkMode: toggleDarkMode
-    }
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: isDarkMode ? 'dark-mode' : '',
-    style: getThemeVariables()
-  }, children));
-};
-var ThemeProvider$1 = ThemeProvider;
+  return {
+    style: style,
+    className: className,
+    getClassName: getClassName,
+    getStyles: getStyles,
+    // Return additional style objects if defined
+    hoverStyles: (componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.hoverStyles) || {},
+    focusStyles: (componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.focusStyles) || {},
+    variants: (componentStyles === null || componentStyles === void 0 ? void 0 : componentStyles.variants) || {}
+  };
+}
 
 exports.Accordion = Accordion$1;
 exports.Alert = Alert$1;
@@ -43064,6 +43258,7 @@ exports.Tooltip = Tooltip$2;
 exports.TwoColumnLayout = TwoColumnLayout$1;
 exports.cn = cn;
 exports.useClickOutside = useClickOutside;
+exports.useComponentStyles = useComponentStyles;
 exports.useFocusTrap = useFocusTrap;
 exports.useTheme = useTheme;
 exports.useToast = useToast;
