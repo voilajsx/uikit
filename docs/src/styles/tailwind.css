@@ -1,0 +1,99 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  :root {
+    --header-height: 4rem;
+    --sidebar-width: 18rem;
+    --content-width: 65ch;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 1rem);
+  }
+
+  /* Focus outline styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+  }
+
+  /* Code element styling */
+  pre, code {
+    @apply font-mono;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-gray-900;
+  }
+
+  /* Anchor links */
+  a {
+    @apply text-primary-600 transition-colors hover:text-primary-700;
+  }
+}
+
+@layer components {
+  /* Main content area */
+  .docs-content {
+    @apply py-8 px-4;
+    max-width: calc(100% - var(--sidebar-width));
+  }
+
+  /* Code blocks */
+  .code-block {
+    @apply relative rounded-lg bg-gray-800 text-gray-200 overflow-hidden;
+  }
+
+  /* Component preview area */
+  .component-preview {
+    @apply p-6 border border-gray-200 rounded-t-lg bg-white;
+  }
+
+  /* Component code area */
+  .component-code {
+    @apply rounded-b-lg border-t-0 border border-gray-200;
+  }
+
+  /* Navigation link styles */
+  .nav-link {
+    @apply block px-3 py-2 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-md transition-colors;
+  }
+
+  .nav-link.active {
+    @apply font-medium text-primary-600 bg-primary-50;
+  }
+
+  /* Props table */
+  .props-table {
+    @apply w-full text-left border-collapse;
+  }
+
+  .props-table th {
+    @apply py-3 px-4 bg-gray-50 font-medium text-sm uppercase text-gray-700 border-b border-gray-200;
+  }
+
+  .props-table td {
+    @apply py-3 px-4 border-b border-gray-200;
+  }
+
+  /* Tab navigation */
+  .tab-nav {
+    @apply flex border-b border-gray-200;
+  }
+
+  .tab-nav-item {
+    @apply py-2 px-4 font-medium text-sm text-gray-600 border-b-2 border-transparent;
+  }
+
+  .tab-nav-item.active {
+    @apply text-primary-600 border-primary-600;
+  }
+
+  /* Copy button */
+  .copy-button {
+    @apply absolute top-2 right-2 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700;
+  }
+}

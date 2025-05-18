@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Page Not Found | VoilaJSX UIKit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    // Single Page Apps for GitHub Pages
+    // MIT License
+    // https://github.com/rafgraph/spa-github-pages
+    // This script takes the current URL and converts the path and query
+    // string into just a query string, and then redirects the browser
+    // to the new URL with only a query string and hash fragment,
+    // e.g. https://www.foo.tld/one/two?a=b&c=d#qwe, becomes
+    // https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
+    // Note: This 404.html file must be at least 512 bytes for it to work
+    // with Internet Explorer (it is currently > 512 bytes)
+
+    // If you're creating a Project Pages site and NOT using a custom domain,
+    // then set pathSegmentsToKeep to 1 (enterprise users may need to set it to > 1).
+    // This way the code will only replace the route part of the path, and not
+    // the real directory in which the app resides, for example:
+    // https://username.github.io/repo-name/one/two?a=b&c=d#qwe becomes
+    // https://username.github.io/repo-name/?/one/two&a=b~and~c=d#qwe
+    // Otherwise, leave pathSegmentsToKeep as 0.
+    var pathSegmentsToKeep = 1;
+
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
+  </script>
+</head>
+<body>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #333;
+      background-color: #f9fafb;
+    }
+    
+    .container {
+      max-width: 600px;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      color: #db2777;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      margin-bottom: 2rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .redirect-text {
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+  </style>
+
+  <div class="container">
+    <div class="logo">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 5.5C4 4.67157 4.67157 4 5.5 4H18.5C19.3284 4 20 4.67157 20 5.5V18.5C20 19.3284 19.3284 20 18.5 20H5.5C4.67157 20 4 19.3284 4 18.5V5.5Z" fill="#db2777"/>
+        <path d="M8 9C8 8.44772 8.44772 8 9 8H15C15.5523 8 16 8.44772 16 9V15C16 15.5523 15.5523 16 15 16H9C8.44772 16 8 15.5523 8 15V9Z" fill="white"/>
+      </svg>
+    </div>
+    <h1>Page Not Found</h1>
+    <p>We're redirecting you to the homepage. If you're not redirected automatically, please click the link below.</p>
+    <a href="/" style="color: #db2777; font-weight: 500; text-decoration: none;">Go to Homepage</a>
+    <p class="redirect-text">Redirecting...</p>
+  </div>
+</body>
+</html>

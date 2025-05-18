@@ -1,0 +1,213 @@
+/**
+ * Custom styles for VoilaJSX UIKit documentation
+ */
+
+/* Document styles */
+html.dark {
+    color-scheme: dark;
+  }
+  
+  body.dark {
+    @apply bg-gray-900 text-gray-100;
+  }
+  
+  /* Dark mode styles */
+  .dark .dark\:bg-gray-800 {
+    @apply bg-gray-800;
+  }
+  
+  .dark .dark\:text-white {
+    @apply text-white;
+  }
+  
+  .dark .dark\:border-gray-700 {
+    @apply border-gray-700;
+  }
+  
+  /* Code syntax highlighting */
+  .token.tag,
+  .token.class-name,
+  .token.selector,
+  .token.selector .class,
+  .token.selector.class,
+  .token.function {
+    @apply text-pink-400;
+  }
+  
+  .token.attr-name,
+  .token.keyword,
+  .token.rule,
+  .token.pseudo-class,
+  .token.important {
+    @apply text-purple-400;
+  }
+  
+  .token.attr-value,
+  .token.class,
+  .token.string,
+  .token.property {
+    @apply text-sky-300;
+  }
+  
+  .token.punctuation,
+  .token.attr-equals {
+    @apply text-gray-500;
+  }
+  
+  .token.comment {
+    @apply text-gray-400 italic;
+  }
+  
+  .token.operator,
+  .token.variable,
+  .token.module {
+    @apply text-gray-200;
+  }
+  
+  .token.number {
+    @apply text-orange-300;
+  }
+  
+  /* Code block line highlighting */
+  .highlight-line {
+    @apply bg-white bg-opacity-10;
+  }
+  
+  /* Code block scrollbar */
+  .code-block pre::-webkit-scrollbar {
+    @apply h-2 w-2;
+  }
+  
+  .code-block pre::-webkit-scrollbar-track {
+    @apply bg-gray-700;
+  }
+  
+  .code-block pre::-webkit-scrollbar-thumb {
+    @apply bg-gray-500 rounded-full;
+  }
+  
+  /* Sidebar transition */
+  .sidebar-enter {
+    @apply opacity-0 -translate-x-full;
+  }
+  .sidebar-enter-active {
+    @apply opacity-100 translate-x-0 transition-all duration-300;
+  }
+  .sidebar-exit {
+    @apply opacity-100 translate-x-0;
+  }
+  .sidebar-exit-active {
+    @apply opacity-0 -translate-x-full transition-all duration-300;
+  }
+  
+  /* Header transition on scroll */
+  .header-scroll {
+    @apply shadow-md bg-white/90 backdrop-blur-sm;
+  }
+  
+  .dark .header-scroll {
+    @apply bg-gray-900/90;
+  }
+  
+  /* Component preview */
+  .dark .component-preview {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .component-preview-grid {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  }
+  
+  .dark .component-preview-grid {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+  
+  /* Props table */
+  .dark .props-table th {
+    @apply bg-gray-800 text-gray-200 border-gray-700;
+  }
+  
+  .dark .props-table td {
+    @apply border-gray-700;
+  }
+  
+  /* Animation for code copy button feedback */
+  @keyframes copy-success {
+    0% { @apply opacity-0 scale-50; }
+    10% { @apply opacity-100 scale-100; }
+    20% { @apply opacity-100 scale-100; }
+    30% { @apply opacity-0 scale-100; }
+    100% { @apply opacity-0; }
+  }
+  
+  .copy-success {
+    animation: copy-success 2s ease-in-out;
+  }
+  
+  /* Table of contents */
+  .table-of-contents {
+    @apply text-sm;
+  }
+  
+  .table-of-contents ul {
+    @apply pl-4 mt-1 space-y-2;
+  }
+  
+  .table-of-contents a {
+    @apply text-gray-600 hover:text-primary-600 transition-colors;
+  }
+  
+  .table-of-contents a.active {
+    @apply text-primary-600 font-medium;
+  }
+  
+  .dark .table-of-contents a {
+    @apply text-gray-400 hover:text-primary-400;
+  }
+  
+  .dark .table-of-contents a.active {
+    @apply text-primary-400;
+  }
+  
+  /* Responsive breakpoint indicator (dev only) */
+  .breakpoint-indicator {
+    @apply fixed bottom-1 right-1 z-50 p-1 rounded text-xs font-mono text-white;
+    background-color: #ff00ff;
+  }
+  
+  .breakpoint-indicator::before {
+    content: 'xs';
+  }
+  
+  @screen sm {
+    .breakpoint-indicator::before {
+      content: 'sm';
+    }
+  }
+  
+  @screen md {
+    .breakpoint-indicator::before {
+      content: 'md';
+    }
+  }
+  
+  @screen lg {
+    .breakpoint-indicator::before {
+      content: 'lg';
+    }
+  }
+  
+  @screen xl {
+    .breakpoint-indicator::before {
+      content: 'xl';
+    }
+  }
+  
+  @screen 2xl {
+    .breakpoint-indicator::before {
+      content: '2xl';
+    }
+  }

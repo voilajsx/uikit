@@ -1,18 +1,19 @@
 /**
  * Alert Component
  * 
- * A component to display important messages to the user, such as success notifications,
- * warnings, or error messages. Supports different visual styles, optional title,
- * custom icons, and a close button.
+ * Displays important messages to the user, such as success notifications, 
+ * warnings, or error messages. The Alert component is designed to deliver
+ * visual feedback about system events or user actions.
  * 
  * @module components/feedback/Alert
  */
 
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { cn } from '../../utils/cn';
+import { useTheme } from '../../ThemeProvider';
 
 /**
- * Variant-specific styling and icons
+ * Variant styling map for different alert types
  */
 const variantMap = {
   success: {
@@ -35,10 +36,10 @@ const variantMap = {
       </svg>
     ),
   },
-  error: {
-    bg: 'bg-[var(--error-color)] bg-opacity-10',
-    border: 'border-[var(--error-color)] border-opacity-30',
-    text: 'text-[var(--error-color)]',
+  danger: {
+    bg: 'bg-[var(--danger-color)] bg-opacity-10',
+    border: 'border-[var(--danger-color)] border-opacity-30',
+    text: 'text-[var(--danger-color)]',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -58,67 +59,114 @@ const variantMap = {
 };
 
 /**
- * Alert component for displaying status messages, warnings, and other notifications.
+ * Helper function to get component styles from theme
+ */
+const getComponentStyles = (theme, componentName, variant = null) => {
+  if (!theme?.components) return null;
+  
+  // Get base component styles
+  const componentStyles = theme.components[componentName] || null;
+  if (!componentStyles) return null;
+  
+  // If variant is provided and variant styles exist, merge with base styles
+  if (variant && componentStyles.variants && componentStyles.variants[variant]) {
+    return {
+      ...componentStyles,
+      style: {
+        ...(componentStyles.style || {}),
+        ...(componentStyles.variants[variant].style || {})
+      },
+      className: cn(
+        componentStyles.className || '',
+        componentStyles.variants[variant].className || ''
+      )
+    };
+  }
+  
+  return componentStyles;
+};
+
+/**
+ * Alert component for displaying important messages with various states
  * 
- * @param {'success'|'warning'|'error'|'info'} variant - Visual style variant
+ * @param {'success'|'warning'|'danger'|'info'} variant - The visual style and meaning of the alert
  * @param {string} title - Optional title for the alert
- * @param {React.ReactNode} icon - Optional custom icon to display
- * @param {boolean} closable - Whether the alert can be closed
- * @param {Function} onClose - Callback function when close button is clicked
- * @param {string} className - Additional CSS classes to apply
- * @param {React.ReactNode} children - Alert content
- * @param {Object} props - Additional props to pass to the container
+ * @param {React.ReactNode} icon - Custom icon to replace the default variant icon
+ * @param {boolean} closable - Whether the alert can be dismissed
+ * @param {Function} onClose - Callback function when the alert is closed
+ * @param {string} className - Additional CSS classes
+ * @param {Object} style - Additional inline styles
+ * @param {React.ReactNode} children - The alert message content
  * @returns {JSX.Element} Alert component
  */
-const Alert = ({
+const Alert = forwardRef(({
   variant = 'info',
   title,
   icon = null,
   closable = false,
   onClose,
   className,
+  style,
   children,
   ...props
-}) => {
-  // Get variant-specific styling
+}, ref) => {
+  // Get theme from context
+  const { theme } = useTheme() || {};
+  
+  // Get component styles from theme, including variant-specific styles if available
+  const componentStyles = getComponentStyles(theme, 'Alert', variant);
+  
+  // Get the variant style
   const variantStyle = variantMap[variant];
   
-  // Use custom icon if provided, otherwise use the default for the variant
+  // Use provided icon or default from variant
   const customIcon = icon !== null ? icon : variantStyle.icon;
 
   return (
-    <div
+          <div
+      ref={ref}
       role="alert"
       className={cn(
+        // Base styles
         'rounded-[var(--radius-lg)] p-4 border',
         variantStyle.bg,
         variantStyle.border,
+        
+        // Theme classes
+        componentStyles?.className,
+        
+        // Custom className (highest priority)
         className
       )}
+      // Merge theme styles with inline styles
+      style={{
+        ...componentStyles?.style,
+        ...style
+      }}
+      aria-live="polite"
       {...props}
     >
       <div className="flex">
-        {/* Icon section */}
+        {/* Icon */}
         {customIcon && (
           <div className={cn('flex-shrink-0 mr-3', variantStyle.text)}>
             {customIcon}
           </div>
         )}
         
-        {/* Content section */}
+        {/* Content */}
         <div className="flex-1">
-          {/* Title if provided */}
+          {/* Title (optional) */}
           {title && (
             <h3 className={cn('font-medium mb-1', variantStyle.text)}>
               {title}
             </h3>
           )}
-          
-          {/* Main content */}
+          {/* Alert message */}
           <div className="text-[var(--text-primary)]">{children}</div>
         </div>
         
-        {/* Close button if closable and onClose provided */}
+        {/* Close button (optional) */}
         {closable && onClose && (
           <button
             type="button"
@@ -150,7 +198,7 @@ const Alert = ({
       </div>
     </div>
   );
-};
+});
 
 // Set display name for React DevTools
 Alert.displayName = 'Alert';

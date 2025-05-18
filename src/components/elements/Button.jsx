@@ -4,7 +4,6 @@
  * A versatile button component that serves as a primary call-to-action element.
  * Supports various styles, sizes, states, and icon placements to accommodate
  * different UI requirements across the application.
- * Enhanced with theme customization support.
  * 
  * @module components/elements/Button
  */
@@ -22,18 +21,19 @@ const sizeMap = {
   md: 'text-base px-4 py-2',
   lg: 'text-lg px-5 py-2.5',
   xl: 'text-xl px-6 py-3',
+  '2xl': 'text-2xl px-8 py-4',
 };
 
 /**
  * Style variants for the button
  */
 const variantMap = {
-  primary: 'bg-[var(--primary-color)] text-white hover:bg-opacity-90 focus-visible:ring-[var(--primary-color)]',
-  secondary: 'bg-[var(--secondary-color)] text-white hover:bg-opacity-90 focus-visible:ring-[var(--secondary-color)]',
+  primary: 'bg-[var(--primary-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--primary-color)]',
+  secondary: 'bg-[var(--secondary-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--secondary-color)]',
   outline: 'border border-[var(--primary-color)] text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-color)] hover:bg-opacity-10 focus-visible:ring-[var(--primary-color)]',
   ghost: 'text-[var(--primary-color)] bg-transparent hover:bg-[var(--primary-color)] hover:bg-opacity-10 focus-visible:ring-[var(--primary-color)]',
-  link: 'text-[var(--primary-color)] underline bg-transparent p-0 hover:text-[var(--primary-dark)] focus-visible:ring-[var(--primary-color)]',
-  danger: 'bg-[var(--error-color)] text-white hover:bg-opacity-90 focus-visible:ring-[var(--error-color)]',
+  link: 'text-[var(--primary-color)] underline bg-transparent p-0 hover:opacity-80 focus-visible:ring-[var(--primary-color)]',
+  danger: 'bg-[var(--danger-color)] text-[var(--light-color)] hover:bg-opacity-90 focus-visible:ring-[var(--danger-color)]',
 };
 
 /**
@@ -68,7 +68,7 @@ const getComponentStyles = (theme, componentName, variant = null) => {
  * Button component for user interactions.
  * 
  * @param {'primary'|'secondary'|'outline'|'ghost'|'link'|'danger'} variant - Visual style variant
- * @param {'xs'|'sm'|'md'|'lg'|'xl'} size - Size of the button
+ * @param {'xs'|'sm'|'md'|'lg'|'xl'|'2xl'} size - Size of the button
  * @param {'button'|'submit'|'reset'} type - HTML button type
  * @param {boolean} disabled - Whether the button is disabled
  * @param {boolean} fullWidth - Whether the button should take full width
@@ -79,7 +79,6 @@ const getComponentStyles = (theme, componentName, variant = null) => {
  * @param {string} className - Additional CSS classes to apply
  * @param {Object} style - Additional inline styles
  * @param {React.ReactNode} children - Button content
- * @param {Object} props - Additional props to pass to the button element
  * @returns {JSX.Element} Button component
  */
 const Button = forwardRef(({
@@ -111,7 +110,7 @@ const Button = forwardRef(({
       className={cn(
         // Base styles
         'inline-flex items-center justify-center font-medium rounded-[var(--radius-default)]',
-        'transition duration-[var(--duration-normal)] ease-[var(--timing-ease)]',
+        'transition-all duration-[var(--duration-normal)] ease-[var(--timing-ease)]',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
         
         // Size and variant
@@ -133,6 +132,7 @@ const Button = forwardRef(({
         ...componentStyles?.style,
         ...style
       }}
+      aria-disabled={disabled || isLoading}
       {...props}
     >
       {/* Loading spinner */}
