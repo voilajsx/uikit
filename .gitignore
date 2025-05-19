@@ -1,0 +1,69 @@
+# Dependencies
+node_modules
+docs/node_modules
+package-lock.json
+yarn.lock
+
+# Build output
+build
+lib
+.rollup.cache
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs
+*.log
+lerna-debug.log*
+
+# Testing
+coverage
+.nyc_output
+.jest-cache
+
+# Operating system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Temp files
+tmp
+temp
+.temp
+*.tmp
+*.bak
+*.swp
+
+# Misc
+.cache
+.parcel-cache
+storybook-static
+.storybook-out
+public/storybook
