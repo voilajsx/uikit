@@ -6,6 +6,7 @@ import { resolve } from 'path';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: '/uikit/',
   resolve: {
     alias: {
       '@dist': resolve(__dirname, '../dist'),
