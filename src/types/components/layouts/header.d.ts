@@ -1,0 +1,7 @@
+import { HTMLAttributes } from 'react'
+
+export interface HeaderProps extends HTMLAttributes<HTMLElement> {}
+
+export declare const Header: React.ForwardRefExoticComponent<
+  HeaderProps & React.RefAttributes<HTMLElement>
+>

@@ -1,159 +1,302 @@
 # @voilajsx/uikit
 
-Cross-platform React components with themes. Built with Tailwind CSS v4 and compatible with v0.dev.
+A cross-platform React component library with beautiful themes and OKLCH color science.
 
-## Installation
+[![npm version](https://badge.fury.io/js/@voilajsx%2Fuikit.svg)](https://www.npmjs.com/package/@voilajsx/uikit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## ✨ Features
+
+- 🌐 **Cross-Platform** - Works seamlessly on Web, React Native, Tauri, and Expo
+- 🎨 **OKLCH Color Science** - Future-proof colors with better perceptual uniformity
+- 🔄 **shadcn/ui Compatible** - Zero learning curve, familiar API and patterns
+- 🎯 **Direct Imports** - Perfect tree-shaking with `@voilajsx/uikit/button`
+- 🌙 **Built-in Theming** - Beautiful presets with light/dark mode support
+- ⚡ **Modern Tooling** - Vite + Tailwind CSS v4 + TypeScript ready
+
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
 npm install @voilajsx/uikit
 ```
 
-## Quick Start
+### Basic Usage
 
 ```jsx
-import { Button, Card, CardContent } from '@voilajsx/uikit';
-import { ThemeProvider } from '@voilajsx/uikit';
+import { Button } from '@voilajsx/uikit/button';
+import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
 import '@voilajsx/uikit/styles';
 
 function App() {
   return (
-    <ThemeProvider>
-      <Card>
-        <CardContent>
-          <Button>Click me</Button>
-        </CardContent>
-      </Card>
+    <ThemeProvider theme="ocean" variant="light">
+      <Button variant="default" size="lg">
+        Get Started
+      </Button>
     </ThemeProvider>
   );
 }
 ```
 
-## Features
+## 🎨 Built-in Themes
 
-- **Zero configuration** - Works immediately after installation
-- **v0.dev compatible** - Copy-paste works without changes
-- **Cross-platform** - Same code works on web/desktop/mobile
-- **Ultra-minimal** - Only essential components included
-- **Simple imports** - Clear, predictable import structure
-- **Flexible themes** - Multiple built-in themes with light/dark variants
-
-## Theme System
-
-@voilajsx/uikit includes a powerful theme system with:
-
-- Multiple built-in themes (Default, Ocean, Sunset)
-- Light and dark variants for each theme
-- System preference detection
-- Simple theme switching API
-- Custom theme support
-
-### Basic Theme Usage
+Choose from beautiful, professionally designed themes:
 
 ```jsx
-import { ThemeProvider, useTheme } from '@voilajsx/uikit';
+<ThemeProvider theme="default">   {/* Classic shadcn theme */}
+<ThemeProvider theme="ocean">     {/* Deep blue ocean vibes */}
+<ThemeProvider theme="forest">    {/* Natural green tones */}
+<ThemeProvider theme="sunset">    {/* Warm orange/pink gradients */}
+```
 
-// Inside your component
-function ThemeSwitcher() {
-  const { theme, variant, setTheme, setVariant, toggleVariant } = useTheme();
+### Theme Switching
+
+```jsx
+import { useTheme } from '@voilajsx/uikit/theme-provider';
+
+function ThemeSelector() {
+  const { theme, variant, setTheme, toggleVariant } = useTheme();
 
   return (
     <div>
-      <button onClick={() => setTheme('ocean')}>Ocean Theme</button>
-      <button onClick={toggleVariant}>
-        {variant === 'dark' ? 'Light Mode' : 'Dark Mode'}
-      </button>
+      <Button onClick={() => setTheme('ocean')}>Ocean Theme</Button>
+      <Button onClick={toggleVariant}>
+        {variant === 'light' ? '🌙' : '☀️'}
+      </Button>
     </div>
   );
 }
+```
 
-// In your app
-function App() {
+## 📦 Available Components
+
+### Core Components
+
+```jsx
+import { Button } from '@voilajsx/uikit/button';
+import { Input } from '@voilajsx/uikit/input';
+import { Badge } from '@voilajsx/uikit/badge';
+import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
+```
+
+### Form Components
+
+```jsx
+import { Checkbox } from '@voilajsx/uikit/checkbox';
+import { Switch } from '@voilajsx/uikit/switch';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from '@voilajsx/uikit/select';
+import { Slider } from '@voilajsx/uikit/slider';
+import { Textarea } from '@voilajsx/uikit/textarea';
+```
+
+### Layout Components
+
+```jsx
+import { Container } from '@voilajsx/uikit/container';
+import { Header } from '@voilajsx/uikit/header';
+import { Footer } from '@voilajsx/uikit/footer';
+import { Sidebar } from '@voilajsx/uikit/sidebar';
+```
+
+### Navigation & Overlays
+
+```jsx
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@voilajsx/uikit/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@voilajsx/uikit/tabs';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@voilajsx/uikit/accordion';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@voilajsx/uikit/sheet';
+```
+
+[See all components →](https://voilajsx.github.io/uikit)
+
+## 🎯 Cross-Platform Usage
+
+### Web (React)
+
+```jsx
+import { Button } from '@voilajsx/uikit/button';
+// Works with standard DOM
+```
+
+### React Native / Expo
+
+```jsx
+import { Button } from '@voilajsx/uikit/button';
+import { useAdapter } from '@voilajsx/uikit/adapters/hooks';
+
+// Automatically adapts to native components
+```
+
+### Tauri (Desktop)
+
+```jsx
+import { Button } from '@voilajsx/uikit/button';
+// Works in Tauri webview with desktop styling
+```
+
+## 🛠️ Custom Themes
+
+Create your own themes with OKLCH colors:
+
+```jsx
+const customTheme = {
+  name: 'Corporate',
+  id: 'corporate',
+  light: {
+    background: 'oklch(1 0 0)',
+    foreground: 'oklch(0.2 0.02 250)',
+    primary: 'oklch(0.5 0.2 250)',
+    primaryForeground: 'oklch(1 0 0)',
+    // ... other colors
+  },
+  dark: {
+    background: 'oklch(0.1 0.02 250)',
+    foreground: 'oklch(0.98 0.02 250)',
+    primary: 'oklch(0.6 0.25 250)',
+    primaryForeground: 'oklch(0.1 0.02 250)',
+    // ... other colors
+  }
+}
+
+<ThemeProvider theme={customTheme}>
+  <App />
+</ThemeProvider>
+```
+
+## 🔧 Advanced Usage
+
+### With Forms
+
+```jsx
+import { useForm } from 'react-hook-form';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+} from '@voilajsx/uikit/form';
+import { Input } from '@voilajsx/uikit/input';
+import { Button } from '@voilajsx/uikit/button';
+
+function ContactForm() {
+  const form = useForm();
+
   return (
-    <ThemeProvider
-      defaultTheme="default"
-      defaultVariant="light"
-      detectSystem={true}
-    >
-      <YourApp />
-    </ThemeProvider>
+    <Form {...form}>
+      <FormField
+        control={form.control}
+        name="email"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input placeholder="Enter your email" {...field} />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
   );
 }
 ```
 
-### Custom Themes
+### With Tailwind CSS v4
 
-You can easily create and register custom themes:
+If using Tailwind CSS v4 in your project, add our components to your CSS:
 
-```jsx
-import { themeRegistry } from '@voilajsx/uikit';
+```css
+@import 'tailwindcss';
+@source "../node_modules/@voilajsx/uikit/src";
 
-// Define your custom theme
-const customTheme = {
-  name: 'Custom Theme',
-
-  light: {
-    // Light variant variables
-    background: '0 0% 100%',
-    foreground: '222.2 84% 4.9%',
-    // ... other variables
-  },
-
-  dark: {
-    // Dark variant variables
-    background: '222.2 84% 4.9%',
-    foreground: '210 40% 98%',
-    // ... other variables
-  },
-};
-
-// Register your theme
-themeRegistry.register('custom', customTheme);
+@theme {
+  /* Your custom theme variables */
+}
 ```
 
-See the [Theme Guide](./THEME_GUIDE.md) for more details on creating custom themes.
+## 🎨 Why OKLCH Colors?
 
-## Components
+OKLCH provides superior color science compared to HSL/RGB:
 
-### Core UI Components
+- **Perceptual uniformity** - Colors look consistent across devices
+- **Better gradients** - Smoother color transitions
+- **Future-proof** - Part of CSS Color Module Level 4
+- **Accessibility** - More predictable contrast ratios
 
-- Button
-- Card
-- Input
-- Badge
-- Avatar
-- Select (coming soon)
-- Table (coming soon)
-- Dialog (coming soon)
+## 📱 Platform Support
 
-### Layout Components
+| Platform         | Status          | Notes                         |
+| ---------------- | --------------- | ----------------------------- |
+| **Web**          | ✅ Full Support | Chrome, Firefox, Safari, Edge |
+| **React Native** | ✅ Full Support | iOS, Android via adapters     |
+| **Expo**         | ✅ Full Support | Universal apps                |
+| **Tauri**        | ✅ Full Support | Desktop apps                  |
+| **Next.js**      | ✅ Full Support | SSR compatible                |
+| **Vite**         | ✅ Full Support | Optimized builds              |
 
-- Container
-- Header (coming soon)
-- Footer (coming soon)
-- Sidebar (coming soon)
+## 🤝 Contributing
 
-### Templates
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-- Default Template (coming soon)
-- Auth Template (coming soon)
-- Form Template (coming soon)
-- Table Template (coming soon)
-- Blank Template (coming soon)
-
-## Development
-
-To run the development server:
+### Development Setup
 
 ```bash
+# Clone repository
+git clone https://github.com/voilajsx/uikit.git
+cd uikit
+
+# Install dependencies
+npm install
+
+# Start development
+npm run dev
+
+# Build library
+npm run build
+
+# Run documentation site
+cd docs
+npm install
 npm run dev
 ```
 
-To build the library:
+## 📄 License
 
-```bash
-npm run build
-```
+MIT © [VoilaJSX](https://github.com/voilajsx)
 
-## License
+## 🔗 Links
 
-MIT
+- 📚 [Documentation](https://voilajsx.github.io/uikit)
+- 🎮 [Interactive Examples](https://voilajsx.github.io/uikit)
+- 🐛 [Report Issues](https://github.com/voilajsx/uikit/issues)
+- 💬 [Discussions](https://github.com/voilajsx/uikit/discussions)
+- 📦 [NPM Package](https://www.npmjs.com/package/@voilajsx/uikit)
+
+---
+
+<div align="center">
+  <strong>Built with ❤️ for the React ecosystem</strong>
+</div>
