@@ -1,15 +1,15 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx, jsxs } from "react/jsx-runtime";
 import { forwardRef } from "react";
-import * as SheetPrimitive from "@radix-ui/react-dialog";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cva } from "class-variance-authority";
 import { X } from "lucide-react";
 import { cn } from "../../lib/utils.js";
-const Sheet = SheetPrimitive.Root;
-const SheetTrigger = SheetPrimitive.Trigger;
-const SheetClose = SheetPrimitive.Close;
-const SheetPortal = SheetPrimitive.Portal;
-const SheetOverlay = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-  SheetPrimitive.Overlay,
+const Sheet = DialogPrimitive.Root;
+const SheetTrigger = DialogPrimitive.Trigger;
+const SheetClose = DialogPrimitive.Close;
+const SheetPortal = DialogPrimitive.Portal;
+const SheetOverlay = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
+  DialogPrimitive.Overlay,
   {
     className: cn(
       "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -19,7 +19,7 @@ const SheetOverlay = forwardRef(({ className, ...props }, ref) => /* @__PURE__ *
     ref
   }
 ));
-SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
+SheetOverlay.displayName = DialogPrimitive.Overlay.displayName;
 const sheetVariants = cva(
   "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
@@ -36,26 +36,26 @@ const sheetVariants = cva(
     }
   }
 );
-const SheetContent = forwardRef(({ side = "right", className, children, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsxs(SheetPortal, { children: [
-  /* @__PURE__ */ jsxRuntimeExports.jsx(SheetOverlay, {}),
-  /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    SheetPrimitive.Content,
+const SheetContent = forwardRef(({ side = "right", className, children, ...props }, ref) => /* @__PURE__ */ jsxs(SheetPortal, { children: [
+  /* @__PURE__ */ jsx(SheetOverlay, {}),
+  /* @__PURE__ */ jsxs(
+    DialogPrimitive.Content,
     {
       ref,
       className: cn(sheetVariants({ side }), className),
       ...props,
       children: [
         children,
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(SheetPrimitive.Close, { className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "sr-only", children: "Close" })
+        /* @__PURE__ */ jsxs(DialogPrimitive.Close, { className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary", children: [
+          /* @__PURE__ */ jsx(X, { className: "h-4 w-4" }),
+          /* @__PURE__ */ jsx("span", { className: "sr-only", children: "Close" })
         ] })
       ]
     }
   )
 ] }));
-SheetContent.displayName = SheetPrimitive.Content.displayName;
-const SheetHeader = ({ className, ...props }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+SheetContent.displayName = DialogPrimitive.Content.displayName;
+const SheetHeader = ({ className, ...props }) => /* @__PURE__ */ jsx(
   "div",
   {
     className: cn(
@@ -66,7 +66,7 @@ const SheetHeader = ({ className, ...props }) => /* @__PURE__ */ jsxRuntimeExpor
   }
 );
 SheetHeader.displayName = "SheetHeader";
-const SheetFooter = ({ className, ...props }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const SheetFooter = ({ className, ...props }) => /* @__PURE__ */ jsx(
   "div",
   {
     className: cn(
@@ -77,24 +77,24 @@ const SheetFooter = ({ className, ...props }) => /* @__PURE__ */ jsxRuntimeExpor
   }
 );
 SheetFooter.displayName = "SheetFooter";
-const SheetTitle = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-  SheetPrimitive.Title,
+const SheetTitle = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
+  DialogPrimitive.Title,
   {
     ref,
     className: cn("text-lg font-semibold text-foreground", className),
     ...props
   }
 ));
-SheetTitle.displayName = SheetPrimitive.Title.displayName;
-const SheetDescription = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-  SheetPrimitive.Description,
+SheetTitle.displayName = DialogPrimitive.Title.displayName;
+const SheetDescription = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
+  DialogPrimitive.Description,
   {
     ref,
     className: cn("text-sm text-muted-foreground", className),
     ...props
   }
 ));
-SheetDescription.displayName = SheetPrimitive.Description.displayName;
+SheetDescription.displayName = DialogPrimitive.Description.displayName;
 export {
   Sheet,
   SheetClose,

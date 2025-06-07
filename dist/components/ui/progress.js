@@ -1,8 +1,8 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { cn } from "../../lib/utils.js";
-const Progress = forwardRef(({ className, value, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const Progress = forwardRef(({ className, value, ...props }, ref) => /* @__PURE__ */ jsx(
   ProgressPrimitive.Root,
   {
     ref,
@@ -11,7 +11,7 @@ const Progress = forwardRef(({ className, value, ...props }, ref) => /* @__PURE_
       className
     ),
     ...props,
-    children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    children: /* @__PURE__ */ jsx(
       ProgressPrimitive.Indicator,
       {
         className: "h-full w-full flex-1 bg-primary transition-all",

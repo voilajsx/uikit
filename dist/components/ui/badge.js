@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { cva } from "class-variance-authority";
 import { cn } from "../../lib/utils.js";
 const badgeVariants = cva(
@@ -18,7 +18,7 @@ const badgeVariants = cva(
   }
 );
 function Badge({ className, variant, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: cn(badgeVariants({ variant }), className), ...props });
+  return /* @__PURE__ */ jsx("div", { className: cn(badgeVariants({ variant }), className), ...props });
 }
 export {
   Badge,

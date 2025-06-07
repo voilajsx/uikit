@@ -1,8 +1,8 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { cn } from "../../lib/utils.js";
-const Switch = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const Switch = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   SwitchPrimitives.Root,
   {
     className: cn(
@@ -11,7 +11,7 @@ const Switch = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxR
     ),
     ...props,
     ref,
-    children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    children: /* @__PURE__ */ jsx(
       SwitchPrimitives.Thumb,
       {
         className: cn(

@@ -1,9 +1,9 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cn } from "../../lib/utils.js";
 const Tabs = TabsPrimitive.Root;
-const TabsList = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TabsList = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   TabsPrimitive.List,
   {
     ref,
@@ -15,7 +15,7 @@ const TabsList = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ js
   }
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
-const TabsTrigger = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TabsTrigger = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   TabsPrimitive.Trigger,
   {
     ref,
@@ -27,7 +27,7 @@ const TabsTrigger = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */
   }
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
-const TabsContent = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TabsContent = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   TabsPrimitive.Content,
   {
     ref,

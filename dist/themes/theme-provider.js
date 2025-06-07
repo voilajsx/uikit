@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports } from "../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { createContext, useState, useEffect, useContext } from "react";
 const AVAILABLE_THEMES = [
   { id: "default", name: "Default" },
@@ -103,7 +103,7 @@ function ThemeProvider({
       }));
     }
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeContext.Provider, { value: contextValue, children });
+  return /* @__PURE__ */ jsx(ThemeContext.Provider, { value: contextValue, children });
 }
 function useTheme() {
   const context = useContext(ThemeContext);

@@ -1,8 +1,8 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx, jsxs } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import { Check, Circle, ChevronRight } from "lucide-react";
 import { cn } from "../../lib/utils.js";
-const Menubar = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const Menubar = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,
@@ -14,9 +14,9 @@ const Menubar = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx
   }
 ));
 Menubar.displayName = "Menubar";
-const MenubarMenu = ({ children, ...props }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative", ...props, children });
+const MenubarMenu = ({ children, ...props }) => /* @__PURE__ */ jsx("div", { className: "relative", ...props, children });
 MenubarMenu.displayName = "MenubarMenu";
-const MenubarTrigger = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const MenubarTrigger = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "button",
   {
     ref,
@@ -34,7 +34,7 @@ const MenubarContent = forwardRef(({
   alignOffset = -4,
   sideOffset = 8,
   ...props
-}, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+}, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,
@@ -46,7 +46,7 @@ const MenubarContent = forwardRef(({
   }
 ));
 MenubarContent.displayName = "MenubarContent";
-const MenubarItem = forwardRef(({ className, inset, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const MenubarItem = forwardRef(({ className, inset, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,
@@ -59,7 +59,7 @@ const MenubarItem = forwardRef(({ className, inset, ...props }, ref) => /* @__PU
   }
 ));
 MenubarItem.displayName = "MenubarItem";
-const MenubarCheckboxItem = forwardRef(({ className, children, checked, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+const MenubarCheckboxItem = forwardRef(({ className, children, checked, ...props }, ref) => /* @__PURE__ */ jsxs(
   "div",
   {
     ref,
@@ -69,13 +69,13 @@ const MenubarCheckboxItem = forwardRef(({ className, children, checked, ...props
     ),
     ...props,
     children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: checked && /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { className: "h-4 w-4" }) }),
+      /* @__PURE__ */ jsx("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: checked && /* @__PURE__ */ jsx(Check, { className: "h-4 w-4" }) }),
       children
     ]
   }
 ));
 MenubarCheckboxItem.displayName = "MenubarCheckboxItem";
-const MenubarRadioItem = forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+const MenubarRadioItem = forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ jsxs(
   "div",
   {
     ref,
@@ -85,13 +85,13 @@ const MenubarRadioItem = forwardRef(({ className, children, ...props }, ref) => 
     ),
     ...props,
     children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Circle, { className: "h-2 w-2 fill-current" }) }),
+      /* @__PURE__ */ jsx("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ jsx(Circle, { className: "h-2 w-2 fill-current" }) }),
       children
     ]
   }
 ));
 MenubarRadioItem.displayName = "MenubarRadioItem";
-const MenubarLabel = forwardRef(({ className, inset, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const MenubarLabel = forwardRef(({ className, inset, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,
@@ -104,7 +104,7 @@ const MenubarLabel = forwardRef(({ className, inset, ...props }, ref) => /* @__P
   }
 ));
 MenubarLabel.displayName = "MenubarLabel";
-const MenubarSeparator = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const MenubarSeparator = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,
@@ -113,7 +113,7 @@ const MenubarSeparator = forwardRef(({ className, ...props }, ref) => /* @__PURE
   }
 ));
 MenubarSeparator.displayName = "MenubarSeparator";
-const MenubarShortcut = ({ className, ...props }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const MenubarShortcut = ({ className, ...props }) => /* @__PURE__ */ jsx(
   "span",
   {
     className: cn("ml-auto text-xs tracking-widest opacity-60", className),
@@ -121,9 +121,9 @@ const MenubarShortcut = ({ className, ...props }) => /* @__PURE__ */ jsxRuntimeE
   }
 );
 MenubarShortcut.displayName = "MenubarShortcut";
-const MenubarSub = ({ children, ...props }) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ...props, children });
+const MenubarSub = ({ children, ...props }) => /* @__PURE__ */ jsx("div", { ...props, children });
 MenubarSub.displayName = "MenubarSub";
-const MenubarSubTrigger = forwardRef(({ className, inset, children, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+const MenubarSubTrigger = forwardRef(({ className, inset, children, ...props }, ref) => /* @__PURE__ */ jsxs(
   "div",
   {
     ref,
@@ -135,12 +135,12 @@ const MenubarSubTrigger = forwardRef(({ className, inset, children, ...props }, 
     ...props,
     children: [
       children,
-      /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "ml-auto h-4 w-4" })
+      /* @__PURE__ */ jsx(ChevronRight, { className: "ml-auto h-4 w-4" })
     ]
   }
 ));
 MenubarSubTrigger.displayName = "MenubarSubTrigger";
-const MenubarSubContent = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const MenubarSubContent = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,

@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { createContext, forwardRef, useId, useContext } from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { useFormContext, FormProvider, Controller } from "react-hook-form";
@@ -8,7 +8,7 @@ const Form = FormProvider;
 const FormFieldContext = createContext({});
 const FormItemContext = createContext({});
 const FormField = ({ ...props }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(FormFieldContext.Provider, { value: { name: props.name }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Controller, { ...props }) });
+  return /* @__PURE__ */ jsx(FormFieldContext.Provider, { value: { name: props.name }, children: /* @__PURE__ */ jsx(Controller, { ...props }) });
 };
 const useFormField = () => {
   const fieldContext = useContext(FormFieldContext);
@@ -30,12 +30,12 @@ const useFormField = () => {
 };
 const FormItem = forwardRef(({ className, ...props }, ref) => {
   const id = useId();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(FormItemContext.Provider, { value: { id }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref, className: cn("space-y-2", className), ...props }) });
+  return /* @__PURE__ */ jsx(FormItemContext.Provider, { value: { id }, children: /* @__PURE__ */ jsx("div", { ref, className: cn("space-y-2", className), ...props }) });
 });
 FormItem.displayName = "FormItem";
 const FormLabel = forwardRef(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsx(
     Label,
     {
       ref,
@@ -48,7 +48,7 @@ const FormLabel = forwardRef(({ className, ...props }, ref) => {
 FormLabel.displayName = "FormLabel";
 const FormControl = forwardRef(({ ...props }, ref) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsx(
     Slot,
     {
       ref,
@@ -62,7 +62,7 @@ const FormControl = forwardRef(({ ...props }, ref) => {
 FormControl.displayName = "FormControl";
 const FormDescription = forwardRef(({ className, ...props }, ref) => {
   const { formDescriptionId } = useFormField();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsx(
     "p",
     {
       ref,
@@ -79,7 +79,7 @@ const FormMessage = forwardRef(({ className, children, ...props }, ref) => {
   if (!body) {
     return null;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsx(
     "p",
     {
       ref,

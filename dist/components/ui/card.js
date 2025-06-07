@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import { cn } from "../../lib/utils.js";
-const Card = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const Card = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,
@@ -13,7 +13,7 @@ const Card = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRun
   }
 ));
 Card.displayName = "Card";
-const CardHeader = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const CardHeader = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,
@@ -22,7 +22,7 @@ const CardHeader = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ 
   }
 ));
 CardHeader.displayName = "CardHeader";
-const CardTitle = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const CardTitle = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "h3",
   {
     ref,
@@ -34,7 +34,7 @@ const CardTitle = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ j
   }
 ));
 CardTitle.displayName = "CardTitle";
-const CardDescription = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const CardDescription = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "p",
   {
     ref,
@@ -43,9 +43,9 @@ const CardDescription = forwardRef(({ className, ...props }, ref) => /* @__PURE_
   }
 ));
 CardDescription.displayName = "CardDescription";
-const CardContent = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref, className: cn("p-6 pt-0", className), ...props }));
+const CardContent = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx("div", { ref, className: cn("p-6 pt-0", className), ...props }));
 CardContent.displayName = "CardContent";
-const CardFooter = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const CardFooter = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,

@@ -1,9 +1,9 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { Check } from "lucide-react";
 import { cn } from "../../lib/utils.js";
-const Checkbox = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const Checkbox = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   CheckboxPrimitive.Root,
   {
     ref,
@@ -12,11 +12,11 @@ const Checkbox = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ js
       className
     ),
     ...props,
-    children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    children: /* @__PURE__ */ jsx(
       CheckboxPrimitive.Indicator,
       {
         className: cn("flex items-center justify-center text-current"),
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { className: "h-4 w-4" })
+        children: /* @__PURE__ */ jsx(Check, { className: "h-4 w-4" })
       }
     )
   }

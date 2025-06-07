@@ -8,7 +8,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@voilajsx/uikit": "github:voilajsx/uikit",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "react": "^18.2.0",

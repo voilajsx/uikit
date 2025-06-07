@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { cn } from "../../lib/utils.js";
 function Skeleton({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsx(
     "div",
     {
       className: cn("animate-pulse rounded-md bg-primary/10", className),

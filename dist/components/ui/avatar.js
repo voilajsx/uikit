@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import { cn } from "../../lib/utils.js";
-const Avatar = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const Avatar = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,
@@ -13,7 +13,7 @@ const Avatar = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxR
   }
 ));
 Avatar.displayName = "Avatar";
-const AvatarImage = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const AvatarImage = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "img",
   {
     ref,
@@ -22,7 +22,7 @@ const AvatarImage = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */
   }
 ));
 AvatarImage.displayName = "AvatarImage";
-const AvatarFallback = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const AvatarFallback = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
   {
     ref,

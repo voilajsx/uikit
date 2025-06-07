@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import { cn } from "../../lib/utils.js";
-const Textarea = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const Textarea = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "textarea",
   {
     className: cn(

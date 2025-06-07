@@ -1,7 +1,7 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import { cn } from "../../lib/utils.js";
-const Table = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative w-full overflow-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+const Table = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx("div", { className: "relative w-full overflow-auto", children: /* @__PURE__ */ jsx(
   "table",
   {
     ref,
@@ -10,9 +10,9 @@ const Table = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRu
   }
 ) }));
 Table.displayName = "Table";
-const TableHeader = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { ref, className: cn("[&_tr]:border-b", className), ...props }));
+const TableHeader = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx("thead", { ref, className: cn("[&_tr]:border-b", className), ...props }));
 TableHeader.displayName = "TableHeader";
-const TableBody = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TableBody = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "tbody",
   {
     ref,
@@ -21,7 +21,7 @@ const TableBody = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ j
   }
 ));
 TableBody.displayName = "TableBody";
-const TableFooter = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TableFooter = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "tfoot",
   {
     ref,
@@ -33,7 +33,7 @@ const TableFooter = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */
   }
 ));
 TableFooter.displayName = "TableFooter";
-const TableRow = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TableRow = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "tr",
   {
     ref,
@@ -45,7 +45,7 @@ const TableRow = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ js
   }
 ));
 TableRow.displayName = "TableRow";
-const TableHead = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TableHead = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "th",
   {
     ref,
@@ -57,7 +57,7 @@ const TableHead = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ j
   }
 ));
 TableHead.displayName = "TableHead";
-const TableCell = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TableCell = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "td",
   {
     ref,
@@ -69,7 +69,7 @@ const TableCell = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ j
   }
 ));
 TableCell.displayName = "TableCell";
-const TableCaption = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+const TableCaption = forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "caption",
   {
     ref,

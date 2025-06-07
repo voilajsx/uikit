@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports } from "../../_virtual/jsx-runtime.js";
+import { jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "../../lib/utils.js";
@@ -34,7 +34,7 @@ const Container = forwardRef(({
   children,
   ...props
 }, ref) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsx(
     "div",
     {
       ref,
