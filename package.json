@@ -1,7 +1,7 @@
 {
   "name": "@voilajsx/uikit",
   "version": "1.0.0",
-  "description": "Cross-platform React components with themes",
+  "description": "Cross-platform React components with beautiful themes and OKLCH color science",
   "type": "module",
   "keywords": [
     "react",
@@ -11,18 +11,30 @@
     "shadcn",
     "cross-platform",
     "typescript",
-    "design-system"
+    "design-system",
+    "oklch",
+    "themes",
+    "react-native",
+    "tauri",
+    "expo"
   ],
-  "author": "VoilaJSX",
+  "author": {
+    "name": "Krishna Teja GS",
+    "email": "kt@voilacode.com",
+    "url": "https://github.com/voilajsx"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/voilajsx/uikit.git"
   },
-  "homepage": "https://github.com/voilajsx/uikit#readme",
+  "homepage": "https://voilajsx.github.io/uikit",
   "bugs": {
     "url": "https://github.com/voilajsx/uikit/issues"
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
   "sideEffects": [
     "**/*.css",
     "./dist/style.css"
@@ -31,6 +43,10 @@
     "voila-bundle": "./bin/theme-bundler.js"
   },
   "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
     "./styles": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
@@ -51,6 +67,10 @@
       "import": "./dist/components/ui/badge.js",
       "types": "./dist/types/components/ui/badge.d.ts"
     },
+    "./breadcrumb": {
+      "import": "./dist/components/ui/breadcrumb.js",
+      "types": "./dist/types/components/ui/breadcrumb.d.ts"
+    },
     "./button": {
       "import": "./dist/components/ui/button.js",
       "types": "./dist/types/components/ui/button.d.ts"
@@ -62,6 +82,14 @@
     "./checkbox": {
       "import": "./dist/components/ui/checkbox.js",
       "types": "./dist/types/components/ui/checkbox.d.ts"
+    },
+    "./command": {
+      "import": "./dist/components/ui/command.js",
+      "types": "./dist/types/components/ui/command.d.ts"
+    },
+    "./data-table": {
+      "import": "./dist/components/ui/data-table.js",
+      "types": "./dist/types/components/ui/data-table.d.ts"
     },
     "./dialog": {
       "import": "./dist/components/ui/dialog.js",
@@ -167,6 +195,26 @@
       "import": "./dist/components/layouts/sidebar.js",
       "types": "./dist/types/components/layouts/sidebar.d.ts"
     },
+    "./templates/auth": {
+      "import": "./dist/templates/auth.js",
+      "types": "./dist/types/templates/auth.d.ts"
+    },
+    "./templates/blank": {
+      "import": "./dist/templates/blank.js",
+      "types": "./dist/types/templates/blank.d.ts"
+    },
+    "./templates/default": {
+      "import": "./dist/templates/default.js",
+      "types": "./dist/types/templates/default.d.ts"
+    },
+    "./templates/form": {
+      "import": "./dist/templates/form.js",
+      "types": "./dist/types/templates/form.d.ts"
+    },
+    "./templates/table": {
+      "import": "./dist/templates/table.js",
+      "types": "./dist/types/templates/table.d.ts"
+    },
     "./theme-provider": {
       "import": "./dist/themes/theme-provider.js",
       "types": "./dist/types/themes/theme-provider.d.ts"
@@ -195,7 +243,8 @@
   "files": [
     "dist",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "scripts": {
     "dev": "vite",
@@ -210,11 +259,22 @@
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "prepublishOnly": "npm run build"
+    "test:coverage": "vitest --coverage",
+    "prepublishOnly": "npm run build",
+    "preversion": "npm run test && npm run build",
+    "postversion": "git push && git push --tags"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": false
+    },
+    "react-dom": {
+      "optional": false
+    }
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -260,9 +320,15 @@
     "vitest": "^2.0.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/voilajsx"
   }
 }
