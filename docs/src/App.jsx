@@ -43,22 +43,34 @@ function ThemeDemo() {
                 Default
               </Button>
               <Button 
-                variant={theme === 'ocean' ? 'default' : 'outline'}
-                onClick={() => setTheme('ocean')}
+                variant={theme === 'aurora' ? 'default' : 'outline'}
+                onClick={() => setTheme('aurora')}
               >
-                Ocean
+                Aurora
               </Button>
               <Button 
-                variant={theme === 'forest' ? 'default' : 'outline'}
-                onClick={() => setTheme('forest')}
+                variant={theme === 'metro' ? 'default' : 'outline'}
+                onClick={() => setTheme('metro')}
               >
-                Forest
+                Metro
               </Button>
               <Button 
-                variant={theme === 'sunset' ? 'default' : 'outline'}
-                onClick={() => setTheme('sunset')}
+                variant={theme === 'neon' ? 'default' : 'outline'}
+                onClick={() => setTheme('neon')}
               >
-                Sunset
+                Neon
+              </Button>
+              <Button 
+                variant={theme === 'ruby' ? 'default' : 'outline'}
+                onClick={() => setTheme('ruby')}
+              >
+                Ruby
+              </Button>
+              <Button 
+                variant={theme === 'studio' ? 'default' : 'outline'}
+                onClick={() => setTheme('studio')} 
+              >
+                Studio
               </Button>
             </div>
             

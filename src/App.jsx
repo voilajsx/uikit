@@ -27,9 +27,11 @@ function ThemeSelector() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="default">Default</SelectItem>
-            <SelectItem value="ocean">Ocean</SelectItem>
-            <SelectItem value="forest">Forest</SelectItem>
-            <SelectItem value="sunset">Sunset</SelectItem>
+            <SelectItem value="ruby">Ruby</SelectItem>
+            <SelectItem value="aurora">Aurora</SelectItem>
+            <SelectItem value="neon">Neon</SelectItem>
+            <SelectItem value="studio">Studio</SelectItem>
+            <SelectItem value="metro">Metro</SelectItem>
           </SelectContent>
         </Select>
         

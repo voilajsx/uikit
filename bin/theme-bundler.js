@@ -10,9 +10,13 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Create require function for loading CommonJS modules
+const require = createRequire(import.meta.url);
 
 // Consumer project theme directories to search
 const THEME_SEARCH_PATHS = [
@@ -125,6 +129,48 @@ ${darkVariables}
 }
 
 /**
+ * Load a single theme file with both ESM and CommonJS support
+ */
+async function loadThemeFile(themePath, fileName) {
+  try {
+    // Clear any cached version first
+    delete require.cache[themePath];
+
+    let theme = null;
+
+    // Try ES modules first
+    try {
+      const themeUrl = `file://${themePath.replace(
+        /\\/g,
+        '/'
+      )}?timestamp=${Date.now()}`;
+      const themeModule = await import(themeUrl);
+      theme = themeModule.default || themeModule;
+    } catch (esmError) {
+      log(`      ESM failed for ${fileName}: ${esmError.message}`, true);
+
+      // Fall back to CommonJS
+      try {
+        theme = require(themePath);
+        // Handle both module.exports = theme and module.exports.default = theme
+        if (theme.default) {
+          theme = theme.default;
+        }
+      } catch (cjsError) {
+        log(`      CJS failed for ${fileName}: ${cjsError.message}`, true);
+        throw new Error(
+          `Both ESM and CJS import failed. ESM: ${esmError.message}, CJS: ${cjsError.message}`
+        );
+      }
+    }
+
+    return theme;
+  } catch (err) {
+    throw new Error(`Failed to load ${fileName}: ${err.message}`);
+  }
+}
+
+/**
  * Find and load themes from consumer project
  */
 async function loadThemes() {
@@ -143,9 +189,12 @@ async function loadThemes() {
         continue;
       }
 
-      const files = fs
-        .readdirSync(fullPath)
-        .filter((file) => file.endsWith('.js') && !file.startsWith('index.'));
+      const files = fs.readdirSync(fullPath).filter(
+        (file) =>
+          file.endsWith('.js') &&
+          !file.startsWith('index.') &&
+          !file.includes('theme-generator') // Skip build scripts
+      );
 
       if (files.length === 0) {
         log(`   📁 ${themesDir}/ - no theme files`, true);
@@ -162,18 +211,9 @@ async function loadThemes() {
       for (const file of files) {
         try {
           const themePath = path.resolve(fullPath, file);
-          const themeUrl = `file://${themePath.replace(
-            /\\/g,
-            '/'
-          )}?timestamp=${Date.now()}`;
+          log(`      🔄 Loading ${file}...`, true);
 
-          // Clear cache to allow reloading in watch mode
-          if (require.cache[themePath]) {
-            delete require.cache[themePath];
-          }
-
-          const themeModule = await import(themeUrl);
-          const theme = themeModule.default;
+          const theme = await loadThemeFile(themePath, file);
 
           if (theme && theme.id && theme.name && theme.light && theme.dark) {
             themes.push(theme);
@@ -181,9 +221,19 @@ async function loadThemes() {
             log(`      ✅ ${theme.name} (${theme.id})`, true);
           } else {
             console.warn(`      ⚠️  ${file} - invalid theme structure`);
+            log(`         Expected: { id, name, light: {}, dark: {} }`, true);
+            log(
+              `         Got: ${JSON.stringify(
+                Object.keys(theme || {}),
+                null,
+                2
+              )}`,
+              true
+            );
           }
         } catch (err) {
           console.warn(`      ❌ ${file} - ${err.message}`);
+          log(`         Full error: ${err.stack}`, true);
         }
       }
     } catch (err) {
@@ -209,7 +259,11 @@ async function bundleThemes() {
         '\n📁 Make sure your theme files are in one of these directories:'
       );
       THEME_SEARCH_PATHS.forEach((dir) => console.log(`   - ${dir}/`));
-      console.log('\n💡 Run "npx voila-bundle --help" for more information');
+      console.log('\n💡 Theme files should export a default object like:');
+      console.log(
+        '   export default { id: "my-theme", name: "My Theme", light: {...}, dark: {...} }'
+      );
+      console.log('\n🔧 Run with --verbose to see detailed loading attempts');
       return false;
     }
 
@@ -305,7 +359,11 @@ async function watchMode() {
           fullPath,
           { recursive: true },
           (eventType, filename) => {
-            if (filename && filename.endsWith('.js')) {
+            if (
+              filename &&
+              filename.endsWith('.js') &&
+              !filename.includes('theme-generator')
+            ) {
               log(`📝 ${eventType}: ${themesDir}/${filename}`, true);
               rebuild();
             }

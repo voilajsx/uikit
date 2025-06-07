@@ -10,9 +10,11 @@ import { createContext, useContext, useEffect, useState } from 'react';
 // Available themes registry - now extensible!
 let AVAILABLE_THEMES = [
   { id: 'default', name: 'Default' },
-  { id: 'ocean', name: 'Ocean' },
-  { id: 'forest', name: 'Forest' },
-  { id: 'sunset', name: 'Sunset' }
+  { id: 'aurora', name: 'Aurora' },
+  { id: 'metro', name: 'Metro' },
+  { id: 'neon', name: 'Neon' },
+  { id: 'ruby', name: 'Ruby' },
+  { id: 'studio', name: 'Studio' }
 ];
 
 /**

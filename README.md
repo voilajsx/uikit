@@ -42,14 +42,30 @@ function App() {
 
 ## 🎨 Built-in Themes
 
-Choose from beautiful, professionally designed themes:
+Choose from 6 beautiful, professionally designed themes with WCAG AAA accessibility compliance:
 
 ```jsx
-<ThemeProvider theme="default">   {/* Classic shadcn theme */}
-<ThemeProvider theme="ocean">     {/* Deep blue ocean vibes */}
-<ThemeProvider theme="forest">    {/* Natural green tones */}
-<ThemeProvider theme="sunset">    {/* Warm orange/pink gradients */}
+// Professional & Clean
+<ThemeProvider theme="ocean">     {/* Ocean blue (default) - Professional oceanic blues */}
+<ThemeProvider theme="metro">     {/* Clean transit-inspired systematic design */}
+<ThemeProvider theme="studio">    {/* Sophisticated designer grays with strategic accents */}
+
+// Vibrant & Creative
+<ThemeProvider theme="ruby">      {/* Premium ruby red with rose pink accents */}
+<ThemeProvider theme="neon">      {/* Electric cyberpunk with glowing highlights */}
+<ThemeProvider theme="aurora">    {/* Northern lights with purple-green magic */}
 ```
+
+### Theme Preview
+
+| Theme                  | Light Mode               | Dark Mode                      | Perfect For                                     |
+| ---------------------- | ------------------------ | ------------------------------ | ----------------------------------------------- |
+| **🌊 Ocean** (Default) | Clean oceanic blues      | Electric blue highlights       | Business apps, dashboards, professional tools   |
+| **🚇 Metro**           | Systematic gray-blue     | Clean transit aesthetics       | Admin panels, data applications, systematic UIs |
+| **🎨 Studio**          | Designer grays + amber   | Sophisticated creative tones   | Design tools, portfolios, creative applications |
+| **💎 Ruby**            | Sophisticated red + rose | Electric red with pink accents | Finance, luxury brands, premium products        |
+| **⚡ Neon**            | Electric magenta + cyan  | Bright cyberpunk colors        | Gaming, tech startups, creative tools           |
+| **🌌 Aurora**          | Purple-green elegance    | Bright northern lights         | Creative apps, elegant brands, portfolios       |
 
 ### Theme Switching
 
@@ -60,8 +76,13 @@ function ThemeSelector() {
   const { theme, variant, setTheme, toggleVariant } = useTheme();
 
   return (
-    <div>
-      <Button onClick={() => setTheme('ocean')}>Ocean Theme</Button>
+    <div className="flex gap-2">
+      <Button onClick={() => setTheme('ocean')}>Ocean</Button>
+      <Button onClick={() => setTheme('metro')}>Metro</Button>
+      <Button onClick={() => setTheme('studio')}>Studio</Button>
+      <Button onClick={() => setTheme('ruby')}>Ruby</Button>
+      <Button onClick={() => setTheme('neon')}>Neon</Button>
+      <Button onClick={() => setTheme('aurora')}>Aurora</Button>
       <Button onClick={toggleVariant}>
         {variant === 'light' ? '🌙' : '☀️'}
       </Button>
@@ -548,17 +569,8 @@ MIT © [VoilaJSX](https://github.com/voilajsx)
 - 💬 [Discussions](https://github.com/voilajsx/uikit/discussions)
 - 📦 [NPM Package](https://www.npmjs.com/package/@voilajsx/uikit)
 
-## Contributing
-
-Contributions are welcome! See our [Contributing Guide](CONTRIBUTING.md) for
-details.
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
 ---
 
-<p >
+<p>
   Built with ❤️ in India by the <a href="https://github.com/orgs/voilajsx/people">VoilaJS Team</a> — powering modern web development.
 </p>

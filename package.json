@@ -248,10 +248,9 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "npm run clean && npm run generate-themes && npm run build:lib && npm run build:types",
+    "build": "npm run clean  && npm run build:lib && npm run build:types",
     "build:lib": "vite build",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
-    "generate-themes": "node src/themes/theme-generator.js",
     "clean": "rm -rf dist",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",

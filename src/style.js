@@ -7,6 +7,7 @@
 
 // Import the main CSS file
 import './themes/globals.css';
+import './themes.css';
 
 // This file exists solely to allow Vite to process the CSS
 // The JS output from this entry will be minimal/empty
