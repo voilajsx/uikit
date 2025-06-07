@@ -27,6 +27,9 @@
     "**/*.css",
     "./dist/style.css"
   ],
+  "bin": {
+    "voila-bundle": "./bin/theme-bundler.js"
+  },
   "exports": {
     "./styles": {
       "import": "./dist/style.css",
