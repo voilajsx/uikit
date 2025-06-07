@@ -548,8 +548,17 @@ MIT © [VoilaJSX](https://github.com/voilajsx)
 - 💬 [Discussions](https://github.com/voilajsx/uikit/discussions)
 - 📦 [NPM Package](https://www.npmjs.com/package/@voilajsx/uikit)
 
+## Contributing
+
+Contributions are welcome! See our [Contributing Guide](CONTRIBUTING.md) for
+details.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
 ---
 
-<div align="center">
-  <strong>Built with ❤️ for the React ecosystem</strong>
-</div>
+<p >
+  Built with ❤️ in India by the <a href="https://github.com/orgs/voilajsx/people">VoilaJS Team</a> — powering modern web development.
+</p>

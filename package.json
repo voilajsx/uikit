@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Cross-platform React components with themes",
   "type": "module",
   "keywords": [
