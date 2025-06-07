@@ -1,11 +1,35 @@
 import { jsx } from "react/jsx-runtime";
 import { createContext, useState, useEffect, useContext } from "react";
-const AVAILABLE_THEMES = [
+let AVAILABLE_THEMES = [
   { id: "default", name: "Default" },
   { id: "ocean", name: "Ocean" },
   { id: "forest", name: "Forest" },
   { id: "sunset", name: "Sunset" }
 ];
+function registerTheme(theme) {
+  if (!theme || !theme.id || !theme.name) {
+    console.warn("registerTheme: Theme must have id and name properties");
+    return;
+  }
+  if (!AVAILABLE_THEMES.find((t) => t.id === theme.id)) {
+    AVAILABLE_THEMES.push(theme);
+    console.log(`Registered custom theme: ${theme.name} (${theme.id})`);
+  }
+}
+function registerThemes(themes) {
+  themes.forEach(registerTheme);
+}
+function getAvailableThemes() {
+  return [...AVAILABLE_THEMES];
+}
+function unregisterTheme(themeId) {
+  const builtInThemes = ["default", "ocean", "forest", "sunset"];
+  if (builtInThemes.includes(themeId)) {
+    console.warn(`Cannot remove built-in theme: ${themeId}`);
+    return;
+  }
+  AVAILABLE_THEMES = AVAILABLE_THEMES.filter((t) => t.id !== themeId);
+}
 const ThemeContext = createContext({
   theme: "default",
   variant: "light",
@@ -15,18 +39,26 @@ const ThemeContext = createContext({
   },
   toggleVariant: () => {
   },
-  availableThemes: AVAILABLE_THEMES
+  availableThemes: AVAILABLE_THEMES,
+  registerTheme,
+  getAvailableThemes
 });
 function ThemeProvider({
   children,
   theme = "default",
   variant = "light",
-  detectSystem = true
+  detectSystem = true,
+  customThemes = []
 }) {
   const [themeState, setThemeState] = useState({
     theme,
     variant
   });
+  useEffect(() => {
+    if (customThemes.length > 0) {
+      registerThemes(customThemes);
+    }
+  }, [customThemes]);
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -82,12 +114,12 @@ function ThemeProvider({
     theme: themeState.theme,
     variant: themeState.variant,
     availableThemes: AVAILABLE_THEMES,
+    // Dynamic list includes custom themes
     setTheme: (newTheme) => {
       if (typeof newTheme === "string") {
-        if (AVAILABLE_THEMES.some((t) => t.id === newTheme)) {
-          setThemeState((prev) => ({ ...prev, theme: newTheme }));
-        }
+        setThemeState((prev) => ({ ...prev, theme: newTheme }));
       } else if (typeof newTheme === "object" && newTheme.id) {
+        registerTheme(newTheme);
         setThemeState((prev) => ({ ...prev, theme: newTheme.id, customTheme: newTheme }));
       }
     },
@@ -101,7 +133,12 @@ function ThemeProvider({
         ...prev,
         variant: prev.variant === "light" ? "dark" : "light"
       }));
-    }
+    },
+    // Expose theme management functions
+    registerTheme,
+    registerThemes,
+    getAvailableThemes,
+    unregisterTheme
   };
   return /* @__PURE__ */ jsx(ThemeContext.Provider, { value: contextValue, children });
 }
@@ -114,6 +151,10 @@ function useTheme() {
 }
 export {
   ThemeProvider,
+  getAvailableThemes,
+  registerTheme,
+  registerThemes,
+  unregisterTheme,
   useTheme
 };
 //# sourceMappingURL=theme-provider.js.map
