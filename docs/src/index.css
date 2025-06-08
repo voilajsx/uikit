@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @source "../../src";
+@import 'highlight.js/styles/github.css';
+
+
 
 /*
  * 🎨 Bundled Themes for @voilajsx/uikit

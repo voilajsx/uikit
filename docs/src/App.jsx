@@ -1,144 +1,26 @@
-import { useState } from 'react'
-import { ThemeProvider, useTheme } from '@voilajsx/uikit/themes/theme-provider'
-import { Button } from '@voilajsx/uikit/components/ui/button'
-import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/components/ui/card'
-import { Badge, badgeVariants } from '@voilajsx/uikit/components/ui/badge'
-import { Switch } from '@voilajsx/uikit/components/ui/switch'
-
-
-
-function ThemeDemo() {
-  const { theme, variant, setTheme, toggleVariant } = useTheme()
-  
-  return (
-    <div className="min-h-screen bg-background text-foreground p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        
-        {/* Header */}
-        <div className="text-center space-y-4">
-         // In your component:
-
-
-<Badge variant="secondary">
-  @voilajsx/uikit
-</Badge>
-
-          <h1 className="text-4xl font-bold">Cross-Platform UI Components</h1>
-          <p className="text-xl  ">
-            shadcn/ui compatible • Cross-platform • OKLCH colors
-          </p>
-        </div>
-
-        {/* Theme Controls */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Theme Controls</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex gap-2">
-              <Button 
-                variant={theme === 'default' ? 'default' : 'outline'}
-                onClick={() => setTheme('default')}
-              >
-                Default
-              </Button>
-              <Button 
-                variant={theme === 'aurora' ? 'default' : 'outline'}
-                onClick={() => setTheme('aurora')}
-              >
-                Aurora
-              </Button>
-              <Button 
-                variant={theme === 'metro' ? 'default' : 'outline'}
-                onClick={() => setTheme('metro')}
-              >
-                Metro
-              </Button>
-              <Button 
-                variant={theme === 'neon' ? 'default' : 'outline'}
-                onClick={() => setTheme('neon')}
-              >
-                Neon
-              </Button>
-              <Button 
-                variant={theme === 'ruby' ? 'default' : 'outline'}
-                onClick={() => setTheme('ruby')}
-              >
-                Ruby
-              </Button>
-              <Button 
-                variant={theme === 'studio' ? 'default' : 'outline'}
-                onClick={() => setTheme('studio')} 
-              >
-                Studio
-              </Button>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <Switch checked={variant === 'dark'} onCheckedChange={toggleVariant} />
-              <span>Dark mode</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Component Examples */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Buttons</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex gap-2">
-                <Button>Default</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="outline">Outline</Button>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="destructive">Destructive</Button>
-                <Button variant="ghost">Ghost</Button>
-                <Button variant="link">Link</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Badges</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex gap-2">
-                <Badge>Default</Badge>
-                <Badge variant="secondary">Secondary</Badge>
-                <Badge variant="outline">Outline</Badge>
-                <Badge variant="destructive">Destructive</Badge>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Installation */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Installation</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <pre className="bg-muted p-4 rounded text-sm">
-              <code>npm install @voilajsx/uikit</code>
-            </pre>
-          </CardContent>
-        </Card>
-
-      </div>
-    </div>
-  )
-}
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';  // ✅ Correct - this should be in App.tsx
+import Home from './pages/Home';
+import Start from './pages/Start';
+import Components from './pages/Components';
+import Templates from './pages/Templates';
+import Themes from './pages/Themes';
+import Examples from './pages/Examples';
 
 function App() {
   return (
-    <ThemeProvider theme="default" variant="light" detectSystem={true}>
-      <ThemeDemo />
-    </ThemeProvider>
-  )
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/start" element={<Start />} />
+        <Route path="/components" element={<Components />} />
+        <Route path="/templates" element={<Templates />} />
+        <Route path="/themes" element={<Themes />} />
+        <Route path="/examples" element={<Examples />} />
+      </Routes>
+    </Layout>
+  );
 }
 
-export default App
+export default App;
