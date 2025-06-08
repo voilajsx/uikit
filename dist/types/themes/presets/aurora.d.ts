@@ -1,5 +1,5 @@
-export default oceanTheme;
-declare namespace oceanTheme {
+export default auroraTheme;
+declare namespace auroraTheme {
     let name: string;
     let id: string;
     namespace light {
@@ -77,14 +77,6 @@ declare namespace oceanTheme {
         export { chart4_1 as chart4 };
         let chart5_1: string;
         export { chart5_1 as chart5 };
-        export let sidebar: string;
-        export let sidebarForeground: string;
-        export let sidebarPrimary: string;
-        export let sidebarPrimaryForeground: string;
-        export let sidebarAccent: string;
-        export let sidebarAccentForeground: string;
-        export let sidebarBorder: string;
-        export let sidebarRing: string;
     }
 }
-//# sourceMappingURL=ocean.d.ts.map
+//# sourceMappingURL=aurora.d.ts.map

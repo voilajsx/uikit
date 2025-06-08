@@ -1,5 +1,5 @@
-export default forestTheme;
-declare namespace forestTheme {
+export default rubyTheme;
+declare namespace rubyTheme {
     let name: string;
     let id: string;
     namespace light {
@@ -79,4 +79,4 @@ declare namespace forestTheme {
         export { chart5_1 as chart5 };
     }
 }
-//# sourceMappingURL=forest.d.ts.map
+//# sourceMappingURL=ruby.d.ts.map

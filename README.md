@@ -12,6 +12,7 @@ A cross-platform React component library with beautiful themes and OKLCH color s
 - 🔄 **shadcn/ui Compatible** - Zero learning curve, familiar API and patterns
 - 🎯 **Direct Imports** - Perfect tree-shaking with `@voilajsx/uikit/button`
 - 🌙 **Advanced Theming** - Built-in presets + custom theme support with runtime registration
+- 📐 **Ready-to-Use Templates** - Complete page layouts for common use cases
 - ⚡ **Modern Tooling** - Vite + Tailwind CSS v4 + TypeScript ready
 
 ## 🚀 Quick Start
@@ -31,7 +32,7 @@ import '@voilajsx/uikit/styles';
 
 function App() {
   return (
-    <ThemeProvider theme="ocean" variant="light">
+    <ThemeProvider theme="default" variant="light">
       <Button variant="default" size="lg">
         Get Started
       </Button>
@@ -46,7 +47,8 @@ Choose from 6 beautiful, professionally designed themes with WCAG AAA accessibil
 
 ```jsx
 // Professional & Clean
-<ThemeProvider theme="ocean">     {/* Ocean blue (default) - Professional oceanic blues */}
+<ThemeProvider theme="default">   {/* Default theme - Clean system colors */}
+<ThemeProvider theme="ocean">     {/* Ocean blue - Professional oceanic blues */}
 <ThemeProvider theme="metro">     {/* Clean transit-inspired systematic design */}
 <ThemeProvider theme="studio">    {/* Sophisticated designer grays with strategic accents */}
 
@@ -58,14 +60,15 @@ Choose from 6 beautiful, professionally designed themes with WCAG AAA accessibil
 
 ### Theme Preview
 
-| Theme                  | Light Mode               | Dark Mode                      | Perfect For                                     |
-| ---------------------- | ------------------------ | ------------------------------ | ----------------------------------------------- |
-| **🌊 Ocean** (Default) | Clean oceanic blues      | Electric blue highlights       | Business apps, dashboards, professional tools   |
-| **🚇 Metro**           | Systematic gray-blue     | Clean transit aesthetics       | Admin panels, data applications, systematic UIs |
-| **🎨 Studio**          | Designer grays + amber   | Sophisticated creative tones   | Design tools, portfolios, creative applications |
-| **💎 Ruby**            | Sophisticated red + rose | Electric red with pink accents | Finance, luxury brands, premium products        |
-| **⚡ Neon**            | Electric magenta + cyan  | Bright cyberpunk colors        | Gaming, tech startups, creative tools           |
-| **🌌 Aurora**          | Purple-green elegance    | Bright northern lights         | Creative apps, elegant brands, portfolios       |
+| Theme          | Light Mode               | Dark Mode                      | Perfect For                                     |
+| -------------- | ------------------------ | ------------------------------ | ----------------------------------------------- |
+| **🎨 Default** | Clean system colors      | Dark system aesthetics         | General purpose, system integration             |
+| **🌊 Ocean**   | Clean oceanic blues      | Electric blue highlights       | Business apps, dashboards, professional tools   |
+| **🚇 Metro**   | Systematic gray-blue     | Clean transit aesthetics       | Admin panels, data applications, systematic UIs |
+| **🎨 Studio**  | Designer grays + amber   | Sophisticated creative tones   | Design tools, portfolios, creative applications |
+| **💎 Ruby**    | Sophisticated red + rose | Electric red with pink accents | Finance, luxury brands, premium products        |
+| **⚡ Neon**    | Electric magenta + cyan  | Bright cyberpunk colors        | Gaming, tech startups, creative tools           |
+| **🌌 Aurora**  | Purple-green elegance    | Bright northern lights         | Creative apps, elegant brands, portfolios       |
 
 ### Theme Switching
 
@@ -77,6 +80,7 @@ function ThemeSelector() {
 
   return (
     <div className="flex gap-2">
+      <Button onClick={() => setTheme('default')}>Default</Button>
       <Button onClick={() => setTheme('ocean')}>Ocean</Button>
       <Button onClick={() => setTheme('metro')}>Metro</Button>
       <Button onClick={() => setTheme('studio')}>Studio</Button>
@@ -89,6 +93,72 @@ function ThemeSelector() {
     </div>
   );
 }
+```
+
+## 📐 Ready-to-Use Templates
+
+Get started faster with our pre-built page templates that handle common layout patterns:
+
+### Available Templates
+
+| Template               | Use Case                             | Features                           |
+| ---------------------- | ------------------------------------ | ---------------------------------- |
+| **🔐 AuthTemplate**    | Login, Register, Password Reset      | Centered layout, responsive cards  |
+| **📄 BlankTemplate**   | Landing pages, About, Simple content | Minimal container, flexible sizing |
+| **🏠 DefaultTemplate** | Main app layout, Dashboard           | Header + Sidebar + Footer layout   |
+| **📝 FormTemplate**    | Settings, Profile, Configuration     | Form-optimized with action buttons |
+| **📊 TableTemplate**   | Data management, Admin panels        | Search, filters, action buttons    |
+
+### Template Usage
+
+```jsx
+// Authentication pages
+import { AuthTemplate } from '@voilajsx/uikit/templates/auth';
+
+<AuthTemplate title="Welcome Back" subtitle="Sign in to continue">
+  <LoginForm />
+</AuthTemplate>;
+
+// Main application layout
+import { DefaultTemplate } from '@voilajsx/uikit/templates/default';
+
+<DefaultTemplate
+  headerContent={<NavigationBar />}
+  sidebarContent={<SideMenu />}
+  footerContent={<AppFooter />}
+>
+  <DashboardContent />
+</DefaultTemplate>;
+
+// Settings and forms
+import { FormTemplate } from '@voilajsx/uikit/templates/form';
+
+<FormTemplate
+  title="User Settings"
+  actions={<SaveCancelButtons />}
+  onSubmit={handleSubmit}
+>
+  <SettingsForm />
+</FormTemplate>;
+
+// Data tables and management
+import { TableTemplate } from '@voilajsx/uikit/templates/table';
+
+<TableTemplate
+  title="Users"
+  searchable={true}
+  actions={<AddUserButton />}
+  filters={<UserFilters />}
+>
+  <UsersTable />
+</TableTemplate>;
+
+// Simple content pages
+import { BlankTemplate } from '@voilajsx/uikit/templates/blank';
+
+<BlankTemplate containerProps={{ size: 'lg' }}>
+  <AboutPageContent />
+</BlankTemplate>;
 ```
 
 ## 🎨 Custom Themes
@@ -372,7 +442,7 @@ function ThemeBuilder() {
 | **Platform** | `@voilajsx/uikit/platform`   | Cross-platform detection          |
 | **Adapters** | `@voilajsx/uikit/adapters/*` | Cross-platform component adapters |
 
-### 📖 Template Layouts (Bonus)
+### 📐 Page Templates
 
 | Template             | Import Path                         | Description                      |
 | -------------------- | ----------------------------------- | -------------------------------- |
@@ -571,6 +641,6 @@ MIT © [VoilaJSX](https://github.com/voilajsx)
 
 ---
 
-<p>
-  Built with ❤️ in India by the <a href="https://github.com/orgs/voilajsx/people">VoilaJS Team</a> — powering modern web development.
+<p align="center">
+  Built with ❤️ in India by the <a href="https://github.com/orgs/voilajsx/people">VoilaJSX Team</a> — powering modern web development.
 </p>

@@ -1,5 +1,5 @@
-export default sunsetTheme;
-declare namespace sunsetTheme {
+export default neonTheme;
+declare namespace neonTheme {
     let name: string;
     let id: string;
     namespace light {
@@ -27,14 +27,6 @@ declare namespace sunsetTheme {
         let chart3: string;
         let chart4: string;
         let chart5: string;
-        let sidebar: string;
-        let sidebarForeground: string;
-        let sidebarPrimary: string;
-        let sidebarPrimaryForeground: string;
-        let sidebarAccent: string;
-        let sidebarAccentForeground: string;
-        let sidebarBorder: string;
-        let sidebarRing: string;
     }
     namespace dark {
         let background_1: string;
@@ -85,22 +77,6 @@ declare namespace sunsetTheme {
         export { chart4_1 as chart4 };
         let chart5_1: string;
         export { chart5_1 as chart5 };
-        let sidebar_1: string;
-        export { sidebar_1 as sidebar };
-        let sidebarForeground_1: string;
-        export { sidebarForeground_1 as sidebarForeground };
-        let sidebarPrimary_1: string;
-        export { sidebarPrimary_1 as sidebarPrimary };
-        let sidebarPrimaryForeground_1: string;
-        export { sidebarPrimaryForeground_1 as sidebarPrimaryForeground };
-        let sidebarAccent_1: string;
-        export { sidebarAccent_1 as sidebarAccent };
-        let sidebarAccentForeground_1: string;
-        export { sidebarAccentForeground_1 as sidebarAccentForeground };
-        let sidebarBorder_1: string;
-        export { sidebarBorder_1 as sidebarBorder };
-        let sidebarRing_1: string;
-        export { sidebarRing_1 as sidebarRing };
     }
 }
-//# sourceMappingURL=sunset.d.ts.map
+//# sourceMappingURL=neon.d.ts.map

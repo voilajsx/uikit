@@ -2,9 +2,11 @@ import { jsx } from "react/jsx-runtime";
 import { createContext, useState, useEffect, useContext } from "react";
 let AVAILABLE_THEMES = [
   { id: "default", name: "Default" },
-  { id: "ocean", name: "Ocean" },
-  { id: "forest", name: "Forest" },
-  { id: "sunset", name: "Sunset" }
+  { id: "aurora", name: "Aurora" },
+  { id: "metro", name: "Metro" },
+  { id: "neon", name: "Neon" },
+  { id: "ruby", name: "Ruby" },
+  { id: "studio", name: "Studio" }
 ];
 function registerTheme(theme) {
   if (!theme || !theme.id || !theme.name) {

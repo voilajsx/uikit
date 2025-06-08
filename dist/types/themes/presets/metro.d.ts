@@ -1,5 +1,5 @@
-export default defaultTheme;
-declare namespace defaultTheme {
+export default metroTheme;
+declare namespace metroTheme {
     let name: string;
     let id: string;
     namespace light {
@@ -22,6 +22,11 @@ declare namespace defaultTheme {
         let border: string;
         let input: string;
         let ring: string;
+        let chart1: string;
+        let chart2: string;
+        let chart3: string;
+        let chart4: string;
+        let chart5: string;
     }
     namespace dark {
         let background_1: string;
@@ -62,6 +67,16 @@ declare namespace defaultTheme {
         export { input_1 as input };
         let ring_1: string;
         export { ring_1 as ring };
+        let chart1_1: string;
+        export { chart1_1 as chart1 };
+        let chart2_1: string;
+        export { chart2_1 as chart2 };
+        let chart3_1: string;
+        export { chart3_1 as chart3 };
+        let chart4_1: string;
+        export { chart4_1 as chart4 };
+        let chart5_1: string;
+        export { chart5_1 as chart5 };
     }
 }
-//# sourceMappingURL=default.d.ts.map
+//# sourceMappingURL=metro.d.ts.map
