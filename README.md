@@ -48,7 +48,6 @@ Choose from 6 beautiful, professionally designed themes with WCAG AAA accessibil
 ```jsx
 // Professional & Clean
 <ThemeProvider theme="default">   {/* Default theme - Clean system colors */}
-<ThemeProvider theme="ocean">     {/* Ocean blue - Professional oceanic blues */}
 <ThemeProvider theme="metro">     {/* Clean transit-inspired systematic design */}
 <ThemeProvider theme="studio">    {/* Sophisticated designer grays with strategic accents */}
 
@@ -62,8 +61,7 @@ Choose from 6 beautiful, professionally designed themes with WCAG AAA accessibil
 
 | Theme          | Light Mode               | Dark Mode                      | Perfect For                                     |
 | -------------- | ------------------------ | ------------------------------ | ----------------------------------------------- |
-| **🎨 Default** | Clean system colors      | Dark system aesthetics         | General purpose, system integration             |
-| **🌊 Ocean**   | Clean oceanic blues      | Electric blue highlights       | Business apps, dashboards, professional tools   |
+| **🎨 Default** | Clean oceanic blues      | Electric blue highlights       | Business apps, dashboards, professional tools   |
 | **🚇 Metro**   | Systematic gray-blue     | Clean transit aesthetics       | Admin panels, data applications, systematic UIs |
 | **🎨 Studio**  | Designer grays + amber   | Sophisticated creative tones   | Design tools, portfolios, creative applications |
 | **💎 Ruby**    | Sophisticated red + rose | Electric red with pink accents | Finance, luxury brands, premium products        |
@@ -81,7 +79,6 @@ function ThemeSelector() {
   return (
     <div className="flex gap-2">
       <Button onClick={() => setTheme('default')}>Default</Button>
-      <Button onClick={() => setTheme('ocean')}>Ocean</Button>
       <Button onClick={() => setTheme('metro')}>Metro</Button>
       <Button onClick={() => setTheme('studio')}>Studio</Button>
       <Button onClick={() => setTheme('ruby')}>Ruby</Button>

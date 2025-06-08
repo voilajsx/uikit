@@ -44,7 +44,7 @@
 5. **Theme Integration**:
 
    - Always wrap applications in `ThemeProvider`
-   - Use built-in themes: `default`, `ocean`, `metro`, `studio`, `ruby`, `neon`, `aurora`
+   - Use built-in themes: `default`, `metro`, `studio`, `ruby`, `neon`, `aurora`
    - For custom themes, use OKLCH color format
    - Support both light and dark variants
 
@@ -428,7 +428,6 @@ interface TableTemplateProps {
 // Available themes with their characteristics
 const THEMES = {
   default: 'Clean system colors', // Default gray theme
-  ocean: 'Professional oceanic blues', // Deep blue professional
   metro: 'Clean transit-inspired design', // Systematic gray-blue
   studio: 'Sophisticated designer grays', // Creative gray + amber
   ruby: 'Premium ruby red', // Sophisticated red + rose
@@ -463,7 +462,7 @@ function ThemeSelector() {
   return (
     <div className="flex gap-2">
       <Button onClick={() => setTheme('default')}>Default</Button>
-      <Button onClick={() => setTheme('ocean')}>Ocean</Button>
+      <Button onClick={() => setTheme('metro')}>Metro</Button>
       <Button onClick={() => setTheme('neon')}>Neon</Button>
       <Button onClick={toggleVariant}>
         {variant === 'light' ? '🌙' : '☀️'}
@@ -1650,7 +1649,7 @@ import '@voilajsx/uikit/styles';
 
 function App() {
   return (
-    <ThemeProvider theme="ocean" variant="light" detectSystem={true}>
+    <ThemeProvider theme="studio" variant="light" detectSystem={true}>
       {/* App content */}
     </ThemeProvider>
   );
