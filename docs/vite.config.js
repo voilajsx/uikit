@@ -13,6 +13,10 @@ export default defineConfig({
         __dirname,
         '../src/components/ui/button.jsx'
       ),
+      '@voilajsx/uikit/sheet': path.resolve(
+        __dirname,
+        '../src/components/ui/sheet.jsx'
+      ),
       '@voilajsx/uikit/card': path.resolve(
         __dirname,
         '../src/components/ui/card.jsx'
@@ -45,9 +49,17 @@ export default defineConfig({
         __dirname,
         '../src/components/ui/table.jsx'
       ),
+      '@voilajsx/uikit/tabs': path.resolve(
+        __dirname,
+        '../src/components/ui/tabs.jsx'
+      ),
       '@voilajsx/uikit/label': path.resolve(
         __dirname,
         '../src/components/ui/label.jsx'
+      ),
+      '@voilajsx/uikit/separator': path.resolve(
+        __dirname,
+        '../src/components/ui/separator.jsx'
       ),
 
       // Templates

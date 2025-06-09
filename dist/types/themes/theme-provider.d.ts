@@ -31,7 +31,7 @@ export function unregisterTheme(themeId: string): void;
 export function ThemeProvider({ children, theme, variant, detectSystem, customThemes }: {
     children: React.ReactNode;
     theme?: string | undefined;
-    variant?: "light" | "dark" | undefined;
+    variant?: "dark" | "light" | undefined;
     detectSystem?: boolean | undefined;
     customThemes?: any[] | undefined;
 }): JSX.Element;

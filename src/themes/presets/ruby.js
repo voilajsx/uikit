@@ -13,57 +13,57 @@ const rubyTheme = {
   id: 'ruby',
 
   light: {
-    background: 'oklch(0.99 0.005 20)',
-    foreground: 'oklch(0.15 0.02 20)',
-    card: 'oklch(0.97 0.008 15)',
-    cardForeground: 'oklch(0.15 0.02 20)',
-    popover: 'oklch(0.97 0.008 15)',
-    popoverForeground: 'oklch(0.15 0.02 20)',
-    primary: 'oklch(0.48 0.26 18)', // Darker for AAA compliance (was 0.52)
-    primaryForeground: 'oklch(0.98 0.005 15)',
-    secondary: 'oklch(0.88 0.018 10)', // Darker for better contrast (was 0.92)
-    secondaryForeground: 'oklch(0.18 0.028 15)', // Darker text for AAA (was 0.2)
-    muted: 'oklch(0.93 0.01 15)', // Slightly darker (was 0.95)
-    mutedForeground: 'oklch(0.35 0.025 20)', // Much darker for AAA compliance (was 0.45)
-    accent: 'oklch(0.68 0.16 350)', // Rose pink accent
-    accentForeground: 'oklch(0.98 0.005 15)',
-    destructive: 'oklch(0.32 0.28 5)', // Deep wine red - already AAA compliant
-    destructiveForeground: 'oklch(0.98 0.005 15)',
-    border: 'oklch(0.85 0.015 15)', // Slightly darker for better visibility (was 0.88)
-    input: 'oklch(0.85 0.015 15)',
-    ring: 'oklch(0.48 0.26 18)',
-    chart1: 'oklch(0.48 0.26 18)', // Updated to match primary
-    chart2: 'oklch(0.68 0.16 350)', // Rose pink
-    chart3: 'oklch(0.32 0.28 5)', // Deep wine
-    chart4: 'oklch(0.65 0.18 45)', // Darker amber for better contrast
-    chart5: 'oklch(0.55 0.22 340)', // Darker magenta for better contrast
+    background: 'oklch(0.98 0.005 0)', // Very light off-white, almost white
+    foreground: 'oklch(0.12 0.01 0)', // Dark charcoal
+    card: 'oklch(0.96 0.007 0)', // Slightly darker card than background
+    cardForeground: 'oklch(0.12 0.01 0)',
+    popover: 'oklch(0.96 0.007 0)',
+    popoverForeground: 'oklch(0.12 0.01 0)',
+    primary: 'oklch(0.48 0.18 20)', // Equivalent to #db2229
+    primaryForeground: 'oklch(0.98 0.005 0)', // Light text on primary
+    secondary: 'oklch(0.9 0.005 0)', // Light gray for secondary elements
+    secondaryForeground: 'oklch(0.2 0.01 0)', // Darker gray text
+    muted: 'oklch(0.93 0.005 0)', // Softer light gray
+    mutedForeground: 'oklch(0.4 0.01 0)', // Medium gray for muted text
+    accent: 'oklch(0.46 0.01 240)', // Equivalent to #656668 (darker for contrast)
+    accentForeground: 'oklch(0.98 0.005 0)', // Light text on accent
+    destructive: 'oklch(0.5 0.2 20)', // A slightly softer red for destructive actions
+    destructiveForeground: 'oklch(0.98 0.005 0)',
+    border: 'oklch(0.85 0.005 0)', // Subtle gray border
+    input: 'oklch(0.85 0.005 0)',
+    ring: 'oklch(0.48 0.18 20)', // Matches primary
+    chart1: 'oklch(0.48 0.18 20)', // Primary red
+    chart2: 'oklch(0.46 0.01 240)', // Accent gray
+    chart3: 'oklch(0.65 0.15 80)', // Vibrant yellow-green for contrast in charts
+    chart4: 'oklch(0.55 0.12 180)', // A cool blue for charts
+    chart5: 'oklch(0.7 0.1 300)', // A soft purple for charts
   },
 
   dark: {
-    background: 'oklch(0.06 0.03 15)',
-    foreground: 'oklch(0.95 0.008 15)',
-    card: 'oklch(0.08 0.035 15)',
-    cardForeground: 'oklch(0.95 0.008 15)',
-    popover: 'oklch(0.08 0.035 15)',
-    popoverForeground: 'oklch(0.95 0.008 15)',
-    primary: 'oklch(0.68 0.28 18)', // Slightly brighter for AAA compliance (was 0.65)
-    primaryForeground: 'oklch(0.05 0.035 15)', // Darker for better contrast (was 0.06)
-    secondary: 'oklch(0.25 0.045 10)', // Brighter for AAA compliance (was 0.22)
-    secondaryForeground: 'oklch(0.92 0.012 15)', // Slightly brighter (was 0.9)
-    muted: 'oklch(0.14 0.03 15)', // Slightly brighter (was 0.12)
-    mutedForeground: 'oklch(0.72 0.018 15)', // Slightly brighter for AAA (was 0.7)
-    accent: 'oklch(0.78 0.2 350)', // Brighter rose pink for AAA (was 0.75)
-    accentForeground: 'oklch(0.05 0.035 15)', // Darker for better contrast
-    destructive: 'oklch(0.48 0.3 5)', // Slightly brighter for AAA (was 0.45)
-    destructiveForeground: 'oklch(0.95 0.008 15)',
-    border: 'oklch(0.22 0.035 15)', // Slightly brighter for better visibility (was 0.2)
-    input: 'oklch(0.22 0.035 15)',
-    ring: 'oklch(0.68 0.28 18)',
-    chart1: 'oklch(0.68 0.28 18)', // Updated to match primary
-    chart2: 'oklch(0.78 0.2 350)', // Updated bright rose
-    chart3: 'oklch(0.48 0.3 5)', // Updated deep wine
-    chart4: 'oklch(0.75 0.22 45)', // Brighter amber for AAA
-    chart5: 'oklch(0.72 0.24 340)', // Brighter magenta for AAA
+    background: 'oklch(0.08 0.005 0)', // Very dark charcoal
+    foreground: 'oklch(0.95 0.005 0)', // Light gray
+    card: 'oklch(0.12 0.007 0)', // Slightly lighter card than background
+    cardForeground: 'oklch(0.95 0.005 0)',
+    popover: 'oklch(0.12 0.007 0)',
+    popoverForeground: 'oklch(0.95 0.005 0)',
+    primary: 'oklch(0.65 0.25 20)', // Brighter scarlet red
+    primaryForeground: 'oklch(0.08 0.005 0)', // Dark text on primary
+    secondary: 'oklch(0.2 0.008 0)', // Darker gray for secondary elements
+    secondaryForeground: 'oklch(0.85 0.005 0)', // Lighter gray text
+    muted: 'oklch(0.15 0.005 0)', // Slightly brighter dark gray
+    mutedForeground: 'oklch(0.7 0.01 0)', // Medium light gray for muted text
+    accent: 'oklch(0.6 0.01 240)', // Brighter gray accent
+    accentForeground: 'oklch(0.08 0.005 0)', // Dark text on accent
+    destructive: 'oklch(0.7 0.3 20)', // A brighter red for destructive actions
+    destructiveForeground: 'oklch(0.08 0.005 0)',
+    border: 'oklch(0.25 0.005 0)', // Slightly lighter dark gray border
+    input: 'oklch(0.25 0.005 0)',
+    ring: 'oklch(0.65 0.25 20)', // Matches primary
+    chart1: 'oklch(0.65 0.25 20)', // Primary red
+    chart2: 'oklch(0.6 0.01 240)', // Accent gray
+    chart3: 'oklch(0.75 0.18 80)', // Brighter yellow-green
+    chart4: 'oklch(0.68 0.15 180)', // Brighter cool blue
+    chart5: 'oklch(0.8 0.12 300)', // Brighter soft purple
   },
 };
 

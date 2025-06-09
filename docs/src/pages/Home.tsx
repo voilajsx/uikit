@@ -60,8 +60,8 @@ function Home() {
           </h1>
           
           <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto px-4 leading-relaxed">
-            <span className="font-medium text-foreground">shadcn/ui</span> + 
-            <span className="font-medium text-foreground"> Beautiful Themes</span> + 
+            <span className="font-medium text-foreground"> Beautiful Themes</span> +
+            <span className="font-medium text-foreground">Templates</span> + 
             <span className="font-medium text-foreground"> Cross-Platform</span>
           </p>
           
@@ -76,7 +76,7 @@ function Home() {
               Get Started <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <Button variant="outline" size="lg" className="w-full sm:w-auto border-border text-foreground hover:bg-accent hover:text-accent-foreground" asChild>
+          <Button variant="outline" size="lg" className="w-full sm:w-auto border-accent text-accent hover:bg-accent hover:text-accent-foreground" asChild>
             <Link to="/components">Explore Components</Link>
           </Button>
         </div>
@@ -89,7 +89,7 @@ function Home() {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="border-border bg-card text-card-foreground hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+          <Card className=" bg-card text-card-foreground hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
             <CardHeader className="pb-4">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
@@ -273,7 +273,7 @@ function Home() {
             <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
               <Link to="/start">Complete Setup Guide</Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="outline" className="text-primary border-primary hover:bg-primary/10" size="lg" asChild>
               <Link to="/examples">View Live Examples</Link>
             </Button>
           </div>

@@ -90,9 +90,9 @@ function Components() {
       </div>
 
       {/* Key Differences */}
-      <Alert>
+      <Alert className="border-gray-300">
         <Info className="h-4 w-4" />
-        <AlertDescription>
+        <AlertDescription className="text-sm pt-1">
           <strong>Same API as shadcn/ui</strong> - Only the import paths change. 
           All props, variants, and behaviors are identical.
         </AlertDescription>
@@ -121,7 +121,7 @@ function Components() {
           <Card>
             <CardHeader>
               <CardTitle className="text-lg">📱 Cross-Platform</CardTitle>
-            </CardHeader>
+            </CardHeader> 
             <CardContent>
               <p className="text-sm text-muted-foreground">
                 Same components work on Web, React Native, and Tauri with automatic adaptation.

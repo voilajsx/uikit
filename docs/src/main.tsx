@@ -13,7 +13,7 @@ if (!rootElement) throw new Error('Root element not found');
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <BrowserRouter basename="/uikit">
-      <ThemeProvider theme="default" variant="light" detectSystem={true}>
+      <ThemeProvider theme="aurora" variant="light" detectSystem={true}>
         <App />
       </ThemeProvider>
     </BrowserRouter>

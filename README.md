@@ -100,6 +100,7 @@ Get started faster with our pre-built page templates that handle common layout p
 
 | Template               | Use Case                             | Features                           |
 | ---------------------- | ------------------------------------ | ---------------------------------- |
+| **🛡️ AdminTemplate**   | Admin panels, dashboards, docs       | Responsive sidebar, mobile overlay |
 | **🔐 AuthTemplate**    | Login, Register, Password Reset      | Centered layout, responsive cards  |
 | **📄 BlankTemplate**   | Landing pages, About, Simple content | Minimal container, flexible sizing |
 | **🏠 DefaultTemplate** | Main app layout, Dashboard           | Header + Sidebar + Footer layout   |
@@ -109,6 +110,19 @@ Get started faster with our pre-built page templates that handle common layout p
 ### Template Usage
 
 ```jsx
+// Advanced admin panels with responsive sidebar
+import { AdminTemplate } from '@voilajsx/uikit/templates/admin';
+
+<AdminTemplate
+  title="Dashboard"
+  subtitle="v2.1.0"
+  headerActions={<UserMenu />}
+  sidebarContent={<Navigation />}
+  sidebarFooter={<VersionInfo />}
+>
+  <DashboardContent />
+</AdminTemplate>;
+
 // Authentication pages
 import { AuthTemplate } from '@voilajsx/uikit/templates/auth';
 
@@ -443,6 +457,7 @@ function ThemeBuilder() {
 
 | Template             | Import Path                         | Description                      |
 | -------------------- | ----------------------------------- | -------------------------------- |
+| **Admin Template**   | `@voilajsx/uikit/templates/admin`   | Advanced admin/dashboard layouts |
 | **Auth Template**    | `@voilajsx/uikit/templates/auth`    | Authentication page layouts      |
 | **Blank Template**   | `@voilajsx/uikit/templates/blank`   | Minimal page template            |
 | **Default Template** | `@voilajsx/uikit/templates/default` | Header + sidebar + footer layout |
@@ -482,13 +497,14 @@ import {
 } from '@voilajsx/uikit/dialog';
 
 // Layout templates
+import { AdminTemplate } from '@voilajsx/uikit/templates/admin';
 import { DefaultTemplate } from '@voilajsx/uikit/templates/default';
 import { Container } from '@voilajsx/uikit/container';
 ```
 
 > **💡 Pro Tip**: Since we maintain 100% API compatibility with shadcn/ui, you can use their [documentation](https://ui.shadcn.com/docs/components), examples, and community resources directly with @voilajsx/uikit components. Just replace their imports with ours!
 
-**Total: 35+ Components + 5 Layout Templates + Cross-platform Adapters**
+**Total: 35+ Components + 6 Layout Templates + Cross-platform Adapters**
 
 ## 🎯 Cross-Platform Usage
 

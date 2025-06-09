@@ -15,6 +15,6 @@ export function Badge({ className, variant, ...props }: {
  * Badge variants defined with class-variance-authority
  */
 export const badgeVariants: (props?: ({
-    variant?: "default" | "destructive" | "secondary" | "outline" | null | undefined;
+    variant?: "default" | "destructive" | "outline" | "secondary" | null | undefined;
 } & import("class-variance-authority/dist/types").ClassProp) | undefined) => string;
 //# sourceMappingURL=badge.d.ts.map
