@@ -4,19 +4,32 @@
     <meta charset="utf-8">
     <title>@voilajsx/uikit</title>
     <script type="text/javascript">
-      // GitHub Pages SPA redirect
-      var pathSegmentsToKeep = 1; // Change to 0 if deploying to root domain
-      
+      // GitHub Pages SPA redirect for /uikit/ base path
       var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
+      var pathSegmentsToKeep = 1; // Keep 'uikit' segment
+      
+      // Extract the path after /uikit/
+      var pathArray = l.pathname.split('/');
+      var baseSegments = pathArray.slice(0, pathSegmentsToKeep + 1); // ['', 'uikit']
+      var routeSegments = pathArray.slice(pathSegmentsToKeep + 1); // ['start'] etc.
+      
+      // Build the redirect URL
+      var redirectPath = baseSegments.join('/') + '/?/' + routeSegments.join('/');
+      
+      // Add search params and hash
+      if (l.search) {
+        redirectPath += (redirectPath.indexOf('?') === -1 ? '?' : '&') + 
+                       l.search.slice(1).replace(/&/g, '~and~');
+      }
+      if (l.hash) {
+        redirectPath += l.hash;
+      }
+      
+      // Redirect
+      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + redirectPath);
     </script>
   </head>
   <body>
+    <p>Redirecting...</p>
   </body>
 </html>
