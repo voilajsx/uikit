@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Layout from '../components/Layout';
 import { Button } from '@voilajsx/uikit/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import { Alert, AlertDescription } from '@voilajsx/uikit/alert';
@@ -46,7 +47,8 @@ import { Button } from "@voilajsx/uikit/button"
 
 function Start() {
   return (
-    <div className="space-y-12">
+    <Layout>
+      <div className="space-y-12">
       {/* Header */}
       <div>
         <h1 className="text-4xl font-bold mb-4">Getting Started</h1>
@@ -169,6 +171,7 @@ function Start() {
         </div>
       </section>
     </div>
+    </Layout>
   );
 }
 

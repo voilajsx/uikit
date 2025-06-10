@@ -5,6 +5,8 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import Layout from '../../components/layout';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@voilajsx/uikit/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import { Badge } from '@voilajsx/uikit/badge';
@@ -18,7 +20,8 @@ import {
   Building, 
   Palette,
   Smartphone,
-  Globe
+  Globe,
+  ArrowRight
 } from 'lucide-react';
 
 /**
@@ -92,6 +95,7 @@ function NavigationContent({ activeSection, onNavigate }) {
  */
 function AuthTemplatePage() {
   const [activeSection, setActiveSection] = useState('overview');
+  const navigate = useNavigate();
 
   // Track active section
   useEffect(() => {
@@ -241,51 +245,52 @@ import '@voilajsx/uikit/styles';`;
       description: 'Clean minimal login form',
       variant: 'simple',
       icon: CreditCard,
-      href: '/examples/auth/simple-login'
+      route: '/examples/auth/simple'
     },
     {
-      title: 'Card Registration',
-      description: 'Elevated signup with features',
-      variant: 'card',
-      icon: Users,
-      href: '/examples/auth/card-signup'
-    },
-    {
-      title: 'Corporate Portal',
-      description: 'Split layout with branding',
-      variant: 'split-image',
-      icon: Building,
-      href: '/examples/auth/corporate-login'
-    },
-    {
-      title: 'Themed Auth',
-      description: 'Multi-theme demonstration',
-      variant: 'card-gradient',
-      icon: Palette,
-      href: '/examples/auth/themed-login'
-    },
-    {
-      title: 'Mobile-First',
-      description: 'Responsive design showcase',
-      variant: 'simple',
-      icon: Smartphone,
-      href: '/examples/auth/mobile-login'
-    },
-    {
-      title: 'Social Login',
+      title: 'Card',
       description: 'OAuth integration example',
       variant: 'card',
       icon: Globe,
-      href: '/examples/auth/social-login'
+      route: '/examples/auth/card'
+    },
+    {
+      title: 'Card Gradient',
+      description: 'Elevated signup with features',
+      variant: 'card',
+      icon: Users,
+      route: '/examples/auth/card-gradient'
+    },
+    {
+      title: 'Card Image',
+      description: 'Split layout with branding',
+      variant: 'split-image',
+      icon: Building,
+      route: '/examples/auth/card-image'
+    },
+    {
+      title: 'Split Gradient',
+      description: 'Multi-theme demonstration',
+      variant: 'card-gradient',
+      icon: Palette,
+      route: '/examples/auth/split-gradient'
+    },
+    {
+      title: 'Split Image',
+      description: 'Responsive design showcase',
+      variant: 'simple',
+      icon: Smartphone,
+      route: '/examples/auth/split-image'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <Layout>
+      <div className="min-h-screen bg-background">
       <div className="flex min-h-screen">
         {/* Desktop Sidebar - Fixed positioning */}
         <div className="hidden lg:block">
-          <div className="fixed top-0 left-0 h-screen w-64 overflow-y-auto border-r border-border bg-background">
+          <div className="fixed top-0 pt-15 left-0 h-screen w-64 overflow-y-auto border-r border-border bg-background">
             <NavigationContent activeSection={activeSection} />
           </div>
         </div>
@@ -358,6 +363,7 @@ import '@voilajsx/uikit/styles';`;
               <p className="text-lg sm:text-xl text-muted-foreground mb-8 leading-relaxed">
                 A flexible authentication layout component with 6 variants. One API, multiple designs.
               </p>
+
               
               <div className="prose prose-slate dark:prose-invert max-w-none">
                 <p className="text-base sm:text-lg text-foreground leading-relaxed mb-6">
@@ -365,21 +371,75 @@ import '@voilajsx/uikit/styles';`;
                   and wrap your form content. All variants are responsive, accessible, and theme-aware.
                 </p>
 
-                <Alert className="my-6">
-                  <Info className="h-4 w-4" />
+                <Alert className="my-6 border-foreground/20 bg-foreground/5">
                   <AlertDescription>
                     All variants use the same API - just change the <code className="bg-muted px-1 rounded">variant</code> prop to switch layouts.
                   </AlertDescription>
                 </Alert>
 
-                <h2 className="text-xl sm:text-2xl font-semibold text-foreground mt-8 mb-4">Key Features</h2>
-                <ul className="text-foreground space-y-2 text-sm sm:text-base">
-                  <li>6 design variants - simple to immersive</li>
-                  <li>Consistent API across all variants</li>
-                  <li>Fully responsive and accessible</li>
-                  <li>Automatic theme adaptation</li>
-                  <li>SSR compatible</li>
-                </ul>
+                
+              </div>
+            </section>
+
+            {/* Live Examples Grid */}
+            <section id="examples" className="mb-16">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-foreground mb-6">Live Examples</h2>
+              
+              <p className="text-muted-foreground mb-8 text-sm sm:text-base">
+                Interactive examples showcasing different use cases and patterns:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2  gap-4 sm:gap-6 mb-8">
+                {exampleCards.map((example) => {
+                  const Icon = example.icon;
+                  return (
+                    <Card 
+                      key={example.title} 
+                      className="group hover:shadow-md transition-all duration-200 border-border hover:border-primary/30 cursor-pointer"
+                      onClick={() => navigate(example.route)}
+                    >
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                            <Icon className="h-4 w-4 text-primary" />
+                          </div>
+                          <Badge variant="secondary" className="text-xs">
+                            {example.variant}
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-base sm:text-lg flex items-center justify-between">
+                          {example.title}
+                          <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <p className="text-sm text-muted-foreground mb-3">
+                          {example.description}
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(example.route);
+                          }}
+                        >
+                          View Example
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              <div className="text-center">
+                <Button 
+                  variant="outline" 
+                  onClick={() => navigate('/examples/auth')}
+                >
+                  View All Examples <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
               </div>
             </section>
 
@@ -460,61 +520,7 @@ import '@voilajsx/uikit/styles';`;
               </div>
             </section>
 
-            {/* Live Examples Grid */}
-            <section id="examples" className="mb-16">
-              <h2 className="text-2xl sm:text-3xl font-semibold text-foreground mb-6">Live Examples</h2>
-              
-              <p className="text-muted-foreground mb-8 text-sm sm:text-base">
-                Interactive examples showcasing different use cases and patterns:
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
-                {exampleCards.map((example) => {
-                  const Icon = example.icon;
-                  return (
-                    <Card key={example.title} className="group hover:shadow-md transition-all duration-200 border-border hover:border-primary/30">
-                      <CardHeader className="pb-3">
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                            <Icon className="h-4 w-4 text-primary" />
-                          </div>
-                          <Badge variant="secondary" className="text-xs">
-                            {example.variant}
-                          </Badge>
-                        </div>
-                        <CardTitle className="text-base sm:text-lg flex items-center justify-between">
-                          {example.title}
-                          <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <p className="text-sm text-muted-foreground mb-3">
-                          {example.description}
-                        </p>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="w-full"
-                          asChild
-                        >
-                          <a href={example.href} target="_blank" rel="noopener noreferrer">
-                            View Example
-                          </a>
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
-
-              <div className="text-center">
-                <Button variant="outline" asChild>
-                  <a href="/examples/auth" target="_blank" rel="noopener noreferrer">
-                    View All Examples <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              </div>
-            </section>
+            
 
             {/* Practical Example */}
             <section className="mb-16">
@@ -640,7 +646,12 @@ import '@voilajsx/uikit/styles';`;
             <footer className="mt-16 pt-8 border-t border-border text-center text-sm text-muted-foreground">
               <p>
                 AuthTemplate is part of @voilajsx/uikit. 
-                <a href="/components" className="text-primary hover:underline ml-1">View all components</a>
+                <button 
+                  onClick={() => navigate('/components')}
+                  className="text-primary hover:underline ml-1"
+                >
+                  View all components
+                </button>
               </p>
             </footer>
 
@@ -648,6 +659,7 @@ import '@voilajsx/uikit/styles';`;
         </div>
       </div>
     </div>
+    </Layout>
   );
 }
 

@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import  Layout  from '../components/Layout.tsx';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import { Button } from '@voilajsx/uikit/button';
 import { Badge } from '@voilajsx/uikit/badge';
@@ -57,7 +58,8 @@ function Templates(): JSX.Element {
   ];
 
   return (
-    <div className="space-y-12">
+    <Layout>
+<div className="space-y-12">
       {/* Header */}
       <div>
         <h1 className="text-4xl font-bold mb-4">Page Templates</h1>
@@ -292,6 +294,8 @@ function Templates(): JSX.Element {
         </div>
       </section>
     </div>
+    </Layout>
+    
   );
 }
 

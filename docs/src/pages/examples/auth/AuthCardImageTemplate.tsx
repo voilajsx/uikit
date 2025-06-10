@@ -18,7 +18,7 @@ import { Sparkles, Github, Mail, ArrowRight, Eye, EyeOff } from 'lucide-react';
 function ImageLogo() {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
+      <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg">
         <Sparkles className="h-5 w-5 text-white" />
       </div>
       <span className="text-2xl font-bold text-white">
@@ -98,7 +98,7 @@ function AuthCardImageTemplate() {
             id="email"
             type="email"
             placeholder="Enter your email"
-            className="h-12 bg-white/80 border-border focus:border-emerald-400 focus:ring-emerald-400/20 rounded-xl px-4 text-foreground placeholder:text-muted-foreground transition-all duration-200 backdrop-blur-sm"
+            className="h-12 bg-white/80 border-border focus:border-primary focus:ring-primary/40 rounded-xl px-4 text-foreground placeholder:text-muted-foreground transition-all duration-200 backdrop-blur-sm"
             suppressHydrationWarning
           />
         </div>
@@ -112,7 +112,7 @@ function AuthCardImageTemplate() {
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              className="h-12 bg-white/80 border-border focus:border-emerald-400 focus:ring-emerald-400/20 rounded-xl px-4 pr-12 text-foreground placeholder:text-muted-foreground transition-all duration-200 backdrop-blur-sm"
+              className="h-12 bg-white/80 border-border focus:border-primary focus:ring-primary/40 rounded-xl px-4 pr-12 text-foreground placeholder:text-muted-foreground transition-all duration-200 backdrop-blur-sm"
               suppressHydrationWarning
             />
             <button
@@ -134,21 +134,21 @@ function AuthCardImageTemplate() {
           <label className="flex items-center gap-2.5 cursor-pointer">
             <input 
               type="checkbox" 
-              className="w-4 h-4 rounded border-border text-emerald-600 focus:ring-emerald-400/20 focus:ring-2" 
+              className="w-4 h-4 rounded border-border text-primary focus:ring-primary/20 focus:ring-2" 
               suppressHydrationWarning
             />
             <span className="text-muted-foreground text-sm select-none">Remember me</span>
           </label>
           <a 
             href="/forgot-password" 
-            className="text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors"
+            className="text-primary hover:text-primary/80 font-medium text-sm transition-colors"
           >
             Forgot password?
           </a>
         </div>
 
         <Button 
-          className="w-full h-12 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl" 
+          className="w-full h-12 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-accent text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl" 
           suppressHydrationWarning
         >
           <span>Sign in to Zenith</span>
@@ -169,7 +169,7 @@ function AuthCardImageTemplate() {
         <div className="grid grid-cols-2 gap-3">
           <Button 
             variant="outline" 
-            className="h-12 bg-white/80 border-border hover:bg-white hover:border-border/80 text-foreground rounded-xl transition-all duration-200 backdrop-blur-sm" 
+            className="h-12 bg-white/80 border-border hover:bg-accent hover:border-border/80 text-foreground rounded-xl transition-all duration-200 backdrop-blur-sm" 
             suppressHydrationWarning
           >
             <Github className="h-4 w-4 mr-2" />
@@ -177,7 +177,7 @@ function AuthCardImageTemplate() {
           </Button>
           <Button 
             variant="outline" 
-            className="h-12 bg-white/80 border-border hover:bg-white hover:border-border/80 text-foreground rounded-xl transition-all duration-200 backdrop-blur-sm" 
+            className="h-12 bg-white/80 border-border hover:bg-accent hover:border-border/80 text-foreground rounded-xl transition-all duration-200 backdrop-blur-sm" 
             suppressHydrationWarning
           >
             <Mail className="h-4 w-4 mr-2" />

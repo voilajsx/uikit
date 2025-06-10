@@ -1,8 +1,9 @@
 import React from 'react';
+import Layout from '../components/Layout';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import { Button } from '@voilajsx/uikit/button';
 import { Badge } from '@voilajsx/uikit/badge';
-import { Layout, Shield, FileText, Table, Minus } from 'lucide-react';
+import { Layout as LayoutIcon, Shield, FileText, Table, Minus } from 'lucide-react';
 import CodeBlock from '../components/CodeBlock';
 
 const authTemplateCode = `import { AuthTemplate } from '@voilajsx/uikit/templates/auth';
@@ -188,7 +189,8 @@ const templates = [
 
 function Templates() {
   return (
-    <div className="space-y-12">
+    <Layout>
+      <div className="space-y-12">
       {/* Header */}
       <div>
         <h1 className="text-4xl font-bold mb-4">Page Templates</h1>
@@ -300,6 +302,7 @@ function Templates() {
         </Card>
       </section>
     </div>
+    </Layout>
   );
 }
 

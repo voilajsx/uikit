@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
+import Layout from '../components/Layout';
 import { Button } from '@voilajsx/uikit/button';
 import { Badge } from '@voilajsx/uikit/badge';
 import { Alert, AlertDescription } from '@voilajsx/uikit/alert';
@@ -80,7 +81,8 @@ const componentsData = [
 
 function Components() {
   return (
-    <div className="space-y-12">
+   <Layout>
+     <div className="space-y-12">
       {/* Header */}
       <div>
         <h1 className="text-4xl font-bold mb-4">Components</h1>
@@ -212,6 +214,7 @@ function Components() {
         </Button>
       </section>
     </div>
+   </Layout>
   );
 }
 

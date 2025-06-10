@@ -317,7 +317,7 @@
     "tailwindcss": "^4.1.8",
     "typescript": "^5.2.2",
     "vite": "^6.3.5",
-    "vitest": "^2.0.0"
+    "vitest": "^3.2.3"
   },
   "engines": {
     "node": ">=18.0.0",
