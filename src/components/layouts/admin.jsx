@@ -1,8 +1,8 @@
 /**
- * @fileoverview Enhanced Admin template with proper color contrast handling
+ * @fileoverview Admin layout template for @voilajsx/uikit
  * @description Clean admin layout with proper theming for light/dark modes
  * @package @voilajsx/uikit
- * @file /src/templates/admin.jsx
+ * @file /src/components/layouts/admin.jsx
  */
 
 import React, { forwardRef, useState, useEffect } from "react";

@@ -37,7 +37,7 @@
   "types": "./dist/types/index.d.ts",
   "sideEffects": [
     "**/*.css",
-    "./dist/style.css"
+    "./dist/styles.css"
   ],
   "bin": {
     "voila-bundle": "./bin/theme-bundler.js"
@@ -48,196 +48,196 @@
       "types": "./dist/types/index.d.ts"
     },
     "./styles": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
+      "import": "./dist/styles.css",
+      "require": "./dist/styles.css"
     },
     "./accordion": {
-      "import": "./dist/components/ui/accordion.js",
+      "import": "./dist/accordion.js",
       "types": "./dist/types/components/ui/accordion.d.ts"
     },
     "./alert": {
-      "import": "./dist/components/ui/alert.js",
+      "import": "./dist/alert.js",
       "types": "./dist/types/components/ui/alert.d.ts"
     },
     "./avatar": {
-      "import": "./dist/components/ui/avatar.js",
+      "import": "./dist/avatar.js",
       "types": "./dist/types/components/ui/avatar.d.ts"
     },
     "./badge": {
-      "import": "./dist/components/ui/badge.js",
+      "import": "./dist/badge.js",
       "types": "./dist/types/components/ui/badge.d.ts"
     },
     "./breadcrumb": {
-      "import": "./dist/components/ui/breadcrumb.js",
+      "import": "./dist/breadcrumb.js",
       "types": "./dist/types/components/ui/breadcrumb.d.ts"
     },
     "./button": {
-      "import": "./dist/components/ui/button.js",
+      "import": "./dist/button.js",
       "types": "./dist/types/components/ui/button.d.ts"
     },
+    "./calendar": {
+      "import": "./dist/calendar.js",
+      "types": "./dist/types/components/ui/calendar.d.ts"
+    },
     "./card": {
-      "import": "./dist/components/ui/card.js",
+      "import": "./dist/card.js",
       "types": "./dist/types/components/ui/card.d.ts"
     },
     "./checkbox": {
-      "import": "./dist/components/ui/checkbox.js",
+      "import": "./dist/checkbox.js",
       "types": "./dist/types/components/ui/checkbox.d.ts"
     },
+    "./collapsible": {
+      "import": "./dist/collapsible.js",
+      "types": "./dist/types/components/ui/collapsible.d.ts"
+    },
     "./command": {
-      "import": "./dist/components/ui/command.js",
+      "import": "./dist/command.js",
       "types": "./dist/types/components/ui/command.d.ts"
     },
     "./data-table": {
-      "import": "./dist/components/ui/data-table.js",
+      "import": "./dist/data-table.js",
       "types": "./dist/types/components/ui/data-table.d.ts"
     },
     "./dialog": {
-      "import": "./dist/components/ui/dialog.js",
+      "import": "./dist/dialog.js",
       "types": "./dist/types/components/ui/dialog.d.ts"
     },
     "./dropdown-menu": {
-      "import": "./dist/components/ui/dropdown-menu.js",
+      "import": "./dist/dropdown-menu.js",
       "types": "./dist/types/components/ui/dropdown-menu.d.ts"
     },
     "./form": {
-      "import": "./dist/components/ui/form.js",
+      "import": "./dist/form.js",
       "types": "./dist/types/components/ui/form.d.ts"
     },
+    "./hover-card": {
+      "import": "./dist/hover-card.js",
+      "types": "./dist/types/components/ui/hover-card.d.ts"
+    },
     "./input": {
-      "import": "./dist/components/ui/input.js",
+      "import": "./dist/input.js",
       "types": "./dist/types/components/ui/input.d.ts"
     },
     "./label": {
-      "import": "./dist/components/ui/label.js",
+      "import": "./dist/label.js",
       "types": "./dist/types/components/ui/label.d.ts"
     },
     "./menubar": {
-      "import": "./dist/components/ui/menubar.js",
+      "import": "./dist/menubar.js",
       "types": "./dist/types/components/ui/menubar.d.ts"
     },
     "./pagination": {
-      "import": "./dist/components/ui/pagination.js",
+      "import": "./dist/pagination.js",
       "types": "./dist/types/components/ui/pagination.d.ts"
     },
     "./popover": {
-      "import": "./dist/components/ui/popover.js",
+      "import": "./dist/popover.js",
       "types": "./dist/types/components/ui/popover.d.ts"
     },
     "./progress": {
-      "import": "./dist/components/ui/progress.js",
+      "import": "./dist/progress.js",
       "types": "./dist/types/components/ui/progress.d.ts"
     },
     "./radio-group": {
-      "import": "./dist/components/ui/radio-group.js",
+      "import": "./dist/radio-group.js",
       "types": "./dist/types/components/ui/radio-group.d.ts"
     },
     "./select": {
-      "import": "./dist/components/ui/select.js",
+      "import": "./dist/select.js",
       "types": "./dist/types/components/ui/select.d.ts"
     },
     "./separator": {
-      "import": "./dist/components/ui/separator.js",
+      "import": "./dist/separator.js",
       "types": "./dist/types/components/ui/separator.d.ts"
     },
     "./sheet": {
-      "import": "./dist/components/ui/sheet.js",
+      "import": "./dist/sheet.js",
       "types": "./dist/types/components/ui/sheet.d.ts"
     },
     "./skeleton": {
-      "import": "./dist/components/ui/skeleton.js",
+      "import": "./dist/skeleton.js",
       "types": "./dist/types/components/ui/skeleton.d.ts"
     },
     "./slider": {
-      "import": "./dist/components/ui/slider.js",
+      "import": "./dist/slider.js",
       "types": "./dist/types/components/ui/slider.d.ts"
     },
     "./switch": {
-      "import": "./dist/components/ui/switch.js",
+      "import": "./dist/switch.js",
       "types": "./dist/types/components/ui/switch.d.ts"
     },
     "./table": {
-      "import": "./dist/components/ui/table.js",
+      "import": "./dist/table.js",
       "types": "./dist/types/components/ui/table.d.ts"
     },
     "./tabs": {
-      "import": "./dist/components/ui/tabs.js",
+      "import": "./dist/tabs.js",
       "types": "./dist/types/components/ui/tabs.d.ts"
     },
     "./textarea": {
-      "import": "./dist/components/ui/textarea.js",
+      "import": "./dist/textarea.js",
       "types": "./dist/types/components/ui/textarea.d.ts"
     },
     "./toast": {
-      "import": "./dist/components/ui/toast.js",
+      "import": "./dist/toast.js",
       "types": "./dist/types/components/ui/toast.d.ts"
     },
     "./toggle": {
-      "import": "./dist/components/ui/toggle.js",
+      "import": "./dist/toggle.js",
       "types": "./dist/types/components/ui/toggle.d.ts"
     },
     "./tooltip": {
-      "import": "./dist/components/ui/tooltip.js",
+      "import": "./dist/tooltip.js",
       "types": "./dist/types/components/ui/tooltip.d.ts"
     },
+    "./admin": {
+      "import": "./dist/admin.js",
+      "types": "./dist/types/components/layouts/admin.d.ts"
+    },
+    "./auth": {
+      "import": "./dist/auth.js",
+      "types": "./dist/types/components/layouts/auth.d.ts"
+    },
+    "./blank": {
+      "import": "./dist/blank.js",
+      "types": "./dist/types/components/layouts/blank.d.ts"
+    },
+    "./page": {
+      "import": "./dist/page.js",
+      "types": "./dist/types/components/layouts/page.d.ts"
+    },
     "./container": {
-      "import": "./dist/components/layouts/container.js",
-      "types": "./dist/types/components/layouts/container.d.ts"
+      "import": "./dist/container.js",
+      "types": "./dist/types/components/sections/container.d.ts"
     },
     "./header": {
-      "import": "./dist/components/layouts/header.js",
-      "types": "./dist/types/components/layouts/header.d.ts"
+      "import": "./dist/header.js",
+      "types": "./dist/types/components/sections/header.d.ts"
     },
     "./footer": {
-      "import": "./dist/components/layouts/footer.js",
-      "types": "./dist/types/components/layouts/footer.d.ts"
-    },
-    "./sidebar": {
-      "import": "./dist/components/layouts/sidebar.js",
-      "types": "./dist/types/components/layouts/sidebar.d.ts"
-    },
-    "./templates/auth": {
-      "import": "./dist/templates/auth.js",
-      "types": "./dist/types/templates/auth.d.ts"
-    },
-    "./templates/blank": {
-      "import": "./dist/templates/blank.js",
-      "types": "./dist/types/templates/blank.d.ts"
-    },
-    "./templates/default": {
-      "import": "./dist/templates/default.js",
-      "types": "./dist/types/templates/default.d.ts"
-    },
-    "./templates/form": {
-      "import": "./dist/templates/form.js",
-      "types": "./dist/types/templates/form.d.ts"
-    },
-    "./templates/table": {
-      "import": "./dist/templates/table.js",
-      "types": "./dist/types/templates/table.d.ts"
+      "import": "./dist/footer.js",
+      "types": "./dist/types/components/sections/footer.d.ts"
     },
     "./theme-provider": {
-      "import": "./dist/themes/theme-provider.js",
+      "import": "./dist/theme-provider.js",
       "types": "./dist/types/themes/theme-provider.d.ts"
     },
+    "./themes": {
+      "import": "./dist/themes.js",
+      "types": "./dist/types/themes/index.d.ts"
+    },
     "./utils": {
-      "import": "./dist/lib/utils.js",
+      "import": "./dist/utils.js",
       "types": "./dist/types/lib/utils.d.ts"
     },
     "./platform": {
-      "import": "./dist/lib/platform.js",
+      "import": "./dist/platform.js",
       "types": "./dist/types/lib/platform.d.ts"
     },
-    "./adapters/hooks": {
-      "import": "./dist/adapters/hooks.js",
-      "types": "./dist/types/adapters/hooks.d.ts"
-    },
-    "./adapters/web": {
-      "import": "./dist/adapters/web.js",
-      "types": "./dist/types/adapters/web.d.ts"
-    },
-    "./adapters/native": {
-      "import": "./dist/adapters/native.js",
-      "types": "./dist/types/adapters/native.d.ts"
+    "./adapters": {
+      "import": "./dist/adapters.js",
+      "types": "./dist/types/adapters/index.d.ts"
     }
   },
   "files": [
@@ -248,7 +248,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "npm run clean  && npm run build:lib && npm run build:types",
+    "build": "npm run clean && npm run build:lib && npm run build:types",
     "build:lib": "vite build",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
     "clean": "rm -rf dist",
@@ -281,9 +281,12 @@
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.3.2",
+    "@radix-ui/react-collapsible": "^1.1.4",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@radix-ui/react-hover-card": "^1.1.10",
     "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-menubar": "^1.1.7",
     "@radix-ui/react-popover": "^1.1.14",
     "@radix-ui/react-progress": "^1.1.7",
     "@radix-ui/react-radio-group": "^1.3.7",

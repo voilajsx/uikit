@@ -1,6 +1,6 @@
 /**
  * @fileoverview Vite configuration for @voilajsx/uikit library
- * @description Builds components as library with proper React externalization
+ * @description Builds components with flat import structure for clean DX
  * @package @voilajsx/uikit
  * @file /vite.config.js
  */
@@ -16,167 +16,109 @@ export default defineConfig({
     lib: {
       entry: {
         // CSS entry
-        style: path.resolve(__dirname, 'src/style.js'),
+        styles: path.resolve(__dirname, 'src/style.js'),
 
-        // Individual components - explicitly define each one
-        'components/ui/button': path.resolve(
+        // UI Components - Flat structure
+        accordion: path.resolve(__dirname, 'src/components/ui/accordion.jsx'),
+        alert: path.resolve(__dirname, 'src/components/ui/alert.jsx'),
+        avatar: path.resolve(__dirname, 'src/components/ui/avatar.jsx'),
+        badge: path.resolve(__dirname, 'src/components/ui/badge.jsx'),
+        breadcrumb: path.resolve(__dirname, 'src/components/ui/breadcrumb.jsx'),
+        button: path.resolve(__dirname, 'src/components/ui/button.jsx'),
+        calendar: path.resolve(__dirname, 'src/components/ui/calendar.jsx'),
+        card: path.resolve(__dirname, 'src/components/ui/card.jsx'),
+        checkbox: path.resolve(__dirname, 'src/components/ui/checkbox.jsx'),
+        collapsible: path.resolve(
           __dirname,
-          'src/components/ui/button.jsx'
+          'src/components/ui/collapsible.jsx'
         ),
-        'components/ui/card': path.resolve(
+        command: path.resolve(__dirname, 'src/components/ui/command.jsx'),
+        'data-table': path.resolve(
           __dirname,
-          'src/components/ui/card.jsx'
+          'src/components/ui/data-table.jsx'
         ),
-        'components/ui/input': path.resolve(
-          __dirname,
-          'src/components/ui/input.jsx'
-        ),
-        'components/ui/badge': path.resolve(
-          __dirname,
-          'src/components/ui/badge.jsx'
-        ),
-        'components/ui/avatar': path.resolve(
-          __dirname,
-          'src/components/ui/avatar.jsx'
-        ),
-        'components/ui/checkbox': path.resolve(
-          __dirname,
-          'src/components/ui/checkbox.jsx'
-        ),
-        'components/ui/dialog': path.resolve(
-          __dirname,
-          'src/components/ui/dialog.jsx'
-        ),
-        'components/ui/dropdown-menu': path.resolve(
+        dialog: path.resolve(__dirname, 'src/components/ui/dialog.jsx'),
+        'dropdown-menu': path.resolve(
           __dirname,
           'src/components/ui/dropdown-menu.jsx'
         ),
-        'components/ui/form': path.resolve(
+        form: path.resolve(__dirname, 'src/components/ui/form.jsx'),
+        'hover-card': path.resolve(
           __dirname,
-          'src/components/ui/form.jsx'
+          'src/components/ui/hover-card.jsx'
         ),
-        'components/ui/label': path.resolve(
-          __dirname,
-          'src/components/ui/label.jsx'
-        ),
-        'components/ui/menubar': path.resolve(
-          __dirname,
-          'src/components/ui/menubar.jsx'
-        ),
-        'components/ui/pagination': path.resolve(
-          __dirname,
-          'src/components/ui/pagination.jsx'
-        ),
-        'components/ui/popover': path.resolve(
-          __dirname,
-          'src/components/ui/popover.jsx'
-        ),
-        'components/ui/progress': path.resolve(
-          __dirname,
-          'src/components/ui/progress.jsx'
-        ),
-        'components/ui/radio-group': path.resolve(
+        input: path.resolve(__dirname, 'src/components/ui/input.jsx'),
+        label: path.resolve(__dirname, 'src/components/ui/label.jsx'),
+        menubar: path.resolve(__dirname, 'src/components/ui/menubar.jsx'),
+        pagination: path.resolve(__dirname, 'src/components/ui/pagination.jsx'),
+        popover: path.resolve(__dirname, 'src/components/ui/popover.jsx'),
+        progress: path.resolve(__dirname, 'src/components/ui/progress.jsx'),
+        'radio-group': path.resolve(
           __dirname,
           'src/components/ui/radio-group.jsx'
         ),
-        'components/ui/select': path.resolve(
-          __dirname,
-          'src/components/ui/select.jsx'
-        ),
-        'components/ui/separator': path.resolve(
-          __dirname,
-          'src/components/ui/separator.jsx'
-        ),
-        'components/ui/sheet': path.resolve(
-          __dirname,
-          'src/components/ui/sheet.jsx'
-        ),
-        'components/ui/skeleton': path.resolve(
-          __dirname,
-          'src/components/ui/skeleton.jsx'
-        ),
-        'components/ui/slider': path.resolve(
-          __dirname,
-          'src/components/ui/slider.jsx'
-        ),
-        'components/ui/switch': path.resolve(
-          __dirname,
-          'src/components/ui/switch.jsx'
-        ),
-        'components/ui/table': path.resolve(
-          __dirname,
-          'src/components/ui/table.jsx'
-        ),
-        'components/ui/tabs': path.resolve(
-          __dirname,
-          'src/components/ui/tabs.jsx'
-        ),
-        'components/ui/textarea': path.resolve(
-          __dirname,
-          'src/components/ui/textarea.jsx'
-        ),
-        'components/ui/toast': path.resolve(
-          __dirname,
-          'src/components/ui/toast.jsx'
-        ),
-        'components/ui/toggle': path.resolve(
-          __dirname,
-          'src/components/ui/toggle.jsx'
-        ),
-        'components/ui/tooltip': path.resolve(
-          __dirname,
-          'src/components/ui/tooltip.jsx'
-        ),
+        select: path.resolve(__dirname, 'src/components/ui/select.jsx'),
+        separator: path.resolve(__dirname, 'src/components/ui/separator.jsx'),
+        sheet: path.resolve(__dirname, 'src/components/ui/sheet.jsx'),
+        skeleton: path.resolve(__dirname, 'src/components/ui/skeleton.jsx'),
+        slider: path.resolve(__dirname, 'src/components/ui/slider.jsx'),
+        switch: path.resolve(__dirname, 'src/components/ui/switch.jsx'),
+        table: path.resolve(__dirname, 'src/components/ui/table.jsx'),
+        tabs: path.resolve(__dirname, 'src/components/ui/tabs.jsx'),
+        textarea: path.resolve(__dirname, 'src/components/ui/textarea.jsx'),
+        toast: path.resolve(__dirname, 'src/components/ui/toast.jsx'),
+        toggle: path.resolve(__dirname, 'src/components/ui/toggle.jsx'),
+        tooltip: path.resolve(__dirname, 'src/components/ui/tooltip.jsx'),
 
-        // Layout components
-        'components/layouts/container': path.resolve(
-          __dirname,
-          'src/components/layouts/container.jsx'
-        ),
-        'components/layouts/header': path.resolve(
-          __dirname,
-          'src/components/layouts/header.jsx'
-        ),
-        'components/layouts/footer': path.resolve(
-          __dirname,
-          'src/components/layouts/footer.jsx'
-        ),
-        'components/layouts/sidebar': path.resolve(
-          __dirname,
-          'src/components/layouts/sidebar.jsx'
-        ),
+        // Layout Components - Flat structure
+        admin: path.resolve(__dirname, 'src/components/layouts/admin.jsx'),
+        auth: path.resolve(__dirname, 'src/components/layouts/auth.jsx'),
+        blank: path.resolve(__dirname, 'src/components/layouts/blank.jsx'),
+        page: path.resolve(__dirname, 'src/components/layouts/page.jsx'),
 
-        // Theme provider
-        'themes/theme-provider': path.resolve(
+        // Section Components - Flat structure
+        container: path.resolve(
+          __dirname,
+          'src/components/sections/container.jsx'
+        ),
+        header: path.resolve(__dirname, 'src/components/sections/header.jsx'),
+        footer: path.resolve(__dirname, 'src/components/sections/footer.jsx'),
+
+        // Theme System - Flat structure
+        'theme-provider': path.resolve(
           __dirname,
           'src/themes/theme-provider.jsx'
         ),
+        themes: path.resolve(__dirname, 'src/themes/index.js'),
 
-        // Utils
-        'lib/utils': path.resolve(__dirname, 'src/lib/utils.js'),
-        'lib/platform': path.resolve(__dirname, 'src/lib/platform.js'),
+        // Utilities - Flat structure
+        utils: path.resolve(__dirname, 'src/lib/utils.js'),
+        platform: path.resolve(__dirname, 'src/lib/platform.js'),
 
-        // Adapters
-        'adapters/hooks': path.resolve(__dirname, 'src/adapters/hooks.js'),
-        'adapters/web': path.resolve(__dirname, 'src/adapters/web.js'),
-        'adapters/native': path.resolve(__dirname, 'src/adapters/native.js'),
+        // Cross-Platform Adapters - Flat structure
+        adapters: path.resolve(__dirname, 'src/adapters/index.js'),
       },
-      formats: ['es'], // Only ES modules
+      formats: ['es'], // Only ES modules for modern bundlers
     },
     rollupOptions: {
-      // CRITICAL: Externalize everything that should be provided by the consumer
+      // Externalize all peer dependencies
       external: [
+        // React ecosystem
         'react',
         'react-dom',
         'react/jsx-runtime',
         'react/jsx-dev-runtime',
-        // Radix UI
+
+        // Radix UI primitives
         '@radix-ui/react-accordion',
         '@radix-ui/react-avatar',
         '@radix-ui/react-checkbox',
+        '@radix-ui/react-collapsible',
         '@radix-ui/react-dialog',
         '@radix-ui/react-dropdown-menu',
+        '@radix-ui/react-hover-card',
         '@radix-ui/react-label',
+        '@radix-ui/react-menubar',
         '@radix-ui/react-popover',
         '@radix-ui/react-progress',
         '@radix-ui/react-radio-group',
@@ -189,38 +131,85 @@ export default defineConfig({
         '@radix-ui/react-toast',
         '@radix-ui/react-toggle',
         '@radix-ui/react-tooltip',
-        // Utilities
+
+        // Form handling
+        'react-hook-form',
+        '@hookform/resolvers',
+        '@hookform/resolvers/zod',
+        'zod',
+
+        // Styling utilities
         'class-variance-authority',
         'clsx',
         'tailwind-merge',
+
+        // Icons
         'lucide-react',
-        'react-hook-form',
-        '@hookform/resolvers',
-        'zod',
+
+        // React Native (when available)
+        'react-native',
       ],
       output: {
-        // Handle CSS files
+        // Proper asset handling
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
-            return 'style.css';
+            return 'styles.css'; // Match the entry name
           }
-          return 'assets/[name].[ext]';
+          return 'assets/[name].[hash][extname]';
         },
-        // Ensure proper ES module output
+        // ES module format
         format: 'es',
-        // Don't create globals (we're building ES modules)
-        globals: undefined,
+        // Clean file names for flat structure
+        entryFileNames: '[name].js',
+        chunkFileNames: 'chunks/[name].[hash].js',
       },
     },
-    minify: false, // Don't minify - let consumers handle this
+    // Don't minify - let consumers handle optimization
+    minify: false,
+    // Generate source maps for debugging
     sourcemap: true,
+    // Target modern environments
+    target: 'es2020',
+    // Clean dist before build
+    emptyOutDir: true,
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      // Map internal imports to relative paths during build
+      '@voilajsx/uikit/utils': path.resolve(__dirname, './src/lib/utils.js'),
+      '@voilajsx/uikit/button': path.resolve(
+        __dirname,
+        './src/components/ui/button.jsx'
+      ),
+      '@voilajsx/uikit/badge': path.resolve(
+        __dirname,
+        './src/components/ui/badge.jsx'
+      ),
+      '@voilajsx/uikit/separator': path.resolve(
+        __dirname,
+        './src/components/ui/separator.jsx'
+      ),
+      '@voilajsx/uikit/header': path.resolve(
+        __dirname,
+        './src/components/sections/header.jsx'
+      ),
+      '@voilajsx/uikit/footer': path.resolve(
+        __dirname,
+        './src/components/sections/footer.jsx'
+      ),
+      '@voilajsx/uikit/container': path.resolve(
+        __dirname,
+        './src/components/sections/container.jsx'
+      ),
     },
   },
   css: {
     devSourcemap: false,
+  },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(
+      process.env.NODE_ENV || 'production'
+    ),
   },
 });

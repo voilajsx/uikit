@@ -10,7 +10,7 @@
  */
 export const Button: import("react").ForwardRefExoticComponent<import("react").RefAttributes<any>>;
 export const buttonVariants: (props?: ({
-    variant?: "default" | "link" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined;
-    size?: "default" | "sm" | "lg" | "icon" | null | undefined;
+    variant?: "default" | "link" | "secondary" | "outline" | "ghost" | "destructive" | null | undefined;
+    size?: "default" | "icon" | "sm" | "lg" | null | undefined;
 } & import("class-variance-authority/dist/types").ClassProp) | undefined) => string;
 //# sourceMappingURL=button.d.ts.map

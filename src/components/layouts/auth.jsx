@@ -1,5 +1,5 @@
 /**
- * AuthTemplate - Unified authentication layout component with variants
+ * @fileoverviewAuth Template
  * @module @voilajsx/uikit
  * @file src/components/layouts/auth.jsx
  */

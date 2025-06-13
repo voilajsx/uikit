@@ -2,7 +2,7 @@
  * @fileoverview Simplified Page template with consistent prop naming
  * @description Clean page layout using compound components with standardized props
  * @package @voilajsx/uikit
- * @file /src/components/layout/page.jsx
+ * @file /src/components/layouts/page.jsx
  */
 
 import { forwardRef, createContext, useContext } from "react";
