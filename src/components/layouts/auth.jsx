@@ -1,11 +1,11 @@
 /**
  * AuthTemplate - Unified authentication layout component with variants
  * @module @voilajsx/uikit
- * @file src/templates/auth.jsx
+ * @file src/components/layouts/auth.jsx
  */
 
 import React from 'react';
-import { cn } from '../lib/utils';
+import { cn } from '../../lib/utils';
 
 /**
  * AuthTemplate - Unified authentication layout with multiple variants

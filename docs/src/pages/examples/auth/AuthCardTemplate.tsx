@@ -9,7 +9,7 @@ import { Button } from '@voilajsx/uikit/button';
 import { Input } from '@voilajsx/uikit/input';
 import { Label } from '@voilajsx/uikit/label';
 import { Separator } from '@voilajsx/uikit/separator';
-import { AuthTemplate } from '@voilajsx/uikit/templates/auth';
+import { AuthTemplate } from '@voilajsx/uikit/auth';
 import { Sparkles, Github, Mail } from 'lucide-react';
 
 /**

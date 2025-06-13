@@ -1,284 +1,320 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import  Layout  from '../components/Layout.tsx';
-import { Button } from '../../../src/components/ui/button.jsx';
-import { Card, CardHeader, CardTitle, CardContent } from '../../../src/components/ui/card.jsx';
-import { Badge } from '../../../src/components/ui/badge.jsx';
-import { ArrowRight, Palette, Smartphone, Layout as LayoutIcon, Zap, Code2, Star } from 'lucide-react';
-import CodeBlock from '../components/CodeBlock';
-
-const installCode = `npm install @voilajsx/uikit`;
-
-const quickStartCode = `import { Button } from '@voilajsx/uikit/button';
-import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
-import '@voilajsx/uikit/styles';
-
-function App() {
-  return (
-    <ThemeProvider theme="ruby" variant="light">
-      <div className="p-8">
-        <Button size="lg">Beautiful Button</Button>
-      </div>
-    </ThemeProvider>
-  );
-}`;
-
-const templateExample = `import { AdminTemplate } from '@voilajsx/uikit/templates/admin';
-
-function Dashboard() {
-  return (
-    <AdminTemplate
-      title="My Dashboard"
-      sidebarContent={<Navigation />}
-      headerActions={<ThemeSwitcher />}
-    >
-      <h1>Dashboard Content</h1>
-    </AdminTemplate>
-  );
-}`;
-
-const themeExample = `// Switch themes instantly
-const { setTheme } = useTheme();
-
-<Button onClick={() => setTheme('neon')}>
-  Neon Theme
-</Button>`;
+import { Button } from '@voilajsx/uikit/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
+import { Badge } from '@voilajsx/uikit/badge';
+import { ArrowRight, Palette, Smartphone, Layout as LayoutIcon, Zap, Code2, Star, Github, ExternalLink } from 'lucide-react';
+import Layout from '../components/Layout';
 
 function Home() {
   return (
     <Layout>
       <div className="space-y-16 sm:space-y-20 w-full max-w-none">
-        {/* Hero Section - Redesigned */}
-        <section className="text-center space-y-6 sm:space-y-8 w-full py-8 sm:py-12">
+        {/* Hero Section - Simplified */}
+        <section className="text-center space-y-6 sm:space-y-8 w-full py-12 sm:py-16">
           <Badge variant="secondary" className="mb-4 text-xs sm:text-sm bg-primary/10 text-primary border-primary/20">
-            Open Source • MIT License
+            Open Source • MIT License 
           </Badge>
           
-          <div className="space-y-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight px-2">
+          <div className="space-y-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight px-2">
               <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                 @voilajsx/uikit
               </span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto px-4 leading-relaxed">
-              <span className="font-medium text-foreground"> Beautiful Themes</span> +
-              <span className="font-medium text-foreground">Templates</span> + 
-              <span className="font-medium text-foreground"> Cross-Platform</span>
+            <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground max-w-4xl mx-auto px-4 leading-relaxed">
+              <span className="font-semibold text-foreground">Custom Themes</span> + 
+              <span className="font-semibold text-foreground"> Ready Layouts</span> + 
+              <span className="font-semibold text-foreground"> Cross-Platform</span>
             </p>
             
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
-              Same components you love, with professional themes, page templates, and universal platform support.
+            <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto px-4 leading-relaxed">
+              Drop-in replacement for shadcn/ui components, built with React and Tailwind v4, compatible with Next.js, Vite, or any framework
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 max-w-md sm:max-w-none mx-auto pt-4">
-            <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg" asChild>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center px-4 max-w-lg sm:max-w-none mx-auto pt-6">
+            <Button size="lg" className="w-full sm:w-auto text-lg px-8 py-6 shadow-lg" asChild>
               <Link to="/start">
-                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                Get Started <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto border-accent text-accent hover:bg-accent hover:text-accent-foreground" asChild>
-              <Link to="/components">Explore Components</Link>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg px-8 py-6" asChild>
+              <Link to="/examples">Live Examples</Link>
             </Button>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="flex flex-wrap justify-center gap-6 pt-8 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <span>30+ UI Components</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <span>3 Prebuilt Sections</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <span>4 Page Layouts</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <span>6 Themes</span>
+            </div>
           </div>
         </section>
 
-        {/* Key Features - Enhanced grid */}
+        {/* Key Value Propositions */}
         <section className="w-full">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-foreground">
-            Everything You Need, Out of the Box
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-foreground">
+            Why Choose @voilajsx/uikit?
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className=" bg-card text-card-foreground hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="border-border  bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
               <CardHeader className="pb-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Palette className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Zap className="h-6 w-6 text-primary" />
+                  </div>
+                  <Badge variant="secondary" className="text-xs">Zero Migration</Badge>
+                </div>
+                <CardTitle className="text-xl">Drop-in Replacement</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground leading-relaxed">
+                  100% compatible with shadcn/ui. Just change imports and instantly get themes, templates, and cross-platform support.
+                </p>
+                <p className="text-sm font-mono bg-muted/50 p-2 rounded">
+                  @/components/ui/button → @voilajsx/uikit/button
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+              <CardHeader className="pb-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Palette className="h-6 w-6 text-primary" />
                   </div>
                   <Badge variant="secondary" className="text-xs">6 Themes</Badge>
                 </div>
-                <CardTitle className="text-lg text-card-foreground">Beautiful Themes</CardTitle>
+                <CardTitle className="text-xl">Professional Themes</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Professional themes with OKLCH color science. Default, Metro, Studio, Ruby, Neon, and Aurora. Custom themes supported.
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground leading-relaxed">
+                  Beautiful themes with OKLCH color science: Default, Metro, Studio, Ruby, Neon, Aurora. Runtime switching included.
                 </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-border bg-card text-card-foreground hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
-              <CardHeader className="pb-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Smartphone className="h-5 w-5 text-primary" />
-                  </div>
-                  <Badge variant="secondary" className="text-xs">Universal</Badge>
+                <div className="flex gap-1">
+                  <div className="w-4 h-4 bg-blue-500 rounded-full" title="Default"></div>
+                  <div className="w-4 h-4 bg-slate-500 rounded-full" title="Metro"></div>
+                  <div className="w-4 h-4 bg-amber-500 rounded-full" title="Studio"></div>
+                  <div className="w-4 h-4 bg-red-500 rounded-full" title="Ruby"></div>
+                  <div className="w-4 h-4 bg-fuchsia-500 rounded-full" title="Neon"></div>
+                  <div className="w-4 h-4 bg-purple-500 rounded-full" title="Aurora"></div>
                 </div>
-                <CardTitle className="text-lg text-card-foreground">Cross-Platform</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Web, React Native, Expo, and Tauri support. Write once, run everywhere with adaptive components.
-                </p>
               </CardContent>
             </Card>
 
-            <Card className="border-border bg-card text-card-foreground hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+            <Card className="border-border bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
               <CardHeader className="pb-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <LayoutIcon className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <LayoutIcon className="h-6 w-6 text-primary" />
                   </div>
                   <Badge variant="secondary" className="text-xs">5 Templates</Badge>
                 </div>
-                <CardTitle className="text-lg text-card-foreground">Page Templates</CardTitle>
+                <CardTitle className="text-xl">Complete Layouts</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Complete layouts for auth, admin dashboards, forms, data tables, and documentation.
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground leading-relaxed">
+                  Ready-to-use page templates: Auth, Admin Dashboard, Form, Table, and Blank layouts. Build faster.
                 </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-border bg-card text-card-foreground hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
-              <CardHeader className="pb-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Zap className="h-5 w-5 text-primary" />
-                  </div>
-                  <Badge variant="secondary" className="text-xs">Zero Config</Badge>
+                <div className="flex flex-wrap gap-1 text-xs">
+                  <Badge variant="outline" className="text-xs">AuthTemplate</Badge>
+                  <Badge variant="outline" className="text-xs">AdminTemplate</Badge>
+                  <Badge variant="outline" className="text-xs">FormTemplate</Badge>
                 </div>
-                <CardTitle className="text-lg text-card-foreground">Drop-in Replacement</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  100% compatible with shadcn/ui. Just change imports and get themes, templates, and more.
-                </p>
               </CardContent>
             </Card>
 
-            <Card className="border-border bg-card text-card-foreground hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+            <Card className="border-border bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
               <CardHeader className="pb-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Code2 className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Smartphone className="h-6 w-6 text-primary" />
+                  </div>
+                  <Badge variant="secondary" className="text-xs">Universal</Badge>
+                </div>
+                <CardTitle className="text-xl">Cross-Platform</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground leading-relaxed">
+                  Web, React Native, Expo, and Tauri support. Write once, deploy everywhere with adaptive components.
+                </p>
+                <div className="grid grid-cols-2 gap-1 text-xs">
+                  <span>✅ Web</span>
+                  <span>✅ React Native</span>
+                  <span>✅ Expo</span>
+                  <span>✅ Tauri</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+              <CardHeader className="pb-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Code2 className="h-6 w-6 text-primary" />
                   </div>
                   <Badge variant="secondary" className="text-xs">35+ Components</Badge>
                 </div>
-                <CardTitle className="text-lg text-card-foreground">Complete Library</CardTitle>
+                <CardTitle className="text-xl">Complete Library</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  All shadcn/ui components plus advanced data tables, layouts, and cross-platform adapters.
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground leading-relaxed">
+                  All shadcn/ui components plus DataTable, layouts, form integration, and platform adapters.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Perfect tree-shaking • TypeScript ready
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-border bg-card text-card-foreground hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+            <Card className="border-border bg-card hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
               <CardHeader className="pb-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Star className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Star className="h-6 w-6 text-primary" />
                   </div>
-                  <Badge variant="secondary" className="text-xs">TypeScript</Badge>
+                  <Badge variant="secondary" className="text-xs">Open Source</Badge>
                 </div>
-                <CardTitle className="text-lg text-card-foreground">Developer Experience</CardTitle>
+                <CardTitle className="text-xl">Developer First</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Full TypeScript support, excellent tree-shaking, and comprehensive documentation.
+              <CardContent className="space-y-3">
+                <p className="text-muted-foreground leading-relaxed">
+                  MIT licensed, TypeScript support, comprehensive docs, and active community support.
                 </p>
+                <div className="flex gap-2">
+                  <Button variant="ghost" size="sm" className="h-7 px-2" asChild>
+                    <a href="https://github.com/voilajsx/uikit" target="_blank" rel="noopener noreferrer">
+                      <Github className="h-3 w-3 mr-1" />
+                      GitHub
+                    </a>
+                  </Button>
+                  <Button variant="ghost" size="sm" className="h-7 px-2" asChild>
+                    <a href="https://ui.shadcn.com" target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-3 w-3 mr-1" />
+                      shadcn/ui
+                    </a>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
         </section>
 
-        {/* Quick Start - Redesigned as tabs/steps */}
+        {/* Quick Preview */}
         <section className="space-y-8 w-full">
           <div className="text-center space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Get Started in Minutes</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Follow these simple steps to add beautiful, themed components to your project
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+              See It In Action
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Explore live examples and complete applications built with @voilajsx/uikit
             </p>
           </div>
           
-          <div className="space-y-8">
-            {/* Step 1 */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">
-                  1
-                </div>
-                <h3 className="text-xl font-semibold text-foreground">Install the Package</h3>
-              </div>
-              <CodeBlock 
-                code={installCode} 
-                language="bash" 
-                title="Terminal"
-              />
-            </div>
-
-            {/* Step 2 */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">
-                  2
-                </div>
-                <h3 className="text-xl font-semibold text-foreground">Import and Use Components</h3>
-              </div>
-              <CodeBlock 
-                code={quickStartCode} 
-                language="tsx" 
-                title="App.tsx"
-              />
-            </div>
-
-            {/* Step 3 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">
-                    3a
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
+              <Link to="/examples#dashboard">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg">Analytics Dashboard</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-0 text-center">
+                  <div className="w-full h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg mb-3 flex items-center justify-center">
+                    <LayoutIcon className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground">Use Templates (Optional)</h3>
-                </div>
-                <CodeBlock 
-                  code={templateExample} 
-                  language="tsx" 
-                  title="Dashboard.tsx"
-                />
-              </div>
+                  <p className="text-sm text-muted-foreground">
+                    Complete admin dashboard with stats and navigation
+                  </p>
+                </CardContent>
+              </Link>
+            </Card>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">
-                    3b
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
+              <Link to="/examples#auth">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg">Authentication</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-0 text-center">
+                  <div className="w-full h-24 bg-gradient-to-br from-secondary/20 to-muted/20 rounded-lg mb-3 flex items-center justify-center">
+                    <Star className="h-8 w-8 text-secondary-foreground" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground">Switch Themes</h3>
-                </div>
-                <CodeBlock 
-                  code={themeExample} 
-                  language="tsx" 
-                  title="ThemeSwitch.tsx"
-                />
-              </div>
-            </div>
+                  <p className="text-sm text-muted-foreground">
+                    Login and registration flows with validation
+                  </p>
+                </CardContent>
+              </Link>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
+              <Link to="/themes">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg">Theme Switching</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-0 text-center">
+                  <div className="w-full h-24 bg-gradient-to-br from-accent/20 to-primary/20 rounded-lg mb-3 flex items-center justify-center">
+                    <Palette className="h-8 w-8 text-accent-foreground" />
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Live theme preview with all 6 built-in themes
+                  </p>
+                </CardContent>
+              </Link>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
+              <Link to="/components">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg">Component Library</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-0 text-center">
+                  <div className="w-full h-24 bg-gradient-to-br from-muted/20 to-secondary/20 rounded-lg mb-3 flex items-center justify-center">
+                    <Code2 className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Browse all 35+ components with examples
+                  </p>
+                </CardContent>
+              </Link>
+            </Card>
           </div>
+        </section>
 
-          <div className="text-center space-y-4 pt-8">
-            <p className="text-muted-foreground">
-              That's it! You now have beautiful, themed components with page templates.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                <Link to="/start">Complete Setup Guide</Link>
-              </Button>
-              <Button variant="outline" className="text-primary border-primary hover:bg-primary/10" size="lg" asChild>
-                <Link to="/examples">View Live Examples</Link>
-              </Button>
-            </div>
+        {/* CTA Section */}
+        <section className="text-center space-y-6 py-12 bg-muted/30 rounded-2xl">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+            Ready to Build Something Beautiful?
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Join developers who are building faster with professional themes and ready-to-use templates.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <Button size="lg" className="text-lg px-8" asChild>
+              <Link to="/start">
+                Get Started Now <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" className="text-lg px-8" asChild>
+              <a href="https://github.com/voilajsx/uikit" target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2 h-5 w-5" />
+                Star on GitHub
+              </a>
+            </Button>
           </div>
         </section>
       </div>

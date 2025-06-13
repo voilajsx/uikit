@@ -1,25 +1,29 @@
 /**
- * Main application with routing structure for auth variants and layout examples
+ * Main application with routing structure
  * @module @voilajsx/uikit
  * @file src/App.tsx
  */
 
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+
+// Main documentation pages
 import Home from './pages/Home';
 import Start from './pages/Start';
-import Components from './pages/Components';
-import Templates from './pages/Templates';
 import Themes from './pages/Themes';
 import Examples from './pages/Examples';
 
-// tesitng pages
+// Component documentation
+import Components from './pages/Components';
+import Ui from './pages/Ui';
+import Sections from './pages/Sections';
+import Layouts from './pages/Layouts';
+
+
+// Testing pages
 import TestingPage from './pages/TestingPage';
 
-// Main AuthTemplate page
-import AuthTemplatePage from './pages/templates/AuthTemplatePage';
-
-// Individual Auth Variant Pages - NO LAYOUT
+// Auth examples (no layout)
 import AuthSimpleTemplate from './pages/examples/auth/AuthSimpleTemplate';
 import AuthCardTemplate from './pages/examples/auth/AuthCardTemplate';
 import AuthSplitGradientTemplate from './pages/examples/auth/AuthSplitGradientTemplate';
@@ -27,40 +31,54 @@ import AuthSplitImageTemplate from './pages/examples/auth/AuthSplitImageTemplate
 import AuthCardGradientTemplate from './pages/examples/auth/AuthCardGradientTemplate';
 import AuthCardImageTemplate from './pages/examples/auth/AuthCardImageTemplate';
 
-// Layout Examples - Each page controls its own Layout with sidebar
-import ContainerFullExample from './pages/examples/layouts/ContainerFullExample';
-import ContainerTwoColumnLeftExample from './pages/examples/layouts/ContainerTwoColumnLeftExample';
-import ContainerTwoColumnRightExample from './pages/examples/layouts/ContainerTwoColumnRightExample';
+// Layout examples (with custom sidebars)
+import PageExample from './pages/examples/layouts/PageExample';
+import AdminExample from './pages/examples/layouts/AdminExample';
+import BlankExample from './pages/examples/layouts/BlankExample';
+
+// Section examples
+import ContainerExample from './pages/examples/sections/ContainerExample';
+import HeaderExample from './pages/examples/sections/HeaderExample';
+import FooterExample from './pages/examples/sections/FooterExample';
 
 /**
  * Main application component with routing
  * @returns {JSX.Element} Application component
  */
-function App(): JSX.Element {
+function App() {
   return (
     <Routes>
-      <Route path="/testing" element={<TestingPage />} />
-      {/* Auth Template Variants WITHOUT Layout - Pure Visual Experience */}
-      <Route path="/examples/auth/simple" element={<AuthSimpleTemplate />} />
-      <Route path="/examples/auth/card" element={<AuthCardTemplate />} />
-      <Route path="/examples/auth/split-gradient" element={<AuthSplitGradientTemplate />} />
-      <Route path="/examples/auth/split-image" element={<AuthSplitImageTemplate />} />
-      <Route path="/examples/auth/card-gradient" element={<AuthCardGradientTemplate />} />
-      <Route path="/examples/auth/card-image" element={<AuthCardImageTemplate />} />
-      
-      {/* Layout Examples - Each controls its own Layout + sidebar */}
-      <Route path="/examples/layouts/container-full" element={<ContainerFullExample />} />
-      <Route path="/examples/layouts/two-column-left" element={<ContainerTwoColumnLeftExample />} />
-      <Route path="/examples/layouts/two-column-right" element={<ContainerTwoColumnRightExample />} />
-      
-      {/* Standard Pages - Each controls its own Layout (no sidebar) */}
+      {/* Main documentation pages */}
       <Route path="/" element={<Home />} />
       <Route path="/start" element={<Start />} />
-      <Route path="/components" element={<Components />} />
-      <Route path="/templates" element={<Templates />} />
-      <Route path="/templates/auth" element={<AuthTemplatePage />} />
       <Route path="/themes" element={<Themes />} />
       <Route path="/examples" element={<Examples />} />
+      <Route path="/testing" element={<TestingPage />} />
+
+      {/* Component documentation */}
+      <Route path="/components" element={<Components />} />
+      <Route path="/components/ui" element={<Ui />} />
+      <Route path="/components/sections" element={<Sections />} />
+      <Route path="/components/layouts" element={<Layouts />} />
+
+
+      {/* Auth examples (no layout wrapper) */}
+      <Route path="/examples/layouts/auth/simple" element={<AuthSimpleTemplate />} />
+      <Route path="/examples/layouts/auth/card" element={<AuthCardTemplate />} />
+      <Route path="/examples/layouts/auth/split-gradient" element={<AuthSplitGradientTemplate />} />
+      <Route path="/examples/layouts/auth/split-image" element={<AuthSplitImageTemplate />} />
+      <Route path="/examples/layouts/auth/card-gradient" element={<AuthCardGradientTemplate />} />
+      <Route path="/examples/layouts/auth/card-image" element={<AuthCardImageTemplate />} />
+
+      {/* Layout examples (with custom layouts) */}
+      <Route path="/examples/layouts/page" element={<PageExample />} />
+      <Route path="/examples/layouts/admin" element={<AdminExample />} />
+      <Route path="/examples/layouts/blank" element={<BlankExample />} />
+
+      {/* Section examples */}
+      <Route path="/examples/sections/container" element={<ContainerExample />} />
+      <Route path="/examples/sections/header" element={<HeaderExample />} />
+      <Route path="/examples/sections/footer" element={<FooterExample />} />
     </Routes>
   );
 }

@@ -8,7 +8,7 @@ export default defineConfig({
   base: '/uikit/',
   resolve: {
     alias: {
-      // More specific aliases for each component
+      // UI Components (from components/ui/)
       '@voilajsx/uikit/button': path.resolve(
         __dirname,
         '../src/components/ui/button.jsx'
@@ -62,44 +62,36 @@ export default defineConfig({
         '../src/components/ui/separator.jsx'
       ),
 
-      // Templates
-      '@voilajsx/uikit/templates/auth': path.resolve(
-        __dirname,
-        '../src/templates/auth.jsx'
-      ),
-      '@voilajsx/uikit/templates/default': path.resolve(
-        __dirname,
-        '../src/templates/default.jsx'
-      ),
-      '@voilajsx/uikit/templates/form': path.resolve(
-        __dirname,
-        '../src/templates/form.jsx'
-      ),
-      '@voilajsx/uikit/templates/table': path.resolve(
-        __dirname,
-        '../src/templates/table.jsx'
-      ),
-      '@voilajsx/uikit/templates/blank': path.resolve(
-        __dirname,
-        '../src/templates/blank.jsx'
-      ),
-
-      // Layout components
+      // Sections (3 components)
       '@voilajsx/uikit/header': path.resolve(
         __dirname,
-        '../src/components/layouts/header.jsx'
-      ),
-      '@voilajsx/uikit/sidebar': path.resolve(
-        __dirname,
-        '../src/components/layouts/sidebar.jsx'
-      ),
-      '@voilajsx/uikit/container': path.resolve(
-        __dirname,
-        '../src/components/layouts/container.jsx'
+        '../src/components/sections/header.jsx'
       ),
       '@voilajsx/uikit/footer': path.resolve(
         __dirname,
-        '../src/components/layouts/footer.jsx'
+        '../src/components/sections/footer.jsx'
+      ),
+      '@voilajsx/uikit/container': path.resolve(
+        __dirname,
+        '../src/components/sections/container.jsx'
+      ),
+
+      // Layouts (4 layouts)
+      '@voilajsx/uikit/admin': path.resolve(
+        __dirname,
+        '../src/components/layouts/admin.jsx'
+      ),
+      '@voilajsx/uikit/page': path.resolve(
+        __dirname,
+        '../src/components/layouts/page.jsx'
+      ),
+      '@voilajsx/uikit/blank': path.resolve(
+        __dirname,
+        '../src/components/layouts/blank.jsx'
+      ),
+      '@voilajsx/uikit/auth': path.resolve(
+        __dirname,
+        '../src/components/layouts/auth.jsx'
       ),
 
       // Theme system

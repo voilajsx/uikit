@@ -1,5 +1,5 @@
 /**
- * Interactive layout for Footer component playground
+ * Interactive Footer component demo
  * @module @voilajsx/uikit
  * @file src/pages/examples/FooterExample.tsx
  */
@@ -11,13 +11,12 @@ import { Input } from '@voilajsx/uikit/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import { Badge } from '@voilajsx/uikit/badge';
 import { useTheme } from '@voilajsx/uikit/theme-provider';
-import ThemeSwitcher from './ThemeSwitcher';
-import CodeBlock from './CodeBlock';
+import ThemeSwitcher from '../../../components/ThemeSwitcher';
+import CodeBlock from '../../../components/CodeBlock';
 import { 
   Sparkles,
   Settings,
   Code2,
-  Eye,
   Palette,
   Github,
   Twitter,
@@ -29,19 +28,16 @@ import {
   Layers,
   Minus,
   Facebook,
-  Instagram,
-  Youtube
+  Zap
 } from 'lucide-react';
 
 function FooterExample() {
   const { theme } = useTheme();
 
-  // Footer configuration state
+  // Footer configuration state with simplified props
   const [footerConfig, setFooterConfig] = useState({
     variant: 'default',
-    size: 'default',
-    width: 'xl',
-    padding: 'md',
+    size: 'xl',
     layout: 'basic'
   });
 
@@ -100,6 +96,15 @@ function FooterExample() {
         { label: 'Status', onClick: () => console.log('Status') },
         { label: 'Security', onClick: () => console.log('Security') },
         { label: 'Terms', onClick: () => console.log('Terms') }
+      ]
+    },
+    {
+      title: 'Developers',
+      links: [
+        { label: 'API Docs', onClick: () => console.log('API') },
+        { label: 'SDK', onClick: () => console.log('SDK') },
+        { label: 'Webhooks', onClick: () => console.log('Webhooks') },
+        { label: 'Open Source', onClick: () => console.log('OSS') }
       ]
     }
   ];
@@ -163,7 +168,7 @@ function FooterExample() {
   // Generate current footer content
   const getCurrentFooterContent = () => {
     switch (footerConfig.layout) {
-      case 'default':
+      case 'minimal':
         return (
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
@@ -199,10 +204,10 @@ function FooterExample() {
     }
   };
 
-  // Generate code example
+  // Generate code example with simplified props
   const generateCodeExample = () => {
     const layoutCode = {
-      default: `<Footer variant="${footerConfig.variant}" size="${footerConfig.size}">
+      minimal: `<Footer variant="${footerConfig.variant}" size="${footerConfig.size}">
   <div className="text-center">
     <p className="text-sm text-muted-foreground">
       © 2024 voilajsx. All rights reserved.
@@ -233,7 +238,7 @@ function FooterExample() {
 
     return `import { Footer } from '@voilajsx/uikit/footer';
 import { Input, Button } from '@voilajsx/uikit/button';
-import { Sparkles, Github, Twitter, /* other icons */ } from 'lucide-react';
+import { Sparkles, Github, Twitter, Linkedin } from 'lucide-react';
 
 // Logo component
 const logo = (
@@ -247,9 +252,17 @@ const logo = (
 
 // Social links
 const socialLinks = [
-  { icon: Github, label: 'GitHub', onClick: () => {} },
-  { icon: Twitter, label: 'Twitter', onClick: () => {} },
-  // ... more social links
+  { icon: Github, label: 'GitHub', onClick: () => window.open('https://github.com') },
+  { icon: Twitter, label: 'Twitter', onClick: () => window.open('https://twitter.com') },
+  { icon: Linkedin, label: 'LinkedIn', onClick: () => window.open('https://linkedin.com') }
+];
+
+// Navigation links
+const navigationLinks = [
+  { label: 'About', onClick: () => navigate('/about') },
+  { label: 'Features', onClick: () => navigate('/features') },
+  { label: 'Pricing', onClick: () => navigate('/pricing') },
+  { label: 'Contact', onClick: () => navigate('/contact') }
 ];
 
 function MyFooter() {
@@ -264,17 +277,18 @@ function MyFooter() {
       {/* Main Content */}
       <div className="flex-1 p-8 max-w-6xl mx-auto space-y-8">
         {/* Title */}
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Eye className="h-6 w-6 text-primary" />
-            <h1 className="text-3xl font-bold">Footer Component Playground</h1>
+            <Zap className="h-6 w-6 text-primary" />
+            <h1 className="text-3xl text-foreground font-bold">Footer Component Interactive Demo</h1>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Test the Footer component with different variants, layouts, and configurations.
+            Explore the Footer component with different layouts and variants. 
+            Supports up to 5 columns on desktop with mobile-first responsive design.
           </p>
         </div>
 
-        {/* Theme Selector Card */}
+        {/* Theme Selector */}
         <Card className="border-0 shadow-sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -286,7 +300,7 @@ function MyFooter() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground mb-2">
-                  Test how the footer looks across different themes and variants
+                  Test how the footer adapts to different themes and color schemes
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Current theme: <Badge variant="secondary" className="ml-1">{theme}</Badge>
@@ -306,7 +320,7 @@ function MyFooter() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               {/* Variant Control */}
               <div className="space-y-3">
@@ -320,6 +334,9 @@ function MyFooter() {
                   <option value="muted">Muted</option>
                   <option value="dark">Dark</option>
                 </select>
+                <p className="text-xs text-muted-foreground">
+                  Controls the footer's background color and styling
+                </p>
               </div>
 
               {/* Size Control */}
@@ -331,40 +348,14 @@ function MyFooter() {
                   className="w-full border rounded px-3 py-2 text-sm bg-background"
                 >
                   <option value="sm">Small</option>
-                  <option value="default">Default</option>
-                  <option value="lg">Large</option>
-                </select>
-              </div>
-
-              {/* Width Control */}
-              <div className="space-y-3">
-                <label className="text-sm font-semibold">Footer Width</label>
-                <select
-                  value={footerConfig.width}
-                  onChange={(e) => setFooterConfig(prev => ({ ...prev, width: e.target.value }))}
-                  className="w-full border rounded px-3 py-2 text-sm bg-background"
-                >
-                  <option value="sm">Small</option>
                   <option value="md">Medium</option>
                   <option value="lg">Large</option>
                   <option value="xl">X-Large</option>
                   <option value="full">Full Width</option>
                 </select>
-              </div>
-
-              {/* Padding Control */}
-              <div className="space-y-3">
-                <label className="text-sm font-semibold">Footer Padding</label>
-                <select
-                  value={footerConfig.padding}
-                  onChange={(e) => setFooterConfig(prev => ({ ...prev, padding: e.target.value }))}
-                  className="w-full border rounded px-3 py-2 text-sm bg-background"
-                >
-                  <option value="none">None</option>
-                  <option value="sm">Small</option>
-                  <option value="md">Medium</option>
-                  <option value="lg">Large</option>
-                </select>
+                <p className="text-xs text-muted-foreground">
+                  Controls width, padding, and vertical spacing together
+                </p>
               </div>
             </div>
           </CardContent>
@@ -384,17 +375,17 @@ function MyFooter() {
                 <div className="flex items-center gap-2">
                   <input
                     type="radio"
-                    id="default"
+                    id="minimal"
                     name="layout"
-                    value="default"
-                    checked={footerConfig.layout === 'default'}
+                    value="minimal"
+                    checked={footerConfig.layout === 'minimal'}
                     onChange={(e) => setFooterConfig(prev => ({ ...prev, layout: e.target.value }))}
                   />
-                  <label htmlFor="default" className="text-sm font-semibold">Default Footer</label>
+                  <label htmlFor="minimal" className="text-sm font-semibold">Minimal Footer</label>
                   <Minus className="h-4 w-4 text-muted-foreground" />
                 </div>
                 <p className="text-xs text-muted-foreground pl-6">
-                  Minimal footer with custom content
+                  Simple copyright text, perfect for landing pages
                 </p>
               </div>
 
@@ -412,7 +403,7 @@ function MyFooter() {
                   <Badge variant="secondary" className="text-xs">Single Row</Badge>
                 </div>
                 <p className="text-xs text-muted-foreground pl-6">
-                  Logo, navigation links, social icons in one row
+                  Logo, navigation links, and social icons in one row
                 </p>
               </div>
 
@@ -430,7 +421,7 @@ function MyFooter() {
                   <Grid3x3 className="h-4 w-4 text-muted-foreground" />
                 </div>
                 <p className="text-xs text-muted-foreground pl-6">
-                  Multi-column layout with brand, links, newsletter
+                  Multi-column layout with brand, navigation, and newsletter
                 </p>
               </div>
             </div>
@@ -448,82 +439,155 @@ function MyFooter() {
           <CardContent>
             <CodeBlock 
               code={generateCodeExample()} 
-              title="Footer Component Usage"
+              title="Footer Component Implementation"
               language="tsx"
             />
           </CardContent>
         </Card>
 
-        {/* Features Overview */}
+        {/* Features */}
         <Card className="border-0 shadow-sm">
           <CardHeader>
-            <CardTitle>Footer Component Features</CardTitle>
+            <CardTitle>Footer Features</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Minus className="h-4 w-4" />
-                  Default Layout
-                </h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>• Simple container</li>
-                  <li>• Custom content</li>
-                  <li>• Minimal styling</li>
-                  <li>• Full flexibility</li>
+                <h4 className="font-semibold mb-3">🎯 Layout Options</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    Minimal footer (just copyright)
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    Basic footer (logo + links + social)
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    Advanced footer (up to 5 columns)
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    Mobile responsive (stacks on small screens)
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    Newsletter signup integration
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    Social media links
+                  </li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Badge variant="secondary" className="text-xs">Basic Layout</Badge>
-                </h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>• Logo section</li>
-                  <li>• Navigation links</li>
-                  <li>• Social media icons</li>
-                  <li>• Copyright text</li>
-                  <li>• Single row design</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Grid3x3 className="h-4 w-4" />
-                  Advanced Layout
-                </h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>• Brand section</li>
-                  <li>• Multiple columns</li>
-                  <li>• Newsletter signup</li>
-                  <li>• Legal links</li>
-                  <li>• Social media</li>
-                  <li>• Contact information</li>
+                <h4 className="font-semibold mb-3">⚙️ Configuration</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                    Three color variants
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                    Five size options
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                    Compound component pattern
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                    Theme integration
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                    Custom brand sections
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                    Legal links support
+                  </li>
                 </ul>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Sample Content for Testing */}
+        {/* Layout Preview */}
         <Card className="border-0 shadow-sm">
           <CardHeader>
-            <CardTitle>Sample Page Content</CardTitle>
+            <CardTitle>Layout Preview</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground mb-4">
-              This content demonstrates how the footer appears at the bottom of the page.
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 border rounded-lg text-center">
+                  <h5 className="font-semibold mb-2">Mobile Layout</h5>
+                  <div className="space-y-2 text-xs text-muted-foreground">
+                    <div className="bg-muted p-2 rounded">Logo</div>
+                    <div className="grid grid-cols-2 gap-1">
+                      <div className="bg-muted p-1 rounded">Nav 1</div>
+                      <div className="bg-muted p-1 rounded">Nav 2</div>
+                      <div className="bg-muted p-1 rounded">Nav 3</div>
+                      <div className="bg-muted p-1 rounded">Nav 4</div>
+                    </div>
+                    <div className="bg-muted p-2 rounded">Newsletter</div>
+                  </div>
+                </div>
+
+                <div className="p-4 border rounded-lg text-center">
+                  <h5 className="font-semibold mb-2">Desktop Layout</h5>
+                  <div className="space-y-2 text-xs text-muted-foreground">
+                    <div className="grid grid-cols-5 gap-1">
+                      <div className="bg-muted p-1 rounded">Logo</div>
+                      <div className="bg-muted p-1 rounded">Nav 1</div>
+                      <div className="bg-muted p-1 rounded">Nav 2</div>
+                      <div className="bg-muted p-1 rounded">Nav 3</div>
+                      <div className="bg-muted p-1 rounded">Newsletter</div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">Up to 5 columns</p>
+                </div>
+
+                <div className="p-4 border rounded-lg text-center">
+                  <h5 className="font-semibold mb-2">Basic Layout</h5>
+                  <div className="space-y-2 text-xs text-muted-foreground">
+                    <div className="flex justify-between">
+                      <div className="bg-muted p-1 rounded w-12">Logo</div>
+                      <div className="bg-muted p-1 rounded w-20">Links</div>
+                      <div className="bg-muted p-1 rounded w-16">Social</div>
+                    </div>
+                    <div className="bg-muted p-1 rounded text-center">Copyright</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Sample Content */}
+        <Card className="border-0 shadow-sm">
+          <CardHeader>
+            <CardTitle>Sample Content</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground mb-6">
+              This content demonstrates the footer positioning. The footer will always appear at the bottom of the page.
             </p>
             
             <div className="space-y-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="p-6 border rounded">
-                  <h4 className="font-semibold mb-2">Content Section {i}</h4>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="p-6 border rounded-lg">
+                  <h4 className="font-semibold mb-3">Content Section {i}</h4>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Sample page content to show how the footer behaves with different amounts of content. 
-                    The footer should always appear at the bottom regardless of content length.
+                    This is sample content to demonstrate the footer's positioning and behavior. 
+                    The footer configuration above affects the appearance and layout of the footer below.
                   </p>
                   <div className="flex gap-2">
                     <Badge variant="outline">Section {i}</Badge>
-                    <Badge variant="secondary">Demo Content</Badge>
+                    <Badge variant="secondary">Sample Content</Badge>
+                    <Badge variant="default">{footerConfig.layout} Layout</Badge>
                   </div>
                 </div>
               ))}
@@ -532,12 +596,10 @@ function MyFooter() {
         </Card>
       </div>
 
-      {/* Actual Footer Component */}
+      {/* Live Footer Component */}
       <Footer 
         variant={footerConfig.variant}
         size={footerConfig.size}
-        width={footerConfig.width}
-        padding={footerConfig.padding}
       >
         {getCurrentFooterContent()}
       </Footer>
