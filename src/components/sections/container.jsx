@@ -378,6 +378,12 @@ const Container = forwardRef(({
   ...props 
 }, ref) => {
   
+  // Filter out any custom props that shouldn't go to DOM
+  const {
+    sidebarSize, // Remove this prop to prevent DOM warning
+    ...domProps
+  } = props;
+  
   // Determine layout based on sidebar position
   const layout = sidebar === "left" ? "sidebar-left" : 
                 sidebar === "right" ? "sidebar-right" : "none";
@@ -391,7 +397,7 @@ const Container = forwardRef(({
         containerVariants({ variant, layout, size }),
         className
       )}
-      {...props}
+      {...domProps}
     >
       {/* Left Sidebar */}
       {hasSidebar && sidebar === "left" && (

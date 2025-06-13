@@ -1,11 +1,11 @@
 /**
  * HoverCard root component
  */
-export const HoverCard: any;
+export const HoverCard: React.FC<HoverCardPrimitive.HoverCardProps>;
 /**
  * HoverCard trigger component
  */
-export const HoverCardTrigger: any;
+export const HoverCardTrigger: React.ForwardRefExoticComponent<HoverCardPrimitive.HoverCardTriggerProps & React.RefAttributes<HTMLAnchorElement>>;
 /**
  * HoverCard content component with styling
  * @param {Object} props - Component props
@@ -23,5 +23,6 @@ export const HoverCardContent: React.ForwardRefExoticComponent<React.RefAttribut
  * @returns {JSX.Element} HoverCard arrow
  */
 export const HoverCardArrow: React.ForwardRefExoticComponent<React.RefAttributes<any>>;
+import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import * as React from "react";
 //# sourceMappingURL=hover-card.d.ts.map
