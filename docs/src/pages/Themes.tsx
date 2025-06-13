@@ -52,7 +52,7 @@ function ThemeSwitcher() {
   );
 }`;
 
-const customThemeCode = `// Define your custom theme
+const customThemeCode = `// Define your custom theme with complete OKLCH colors
 const brandTheme = {
   name: 'Brand Theme',
   id: 'brand',
@@ -60,93 +60,199 @@ const brandTheme = {
   light: {
     background: 'oklch(0.99 0.005 85)',
     foreground: 'oklch(0.15 0.02 85)',
+    card: 'oklch(1 0 0)',
+    cardForeground: 'oklch(0.15 0.02 85)',
+    popover: 'oklch(0.97 0.01 85)',
+    popoverForeground: 'oklch(0.15 0.02 85)',
     primary: 'oklch(0.5 0.2 220)',
     primaryForeground: 'oklch(0.98 0.02 85)',
     secondary: 'oklch(0.92 0.04 85)',
     secondaryForeground: 'oklch(0.25 0.05 85)',
-    // ... other colors
+    muted: 'oklch(0.94 0.02 85)',
+    mutedForeground: 'oklch(0.45 0.03 85)',
+    accent: 'oklch(0.55 0.15 200)',
+    accentForeground: 'oklch(0.98 0.02 85)',
+    destructive: 'oklch(0.6 0.25 30)',
+    destructiveForeground: 'oklch(0.98 0.02 85)',
+    border: 'oklch(0.88 0.03 85)',
+    input: 'oklch(0.88 0.03 85)',
+    ring: 'oklch(0.5 0.2 220)',
+    chart1: 'oklch(0.5 0.2 220)',
+    chart2: 'oklch(0.55 0.15 200)',
+    chart3: 'oklch(0.45 0.18 240)',
+    chart4: 'oklch(0.65 0.2 190)',
+    chart5: 'oklch(0.6 0.24 210)',
+    sidebar: 'oklch(0.97 0.01 85)',
+    sidebarForeground: 'oklch(0.15 0.02 85)',
+    sidebarPrimary: 'oklch(0.5 0.2 220)',
+    sidebarPrimaryForeground: 'oklch(0.98 0.02 85)',
+    sidebarAccent: 'oklch(0.94 0.02 85)',
+    sidebarAccentForeground: 'oklch(0.25 0.05 85)',
+    sidebarBorder: 'oklch(0.88 0.03 85)',
+    sidebarRing: 'oklch(0.5 0.2 220)',
   },
   
   dark: {
     background: 'oklch(0.08 0.02 85)',
     foreground: 'oklch(0.95 0.02 85)',
+    card: 'oklch(0.1 0.025 85)',
+    cardForeground: 'oklch(0.95 0.02 85)',
+    popover: 'oklch(0.1 0.025 85)',
+    popoverForeground: 'oklch(0.95 0.02 85)',
     primary: 'oklch(0.65 0.25 220)',
-    // ... other colors
+    primaryForeground: 'oklch(0.08 0.02 85)',
+    secondary: 'oklch(0.18 0.05 85)',
+    secondaryForeground: 'oklch(0.95 0.02 85)',
+    muted: 'oklch(0.15 0.03 85)',
+    mutedForeground: 'oklch(0.7 0.03 85)',
+    accent: 'oklch(0.6 0.18 200)',
+    accentForeground: 'oklch(0.95 0.02 85)',
+    destructive: 'oklch(0.5 0.2 30)',
+    destructiveForeground: 'oklch(0.95 0.02 85)',
+    border: 'oklch(0.22 0.04 85)',
+    input: 'oklch(0.22 0.04 85)',
+    ring: 'oklch(0.65 0.25 220)',
+    chart1: 'oklch(0.65 0.25 220)',
+    chart2: 'oklch(0.6 0.18 200)',
+    chart3: 'oklch(0.55 0.22 240)',
+    chart4: 'oklch(0.7 0.24 190)',
+    chart5: 'oklch(0.65 0.27 210)',
+    sidebar: 'oklch(0.1 0.025 85)',
+    sidebarForeground: 'oklch(0.95 0.02 85)',
+    sidebarPrimary: 'oklch(0.65 0.25 220)',
+    sidebarPrimaryForeground: 'oklch(0.08 0.02 85)',
+    sidebarAccent: 'oklch(0.15 0.03 85)',
+    sidebarAccentForeground: 'oklch(0.95 0.02 85)',
+    sidebarBorder: 'oklch(0.22 0.04 85)',
+    sidebarRing: 'oklch(0.65 0.25 220)',
   },
 };
 
-// Use in your app
+// Method 1: Register via Provider (Recommended)
 <ThemeProvider theme="brand" customThemes={[brandTheme]}>
   <App />
-</ThemeProvider>`;
+</ThemeProvider>
+
+// Method 2: Runtime Registration
+const { registerTheme, setTheme } = useTheme();
+useEffect(() => {
+  registerTheme(brandTheme);
+  setTheme('brand');
+}, []);`;
 
 const runtimeThemeCode = `import { useTheme } from '@voilajsx/uikit/theme-provider';
 
 function DynamicThemes() {
   const { setTheme, registerTheme } = useTheme();
 
-  const createUserTheme = (color) => ({
+  const createUserTheme = (primaryColor, accentColor) => ({
     id: 'user-theme',
     name: 'User Theme',
-    light: { primary: color, /* ... */ },
-    dark: { primary: color, /* ... */ }
+    light: { 
+      background: 'oklch(0.99 0.005 0)',
+      foreground: 'oklch(0.15 0.02 0)',
+      primary: primaryColor,
+      primaryForeground: 'oklch(0.98 0.01 0)',
+      accent: accentColor,
+      accentForeground: 'oklch(0.98 0.01 0)',
+      // ... other required colors
+    },
+    dark: { 
+      background: 'oklch(0.08 0.02 0)',
+      foreground: 'oklch(0.95 0.02 0)',
+      primary: primaryColor,
+      primaryForeground: 'oklch(0.08 0.02 0)',
+      accent: accentColor,
+      accentForeground: 'oklch(0.08 0.02 0)',
+      // ... other required colors
+    }
   });
 
-  const handleColorChange = (color) => {
-    const newTheme = createUserTheme(color);
+  const handleColorChange = (primary, accent) => {
+    const newTheme = createUserTheme(primary, accent);
     registerTheme(newTheme);
     setTheme('user-theme');
   };
 
   return (
-    <Button onClick={() => handleColorChange('oklch(0.6 0.3 350)')}>
-      Create Pink Theme
-    </Button>
+    <div className="flex gap-2">
+      <Button onClick={() => handleColorChange('oklch(0.6 0.3 350)', 'oklch(0.5 0.2 200)')}>
+        Create Pink & Blue Theme
+      </Button>
+      <Button onClick={() => handleColorChange('oklch(0.5 0.25 120)', 'oklch(0.6 0.2 60)')}>
+        Create Green & Yellow Theme
+      </Button>
+    </div>
   );
 }`;
 
+// Fixed theme colors based on actual CSS values
 const builtInThemes = [
   {
     id: 'default',
     name: 'Default',
-    description: 'Clean system colors',
-    colors: { primary: 'bg-blue-600', accent: 'bg-blue-100' },
-    bestFor: 'Business apps, professional tools'
+    description: 'Clean oceanic blues',
+    colors: { 
+      primary: 'bg-[oklch(0.42_0.26_230)]', // Ocean blue
+      accent: 'bg-[oklch(0.6_0.2_200)]',    // Ocean cyan
+      secondary: 'bg-[oklch(0.86_0.035_210)]' // Light blue-gray
+    },
+    bestFor: 'Business apps, dashboards, professional tools'
   },
   {
     id: 'metro',
     name: 'Metro',
-    description: 'Clean transit-inspired design',
-    colors: { primary: 'bg-slate-600', accent: 'bg-slate-100' },
-    bestFor: 'Admin panels, systematic UIs'
+    description: 'Clean transit-inspired systematic design',
+    colors: { 
+      primary: 'bg-[oklch(0.35_0.08_240)]',  // Metro blue
+      accent: 'bg-[oklch(0.45_0.12_200)]',   // Transit teal
+      secondary: 'bg-[oklch(0.94_0.008_240)]' // Light gray-blue
+    },
+    bestFor: 'Admin panels, data applications, systematic UIs'
   },
   {
     id: 'studio',
     name: 'Studio',
-    description: 'Sophisticated designer grays',
-    colors: { primary: 'bg-amber-600', accent: 'bg-amber-100' },
-    bestFor: 'Design tools, creative applications'
+    description: 'Sophisticated designer grays with amber accents',
+    colors: { 
+      primary: 'bg-[oklch(0.32_0.02_270)]',  // Studio charcoal
+      accent: 'bg-[oklch(0.55_0.15_45)]',    // Creative amber
+      secondary: 'bg-[oklch(0.95_0.003_270)]' // Light studio gray
+    },
+    bestFor: 'Design tools, portfolios, creative applications'
   },
   {
     id: 'ruby',
     name: 'Ruby',
-    description: 'Premium ruby red',
-    colors: { primary: 'bg-red-600', accent: 'bg-red-100' },
-    bestFor: 'Finance, luxury brands'
+    description: 'Premium ruby red with rose accents',
+    colors: { 
+      primary: 'bg-[oklch(0.48_0.18_20)]',   // Ruby red
+      accent: 'bg-[oklch(0.46_0.01_240)]',   // Accent gray
+      secondary: 'bg-[oklch(0.9_0.005_0)]'   // Light gray
+    },
+    bestFor: 'Finance, luxury brands, premium products'
   },
   {
     id: 'neon',
     name: 'Neon',
-    description: 'Electric cyberpunk',
-    colors: { primary: 'bg-fuchsia-600', accent: 'bg-fuchsia-100' },
-    bestFor: 'Gaming, tech startups'
+    description: 'Electric cyberpunk with glowing highlights',
+    colors: { 
+      primary: 'bg-[oklch(0.45_0.28_320)]',  // Electric magenta
+      accent: 'bg-[oklch(0.55_0.25_180)]',   // Electric cyan
+      secondary: 'bg-[oklch(0.92_0.015_280)]' // Light purple-gray
+    },
+    bestFor: 'Gaming, tech startups, creative tools'
   },
   {
     id: 'aurora',
     name: 'Aurora',
-    description: 'Northern lights magic',
-    colors: { primary: 'bg-purple-600', accent: 'bg-purple-100' },
-    bestFor: 'Creative apps, elegant brands'
+    description: 'Northern lights with purple-green magic',
+    colors: { 
+      primary: 'bg-[oklch(0.48_0.2_290)]',   // Aurora purple
+      accent: 'bg-[oklch(0.52_0.18_150)]',   // Aurora green
+      secondary: 'bg-[oklch(0.91_0.012_300)]' // Soft lavender
+    },
+    bestFor: 'Creative apps, elegant brands, portfolios'
   }
 ];
 
@@ -281,7 +387,6 @@ function Themes() {
 
   return (
     <Layout>
-      
       <Container
         sidebar="right"
         sidebarContent={<SidebarContent />}
@@ -390,44 +495,44 @@ function Themes() {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {builtInThemes.map((themeInfo) => (
-    <Card 
-      key={themeInfo.id} 
-      className={`cursor-pointer transition-all hover:shadow-lg group border ${
-        currentTheme === themeInfo.id 
-          ? 'ring-2 ring-primary shadow-lg border-primary/50' 
-          : 'hover:shadow-md border-border hover:border-primary/30'
-      }`}
-      onClick={() => setTheme(themeInfo.id)}
-    >
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <CardTitle className="text-xl">{themeInfo.name}</CardTitle>
-              {currentTheme === themeInfo.id && (
-                <Badge variant="default" className="text-xs">
-                  Active
-                </Badge>
-              )}
+              {builtInThemes.map((themeInfo) => (
+                <Card 
+                  key={themeInfo.id} 
+                  className={`cursor-pointer transition-all hover:shadow-lg group border ${
+                    currentTheme === themeInfo.id 
+                      ? 'ring-2 ring-primary shadow-lg border-primary/50' 
+                      : 'hover:shadow-md border-border hover:border-primary/30'
+                  }`}
+                  onClick={() => setTheme(themeInfo.id)}
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <CardTitle className="text-xl">{themeInfo.name}</CardTitle>
+                          {currentTheme === themeInfo.id && (
+                            <Badge variant="default" className="text-xs">
+                              Active
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground">{themeInfo.description}</p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex gap-2 mb-4">
+                      <div className={`w-8 h-8 rounded-full ${themeInfo.colors.primary} shadow-sm border border-border/20`} />
+                      <div className={`w-8 h-8 rounded-full ${themeInfo.colors.accent} shadow-sm border border-border/20`} />
+                      <div className={`w-8 h-8 rounded-full ${themeInfo.colors.secondary} shadow-sm border border-border/20`} />
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      <strong>Perfect for:</strong> {themeInfo.bestFor}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-            <p className="text-sm text-muted-foreground">{themeInfo.description}</p>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="flex gap-2 mb-4">
-          <div className={`w-8 h-8 rounded-full ${themeInfo.colors.primary} shadow-sm border border-border/20`} />
-          <div className={`w-8 h-8 rounded-full ${themeInfo.colors.accent} shadow-sm border border-border/20`} />
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/60 shadow-sm border border-border/20" />
-        </div>
-        <p className="text-xs text-muted-foreground">
-          <strong>Perfect for:</strong> {themeInfo.bestFor}
-        </p>
-      </CardContent>
-    </Card>
-  ))}
-</div>
           </section>
 
           {/* Basic Usage */}
@@ -463,7 +568,7 @@ function Themes() {
               </p>
             </div>
             
-            <CodeBlock code={customThemeCode} title="Custom Theme Definition" />
+            <CodeBlock code={customThemeCode} title="Complete Custom Theme Definition" />
           </section>
 
           {/* Dynamic Theme Creation */}

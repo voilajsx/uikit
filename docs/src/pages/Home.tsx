@@ -30,7 +30,7 @@ function Home() {
             </p>
             
             <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto px-4 leading-relaxed">
-              Drop-in replacement for shadcn/ui components, built with React and Tailwind v4, compatible with Next.js, Vite, or any framework
+              Drop-in replacement for shadcn/ui components, built with React and Tailwind v4, compatible with Voilajs, Next.js, Vite, or any framework
             </p>
           </div>
 
@@ -85,7 +85,7 @@ function Home() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-muted-foreground leading-relaxed">
-                  100% compatible with shadcn/ui. Just change imports and instantly get themes, templates, and cross-platform support.
+                  100% compatible with shadcn/ui. Just change imports and instantly get themes, layouts, and cross-platform support.
                 </p>
                 <p className="text-sm font-mono bg-muted/50 p-2 rounded">
                   @/components/ui/button → @voilajsx/uikit/button
@@ -124,13 +124,13 @@ function Home() {
                   <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <LayoutIcon className="h-6 w-6 text-primary" />
                   </div>
-                  <Badge variant="secondary" className="text-xs">5 Templates</Badge>
+                  <Badge variant="secondary" className="text-xs">4 Layouts</Badge>
                 </div>
                 <CardTitle className="text-xl">Complete Layouts</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-muted-foreground leading-relaxed">
-                  Ready-to-use page templates: Auth, Admin Dashboard, Form, Table, and Blank layouts. Build faster.
+                  Ready-to-use page layouts: Auth, Admin Dashboard, Generic Page and Blank layouts. Build faster.
                 </p>
                 <div className="flex flex-wrap gap-1 text-xs">
                   <Badge variant="outline" className="text-xs">AuthTemplate</Badge>
@@ -175,7 +175,7 @@ function Home() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-muted-foreground leading-relaxed">
-                  All shadcn/ui components plus DataTable, layouts, form integration, and platform adapters.
+                  Packed with 35+ core Shadcn/ui components, reusable sections, page layouts, and platform integration adapters.
                 </p>
                 <p className="text-sm text-muted-foreground">
                   Perfect tree-shaking • TypeScript ready
@@ -229,33 +229,33 @@ function Home() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
-              <Link to="/examples#dashboard">
+              <Link to="/examples/layouts/admin">
                 <CardHeader className="text-center">
-                  <CardTitle className="text-lg">Analytics Dashboard</CardTitle>
+                  <CardTitle className="text-lg">Admin Layout</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0 text-center">
                   <div className="w-full h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg mb-3 flex items-center justify-center">
                     <LayoutIcon className="h-8 w-8 text-primary" />
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Complete admin dashboard with stats and navigation
+                    Complete admin dashboard with interactive props
                   </p>
                 </CardContent>
               </Link>
             </Card>
 
             <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
-              <Link to="/examples#auth">
+              <Link to="/examples/layouts/auth/split-gradient">
                 <CardHeader className="text-center">
-                  <CardTitle className="text-lg">Authentication</CardTitle>
+                  <CardTitle className="text-lg">Login Layout</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0 text-center">
-                  <div className="w-full h-24 bg-gradient-to-br from-secondary/20 to-muted/20 rounded-lg mb-3 flex items-center justify-center">
+                  <div className="w-full h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg mb-3 flex items-center justify-center">
                     <Star className="h-8 w-8 text-secondary-foreground" />
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Login and registration flows with validation
-                  </p>
+                    Example login layout using the split-gradient prop.
+                      </p>
                 </CardContent>
               </Link>
             </Card>
@@ -282,7 +282,7 @@ function Home() {
                   <CardTitle className="text-lg">Component Library</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0 text-center">
-                  <div className="w-full h-24 bg-gradient-to-br from-muted/20 to-secondary/20 rounded-lg mb-3 flex items-center justify-center">
+                  <div className="w-full h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg mb-3 flex items-center justify-center">
                     <Code2 className="h-8 w-8 text-muted-foreground" />
                   </div>
                   <p className="text-sm text-muted-foreground">

@@ -57,7 +57,7 @@ function LogoComponent({ headerVariant }) {
         <Sparkles className="h-4 w-4 text-primary-foreground" />
       </div>
       <span className={cn("text-lg font-semibold", logoTextColor[headerVariant])}>
-        AdminTest
+        VoilaJS
       </span>
     </div>
   );
@@ -163,7 +163,7 @@ function TestContent({
       <div className="text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <Eye className="h-6 w-6 text-primary" />
-          <h1 className="text-3xl font-bold">Enhanced AdminTemplate Testing</h1>
+          <h1 className="text-3xl font-bold">AdminTemplate Interactive Demo</h1>
         </div>
         <p className="text-muted-foreground mb-4">
           Interactive testing environment for the AdminTemplate with all configuration options.
@@ -440,7 +440,7 @@ function TestContent({
  * Main App Component with Enhanced State Management
  */
 function App() {
-  const [headerVariant, setHeaderVariant] = useState("default");
+  const [headerVariant, setHeaderVariant] = useState("primary");
   const [currentPath, setCurrentPath] = useState('/dashboard');
   const [size, setSize] = useState("default");
   const [sticky, setSticky] = useState(true);
@@ -515,9 +515,9 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme="default" variant="light" detectSystem={true}>
+    <ThemeProvider theme="primary" variant="light" detectSystem={true}>
       <AdminTemplate
-        title="Enhanced Admin Dashboard"
+        title="Admin Dashboard"
         variant={headerVariant}
         size={size}
         logoComponent={(variant) => <LogoComponent headerVariant={variant} />}
