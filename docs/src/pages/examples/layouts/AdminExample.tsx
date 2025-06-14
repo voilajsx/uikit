@@ -447,61 +447,65 @@ function App() {
   const [collapsible, setCollapsible] = useState(true);
   const [defaultSidebarOpen, setDefaultSidebarOpen] = useState(true);
 
-  // Navigation items configuration with enhanced structure
+  // ✅ UPDATED: Navigation items configuration with unified structure
   const navigationItems = [
     {
-      title: "Dashboard",
+      key: "dashboard",
+      label: "Dashboard", // ✅ CHANGED: was 'title', now 'label'
       icon: Home,
       path: "/dashboard",
       section: "main"
     },
     {
-      title: "User Management",
-      icon: Users,
       key: "users",
+      label: "User Management", // ✅ CHANGED: was 'title', now 'label'
+      icon: Users,
       section: "main",
       badge: "23",
-      submenu: [
-        { title: "All Users", path: "/users" },
-        { title: "User Roles", path: "/users/roles" },
-        { title: "Permissions", path: "/users/permissions" }
+      items: [ // ✅ CHANGED: was 'submenu', now 'items'
+        { key: "all-users", label: "All Users", path: "/users" }, // ✅ CHANGED: 'label'
+        { key: "user-roles", label: "User Roles", path: "/users/roles" }, // ✅ CHANGED: 'label'
+        { key: "permissions", label: "Permissions", path: "/users/permissions" } // ✅ CHANGED: 'label'
       ]
     },
     {
-      title: "Products & Orders",
-      icon: Package,
       key: "products",
+      label: "Products & Orders", // ✅ CHANGED: was 'title', now 'label'
+      icon: Package,
       section: "main",
-      submenu: [
-        { title: "All Products", path: "/products" },
-        { title: "Categories", path: "/products/categories" },
-        { title: "Orders", path: "/orders", badge: "12" }
+      items: [ // ✅ CHANGED: was 'submenu', now 'items'
+        { key: "all-products", label: "All Products", path: "/products" }, // ✅ CHANGED: 'label'
+        { key: "categories", label: "Categories", path: "/products/categories" }, // ✅ CHANGED: 'label'
+        { key: "orders", label: "Orders", path: "/orders", badge: "12" } // ✅ CHANGED: 'label'
       ]
     },
     {
-      title: "Analytics",
-      icon: BarChart3,
       key: "analytics",
+      label: "Analytics", // ✅ CHANGED: was 'title', now 'label'
+      icon: BarChart3,
       section: "main",
-      submenu: [
-        { title: "Overview", path: "/analytics" },
-        { title: "Reports", path: "/analytics/reports" }
+      items: [ // ✅ CHANGED: was 'submenu', now 'items'
+        { key: "overview", label: "Overview", path: "/analytics" }, // ✅ CHANGED: 'label'
+        { key: "reports", label: "Reports", path: "/analytics/reports" } // ✅ CHANGED: 'label'
       ]
     },
     {
-      title: "Content",
+      key: "content",
+      label: "Content", // ✅ CHANGED: was 'title', now 'label'
       icon: FileText,
       path: "/content",
       section: "main"
     },
     {
-      title: "Security",
+      key: "security",
+      label: "Security", // ✅ CHANGED: was 'title', now 'label'
       icon: Shield,
       path: "/security",
       section: "main"
     },
     {
-      title: "Settings",
+      key: "settings",
+      label: "Settings", // ✅ CHANGED: was 'title', now 'label'
       icon: Settings,
       path: "/settings",
       section: "system"

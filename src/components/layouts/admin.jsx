@@ -1,6 +1,6 @@
 /**
- * @fileoverview Admin layout template for @voilajsx/uikit
- * @description Clean admin layout with proper theming for light/dark modes
+ * @fileoverview Admin layout template for @voilajsx/uikit - Fixed sticky header implementation
+ * @description Clean admin layout with proper theming for light/dark modes and working sticky header
  * @package @voilajsx/uikit
  * @file /src/components/layouts/admin.jsx
  */
@@ -67,10 +67,21 @@ const sidebarVariants = cva(
 );
 
 /**
- * Header variants - ALWAYS uses default styling regardless of variant prop
+ * ✅ FIXED: Header variants with conditional sticky positioning
  */
 const headerVariants = cva(
-  "w-full border-b transition-all duration-200 z-40 sticky top-0 bg-background/80 backdrop-blur-sm border-border/40 supports-[backdrop-filter]:bg-background/60 text-foreground"
+  "w-full border-b transition-all duration-200 z-40 bg-background/80 backdrop-blur-sm border-border/40 supports-[backdrop-filter]:bg-background/60 text-foreground",
+  {
+    variants: {
+      sticky: {
+        true: "sticky top-0",
+        false: "relative"
+      }
+    },
+    defaultVariants: {
+      sticky: true
+    }
+  }
 );
 
 /**
@@ -109,6 +120,7 @@ const getSizeConfig = (size = 'default') => {
 
 /**
  * Built-in Navigation Component with proper semantic colors
+ * ✅ UPDATED: Now uses 'label' and 'items' instead of 'title' and 'submenu'
  */
 function AdminNavigation({ 
   navigationItems = [], 
@@ -192,7 +204,8 @@ function AdminNavigation({
   };
 
   const MenuItem = ({ item, isSubmenu = false }) => {
-    const hasSubmenu = !isSubmenu && item.submenu?.length > 0;
+    // ✅ UPDATED: Use 'items' instead of 'submenu'
+    const hasSubmenu = !isSubmenu && item.items?.length > 0;
     const isExpanded = expandedMenus.has(item.key);
     const isActive = item.path ? currentPath === item.path : item.isActive;
 
@@ -212,7 +225,8 @@ function AdminNavigation({
             <item.icon className={cn(config.icon, "flex-shrink-0")} />
           )}
           
-          <span className="flex-1 truncate text-left">{item.title}</span>
+          {/* ✅ UPDATED: Use 'label' instead of 'title' */}
+          <span className="flex-1 truncate text-left">{item.label}</span>
           
           {item.badge && config.showBadges && (
             <Badge 
@@ -243,7 +257,8 @@ function AdminNavigation({
             isExpanded ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
           )}>
             <div className={cn(config.spacing, "pb-2")}>
-              {item.submenu.map((subItem) => (
+              {/* ✅ UPDATED: Use 'items' instead of 'submenu' */}
+              {item.items.map((subItem) => (
                 <MenuItem key={subItem.path || subItem.key} item={subItem} isSubmenu />
               ))}
             </div>
@@ -302,6 +317,7 @@ function AdminNavigation({
 
 /**
  * Enhanced Admin template with proper color contrast handling
+ * ✅ FIXED: Now properly handles sticky header based on sticky prop
  */
 const AdminTemplate = forwardRef(({ 
   className,
@@ -310,13 +326,13 @@ const AdminTemplate = forwardRef(({
   title = "Admin Panel",
   logo,
   headerActions,
-  navigationItems = [],
+  navigationItems = [], // ✅ Now expects unified structure with 'label' and 'items'
   currentPath = '',
   onNavigate = () => {},
   sidebarContent,
   sidebarFooter,
   children,
-  sticky = true,
+  sticky = true, // ✅ This prop now actually controls sticky behavior
   logoComponent,
   headerActionsComponent,
   collapsible = true,
@@ -345,7 +361,7 @@ const AdminTemplate = forwardRef(({
     return () => window.removeEventListener('resize', checkMobile);
   }, [defaultSidebarOpen]);
 
-  // Handle scroll for header effects
+  // ✅ FIXED: Handle scroll for header effects - only when sticky is enabled
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -375,10 +391,10 @@ const AdminTemplate = forwardRef(({
     setSidebarOpen(!sidebarOpen);
   };
 
-  // Get header classes with proper scrolling effects - ALWAYS uses default colors
+  // ✅ FIXED: Get header classes with proper sticky handling
   const getHeaderClasses = () => {
-    const scrollClasses = isScrolled ? "shadow-sm" : "";
-    return cn(headerVariants(), scrollClasses);
+    const scrollClasses = isScrolled && sticky ? "shadow-sm" : "";
+    return cn(headerVariants({ sticky }), scrollClasses);
   };
 
   // Get mobile toggle styles - ALWAYS uses default colors for header
@@ -529,7 +545,7 @@ const AdminTemplate = forwardRef(({
         "flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out",
         getMainContentMargin()
       )}>
-        {/* Top Header - ALWAYS uses default colors */}
+        {/* ✅ FIXED: Top Header - Now properly uses sticky prop */}
         <header className={getHeaderClasses()}>
           <div className={cn(
             "flex items-center justify-between px-4 lg:px-6",

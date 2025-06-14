@@ -702,20 +702,20 @@ interface AdminTemplateProps {
   logo?: React.ReactNode; // Logo component
   headerActions?: React.ReactNode; // Top-right header buttons
 
-  // Navigation Structure (REQUIRED)
+  // Navigation Structure (REQUIRED) - ✅ UPDATED: Now uses unified structure
   navigationItems: Array<{
     key: string; // REQUIRED: Unique identifier
-    title: string; // REQUIRED: Display text
+    label: string; // ✅ CHANGED: Display text (was 'title', now 'label')
     icon?: React.ComponentType; // Optional: Lucide icon component
     path?: string; // Optional: URL path
     badge?: string; // Optional: Badge text (e.g., "12", "New")
     isActive?: boolean; // Optional: Current page indicator
     section?: string; // Optional: Group name ('main', 'system', etc.)
     onClick?: () => void; // Optional: Click handler
-    submenu?: Array<{
-      // Optional: Nested navigation
+    items?: Array<{
+      // ✅ CHANGED: Nested navigation (was 'submenu', now 'items')
       key: string;
-      title: string;
+      label: string; // ✅ CHANGED: (was 'title', now 'label')
       path?: string;
       isActive?: boolean;
       onClick?: () => void;
@@ -731,11 +731,11 @@ interface AdminTemplateProps {
   children: React.ReactNode; // Main content area
 }
 
-// Navigation Items Example Structure
+// Navigation Items Example Structure - ✅ UPDATED: Uses unified props
 const navigationItems = [
   {
     key: 'dashboard',
-    title: 'Dashboard',
+    label: 'Dashboard', // ✅ CHANGED: was 'title', now 'label'
     icon: Home,
     path: '/admin',
     isActive: true,
@@ -743,7 +743,7 @@ const navigationItems = [
   },
   {
     key: 'users',
-    title: 'Users',
+    label: 'Users', // ✅ CHANGED: was 'title', now 'label'
     icon: Users,
     path: '/admin/users',
     badge: '24', // Shows notification badge
@@ -751,18 +751,19 @@ const navigationItems = [
   },
   {
     key: 'analytics',
-    title: 'Analytics',
+    label: 'Analytics', // ✅ CHANGED: was 'title', now 'label'
     icon: BarChart3,
     section: 'main',
-    submenu: [
+    items: [
+      // ✅ CHANGED: was 'submenu', now 'items'
       // Creates collapsible submenu
-      { key: 'overview', title: 'Overview', path: '/admin/analytics' },
-      { key: 'reports', title: 'Reports', path: '/admin/analytics/reports' },
+      { key: 'overview', label: 'Overview', path: '/admin/analytics' }, // ✅ CHANGED: 'label'
+      { key: 'reports', label: 'Reports', path: '/admin/analytics/reports' }, // ✅ CHANGED: 'label'
     ],
   },
   {
     key: 'settings',
-    title: 'Settings',
+    label: 'Settings', // ✅ CHANGED: was 'title', now 'label'
     icon: Settings,
     path: '/admin/settings',
     section: 'system', // Different section = separator line
@@ -1526,7 +1527,7 @@ function AdminDashboard() {
   const navigationItems = [
     {
       key: 'dashboard',
-      title: 'Dashboard',
+      label: 'Dashboard', // ✅ CHANGED: was 'title', now 'label'
       icon: Home,
       path: '/admin',
       isActive: true,
@@ -1534,7 +1535,7 @@ function AdminDashboard() {
     },
     {
       key: 'users',
-      title: 'User Management',
+      label: 'User Management', // ✅ CHANGED: was 'title', now 'label'
       icon: Users,
       path: '/admin/users',
       badge: '24',
@@ -1542,25 +1543,26 @@ function AdminDashboard() {
     },
     {
       key: 'analytics',
-      title: 'Analytics',
+      label: 'Analytics', // ✅ CHANGED: was 'title', now 'label'
       icon: BarChart3,
       section: 'main',
-      submenu: [
+      items: [
+        // ✅ CHANGED: was 'submenu', now 'items'
         {
           key: 'overview',
-          title: 'Overview',
+          label: 'Overview', // ✅ CHANGED: was 'title', now 'label'
           path: '/admin/analytics',
         },
         {
           key: 'reports',
-          title: 'Reports',
+          label: 'Reports', // ✅ CHANGED: was 'title', now 'label'
           path: '/admin/analytics/reports',
         },
       ],
     },
     {
       key: 'settings',
-      title: 'Settings',
+      label: 'Settings', // ✅ CHANGED: was 'title', now 'label'
       icon: Settings,
       path: '/admin/settings',
       section: 'system',
@@ -1913,34 +1915,30 @@ import '@voilajsx/uikit/styles';
 
 ### 2. Navigation Structure Requirements
 
-**AdminTemplate Navigation (use 'title'):**
+**Unified Navigation Structure (all components use 'label' and 'items'):**
 
 ```jsx
+// ✅ ALL navigation components now use the SAME structure
 const navigationItems = [
   {
     key: 'unique-id',    // REQUIRED
-    title: 'Display Name', // REQUIRED (note: 'title')
+    label: 'Display Name', // REQUIRED (unified: all components use 'label')
     icon: LucideIcon,     // Optional
     path: '/path',        // Optional
     isActive: boolean,    // Optional
-    section: 'main',      // Optional
-    submenu: [...]        // Optional
+    section: 'main',      // Optional (AdminTemplate only)
+    items: [...]          // Optional (unified: all components use 'items')
   }
 ];
-```
 
-**Container Sidebar Navigation (use 'label'):**
+// ✅ Works with AdminTemplate
+<AdminTemplate navigationItems={navigationItems} />
 
-```jsx
-const sidebarContent = [
-  {
-    key: 'unique-id',    // REQUIRED
-    label: 'Display Name', // REQUIRED (note: 'label')
-    icon: LucideIcon,     // Optional
-    isActive: boolean,    // Optional
-    items: [...]          // Optional
-  }
-];
+// ✅ Works with Container
+<Container sidebarContent={navigationItems} />
+
+// ✅ Works with HeaderNav
+<HeaderNav items={navigationItems} />
 ```
 
 ### 3. Template Selection Guide
