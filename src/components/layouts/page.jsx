@@ -116,7 +116,7 @@ const pageContentVariants = cva(
  * Page Content inner container variants - handles width and spacing
  */
 const pageContentInnerVariants = cva(
-  "mx-auto py-6",
+  "mx-auto ",
   {
     variants: {
       size: {

@@ -1,9 +1,8 @@
-import { jsx, jsxs, Fragment } from "react/jsx-runtime";
+import { jsx, jsxs } from "react/jsx-runtime";
 import { createContext, forwardRef, useState, useContext, useEffect } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "./utils.js";
 import { Button } from "./button.js";
-import "./separator.js";
 import { ChevronDown, X, Menu } from "lucide-react";
 const HeaderContext = createContext({});
 const headerVariants = cva(
@@ -156,71 +155,77 @@ const HeaderNav = forwardRef(({
     );
   };
   const DesktopNavigation = () => {
-    const [hoveredItem, setHoveredItem] = useState(null);
-    const handleNavClick = (onClick) => {
-      setHoveredItem(null);
+    const [openDropdown, setOpenDropdown] = useState(null);
+    const toggleDropdown = (index, hasDropdown, mainOnClick) => {
+      if (hasDropdown) {
+        setOpenDropdown(openDropdown === index ? null : index);
+      } else {
+        setOpenDropdown(null);
+        mainOnClick?.();
+      }
+    };
+    useEffect(() => {
+      const handleOutsideClick = () => setOpenDropdown(null);
+      if (openDropdown !== null) {
+        document.addEventListener("click", handleOutsideClick);
+        return () => document.removeEventListener("click", handleOutsideClick);
+      }
+    }, [openDropdown]);
+    const handleSubItemClick = (onClick) => {
+      setOpenDropdown(null);
       onClick?.();
     };
     return /* @__PURE__ */ jsx("nav", { className: cn("hidden md:flex items-center space-x-1", className), ref, ...props, children: items.map((item, index) => {
       const hasDropdown = item.items && item.items.length > 0;
-      const isHovered = isMounted && hoveredItem === index;
-      return /* @__PURE__ */ jsxs(
-        "div",
-        {
-          className: "relative group",
-          onMouseEnter: () => isMounted && hasDropdown && setHoveredItem(index),
-          onMouseLeave: () => isMounted && hasDropdown && setHoveredItem(null),
-          children: [
-            /* @__PURE__ */ jsxs(
-              Button,
-              {
-                variant: "ghost",
-                size: "sm",
-                className: cn(
-                  getButtonStyles(item.isActive),
-                  item.className
-                ),
-                onClick: () => handleNavClick(item.onClick),
-                children: [
-                  item.icon && /* @__PURE__ */ jsx(item.icon, { className: "h-4 w-4 mr-2" }),
-                  /* @__PURE__ */ jsx("span", { children: item.label }),
-                  hasDropdown && /* @__PURE__ */ jsx(ChevronDown, { className: cn(
-                    "h-3 w-3 ml-1 transition-transform duration-200",
-                    isHovered && "rotate-180"
-                  ) })
-                ]
-              }
+      const isOpen = openDropdown === index;
+      return /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+        /* @__PURE__ */ jsxs(
+          Button,
+          {
+            variant: "ghost",
+            size: "sm",
+            className: cn(
+              getButtonStyles(item.isActive),
+              item.className
             ),
-            hasDropdown && isHovered && isMounted && /* @__PURE__ */ jsxs(Fragment, { children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute top-full left-0 w-full h-2 bg-transparent z-40" }),
-              /* @__PURE__ */ jsx(
-                "div",
-                {
-                  className: "absolute top-full left-0 w-48 bg-background border border-border/50 rounded-lg shadow-lg z-50 mt-2",
-                  onMouseEnter: () => setHoveredItem(index),
-                  onMouseLeave: () => setHoveredItem(null),
-                  children: /* @__PURE__ */ jsx("div", { className: "py-1", children: item.items.map((subItem, subIndex) => /* @__PURE__ */ jsxs(
-                    "button",
-                    {
-                      className: cn(
-                        "w-full px-3 py-2 text-left text-sm rounded-md transition-colors flex items-center cursor-pointer",
-                        subItem.isActive ? "bg-secondary text-secondary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                      ),
-                      onClick: () => handleNavClick(subItem.onClick),
-                      children: [
-                        subItem.icon && /* @__PURE__ */ jsx(subItem.icon, { className: "h-4 w-4 mr-2" }),
-                        /* @__PURE__ */ jsx("span", { children: subItem.label })
-                      ]
-                    },
-                    subItem.key || subIndex
-                  )) })
-                }
-              )
-            ] })
-          ]
-        },
-        item.key || index
-      );
+            onClick: (e) => {
+              e.stopPropagation();
+              toggleDropdown(index, hasDropdown, item.onClick);
+            },
+            children: [
+              item.icon && /* @__PURE__ */ jsx(item.icon, { className: "h-4 w-4 mr-2" }),
+              /* @__PURE__ */ jsx("span", { children: item.label }),
+              hasDropdown && /* @__PURE__ */ jsx(ChevronDown, { className: cn(
+                "h-3 w-3 ml-1 transition-transform duration-200",
+                isOpen && "rotate-180"
+              ) })
+            ]
+          }
+        ),
+        hasDropdown && isOpen && /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "absolute top-full left-0 w-48 bg-background border border-border rounded-lg shadow-lg z-50 mt-1",
+            onClick: (e) => e.stopPropagation(),
+            children: /* @__PURE__ */ jsx("div", { className: "py-1", children: item.items.map((subItem, subIndex) => /* @__PURE__ */ jsxs(
+              "button",
+              {
+                className: cn(
+                  "w-full px-3 py-2 text-left text-sm transition-colors flex items-center",
+                  "hover:bg-muted focus:bg-muted focus:outline-none",
+                  subItem.isActive ? "bg-secondary text-secondary-foreground" : "text-foreground"
+                ),
+                onClick: () => handleSubItemClick(subItem.onClick),
+                children: [
+                  subItem.icon && /* @__PURE__ */ jsx(subItem.icon, { className: "h-4 w-4 mr-2" }),
+                  /* @__PURE__ */ jsx("span", { children: subItem.label })
+                ]
+              },
+              subItem.key || subIndex
+            )) })
+          }
+        )
+      ] }, item.key || index);
     }) });
   };
   const MobileNavigation = () => {
