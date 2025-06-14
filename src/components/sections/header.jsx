@@ -235,45 +235,33 @@ const HeaderNav = forwardRef(({
     );
   };
 
-  // Desktop Navigation Component
-  // Desktop Navigation Component - Fixed for Touch Support
+// Desktop Navigation Component - Simple & Robust
 const DesktopNavigation = () => {
-  const [hoveredItem, setHoveredItem] = useState(null);
-  const [clickedItem, setClickedItem] = useState(null); // ✅ NEW: Track clicked dropdowns
+  const [openDropdown, setOpenDropdown] = useState(null);
 
-  // ✅ NEW: Handle dropdown toggle for touch devices
-  const handleDropdownToggle = (index, hasDropdown, mainOnClick) => {
+  // Simple toggle function
+  const toggleDropdown = (index, hasDropdown, mainOnClick) => {
     if (hasDropdown) {
-      // Toggle dropdown for touch devices
-      if (clickedItem === index) {
-        setClickedItem(null); // Close if already open
-      } else {
-        setClickedItem(index); // Open this dropdown
-      }
+      setOpenDropdown(openDropdown === index ? null : index);
     } else {
-      // Execute main action if no dropdown
-      setHoveredItem(null);
-      setClickedItem(null);
+      setOpenDropdown(null);
       mainOnClick?.();
     }
   };
 
-  // ✅ NEW: Close dropdown when clicking outside
+  // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = () => {
-      setClickedItem(null);
-    };
-
-    if (clickedItem !== null) {
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
+    const handleOutsideClick = () => setOpenDropdown(null);
+    
+    if (openDropdown !== null) {
+      document.addEventListener('click', handleOutsideClick);
+      return () => document.removeEventListener('click', handleOutsideClick);
     }
-  }, [clickedItem]);
+  }, [openDropdown]);
 
-  // Handle navigation click
-  const handleNavClick = (onClick) => {
-    setHoveredItem(null);
-    setClickedItem(null);
+  // Handle sub-item click
+  const handleSubItemClick = (onClick) => {
+    setOpenDropdown(null);
     onClick?.();
   };
 
@@ -281,18 +269,10 @@ const DesktopNavigation = () => {
     <nav className={cn("hidden md:flex items-center space-x-1", className)} ref={ref} {...props}>
       {items.map((item, index) => {
         const hasDropdown = item.items && item.items.length > 0;
-        const isHovered = isMounted && hoveredItem === index;
-        const isClicked = isMounted && clickedItem === index; // ✅ NEW: Check clicked state
-        const isOpen = isHovered || isClicked; // ✅ NEW: Open on hover OR click
+        const isOpen = openDropdown === index;
 
         return (
-          <div 
-            key={item.key || index}
-            className="relative group"
-            onMouseEnter={() => isMounted && hasDropdown && setHoveredItem(index)}
-            onMouseLeave={() => isMounted && hasDropdown && setHoveredItem(null)}
-            onClick={(e) => e.stopPropagation()} // ✅ NEW: Prevent closing when clicking inside
-          >
+          <div key={item.key || index} className="relative">
             <Button 
               variant="ghost" 
               size="sm" 
@@ -300,46 +280,46 @@ const DesktopNavigation = () => {
                 getButtonStyles(item.isActive),
                 item.className
               )}
-              onClick={() => handleDropdownToggle(index, hasDropdown, item.onClick)} // ✅ FIXED: Handle both dropdown toggle and main action
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleDropdown(index, hasDropdown, item.onClick);
+              }}
             >
               {item.icon && <item.icon className="h-4 w-4 mr-2" />}
               <span>{item.label}</span>
               {hasDropdown && (
                 <ChevronDown className={cn(
                   "h-3 w-3 ml-1 transition-transform duration-200",
-                  isOpen && "rotate-180" // ✅ FIXED: Use isOpen instead of just isHovered
+                  isOpen && "rotate-180"
                 )} />
               )}
             </Button>
             
-            {hasDropdown && isOpen && isMounted && ( // ✅ FIXED: Use isOpen instead of just isHovered
-              <>
-                <div className="absolute top-full left-0 w-full h-2 bg-transparent z-40" />
-                
-                <div 
-                  className="absolute top-full left-0 w-48 bg-background border border-border/50 rounded-lg shadow-lg z-50 mt-2"
-                  onMouseEnter={() => setHoveredItem(index)}
-                  onMouseLeave={() => setHoveredItem(null)}
-                >
-                  <div className="py-1">
-                    {item.items.map((subItem, subIndex) => (
-                      <button
-                        key={subItem.key || subIndex}
-                        className={cn(
-                          "w-full px-3 py-2 text-left text-sm rounded-md transition-colors flex items-center cursor-pointer",
-                          subItem.isActive 
-                            ? "bg-secondary text-secondary-foreground" 
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                        )}
-                        onClick={() => handleNavClick(subItem.onClick)}
-                      >
-                        {subItem.icon && <subItem.icon className="h-4 w-4 mr-2" />}
-                        <span>{subItem.label}</span>
-                      </button>
-                    ))}
-                  </div>
+            {/* Dropdown Menu */}
+            {hasDropdown && isOpen && (
+              <div 
+                className="absolute top-full left-0 w-48 bg-background border border-border rounded-lg shadow-lg z-50 mt-1"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="py-1">
+                  {item.items.map((subItem, subIndex) => (
+                    <button
+                      key={subItem.key || subIndex}
+                      className={cn(
+                        "w-full px-3 py-2 text-left text-sm transition-colors flex items-center",
+                        "hover:bg-muted focus:bg-muted focus:outline-none",
+                        subItem.isActive 
+                          ? "bg-secondary text-secondary-foreground" 
+                          : "text-foreground"
+                      )}
+                      onClick={() => handleSubItemClick(subItem.onClick)}
+                    >
+                      {subItem.icon && <subItem.icon className="h-4 w-4 mr-2" />}
+                      <span>{subItem.label}</span>
+                    </button>
+                  ))}
                 </div>
-              </>
+              </div>
             )}
           </div>
         );
