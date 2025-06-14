@@ -41,28 +41,96 @@
    - **No basic comments**: Avoid obvious comments like `// Button component`
    - **Focus on minimal file size**: Comment only when necessary
 
-5. **Theme Integration**:
-
-   - Always wrap applications in `ThemeProvider`
-   - Use built-in themes: `default`, `metro`, `studio`, `ruby`, `neon`, `aurora`
-   - For custom themes, use OKLCH color format
-   - Support both light and dark variants
-
-6. **Import Patterns**:
+5. **Import Patterns**:
    - Use direct component imports: `@voilajsx/uikit/button`
    - Always import styles: `@voilajsx/uikit/styles`
    - Import theme provider: `@voilajsx/uikit/theme-provider`
 
-## Available Components
+## Complete Component Inventory
 
-### Core UI Components
+### 🏗️ Layout Templates (4 Total)
 
-```typescript
-// Button with variants and sizes
+Full-page layouts that structure entire applications:
+
+```jsx
+// Standard website layout with header/content/footer
+import {
+  Page,
+  PageHeader,
+  PageContent,
+  PageFooter,
+} from '@voilajsx/uikit/page';
+
+// Admin dashboard with sidebar navigation
+import { AdminTemplate } from '@voilajsx/uikit/admin';
+
+// Authentication pages (6 variants: simple, card, split-gradient, split-image, card-gradient, card-image)
+import { AuthTemplate } from '@voilajsx/uikit/auth';
+
+// Simple content pages, error pages, maintenance pages
+import { BlankTemplate } from '@voilajsx/uikit/blank';
+```
+
+### 🧱 Section Components (3 Total)
+
+Building blocks for custom layouts:
+
+```jsx
+// Responsive navigation header with logo and menu
+import { Header, HeaderLogo, HeaderNav } from '@voilajsx/uikit/header';
+
+// Content container with optional sticky sidebar
+import {
+  Container,
+  ContainerSidebar,
+  ContainerMain,
+} from '@voilajsx/uikit/container';
+
+// Footer with basic and advanced multi-column layouts
+import {
+  Footer,
+  FooterBasic,
+  FooterAdvanced,
+  FooterBrand,
+  FooterSocial,
+} from '@voilajsx/uikit/footer';
+```
+
+### 🎨 UI Components (35 Total)
+
+All shadcn/ui components enhanced with theming:
+
+**Form & Input Components (10):**
+
+```jsx
 import { Button } from '@voilajsx/uikit/button';
-// Usage: <Button variant="default|destructive|outline|secondary|ghost|link" size="default|sm|lg|icon">
+import { Input } from '@voilajsx/uikit/input';
+import { Textarea } from '@voilajsx/uikit/textarea';
+import { Label } from '@voilajsx/uikit/label';
+import { Checkbox } from '@voilajsx/uikit/checkbox';
+import { RadioGroup, RadioGroupItem } from '@voilajsx/uikit/radio-group';
+import { Switch } from '@voilajsx/uikit/switch';
+import { Slider } from '@voilajsx/uikit/slider';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@voilajsx/uikit/select';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@voilajsx/uikit/form';
+```
 
-// Card components for content containers
+**Display & Layout Components (10):**
+
+```jsx
 import {
   Card,
   CardHeader,
@@ -71,110 +139,36 @@ import {
   CardContent,
   CardFooter,
 } from '@voilajsx/uikit/card';
-
-// Input field with styling
-import { Input } from '@voilajsx/uikit/input';
-
-// Badge for status indicators
 import { Badge } from '@voilajsx/uikit/badge';
-// Usage: <Badge variant="default|secondary|destructive|outline">
-
-// Avatar with image fallback
 import { Avatar, AvatarImage, AvatarFallback } from '@voilajsx/uikit/avatar';
-
-// Alert messages
+import { Separator } from '@voilajsx/uikit/separator';
+import { Progress } from '@voilajsx/uikit/progress';
+import { Skeleton } from '@voilajsx/uikit/skeleton';
 import { Alert, AlertTitle, AlertDescription } from '@voilajsx/uikit/alert';
-
-// Accordion for collapsible content
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from '@voilajsx/uikit/breadcrumb';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@voilajsx/uikit/tabs';
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from '@voilajsx/uikit/accordion';
-
-// Skeleton loading states
-import { Skeleton } from '@voilajsx/uikit/skeleton';
-
-// Progress indicators
-import { Progress } from '@voilajsx/uikit/progress';
-
-// Separator lines
-import { Separator } from '@voilajsx/uikit/separator';
 ```
 
-### Form Components
+**Navigation & Menu Components (6):**
 
-```typescript
-// Form integration with React Hook Form
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from '@voilajsx/uikit/form';
-
-// Checkbox with states
-import { Checkbox } from '@voilajsx/uikit/checkbox';
-
-// Radio button groups
-import { RadioGroup, RadioGroupItem } from '@voilajsx/uikit/radio-group';
-
-// Select dropdown
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectLabel,
-  SelectSeparator,
-} from '@voilajsx/uikit/select';
-
-// Switch toggle
-import { Switch } from '@voilajsx/uikit/switch';
-
-// Range slider
-import { Slider } from '@voilajsx/uikit/slider';
-
-// Multi-line text input
-import { Textarea } from '@voilajsx/uikit/textarea';
-
-// Form labels
-import { Label } from '@voilajsx/uikit/label';
-```
-
-### Navigation Components
-
-```typescript
-// Dropdown menus
+```jsx
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
 } from '@voilajsx/uikit/dropdown-menu';
-
-// Navigation tabs
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@voilajsx/uikit/tabs';
-
-// Page navigation
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-  PaginationEllipsis,
-} from '@voilajsx/uikit/pagination';
-
-// Horizontal menu bar
 import {
   Menubar,
   MenubarMenu,
@@ -182,22 +176,1104 @@ import {
   MenubarContent,
   MenubarItem,
 } from '@voilajsx/uikit/menubar';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from '@voilajsx/uikit/pagination';
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandItem,
+} from '@voilajsx/uikit/command';
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from '@voilajsx/uikit/collapsible';
+import { Toggle } from '@voilajsx/uikit/toggle';
+```
 
-// Breadcrumb navigation
+**Overlay & Modal Components (5):**
+
+```jsx
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@voilajsx/uikit/dialog';
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@voilajsx/uikit/sheet';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '@voilajsx/uikit/popover';
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from '@voilajsx/uikit/hover-card';
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from '@voilajsx/uikit/tooltip';
+```
+
+**Data & Table Components (4):**
+
+```jsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@voilajsx/uikit/table';
+import { DataTable } from '@voilajsx/uikit/data-table'; // Enhanced with search/sort
+import { Calendar } from '@voilajsx/uikit/calendar';
+import { Toast, ToastProvider, ToastViewport } from '@voilajsx/uikit/toast';
+```
+
+### 🎨 Theme System
+
+6 professional themes with light/dark variants:
+
+```jsx
+import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
+
+// Available themes: 'default', 'aurora', 'metro', 'neon', 'ruby', 'studio'
+// Variants: 'light', 'dark'
+```
+
+**Theme Descriptions:**
+
+- **default**: Ocean blue professional colors - perfect for business applications
+- **aurora**: Northern lights purple-green gradients - ideal for creative applications
+- **metro**: Clean transit-inspired gray-blue - excellent for admin panels and dashboards
+- **neon**: Electric cyberpunk magenta-cyan - great for gaming and tech applications
+- **ruby**: Sophisticated red with gold accents - perfect for premium brands
+- **studio**: Designer grays with amber accent - ideal for design tools and creative platforms
+
+## Template Selection Decision Tree
+
+| Need                                       | Use Template    | When to Choose                                        |
+| ------------------------------------------ | --------------- | ----------------------------------------------------- |
+| Full website with header/footer navigation | `Page`          | Marketing sites, documentation, company websites      |
+| Admin dashboard with persistent sidebar    | `AdminTemplate` | CRM systems, analytics dashboards, admin panels       |
+| Authentication flows                       | `AuthTemplate`  | Login, signup, password reset, onboarding             |
+| Simple content or error pages              | `BlankTemplate` | 404 pages, maintenance, about us, terms               |
+| Content section with optional sidebar      | `Container`     | Documentation sections, settings pages, content areas |
+
+# UIKit Color System Guidelines (CRITICAL FOR THEME COMPATIBILITY)
+
+## 🚨 MANDATORY Color Usage Rules
+
+### 1. ONLY Use Semantic Color Variables
+
+```jsx
+// ✅ CORRECT - Use semantic color variables (theme-aware)
+className = 'bg-background text-foreground border-border';
+className = 'bg-primary text-primary-foreground';
+className = 'bg-card text-card-foreground border-border';
+className = 'text-muted-foreground bg-muted';
+
+// ❌ WRONG - Never use hardcoded colors (breaks themes)
+className = 'bg-white text-black border-gray-200';
+className = 'bg-blue-500 text-white';
+className = 'text-gray-600 bg-gray-100';
+```
+
+### 2. Complete Semantic Color System
+
+```css
+/* Background & Surface Colors */
+bg-background           /* Main page background */
+bg-card                /* Card/panel backgrounds */
+bg-popover             /* Dropdown/popover backgrounds */
+bg-muted               /* Subtle background areas */
+
+/* Text Colors */
+text-foreground        /* Primary text color */
+text-muted-foreground  /* Secondary/subtle text */
+text-card-foreground   /* Text on card backgrounds */
+text-popover-foreground /* Text on popover backgrounds */
+
+/* Interactive Colors */
+bg-primary             /* Primary buttons/elements */
+text-primary-foreground /* Text on primary elements */
+bg-secondary           /* Secondary buttons/elements */
+text-secondary-foreground /* Text on secondary elements */
+bg-accent              /* Accent highlights */
+text-accent-foreground /* Text on accent elements */
+
+/* State Colors */
+bg-destructive         /* Error/danger states */
+text-destructive-foreground /* Text on destructive elements */
+text-destructive       /* Destructive text (standalone) */
+
+/* Border & Divider Colors */
+border-border          /* Standard borders */
+border-input           /* Input field borders */
+ring-ring              /* Focus ring colors */
+
+/* Chart Colors (for data visualization) */
+bg-chart-1 through bg-chart-5  /* Themed chart colors */
+```
+
+### 3. Dark/Light Theme Compatibility
+
+```jsx
+// ✅ AUTOMATICALLY works in both themes
+<Card className="bg-card text-card-foreground border-border">
+  <CardHeader className="border-b border-border">
+    <CardTitle className="text-foreground">Title</CardTitle>
+    <p className="text-muted-foreground">Subtitle</p>
+  </CardHeader>
+  <CardContent className="text-foreground">
+    Content adapts to theme automatically
+  </CardContent>
+</Card>
+
+// ❌ BREAKS in dark theme
+<Card className="bg-white text-black border-gray-200">
+  <CardHeader className="border-b border-gray-200">
+    <CardTitle className="text-gray-900">Title</CardTitle>
+    <p className="text-gray-600">Subtitle</p>
+  </CardHeader>
+</Card>
+```
+
+### 4. State-Based Color Patterns
+
+```jsx
+// ✅ Status indicators using semantic colors
+<Badge variant="default">Active</Badge>          // Uses bg-primary
+<Badge variant="secondary">Pending</Badge>       // Uses bg-secondary
+<Badge variant="destructive">Error</Badge>       // Uses bg-destructive
+<Badge variant="outline">Neutral</Badge>         // Uses border-border
+
+// ✅ Interactive states
+<Button
+  variant="default"     // bg-primary text-primary-foreground
+  className="hover:bg-primary/90"  // Semantic color with opacity
+>
+  Action
+</Button>
+
+// ✅ Form validation states
+<Input
+  className={cn(
+    "border-input",  // Default border
+    error && "border-destructive focus:ring-destructive"  // Error state
+  )}
+/>
+```
+
+### 5. Opacity and Color Modifiers
+
+```jsx
+// ✅ Use opacity modifiers with semantic colors
+className = 'bg-primary/10'; // 10% opacity primary
+className = 'text-muted-foreground/60'; // 60% opacity muted text
+className = 'border-border/50'; // 50% opacity border
+
+// ✅ Hover states with semantic colors
+className = 'hover:bg-muted/80'; // Hover with opacity
+className = 'hover:text-foreground'; // Full semantic color on hover
+```
+
+### 6. Never Use These (Theme-Breaking Colors)
+
+```jsx
+// ❌ FORBIDDEN - Hardcoded grays
+className="bg-gray-100 text-gray-900 border-gray-300"
+className="bg-slate-50 text-slate-800"
+
+// ❌ FORBIDDEN - Hardcoded colors
+className="bg-blue-500 text-white"
+className="bg-red-600 text-white"
+className="bg-green-100 text-green-800"
+
+// ❌ FORBIDDEN - CSS color values
+style={{ backgroundColor: '#ffffff', color: '#000000' }}
+className="bg-[#f5f5f5] text-[#333333]"
+```
+
+## Component-Specific Color Guidelines
+
+### Buttons
+
+```jsx
+// ✅ Use button variants (automatically theme-aware)
+<Button variant="default">Primary Action</Button>      // bg-primary
+<Button variant="secondary">Secondary</Button>         // bg-secondary
+<Button variant="destructive">Delete</Button>          // bg-destructive
+<Button variant="outline">Outline</Button>             // border-input
+<Button variant="ghost">Ghost</Button>                 // transparent
+```
+
+### Cards & Containers
+
+```jsx
+// ✅ Standard card pattern
+<Card className="bg-card text-card-foreground border-border">
+  <CardHeader className="border-b border-border">
+    <CardTitle className="text-foreground">Title</CardTitle>
+    <CardDescription className="text-muted-foreground">
+      Description
+    </CardDescription>
+  </CardHeader>
+  <CardContent className="text-foreground">Content here</CardContent>
+</Card>
+```
+
+### Forms & Inputs
+
+```jsx
+// ✅ Form styling pattern
+<div className="space-y-4">
+  <Label className="text-foreground">Email</Label>
+  <Input
+    className="bg-background text-foreground border-input focus:ring-ring"
+    placeholder="Enter email..."
+  />
+  <p className="text-muted-foreground text-sm">Helper text</p>
+  {error && <p className="text-destructive text-sm">Error message</p>}
+</div>
+```
+
+### Status & Feedback
+
+```jsx
+// ✅ Status indicators
+<Alert className="border-border bg-background">
+  <AlertTitle className="text-foreground">Success</AlertTitle>
+  <AlertDescription className="text-muted-foreground">
+    Operation completed successfully
+  </AlertDescription>
+</Alert>
+
+<Alert variant="destructive" className="border-destructive bg-destructive/10">
+  <AlertTitle className="text-destructive">Error</AlertTitle>
+  <AlertDescription className="text-destructive">
+    Something went wrong
+  </AlertDescription>
+</Alert>
+```
+
+### Navigation & Menus
+
+```jsx
+// ✅ Navigation pattern (automatically themed by components)
+<Header variant="default">  {/* Uses semantic colors internally */}
+  <HeaderNav items={navItems} />
+</Header>
+
+// ✅ Custom navigation with semantic colors
+<nav className="bg-background border-b border-border">
+  <Button
+    variant="ghost"
+    className={cn(
+      "text-muted-foreground hover:text-foreground",
+      isActive && "text-foreground bg-muted"
+    )}
+  >
+    Navigation Item
+  </Button>
+</nav>
+```
+
+## Data Visualization Colors
+
+```jsx
+// ✅ Use themed chart colors
+<div className="grid grid-cols-5 gap-2">
+  <div className="h-4 bg-chart-1 rounded"></div> {/* Theme-aware chart color 1 */}
+  <div className="h-4 bg-chart-2 rounded"></div> {/* Theme-aware chart color 2 */}
+  <div className="h-4 bg-chart-3 rounded"></div> {/* Theme-aware chart color 3 */}
+  <div className="h-4 bg-chart-4 rounded"></div> {/* Theme-aware chart color 4 */}
+  <div className="h-4 bg-chart-5 rounded"></div> {/* Theme-aware chart color 5 */}
+</div>;
+
+// ✅ DataTable with semantic colors
+const columns = [
+  {
+    key: 'status',
+    title: 'Status',
+    render: (value) => (
+      <Badge
+        variant={value === 'active' ? 'default' : 'secondary'}
+        className={cn(
+          value === 'active' && 'bg-primary text-primary-foreground',
+          value === 'inactive' && 'bg-muted text-muted-foreground'
+        )}
+      >
+        {value}
+      </Badge>
+    ),
+  },
+];
+```
+
+## Testing Theme Compatibility
+
+```jsx
+// ✅ Always test components work in both themes
+function ThemeTestComponent() {
+  const { toggleVariant } = useTheme();
+
+  return (
+    <div className="p-4 bg-background text-foreground">
+      <Button onClick={toggleVariant} className="mb-4">
+        Toggle Theme to Test
+      </Button>
+
+      <Card className="bg-card text-card-foreground border-border">
+        <CardContent className="p-4">
+          <p className="text-foreground mb-2">Primary text</p>
+          <p className="text-muted-foreground">Secondary text</p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+```
+
+## Quick Reference Checklist
+
+### ✅ DO:
+
+- Use semantic color variables (`bg-background`, `text-foreground`, etc.)
+- Use component variants (`variant="default"`, `variant="destructive"`)
+- Use opacity modifiers (`bg-primary/10`, `text-muted-foreground/60`)
+- Test in both light and dark themes
+- Use themed chart colors (`bg-chart-1` through `bg-chart-5`)
+
+### ❌ DON'T:
+
+- Use hardcoded colors (`bg-white`, `text-black`, `bg-blue-500`)
+- Use gray scale colors (`bg-gray-100`, `text-gray-600`)
+- Use CSS color values (`#ffffff`, `rgb(255,255,255)`)
+- Use arbitrary color values (`bg-[#f5f5f5]`)
+- Assume colors work in both themes without testing
+
+### 🎯 Golden Rule:
+
+**If it uses a hardcoded color, it will break themes. Always use semantic color variables that automatically adapt to the current theme.**
+
+## Theme System (Complete API Reference)
+
+### Theme Provider - REQUIRED wrapper for all apps
+
+```typescript
+// Theme Provider - MUST wrap your entire application
+import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
+
+// ThemeProvider Props (complete interface)
+interface ThemeProviderProps {
+  theme?: 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+  variant?: 'light' | 'dark';
+  detectSystem?: boolean; // Auto-detect system preference (default: true)
+  customThemes?: Array<ThemeObject>; // Register custom themes
+  children: React.ReactNode;
+}
+
+// useTheme Hook (complete return interface)
+const {
+  theme, // string: current theme id
+  variant, // 'light' | 'dark'
+  setTheme, // (themeId: string) => void
+  setVariant, // ('light' | 'dark') => void
+  toggleVariant, // () => void
+  availableThemes, // Array<{id: string, name: string}>
+  registerTheme, // (themeObj) => void - for custom themes
+  getAvailableThemes, // () => Array - get all themes
+} = useTheme();
+
+// CRITICAL: Always wrap your app
+<ThemeProvider theme="studio" variant="light" detectSystem={true}>
+  <App />
+</ThemeProvider>;
+```
+
+### Theme Selection Patterns
+
+```jsx
+// Standard theme selector
+<Select value={theme} onValueChange={setTheme}>
+  <SelectItem value="default">Default (Ocean Blue)</SelectItem>
+  <SelectItem value="aurora">Aurora (Purple-Green)</SelectItem>
+  <SelectItem value="metro">Metro (Gray-Blue)</SelectItem>
+  <SelectItem value="neon">Neon (Cyberpunk)</SelectItem>
+  <SelectItem value="ruby">Ruby (Red-Gold)</SelectItem>
+  <SelectItem value="studio">Studio (Designer Gray)</SelectItem>
+</Select>
+
+// Dark mode toggle
+<Switch
+  checked={variant === 'dark'}
+  onCheckedChange={(checked) => setVariant(checked ? 'dark' : 'light')}
+/>
+
+// Quick toggle button
+<Button onClick={toggleVariant}>
+  {variant === 'light' ? <Moon /> : <Sun />}
+</Button>
+```
+
+## Layout Templates (Complete API Reference)
+
+### 1. Page Template - Standard Website Layout
+
+```typescript
+// Complete page layout with header/content/footer
+import {
+  Page,
+  PageHeader,
+  PageContent,
+  PageFooter,
+} from '@voilajsx/uikit/page';
+
+// Page Props (complete interface)
+interface PageProps {
+  variant?: 'default' | 'minimal' | 'contained';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'; // Controls width and spacing
+  children: React.ReactNode;
+}
+
+// PageHeader Props (inherits size from Page if not specified)
+interface PageHeaderProps {
+  variant?: 'default' | 'primary' | 'black'; // Color scheme
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  sticky?: boolean; // Sticky positioning (default: true)
+  children: React.ReactNode;
+}
+
+// PageContent Props (inherits size from Page if not specified)
+interface PageContentProps {
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  children: React.ReactNode;
+}
+
+// PageFooter Props (inherits size from Page if not specified)
+interface PageFooterProps {
+  variant?: 'default' | 'muted' | 'dark'; // Color scheme
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  children: React.ReactNode;
+}
+
+// Standard Page Pattern
+<Page variant="default" size="xl">
+  <PageHeader variant="default" sticky={true}>
+    <HeaderLogo>{logo}</HeaderLogo>
+    <HeaderNav items={navItems} />
+  </PageHeader>
+  <PageContent>{/* Main content */}</PageContent>
+  <PageFooter variant="default">
+    <FooterBasic />
+  </PageFooter>
+</Page>;
+```
+
+### 2. Admin Template - Dashboard with Sidebar
+
+```typescript
+// Admin dashboard with sidebar and header
+import { AdminTemplate } from '@voilajsx/uikit/admin';
+
+// AdminTemplate Props (complete interface)
+interface AdminTemplateProps {
+  variant?: 'default' | 'primary' | 'black'; // Sidebar color scheme
+  size?: 'compact' | 'default' | 'wide'; // Sidebar width (192px/256px/320px)
+  title?: string; // Header title text
+  logo?: React.ReactNode; // Logo component
+  headerActions?: React.ReactNode; // Top-right header buttons
+
+  // Navigation Structure (REQUIRED)
+  navigationItems: Array<{
+    key: string; // REQUIRED: Unique identifier
+    title: string; // REQUIRED: Display text
+    icon?: React.ComponentType; // Optional: Lucide icon component
+    path?: string; // Optional: URL path
+    badge?: string; // Optional: Badge text (e.g., "12", "New")
+    isActive?: boolean; // Optional: Current page indicator
+    section?: string; // Optional: Group name ('main', 'system', etc.)
+    onClick?: () => void; // Optional: Click handler
+    submenu?: Array<{
+      // Optional: Nested navigation
+      key: string;
+      title: string;
+      path?: string;
+      isActive?: boolean;
+      onClick?: () => void;
+    }>;
+  }>;
+
+  currentPath?: string; // Current URL for active states
+  onNavigate?: (path: string, item: object) => void; // Navigation handler
+  sidebarContent?: React.ReactNode; // Custom sidebar content (overrides navigationItems)
+  sidebarFooter?: React.ReactNode; // Bottom sidebar content
+  collapsible?: boolean; // Allow sidebar collapse (default: true)
+  defaultSidebarOpen?: boolean; // Initial sidebar state (default: true)
+  children: React.ReactNode; // Main content area
+}
+
+// Navigation Items Example Structure
+const navigationItems = [
+  {
+    key: 'dashboard',
+    title: 'Dashboard',
+    icon: Home,
+    path: '/admin',
+    isActive: true,
+    section: 'main', // Groups items with separators
+  },
+  {
+    key: 'users',
+    title: 'Users',
+    icon: Users,
+    path: '/admin/users',
+    badge: '24', // Shows notification badge
+    section: 'main',
+  },
+  {
+    key: 'analytics',
+    title: 'Analytics',
+    icon: BarChart3,
+    section: 'main',
+    submenu: [
+      // Creates collapsible submenu
+      { key: 'overview', title: 'Overview', path: '/admin/analytics' },
+      { key: 'reports', title: 'Reports', path: '/admin/analytics/reports' },
+    ],
+  },
+  {
+    key: 'settings',
+    title: 'Settings',
+    icon: Settings,
+    path: '/admin/settings',
+    section: 'system', // Different section = separator line
+  },
+];
+
+// Standard Admin Pattern
+<AdminTemplate
+  variant="default"
+  size="default"
+  title="Admin Dashboard"
+  navigationItems={navigationItems}
+  currentPath="/admin"
+  onNavigate={(path) => navigate(path)}
+  headerActions={<HeaderButtons />}
+>
+  {/* Dashboard content */}
+</AdminTemplate>;
+```
+
+### 3. Auth Template - Authentication Pages
+
+```typescript
+// Authentication page layouts
+import { AuthTemplate } from '@voilajsx/uikit/auth';
+
+// AuthTemplate Props (complete interface)
+interface AuthTemplateProps {
+  variant: 'simple' | 'card' | 'split-gradient' | 'split-image' | 'card-gradient' | 'card-image';
+  title?: string; // Page title
+  subtitle?: string; // Page subtitle
+  logo?: React.ReactNode; // Logo component
+  footer?: React.ReactNode; // Footer content
+  className?: string;
+  containerProps?: object;
+
+  // Split Layout Props (for split-* variants)
+  splitContent?: React.ReactNode; // Left side content
+
+  // Image Layout Props (for *-image variants)
+  imageUrl?: string; // Background image URL
+  imageAlt?: string; // Image alt text
+  imageOverlay?: 'light' | 'dark' | 'none'; // Image overlay
+
+  // Card Layout Props (for card-* variants)
+  cardContent?: React.ReactNode; // Additional card content
+
+  children: React.ReactNode; // Form content (REQUIRED)
+}
+
+// Variant Descriptions
+const AUTH_VARIANTS = {
+  'simple': 'Centered form on plain background',
+  'card': 'Form inside elevated card',
+  'split-gradient': 'Left gradient panel, right form',
+  'split-image': 'Left image panel, right form',
+  'card-gradient': 'Vertical card with gradient header',
+  'card-image': 'Card overlay on background image'
+};
+
+// Standard Auth Patterns
+<AuthTemplate variant="card" title="Sign In" subtitle="Welcome back">
+  <LoginForm />
+</AuthTemplate>
+
+<AuthTemplate
+  variant="split-gradient"
+  title="Join Us"
+  splitContent={<WelcomeContent />}
+>
+  <SignupForm />
+</AuthTemplate>
+
+<AuthTemplate
+  variant="card-image"
+  imageUrl="/background.jpg"
+  imageOverlay="dark"
+  title="Welcome"
+>
+  <AuthForm />
+</AuthTemplate>
+```
+
+### 4. Blank Template - Simple Content Pages
+
+```typescript
+// Simple content pages and error states
+import { BlankTemplate } from '@voilajsx/uikit/blank';
+
+// BlankTemplate Props (complete interface)
+interface BlankTemplateProps {
+  variant?: 'default' | 'card' | 'error' | 'maintenance' | 'suspension';
+  title?: string; // Page title
+  subtitle?: string; // Page subtitle
+  logo?: React.ReactNode; // Logo component
+  icon?: React.ReactNode; // Icon component (e.g., error icon)
+  actions?: React.ReactNode; // Action buttons
+  footer?: React.ReactNode; // Footer content
+  className?: string;
+  containerProps?: object;
+  children?: React.ReactNode; // Main content
+}
+
+// Variant Descriptions
+const BLANK_VARIANTS = {
+  'default': 'Simple centered content',
+  'card': 'Content in elevated card',
+  'error': 'Error page styling with muted colors',
+  'maintenance': 'Maintenance page with pulsing icon',
+  'suspension': 'Account suspension styling with destructive colors'
+};
+
+// Standard Blank Patterns
+<BlankTemplate
+  variant="error"
+  title="404 - Page Not Found"
+  subtitle="The page you're looking for doesn't exist"
+  icon={<AlertTriangle className="h-24 w-24" />}
+  actions={
+    <Button onClick={() => navigate('/')}>
+      Go Home
+    </Button>
+  }
+/>
+
+<BlankTemplate variant="card" title="About Us">
+  <AboutContent />
+</BlankTemplate>
+```
+
+---
+
+## Section Components (Complete API Reference)
+
+### 1. Header Component - Navigation Header
+
+```typescript
+// Header with logo and navigation
+import { Header, HeaderLogo, HeaderNav } from '@voilajsx/uikit/header';
+
+// Header Props (complete interface)
+interface HeaderProps {
+  variant?: 'default' | 'primary' | 'black'; // Color scheme
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'; // Height and padding
+  sticky?: boolean; // Sticky positioning (default: true)
+  className?: string;
+  children: React.ReactNode;
+}
+
+// HeaderNav Props (complete interface)
+interface HeaderNavProps {
+  items: Array<{
+    key: string; // REQUIRED: Unique identifier
+    label: string; // REQUIRED: Display text
+    icon?: React.ComponentType; // Optional: Lucide icon
+    isActive?: boolean; // Optional: Active state
+    onClick?: () => void; // Optional: Click handler
+    className?: string; // Optional: Custom styling
+    items?: Array<{
+      // Optional: Dropdown submenu
+      key: string;
+      label: string;
+      icon?: React.ComponentType;
+      isActive?: boolean;
+      onClick?: () => void;
+    }>;
+  }>;
+  className?: string;
+}
+
+// Standard Header Pattern
+<Header variant="default" sticky={true}>
+  <HeaderLogo>
+    <div className="flex items-center gap-2">
+      <img src="/logo.png" alt="Brand" className="h-8 w-8" />
+      <span className="text-xl font-bold">Brand</span>
+    </div>
+  </HeaderLogo>
+  <HeaderNav items={navigationItems} />
+</Header>;
+
+// Navigation Items Structure
+const navigationItems = [
+  { key: 'home', label: 'Home', isActive: true, onClick: () => {} },
+  { key: 'about', label: 'About', onClick: () => {} },
+  {
+    key: 'services',
+    label: 'Services',
+    items: [
+      // Dropdown menu
+      { key: 'web', label: 'Web Design', onClick: () => {} },
+      { key: 'mobile', label: 'Mobile Apps', onClick: () => {} },
+    ],
+  },
+  { key: 'contact', label: 'Contact', onClick: () => {} },
+];
+```
+
+### 2. Container Component - Content with Optional Sidebar
+
+```typescript
+// Content container with optional sidebar
+import { Container } from '@voilajsx/uikit/container';
+
+// Container Props (complete interface)
+interface ContainerProps {
+  variant?: 'default' | 'contained' | 'minimal';
+  sidebar?: 'none' | 'left' | 'right'; // Sidebar position
+  sidebarContent?: React.ReactNode | Array<NavigationItem>; // Sidebar content
+  sidebarSticky?: boolean; // Sticky sidebar behavior (default: false)
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'; // Container width
+  className?: string;
+  children: React.ReactNode; // Main content
+}
+
+// NavigationItem Interface (for sidebarContent array)
+interface NavigationItem {
+  key: string; // REQUIRED: Unique identifier
+  label: string; // REQUIRED: Display text (note: 'label' not 'title')
+  icon?: React.ComponentType; // Optional: Lucide icon
+  badge?: string; // Optional: Badge text
+  isActive?: boolean; // Optional: Active state
+  onClick?: () => void; // Optional: Click handler
+  items?: Array<NavigationItem>; // Optional: Nested items (collapsible)
+}
+
+// Sidebar Content Patterns
+
+// 1. Navigation Array (auto-rendered with collapsible support)
+const sidebarNav = [
+  { key: 'overview', label: 'Overview', icon: Home, isActive: true },
+  { key: 'users', label: 'Users', icon: Users, badge: '12' },
+  {
+    key: 'settings',
+    label: 'Settings',
+    icon: Settings,
+    items: [ // Creates collapsible submenu
+      { key: 'general', label: 'General', onClick: () => {} },
+      { key: 'security', label: 'Security', onClick: () => {} }
+    ]
+  }
+];
+
+// 2. Custom JSX Content
+const customSidebar = (
+  <nav className="p-4 space-y-2">
+    <Button variant="ghost" className="w-full justify-start">
+      <Home className="mr-2 h-4 w-4" />
+      Dashboard
+    </Button>
+    <Button variant="ghost" className="w-full justify-start">
+      <Users className="mr-2 h-4 w-4" />
+      Users
+    </Button>
+  </nav>
+);
+
+// Standard Container Patterns
+<Container sidebar="left" sidebarContent={sidebarNav} size="xl">
+  <MainContent />
+</Container>
+
+<Container sidebar="right" sidebarContent={customSidebar} sidebarSticky={true}>
+  <MainContent />
+</Container>
+```
+
+### 3. Footer Component - Footer Layouts
+
+```typescript
+// Footer with multiple layout options
+import { Footer, FooterBasic, FooterAdvanced, FooterBrand, FooterSocial } from '@voilajsx/uikit/footer';
+
+// Footer Props (complete interface)
+interface FooterProps {
+  variant?: 'default' | 'muted' | 'dark'; // Color scheme
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'; // Width and padding
+  className?: string;
+  children: React.ReactNode;
+}
+
+// FooterBasic Props (simple footer)
+interface FooterBasicProps {
+  logo?: React.ReactNode; // Footer logo
+  links?: Array<{ // Navigation links
+    key: string;
+    label: string;
+    onClick: () => void;
+    className?: string;
+  }>;
+  social?: React.ReactNode; // Social media links
+  copyright?: React.ReactNode; // Copyright text
+  className?: string;
+}
+
+// FooterAdvanced Props (multi-column footer)
+interface FooterAdvancedProps {
+  brand?: React.ReactNode; // Brand section (logo + description)
+  columns?: Array<{ // Footer columns (up to 5)
+    key: string;
+    title: string;
+    links: Array<{
+      key: string;
+      label: string;
+      onClick: () => void;
+    }>;
+  }>;
+  newsletter?: React.ReactNode; // Newsletter signup
+  social?: React.ReactNode; // Social links
+  legal?: React.ReactNode; // Legal links
+  copyright?: React.ReactNode; // Copyright text
+  className?: string;
+}
+
+// FooterSocial Props
+interface FooterSocialProps {
+  links: Array<{
+    key: string;
+    label: string; // For accessibility
+    icon: React.ComponentType; // Lucide icon
+    onClick: () => void;
+    className?: string;
+  }>;
+  className?: string;
+}
+
+// Standard Footer Patterns
+<Footer variant="default">
+  <FooterBasic
+    logo={<BrandLogo />}
+    links={footerLinks}
+    social={<FooterSocial links={socialLinks} />}
+    copyright="© 2024 Company. All rights reserved."
+  />
+</Footer>
+
+<Footer variant="dark">
+  <FooterAdvanced
+    brand={<FooterBrand logo={<Logo />} description="Company description" />}
+    columns={footerColumns}
+    social={<FooterSocial links={socialLinks} />}
+    legal={<LegalLinks />}
+    copyright="© 2024 Company"
+  />
+</Footer>
+```
+
+## Enhanced UI Components (Key Differences from shadcn/ui)
+
+### DataTable - Enhanced Table with Search and Sort
+
+```typescript
+// Enhanced table component with built-in features
+import { DataTable } from '@voilajsx/uikit/data-table';
+
+// DataTable Props (UIKit-specific enhancement)
+interface DataTableProps {
+  columns: Array<{
+    key: string; // REQUIRED: Data property key
+    title: string; // REQUIRED: Column header text
+    sortable?: boolean; // Optional: Enable sorting (default: true)
+    render?: (value: any, row: object) => React.ReactNode; // Optional: Custom cell renderer
+  }>;
+  data: Array<object>; // REQUIRED: Table data
+  searchable?: boolean; // Optional: Enable search (default: true)
+  sortable?: boolean; // Optional: Enable global sorting (default: true)
+  className?: string;
+}
+
+// Example Usage
+const columns = [
+  {
+    key: 'name',
+    title: 'Name',
+    render: (value, row) => (
+      <div>
+        <div className="font-medium">{value}</div>
+        <div className="text-sm text-muted-foreground">{row.email}</div>
+      </div>
+    ),
+  },
+  {
+    key: 'role',
+    title: 'Role',
+    render: (value) => <Badge variant="secondary">{value}</Badge>,
+  },
+  {
+    key: 'status',
+    title: 'Status',
+    render: (value) => (
+      <Badge variant={value === 'Active' ? 'default' : 'destructive'}>
+        {value}
+      </Badge>
+    ),
+  },
+  {
+    key: 'actions',
+    title: 'Actions',
+    sortable: false, // Disable sorting for action column
+    render: (_, row) => (
+      <div className="flex gap-2">
+        <Button variant="ghost" size="sm">
+          Edit
+        </Button>
+        <Button variant="ghost" size="sm" className="text-destructive">
+          Delete
+        </Button>
+      </div>
+    ),
+  },
+];
+
+<DataTable columns={columns} data={users} searchable sortable />;
+```
+
+### Form Components - React Hook Form Integration
+
+```typescript
+// Enhanced form integration (same API as shadcn/ui)
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+  FormDescription,
+} from '@voilajsx/uikit/form';
+
+// Standard React Hook Form pattern (unchanged from shadcn/ui)
+const form = useForm({
+  defaultValues: {
+    email: '',
+    password: '',
+  },
+});
+
+<Form {...form}>
+  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <FormField
+      control={form.control}
+      name="email"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Email</FormLabel>
+          <FormControl>
+            <Input placeholder="name@example.com" {...field} />
+          </FormControl>
+          <FormDescription>
+            We'll never share your email with anyone else.
+          </FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+    <Button type="submit">Submit</Button>
+  </form>
+</Form>;
+```
+
+### Standard shadcn/ui Components (All Available)
+
+```typescript
+// All standard shadcn/ui components work exactly the same
+import { Button } from '@voilajsx/uikit/button';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from '@voilajsx/uikit/card';
+import { Input } from '@voilajsx/uikit/input';
+import { Label } from '@voilajsx/uikit/label';
+import { Textarea } from '@voilajsx/uikit/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@voilajsx/uikit/select';
+import { Checkbox } from '@voilajsx/uikit/checkbox';
+import { RadioGroup, RadioGroupItem } from '@voilajsx/uikit/radio-group';
+import { Switch } from '@voilajsx/uikit/switch';
+import { Slider } from '@voilajsx/uikit/slider';
+import { Progress } from '@voilajsx/uikit/progress';
+import { Badge } from '@voilajsx/uikit/badge';
+import { Avatar, AvatarImage, AvatarFallback } from '@voilajsx/uikit/avatar';
+import { Separator } from '@voilajsx/uikit/separator';
+import { Skeleton } from '@voilajsx/uikit/skeleton';
+import { Alert, AlertTitle, AlertDescription } from '@voilajsx/uikit/alert';
 import {
   Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbPage,
-  BreadcrumbSeparator,
 } from '@voilajsx/uikit/breadcrumb';
-```
-
-### Overlay Components
-
-```typescript
-// Modal dialogs
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@voilajsx/uikit/tabs';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@voilajsx/uikit/accordion';
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from '@voilajsx/uikit/collapsible';
 import {
   Dialog,
   DialogTrigger,
@@ -205,10 +1281,39 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
 } from '@voilajsx/uikit/dialog';
-
-// Slide-out panels
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from '@voilajsx/uikit/dropdown-menu';
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from '@voilajsx/uikit/hover-card';
+import {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+} from '@voilajsx/uikit/menubar';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+} from '@voilajsx/uikit/pagination';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '@voilajsx/uikit/popover';
 import {
   Sheet,
   SheetTrigger,
@@ -217,56 +1322,29 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@voilajsx/uikit/sheet';
-
-// Floating content
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from '@voilajsx/uikit/popover';
-
-// Hover tooltips
-import {
-  Tooltip,
-  TooltipProvider,
-  TooltipTrigger,
-  TooltipContent,
-} from '@voilajsx/uikit/tooltip';
-
-// Toast notifications
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from '@voilajsx/uikit/table';
 import {
   Toast,
   ToastProvider,
   ToastViewport,
   ToastTitle,
   ToastDescription,
-  ToastClose,
-  ToastAction,
 } from '@voilajsx/uikit/toast';
-```
-
-### Data Components
-
-```typescript
-// Data tables with styling
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableFooter,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableCaption,
-} from '@voilajsx/uikit/table';
-
-// Advanced data table with sorting/filtering
-import { DataTable } from '@voilajsx/uikit/data-table';
-
-// Toggle buttons
 import { Toggle } from '@voilajsx/uikit/toggle';
-
-// Command palette
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from '@voilajsx/uikit/tooltip';
 import {
   Command,
   CommandInput,
@@ -274,241 +1352,22 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandItem,
-  CommandSeparator,
 } from '@voilajsx/uikit/command';
+import { Calendar } from '@voilajsx/uikit/calendar';
+
+// All components maintain 100% API compatibility with shadcn/ui
+// Only difference: Enhanced theming system built-in
 ```
 
-### Layout Components
+---
 
-```typescript
-// Page containers
-import { Container } from '@voilajsx/uikit/container';
+## Complete Implementation Examples
 
-// Page headers
-import { Header } from '@voilajsx/uikit/header';
-
-// Page footers
-import { Footer } from '@voilajsx/uikit/footer';
-
-// Navigation sidebars
-import { Sidebar } from '@voilajsx/uikit/sidebar';
-```
-
-### Theme System
-
-```typescript
-// Theme provider and hooks
-import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
-```
-
-### Template Layouts
-
-```typescript
-// Authentication page layouts
-import { AuthTemplate } from '@voilajsx/uikit/templates/auth';
-
-// Minimal page template
-import { BlankTemplate } from '@voilajsx/uikit/templates/blank';
-
-// Header + sidebar + footer layout
-import { DefaultTemplate } from '@voilajsx/uikit/templates/default';
-
-// Form-optimized layouts
-import { FormTemplate } from '@voilajsx/uikit/templates/form';
-
-// Data table page layouts
-import { TableTemplate } from '@voilajsx/uikit/templates/table';
-```
-
-### Utilities
-
-```typescript
-// Class merging utilities
-import { cn } from '@voilajsx/uikit/utils';
-
-// Platform detection
-import { detectPlatform, isBrowser, isNative } from '@voilajsx/uikit/platform';
-
-// Cross-platform adapters
-import { useAdapter, usePlatform } from '@voilajsx/uikit/adapters/hooks';
-```
-
-## Template Layouts
-
-### Available Templates
-
-```typescript
-// Template component signatures
-interface AuthTemplateProps {
-  className?: string;
-  title?: string;
-  subtitle?: string;
-  children: React.ReactNode;
-}
-
-interface BlankTemplateProps {
-  className?: string;
-  containerProps?: object;
-  children: React.ReactNode;
-}
-
-interface DefaultTemplateProps {
-  className?: string;
-  headerContent?: React.ReactNode;
-  sidebarContent?: React.ReactNode;
-  footerContent?: React.ReactNode;
-  children: React.ReactNode;
-}
-
-interface FormTemplateProps {
-  className?: string;
-  title?: string;
-  actions?: React.ReactNode;
-  onSubmit?: (event: React.FormEvent) => void;
-  children: React.ReactNode;
-}
-
-interface TableTemplateProps {
-  className?: string;
-  title?: string;
-  actions?: React.ReactNode;
-  searchable?: boolean;
-  searchPlaceholder?: string;
-  onSearch?: (value: string) => void;
-  filters?: React.ReactNode;
-  children: React.ReactNode;
-}
-```
-
-### Template Usage Patterns
-
-```jsx
-// AuthTemplate - Centered layout for authentication
-<AuthTemplate title="Sign In" subtitle="Enter your credentials">
-  <LoginForm />
-</AuthTemplate>
-
-// BlankTemplate - Minimal container layout
-<BlankTemplate containerProps={{ size: 'lg' }}>
-  <YourContent />
-</BlankTemplate>
-
-// DefaultTemplate - Complete app layout
-<DefaultTemplate
-  headerContent={<NavigationBar />}
-  sidebarContent={<NavigationMenu />}
-  footerContent={<AppFooter />}
->
-  <MainContent />
-</DefaultTemplate>
-
-// FormTemplate - Form-optimized layout
-<FormTemplate
-  title="User Settings"
-  actions={<SaveButton />}
-  onSubmit={handleSubmit}
->
-  <SettingsForm />
-</FormTemplate>
-
-// TableTemplate - Data table layout
-<TableTemplate
-  title="Users"
-  searchable={true}
-  actions={<AddUserButton />}
-  filters={<UserFilters />}
->
-  <UsersTable />
-</TableTemplate>
-```
-
-### Built-in Themes
-
-```typescript
-// Available themes with their characteristics
-const THEMES = {
-  default: 'Clean system colors', // Default gray theme
-  metro: 'Clean transit-inspired design', // Systematic gray-blue
-  studio: 'Sophisticated designer grays', // Creative gray + amber
-  ruby: 'Premium ruby red', // Sophisticated red + rose
-  neon: 'Electric cyberpunk', // Bright magenta + cyan
-  aurora: 'Northern lights magic', // Purple-green elegance
-};
-```
-
-### Basic Theme Usage
-
-```jsx
-import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
-import '@voilajsx/uikit/styles';
-
-function App() {
-  return (
-    <ThemeProvider theme="default" variant="light" detectSystem={true}>
-      <YourApp />
-    </ThemeProvider>
-  );
-}
-```
-
-### Theme Switching
-
-```jsx
-import { useTheme } from '@voilajsx/uikit/theme-provider';
-
-function ThemeSelector() {
-  const { theme, variant, setTheme, toggleVariant } = useTheme();
-
-  return (
-    <div className="flex gap-2">
-      <Button onClick={() => setTheme('default')}>Default</Button>
-      <Button onClick={() => setTheme('metro')}>Metro</Button>
-      <Button onClick={() => setTheme('neon')}>Neon</Button>
-      <Button onClick={toggleVariant}>
-        {variant === 'light' ? '🌙' : '☀️'}
-      </Button>
-    </div>
-  );
-}
-```
-
-### Custom Theme Creation
-
-```typescript
-// Custom theme object structure
-interface CustomTheme {
-  name: string;
-  id: string;
-  light: {
-    background: string; // OKLCH format
-    foreground: string;
-    primary: string;
-    primaryForeground: string;
-    secondary: string;
-    secondaryForeground: string;
-    muted: string;
-    mutedForeground: string;
-    accent: string;
-    accentForeground: string;
-    destructive: string;
-    destructiveForeground: string;
-    border: string;
-    input: string;
-    ring: string;
-  };
-  dark: {
-    // Same structure as light
-  };
-}
-```
-
-## Example Implementations
-
-### Basic App Structure
+### 1. Basic App Setup (REQUIRED PATTERN)
 
 ```jsx
 /**
- * Basic application with UIKit theme provider and components
+ * Basic application with theme provider setup
  * @module @voilajsx/uikit
  * @file examples/basic-app.jsx
  */
@@ -518,24 +1377,18 @@ import { Button } from '@voilajsx/uikit/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import '@voilajsx/uikit/styles';
 
-/**
- * Main application component with theme provider
- * @returns {JSX.Element} Application component
- */
 function App() {
   return (
-    <ThemeProvider theme="default" variant="light">
-      <div className="min-h-screen bg-background">
-        <main className="container mx-auto p-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Welcome to UIKit</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Button>Get Started</Button>
-            </CardContent>
-          </Card>
-        </main>
+    <ThemeProvider theme="studio" variant="light" detectSystem={true}>
+      <div className="min-h-screen bg-background p-6">
+        <Card className="max-w-md mx-auto">
+          <CardHeader>
+            <CardTitle>Welcome to UIKit</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Button className="w-full">Get Started</Button>
+          </CardContent>
+        </Card>
       </div>
     </ThemeProvider>
   );
@@ -544,16 +1397,264 @@ function App() {
 export default App;
 ```
 
-### Form Example
+### 2. Complete Page Layout
 
 ```jsx
 /**
- * Contact form using UIKit form components and React Hook Form
+ * Complete page using Page template with all sections
  * @module @voilajsx/uikit
- * @file examples/contact-form.jsx
+ * @file examples/complete-page.jsx
  */
 
-import { useForm } from 'react-hook-form';
+import {
+  Page,
+  PageHeader,
+  PageContent,
+  PageFooter,
+} from '@voilajsx/uikit/page';
+import { HeaderLogo, HeaderNav } from '@voilajsx/uikit/header';
+import { FooterBasic } from '@voilajsx/uikit/footer';
+import { Button } from '@voilajsx/uikit/button';
+import { Card, CardContent } from '@voilajsx/uikit/card';
+
+function HomePage() {
+  const navigationItems = [
+    { key: 'home', label: 'Home', isActive: true, onClick: () => {} },
+    { key: 'about', label: 'About', onClick: () => {} },
+    { key: 'services', label: 'Services', onClick: () => {} },
+    { key: 'contact', label: 'Contact', onClick: () => {} },
+  ];
+
+  const footerLinks = [
+    { key: 'privacy', label: 'Privacy Policy', onClick: () => {} },
+    { key: 'terms', label: 'Terms of Service', onClick: () => {} },
+    { key: 'support', label: 'Support', onClick: () => {} },
+  ];
+
+  return (
+    <Page variant="default" size="xl">
+      <PageHeader variant="default" sticky={true}>
+        <HeaderLogo>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-lg"></div>
+            <span className="text-xl font-bold">Brand</span>
+          </div>
+        </HeaderLogo>
+        <HeaderNav items={navigationItems} />
+      </PageHeader>
+
+      <PageContent>
+        <div className="space-y-12">
+          <section className="text-center">
+            <h1 className="text-4xl font-bold mb-4">Welcome to Our Platform</h1>
+            <p className="text-xl text-muted-foreground mb-8">
+              Build amazing applications with our comprehensive UI kit.
+            </p>
+            <Button size="lg">Get Started Today</Button>
+          </section>
+
+          <section className="grid md:grid-cols-3 gap-6">
+            <Card>
+              <CardContent className="p-6 text-center">
+                <h3 className="text-lg font-semibold mb-2">Feature One</h3>
+                <p className="text-muted-foreground">
+                  Description of the first feature.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <h3 className="text-lg font-semibold mb-2">Feature Two</h3>
+                <p className="text-muted-foreground">
+                  Description of the second feature.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <h3 className="text-lg font-semibold mb-2">Feature Three</h3>
+                <p className="text-muted-foreground">
+                  Description of the third feature.
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+        </div>
+      </PageContent>
+
+      <PageFooter variant="default">
+        <FooterBasic
+          logo={<span className="font-bold">Brand</span>}
+          links={footerLinks}
+          copyright="© 2024 Brand. All rights reserved."
+        />
+      </PageFooter>
+    </Page>
+  );
+}
+
+export default HomePage;
+```
+
+### 3. Admin Dashboard (COMPLETE EXAMPLE)
+
+```jsx
+/**
+ * Complete admin dashboard with all features
+ * @module @voilajsx/uikit
+ * @file examples/admin-dashboard.jsx
+ */
+
+import { AdminTemplate } from '@voilajsx/uikit/admin';
+import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
+import { Button } from '@voilajsx/uikit/button';
+import { Badge } from '@voilajsx/uikit/badge';
+import { useTheme } from '@voilajsx/uikit/theme-provider';
+import {
+  Home,
+  Users,
+  BarChart3,
+  Settings,
+  Bell,
+  Sun,
+  Moon,
+} from 'lucide-react';
+
+function AdminDashboard() {
+  const { variant, toggleVariant } = useTheme();
+
+  const navigationItems = [
+    {
+      key: 'dashboard',
+      title: 'Dashboard',
+      icon: Home,
+      path: '/admin',
+      isActive: true,
+      section: 'main',
+    },
+    {
+      key: 'users',
+      title: 'User Management',
+      icon: Users,
+      path: '/admin/users',
+      badge: '24',
+      section: 'main',
+    },
+    {
+      key: 'analytics',
+      title: 'Analytics',
+      icon: BarChart3,
+      section: 'main',
+      submenu: [
+        {
+          key: 'overview',
+          title: 'Overview',
+          path: '/admin/analytics',
+        },
+        {
+          key: 'reports',
+          title: 'Reports',
+          path: '/admin/analytics/reports',
+        },
+      ],
+    },
+    {
+      key: 'settings',
+      title: 'Settings',
+      icon: Settings,
+      path: '/admin/settings',
+      section: 'system',
+    },
+  ];
+
+  const headerActions = (
+    <div className="flex items-center gap-2">
+      <Button variant="ghost" size="icon">
+        <Bell className="h-4 w-4" />
+      </Button>
+      <Button variant="ghost" size="icon" onClick={toggleVariant}>
+        {variant === 'light' ? (
+          <Moon className="h-4 w-4" />
+        ) : (
+          <Sun className="h-4 w-4" />
+        )}
+      </Button>
+    </div>
+  );
+
+  return (
+    <AdminTemplate
+      variant="default"
+      size="default"
+      title="Admin Dashboard"
+      navigationItems={navigationItems}
+      currentPath="/admin"
+      onNavigate={(path) => console.log('Navigate to:', path)}
+      headerActions={headerActions}
+    >
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-muted-foreground">
+            Welcome back! Here's what's happening with your platform.
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">1,234</div>
+              <div className="flex items-center pt-1">
+                <Badge variant="default" className="text-xs">
+                  +12%
+                </Badge>
+                <span className="text-xs text-muted-foreground ml-2">
+                  from last month
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Revenue</CardTitle>
+              <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">$45,231</div>
+              <div className="flex items-center pt-1">
+                <Badge variant="default" className="text-xs">
+                  +5%
+                </Badge>
+                <span className="text-xs text-muted-foreground ml-2">
+                  from last month
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </AdminTemplate>
+  );
+}
+
+export default AdminDashboard;
+```
+
+### 4. Authentication Page
+
+```jsx
+/**
+ * Complete authentication page with card variant
+ * @module @voilajsx/uikit
+ * @file examples/auth-page.jsx
+ */
+
+import { AuthTemplate } from '@voilajsx/uikit/auth';
 import {
   Form,
   FormField,
@@ -563,407 +1664,99 @@ import {
   FormMessage,
 } from '@voilajsx/uikit/form';
 import { Input } from '@voilajsx/uikit/input';
-import { Textarea } from '@voilajsx/uikit/textarea';
 import { Button } from '@voilajsx/uikit/button';
-import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
-
-/**
- * Contact form component with validation
- * @returns {JSX.Element} Contact form component
- */
-function ContactForm() {
-  const form = useForm({
-    defaultValues: {
-      name: '',
-      email: '',
-      message: '',
-    },
-  });
-
-  const onSubmit = (data) => {
-    console.log('Form submitted:', data);
-  };
-
-  return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Contact Us</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="your@email.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Message</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Your message..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit" className="w-full">
-              Send Message
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
-  );
-}
-
-export default ContactForm;
-```
-
-### Dashboard Layout
-
-```jsx
-/**
- * Dashboard layout using UIKit layout components and navigation
- * @module @voilajsx/uikit
- * @file examples/dashboard.jsx
- */
-
-import { Header } from '@voilajsx/uikit/header';
-import { Sidebar } from '@voilajsx/uikit/sidebar';
-import { Container } from '@voilajsx/uikit/container';
-import { Button } from '@voilajsx/uikit/button';
-import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
-import { Badge } from '@voilajsx/uikit/badge';
-import { Avatar, AvatarImage, AvatarFallback } from '@voilajsx/uikit/avatar';
-import { useTheme } from '@voilajsx/uikit/theme-provider';
-
-/**
- * Dashboard layout with header, sidebar, and main content
- * @returns {JSX.Element} Dashboard component
- */
-function Dashboard() {
-  const { toggleVariant, variant } = useTheme();
-
-  return (
-    <div className="flex min-h-screen">
-      {/* Sidebar */}
-      <Sidebar className="w-64">
-        <div className="p-6">
-          <h2 className="text-lg font-semibold">Dashboard</h2>
-          <nav className="mt-6 space-y-2">
-            <Button variant="ghost" className="w-full justify-start">
-              Overview
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Analytics
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Settings
-            </Button>
-          </nav>
-        </div>
-      </Sidebar>
-
-      {/* Main Content */}
-      <div className="flex-1">
-        {/* Header */}
-        <Header>
-          <Container className="flex h-16 items-center justify-between">
-            <h1 className="text-xl font-semibold">Welcome Back</h1>
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={toggleVariant}>
-                {variant === 'light' ? '🌙' : '☀️'}
-              </Button>
-              <Avatar>
-                <AvatarImage src="/avatar.jpg" alt="User" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-            </div>
-          </Container>
-        </Header>
-
-        {/* Page Content */}
-        <main className="p-6">
-          <Container>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    Users
-                    <Badge variant="secondary">+12%</Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold">1,234</p>
-                  <p className="text-sm text-muted-foreground">
-                    Active this month
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    Revenue
-                    <Badge variant="default">+5%</Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold">$12,345</p>
-                  <p className="text-sm text-muted-foreground">This quarter</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    Orders
-                    <Badge variant="destructive">-2%</Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold">567</p>
-                  <p className="text-sm text-muted-foreground">This week</p>
-                </CardContent>
-              </Card>
-            </div>
-          </Container>
-        </main>
-      </div>
-    </div>
-  );
-}
-
-export default Dashboard;
-```
-
-### Data Table Example
-
-```jsx
-/**
- * Data table with sorting and filtering using UIKit components
- * @module @voilajsx/uikit
- * @file examples/users-table.jsx
- */
-
-import { useState } from 'react';
-import { DataTable } from '@voilajsx/uikit/data-table';
-import { Button } from '@voilajsx/uikit/button';
-import { Input } from '@voilajsx/uikit/input';
-import { Badge } from '@voilajsx/uikit/badge';
-import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
-
-/**
- * Users table component with search and actions
- * @returns {JSX.Element} Users table component
- */
-function UsersTable() {
-  const [users] = useState([
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
-      role: 'Admin',
-      status: 'Active',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      role: 'User',
-      status: 'Active',
-    },
-    {
-      id: 3,
-      name: 'Bob Johnson',
-      email: 'bob@example.com',
-      role: 'User',
-      status: 'Inactive',
-    },
-  ]);
-
-  const columns = [
-    {
-      key: 'name',
-      title: 'Name',
-      render: (value) => <span className="font-medium">{value}</span>,
-    },
-    {
-      key: 'email',
-      title: 'Email',
-      render: (value) => <span className="text-muted-foreground">{value}</span>,
-    },
-    {
-      key: 'role',
-      title: 'Role',
-      render: (value) => (
-        <Badge variant={value === 'Admin' ? 'default' : 'secondary'}>
-          {value}
-        </Badge>
-      ),
-    },
-    {
-      key: 'status',
-      title: 'Status',
-      render: (value) => (
-        <Badge variant={value === 'Active' ? 'default' : 'destructive'}>
-          {value}
-        </Badge>
-      ),
-    },
-    {
-      key: 'actions',
-      title: 'Actions',
-      sortable: false,
-      render: (_, row) => (
-        <div className="flex gap-2">
-          <Button variant="ghost" size="sm">
-            Edit
-          </Button>
-          <Button variant="ghost" size="sm">
-            Delete
-          </Button>
-        </div>
-      ),
-    },
-  ];
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Users Management</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <DataTable
-          columns={columns}
-          data={users}
-          searchable={true}
-          sortable={true}
-        />
-      </CardContent>
-    </Card>
-  );
-}
-
-export default UsersTable;
-```
-
-### Authentication Template Example
-
-```jsx
-/**
- * Login page using AuthTemplate for centered authentication layout
- * @module @voilajsx/uikit
- * @file examples/login-page.jsx
- */
-
-import { AuthTemplate } from '@voilajsx/uikit/templates/auth';
-import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-} from '@voilajsx/uikit/form';
-import { Input } from '@voilajsx/uikit/input';
-import { Button } from '@voilajsx/uikit/button';
+import { Checkbox } from '@voilajsx/uikit/checkbox';
 import { useForm } from 'react-hook-form';
 
-/**
- * Login page component with authentication template
- * @returns {JSX.Element} Login page component
- */
 function LoginPage() {
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+      remember: false,
+    },
+  });
 
   const onSubmit = (data) => {
     console.log('Login attempt:', data);
   };
 
+  const logo = (
+    <div className="flex items-center justify-center w-16 h-16 bg-primary rounded-xl">
+      <span className="text-2xl font-bold text-primary-foreground">L</span>
+    </div>
+  );
+
   return (
     <AuthTemplate
-      title="Welcome Back"
+      variant="card"
+      title="Welcome back"
       subtitle="Sign in to your account to continue"
+      logo={logo}
     >
-      <Card>
-        <CardHeader>
-          <CardTitle>Sign In</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="your@email.com"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Password"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full">
-                Sign In
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email address</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="name@example.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Enter your password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="remember"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel className="text-sm font-normal">
+                    Remember me for 30 days
+                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" className="w-full">
+            Sign in
+          </Button>
+        </form>
+      </Form>
     </AuthTemplate>
   );
 }
@@ -971,746 +1764,267 @@ function LoginPage() {
 export default LoginPage;
 ```
 
-### Default Template Example
+### 5. Theme Selector Component
 
 ```jsx
 /**
- * Complete application layout using DefaultTemplate
+ * Complete theme selector with all available themes
  * @module @voilajsx/uikit
- * @file examples/app-layout.jsx
+ * @file examples/theme-selector.jsx
  */
 
-import { DefaultTemplate } from '@voilajsx/uikit/templates/default';
-import { Button } from '@voilajsx/uikit/button';
-import { Avatar, AvatarImage, AvatarFallback } from '@voilajsx/uikit/avatar';
-import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import { useTheme } from '@voilajsx/uikit/theme-provider';
-
-/**
- * Navigation bar component for header
- * @returns {JSX.Element} Navigation bar
- */
-function NavigationBar() {
-  const { toggleVariant, variant } = useTheme();
-
-  return (
-    <div className="flex items-center justify-between w-full">
-      <h1 className="text-xl font-semibold">My Application</h1>
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={toggleVariant}>
-          {variant === 'light' ? '🌙' : '☀️'}
-        </Button>
-        <Avatar>
-          <AvatarImage src="/avatar.jpg" alt="User" />
-          <AvatarFallback>JD</AvatarFallback>
-        </Avatar>
-      </div>
-    </div>
-  );
-}
-
-/**
- * Sidebar navigation menu
- * @returns {JSX.Element} Sidebar navigation
- */
-function NavigationMenu() {
-  return (
-    <nav className="p-6 space-y-2">
-      <h2 className="text-lg font-semibold mb-4">Navigation</h2>
-      <Button variant="ghost" className="w-full justify-start">
-        Dashboard
-      </Button>
-      <Button variant="ghost" className="w-full justify-start">
-        Users
-      </Button>
-      <Button variant="ghost" className="w-full justify-start">
-        Settings
-      </Button>
-      <Button variant="ghost" className="w-full justify-start">
-        Analytics
-      </Button>
-    </nav>
-  );
-}
-
-/**
- * Application footer content
- * @returns {JSX.Element} Footer content
- */
-function AppFooter() {
-  return (
-    <div className="text-center text-sm text-muted-foreground">
-      © 2024 My Application. All rights reserved.
-    </div>
-  );
-}
-
-/**
- * Main application layout using DefaultTemplate
- * @returns {JSX.Element} Application layout
- */
-function AppLayout() {
-  return (
-    <DefaultTemplate
-      headerContent={<NavigationBar />}
-      sidebarContent={<NavigationMenu />}
-      footerContent={<AppFooter />}
-    >
-      <div className="space-y-6">
-        <h2 className="text-2xl font-bold">Dashboard</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Total Users</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">1,234</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Revenue</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">$12,345</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Orders</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">567</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </DefaultTemplate>
-  );
-}
-
-export default AppLayout;
-```
-
-### Form Template Example
-
-```jsx
-/**
- * Settings page using FormTemplate for form-optimized layout
- * @module @voilajsx/uikit
- * @file examples/settings-page.jsx
- */
-
-import { FormTemplate } from '@voilajsx/uikit/templates/form';
 import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-} from '@voilajsx/uikit/form';
-import { Input } from '@voilajsx/uikit/input';
-import { Textarea } from '@voilajsx/uikit/textarea';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@voilajsx/uikit/select';
 import { Switch } from '@voilajsx/uikit/switch';
+import { Label } from '@voilajsx/uikit/label';
 import { Button } from '@voilajsx/uikit/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@voilajsx/uikit/select';
-import { useForm } from 'react-hook-form';
+import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
+import { Palette, Sun, Moon } from 'lucide-react';
 
-/**
- * Settings page with form template
- * @returns {JSX.Element} Settings page component
- */
-function SettingsPage() {
-  const form = useForm({
-    defaultValues: {
-      name: 'John Doe',
-      email: 'john@example.com',
-      bio: '',
-      notifications: true,
-      theme: 'system',
-    },
-  });
+function ThemeSelector() {
+  const { theme, variant, setTheme, setVariant, toggleVariant } = useTheme();
 
-  const onSubmit = (data) => {
-    console.log('Settings saved:', data);
-  };
-
-  const formActions = (
-    <div className="flex gap-2">
-      <Button variant="outline" type="button">
-        Cancel
-      </Button>
-      <Button type="submit" form="settings-form">
-        Save Changes
-      </Button>
-    </div>
-  );
-
-  return (
-    <FormTemplate
-      title="Account Settings"
-      actions={formActions}
-      onSubmit={form.handleSubmit(onSubmit)}
-    >
-      <Form {...form}>
-        <div id="settings-form" className="space-y-6">
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium">Profile Information</h3>
-
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your full name" {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email Address</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="your@email.com"
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="bio"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Bio</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Tell us about yourself..."
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium">Preferences</h3>
-
-            <FormField
-              control={form.control}
-              name="theme"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Theme</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a theme" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="light">Light</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="system">System</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="notifications"
-              render={({ field }) => (
-                <FormItem className="flex items-center justify-between">
-                  <div>
-                    <FormLabel>Email Notifications</FormLabel>
-                    <FormDescription>
-                      Receive email notifications about your account activity.
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-      </Form>
-    </FormTemplate>
-  );
-}
-
-export default SettingsPage;
-```
-
-### Table Template Example
-
-```jsx
-/**
- * Users management page using TableTemplate
- * @module @voilajsx/uikit
- * @file examples/users-management.jsx
- */
-
-import { useState } from 'react';
-import { TableTemplate } from '@voilajsx/uikit/templates/table';
-import { DataTable } from '@voilajsx/uikit/data-table';
-import { Button } from '@voilajsx/uikit/button';
-import { Badge } from '@voilajsx/uikit/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@voilajsx/uikit/select';
-import { Avatar, AvatarImage, AvatarFallback } from '@voilajsx/uikit/avatar';
-
-/**
- * Users management page with table template
- * @returns {JSX.Element} Users management component
- */
-function UsersManagement() {
-  const [users] = useState([
+  const themes = [
     {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
-      role: 'Admin',
-      status: 'Active',
-      avatar: '/avatars/john.jpg',
+      id: 'default',
+      name: 'Default',
+      description: 'Ocean blue professional colors',
     },
     {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      role: 'User',
-      status: 'Active',
-      avatar: '/avatars/jane.jpg',
+      id: 'aurora',
+      name: 'Aurora',
+      description: 'Northern lights purple-green gradients',
     },
     {
-      id: 3,
-      name: 'Bob Johnson',
-      email: 'bob@example.com',
-      role: 'Moderator',
-      status: 'Inactive',
-      avatar: null,
-    },
-  ]);
-
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-  };
-
-  const tableActions = (
-    <div className="flex gap-2">
-      <Button>Add User</Button>
-      <Button variant="outline">Export</Button>
-    </div>
-  );
-
-  const tableFilters = (
-    <div className="flex gap-2">
-      <Select defaultValue="all">
-        <SelectTrigger className="w-32">
-          <SelectValue placeholder="Role" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Roles</SelectItem>
-          <SelectItem value="admin">Admin</SelectItem>
-          <SelectItem value="user">User</SelectItem>
-          <SelectItem value="moderator">Moderator</SelectItem>
-        </SelectContent>
-      </Select>
-
-      <Select defaultValue="all">
-        <SelectTrigger className="w-32">
-          <SelectValue placeholder="Status" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Status</SelectItem>
-          <SelectItem value="active">Active</SelectItem>
-          <SelectItem value="inactive">Inactive</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-  );
-
-  const columns = [
-    {
-      key: 'user',
-      title: 'User',
-      render: (_, row) => (
-        <div className="flex items-center gap-3">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={row.avatar} alt={row.name} />
-            <AvatarFallback>
-              {row.name
-                .split(' ')
-                .map((n) => n[0])
-                .join('')}
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <div className="font-medium">{row.name}</div>
-            <div className="text-sm text-muted-foreground">{row.email}</div>
-          </div>
-        </div>
-      ),
+      id: 'metro',
+      name: 'Metro',
+      description: 'Clean transit-inspired gray-blue design',
     },
     {
-      key: 'role',
-      title: 'Role',
-      render: (value) => (
-        <Badge
-          variant={
-            value === 'Admin'
-              ? 'default'
-              : value === 'Moderator'
-              ? 'secondary'
-              : 'outline'
-          }
-        >
-          {value}
-        </Badge>
-      ),
+      id: 'neon',
+      name: 'Neon',
+      description: 'Electric cyberpunk magenta-cyan colors',
     },
     {
-      key: 'status',
-      title: 'Status',
-      render: (value) => (
-        <Badge variant={value === 'Active' ? 'default' : 'destructive'}>
-          {value}
-        </Badge>
-      ),
+      id: 'ruby',
+      name: 'Ruby',
+      description: 'Sophisticated red with gold accents',
     },
     {
-      key: 'actions',
-      title: 'Actions',
-      sortable: false,
-      render: (_, row) => (
-        <div className="flex gap-2">
-          <Button variant="ghost" size="sm">
-            Edit
-          </Button>
-          <Button variant="ghost" size="sm" className="text-destructive">
-            Delete
-          </Button>
-        </div>
-      ),
+      id: 'studio',
+      name: 'Studio',
+      description: 'Designer grays with amber accent',
     },
   ];
 
   return (
-    <TableTemplate
-      title="User Management"
-      searchable={true}
-      searchPlaceholder="Search users..."
-      onSearch={handleSearch}
-      actions={tableActions}
-      filters={tableFilters}
-    >
-      <DataTable
-        columns={columns}
-        data={users}
-        searchable={false} // Search handled by template
-        sortable={true}
-      />
-    </TableTemplate>
-  );
-}
+    <Card className="w-full max-w-md mx-auto">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Palette className="h-5 w-5" />
+          Theme Preferences
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="space-y-3">
+          <Label htmlFor="theme-select" className="text-base font-medium">
+            Choose Theme
+          </Label>
+          <Select value={theme} onValueChange={setTheme}>
+            <SelectTrigger id="theme-select">
+              <SelectValue placeholder="Select a theme" />
+            </SelectTrigger>
+            <SelectContent>
+              {themes.map((themeOption) => (
+                <SelectItem key={themeOption.id} value={themeOption.id}>
+                  <div>
+                    <div className="font-medium">{themeOption.name}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {themeOption.description}
+                    </div>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-export default UsersManagement;
-```
-
-### Blank Template Example
-
-```jsx
-/**
- * Simple content page using BlankTemplate
- * @module @voilajsx/uikit
- * @file examples/about-page.jsx
- */
-
-import { BlankTemplate } from '@voilajsx/uikit/templates/blank';
-import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
-import { Button } from '@voilajsx/uikit/button';
-import { Separator } from '@voilajsx/uikit/separator';
-
-/**
- * About page using blank template for minimal layout
- * @returns {JSX.Element} About page component
- */
-function AboutPage() {
-  return (
-    <BlankTemplate containerProps={{ size: 'lg' }}>
-      <div className="py-12">
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="text-4xl font-bold mb-4">
-              About Our Company
-            </CardTitle>
-            <p className="text-xl text-muted-foreground">
-              Building the future of web development
-            </p>
-          </CardHeader>
-          <CardContent className="prose prose-gray max-w-none">
-            <div className="space-y-6">
-              <p className="text-lg">
-                We are a team of passionate developers creating tools that make
-                web development faster, easier, and more enjoyable. Our mission
-                is to empower developers with beautiful, functional components
-                that work across all platforms.
-              </p>
-
-              <Separator />
-
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-semibold mb-3">Our Vision</h3>
-                  <p>
-                    To create a world where building beautiful user interfaces
-                    is accessible to everyone, regardless of their platform or
-                    technical background.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-3">Our Mission</h3>
-                  <p>
-                    Providing developers with high-quality, cross-platform
-                    components that maintain consistency and accessibility
-                    across all devices.
-                  </p>
-                </div>
-              </div>
-
-              <Separator />
-
-              <div className="text-center">
-                <h3 className="text-xl font-semibold mb-4">
-                  Ready to Get Started?
-                </h3>
-                <div className="flex gap-4 justify-center">
-                  <Button size="lg">View Documentation</Button>
-                  <Button variant="outline" size="lg">
-                    Contact Us
-                  </Button>
-                </div>
+        <div className="space-y-3">
+          <Label className="text-base font-medium">Color Mode</Label>
+          <div className="flex items-center justify-between rounded-lg border p-3">
+            <div className="space-y-0.5">
+              <Label htmlFor="dark-mode-switch" className="text-sm font-medium">
+                Dark Mode
+              </Label>
+              <div className="text-xs text-muted-foreground">
+                Switch between light and dark appearance
               </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    </BlankTemplate>
+            <Switch
+              id="dark-mode-switch"
+              checked={variant === 'dark'}
+              onCheckedChange={(checked) =>
+                setVariant(checked ? 'dark' : 'light')
+              }
+            />
+          </div>
+        </div>
+
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full"
+          onClick={toggleVariant}
+        >
+          {variant === 'light' ? (
+            <Moon className="mr-2 h-4 w-4" />
+          ) : (
+            <Sun className="mr-2 h-4 w-4" />
+          )}
+          Toggle to {variant === 'light' ? 'Dark' : 'Light'} Mode
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
 
-export default AboutPage;
+export default ThemeSelector;
 ```
 
-```jsx
-/**
- * Custom theme creation and registration example
- * @module @voilajsx/uikit
- * @file examples/custom-theme.jsx
- */
+## Critical Code Generation Rules
 
-import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
-import { Button } from '@voilajsx/uikit/button';
-import { Card, CardContent } from '@voilajsx/uikit/card';
-
-/**
- * Custom brand theme using OKLCH colors
- */
-const brandTheme = {
-  name: 'Brand Theme',
-  id: 'brand',
-  light: {
-    background: 'oklch(0.99 0.005 85)',
-    foreground: 'oklch(0.15 0.02 85)',
-    primary: 'oklch(0.5 0.2 220)',
-    primaryForeground: 'oklch(0.98 0.02 85)',
-    secondary: 'oklch(0.92 0.04 85)',
-    secondaryForeground: 'oklch(0.25 0.05 85)',
-    muted: 'oklch(0.94 0.02 85)',
-    mutedForeground: 'oklch(0.45 0.03 85)',
-    accent: 'oklch(0.55 0.15 200)',
-    accentForeground: 'oklch(0.98 0.02 85)',
-    destructive: 'oklch(0.6 0.25 30)',
-    destructiveForeground: 'oklch(0.98 0.02 85)',
-    border: 'oklch(0.88 0.03 85)',
-    input: 'oklch(0.88 0.03 85)',
-    ring: 'oklch(0.5 0.2 220)',
-  },
-  dark: {
-    background: 'oklch(0.08 0.02 85)',
-    foreground: 'oklch(0.95 0.02 85)',
-    primary: 'oklch(0.65 0.25 220)',
-    primaryForeground: 'oklch(0.08 0.02 85)',
-    secondary: 'oklch(0.18 0.05 85)',
-    secondaryForeground: 'oklch(0.95 0.02 85)',
-    muted: 'oklch(0.15 0.03 85)',
-    mutedForeground: 'oklch(0.7 0.03 85)',
-    accent: 'oklch(0.6 0.18 200)',
-    accentForeground: 'oklch(0.95 0.02 85)',
-    destructive: 'oklch(0.5 0.2 30)',
-    destructiveForeground: 'oklch(0.95 0.02 85)',
-    border: 'oklch(0.22 0.04 85)',
-    input: 'oklch(0.22 0.04 85)',
-    ring: 'oklch(0.65 0.25 220)',
-  },
-};
-
-/**
- * App component using custom theme
- * @returns {JSX.Element} App with custom theme
- */
-function CustomThemeApp() {
-  return (
-    <ThemeProvider theme="brand" customThemes={[brandTheme]}>
-      <div className="min-h-screen bg-background p-8">
-        <Card className="max-w-md mx-auto">
-          <CardContent className="p-6 text-center">
-            <h1 className="text-2xl font-bold mb-4">Custom Brand Theme</h1>
-            <p className="text-muted-foreground mb-6">
-              This app uses a custom theme with brand colors.
-            </p>
-            <div className="space-y-2">
-              <Button className="w-full">Primary Action</Button>
-              <Button variant="secondary" className="w-full">
-                Secondary Action
-              </Button>
-              <Button variant="outline" className="w-full">
-                Outline Button
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </ThemeProvider>
-  );
-}
-
-export default CustomThemeApp;
-```
-
-## Code Generation Rules
-
-1. **Always include file header** with description, @module, and @file tags
-2. **Use JSDoc for all components** with one clear sentence descriptions
-3. **Always import styles**: Include `@voilajsx/uikit/styles` in main App component
-4. **Use ThemeProvider**: Wrap all apps in ThemeProvider with appropriate theme
-5. **Follow import patterns**: Use direct component imports from specific paths
-6. **Use Tailwind classes**: Apply Tailwind CSS for additional styling
-7. **Include responsive design**: Use responsive Tailwind classes (sm:, md:, lg:)
-8. **Handle theme switching**: Implement theme selector when multiple themes needed
-9. **Use semantic HTML**: Ensure proper accessibility with semantic elements
-10. **Focus on minimal file size** - avoid unnecessary comments
-11. **Follow React best practices**: Use hooks, functional components, proper state management
-12. **Use appropriate templates**: Choose the right template for the page type (Auth, Default, Form, Table, Blank)
-13. **Template consistency**: Follow template patterns for consistent user experience across pages
-
-## Common Patterns
-
-### App Initialization
+### 1. ALWAYS Required Setup
 
 ```jsx
-// Always wrap in ThemeProvider with styles import
-import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
+// ALWAYS wrap your entire app
+<ThemeProvider theme="studio" variant="light" detectSystem={true}>
+  <App />
+</ThemeProvider>;
+
+// ALWAYS import styles
 import '@voilajsx/uikit/styles';
-
-function App() {
-  return (
-    <ThemeProvider theme="studio" variant="light" detectSystem={true}>
-      {/* App content */}
-    </ThemeProvider>
-  );
-}
 ```
 
-### Layout Structure
+### 2. Navigation Structure Requirements
+
+**AdminTemplate Navigation (use 'title'):**
 
 ```jsx
-// Use layout components for consistent structure
-import { Header } from '@voilajsx/uikit/header';
-import { Container } from '@voilajsx/uikit/container';
-import { Sidebar } from '@voilajsx/uikit/sidebar';
-
-// Standard layout pattern
-<div className="flex min-h-screen">
-  <Sidebar />
-  <div className="flex-1">
-    <Header />
-    <main>
-      <Container>{/* Content */}</Container>
-    </main>
-  </div>
-</div>;
+const navigationItems = [
+  {
+    key: 'unique-id',    // REQUIRED
+    title: 'Display Name', // REQUIRED (note: 'title')
+    icon: LucideIcon,     // Optional
+    path: '/path',        // Optional
+    isActive: boolean,    // Optional
+    section: 'main',      // Optional
+    submenu: [...]        // Optional
+  }
+];
 ```
 
-### Form Patterns
+**Container Sidebar Navigation (use 'label'):**
 
 ```jsx
-// Always use React Hook Form with Form components
-import { useForm } from 'react-hook-form';
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-} from '@voilajsx/uikit/form';
+const sidebarContent = [
+  {
+    key: 'unique-id',    // REQUIRED
+    label: 'Display Name', // REQUIRED (note: 'label')
+    icon: LucideIcon,     // Optional
+    isActive: boolean,    // Optional
+    items: [...]          // Optional
+  }
+];
+```
 
-const form = useForm();
+### 3. Template Selection Guide
 
-<Form {...form}>
-  <form onSubmit={form.handleSubmit(onSubmit)}>
-    <FormField
-      control={form.control}
-      name="fieldName"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Label</FormLabel>
-          <FormControl>
-            <Input {...field} />
-          </FormControl>
-        </FormItem>
-      )}
-    />
-  </form>
-</Form>;
+```jsx
+// Choose the right template:
+Page; // Full website with header/footer
+AdminTemplate; // Dashboard with sidebar
+AuthTemplate; // Login/signup pages
+BlankTemplate; // Simple content/error pages
+Container; // Content section with optional sidebar
+```
+
+### 4. Theme Usage Patterns
+
+```jsx
+const { theme, variant, setTheme, setVariant, toggleVariant } = useTheme();
+
+// All 6 themes available:
+'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+
+// Variants:
+'light' | 'dark';
+```
+
+### 5. DataTable Usage
+
+```jsx
+const columns = [
+  {
+    key: 'dataProperty', // REQUIRED: matches data object key
+    title: 'Column Header', // REQUIRED: display text
+    render: (value, row) => <Custom />, // Optional: custom renderer
+  },
+];
+
+<DataTable columns={columns} data={arrayOfObjects} />;
+```
+
+### 6. Responsive Classes
+
+```jsx
+// ALWAYS include responsive breakpoints
+className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4';
+```
+
+### 7. Icon Usage
+
+```jsx
+// ALWAYS use Lucide React icons
+import { Home, Users, Settings } from 'lucide-react';
+```
+
+### 8. Common Prop Patterns
+
+```jsx
+// Size props (most components)
+size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
+
+// Variant props (color schemes)
+variant?: 'default' | 'primary' | 'black'  // For headers/sidebars
+variant?: 'default' | 'muted' | 'dark'     // For footers
+variant?: 'simple' | 'card' | 'split-gradient' // For auth templates
+```
+
+### 9. File Structure Requirements
+
+```jsx
+/**
+ * Brief description of what the file does
+ * @module @voilajsx/uikit
+ * @file path/to/filename.jsx
+ */
+```
+
+### 10. Zero Migration from shadcn/ui
+
+```jsx
+// Just change the import path - everything else stays the same
+- import { Button } from "@/components/ui/button"
++ import { Button } from "@voilajsx/uikit/button"
+
+// All props, APIs, and usage patterns remain identical
+<Button variant="default" size="lg">Same API</Button>
 ```
 
 ---
-
-<p align="center">
-  Built with ❤️ in India by the <a href="https://github.com/orgs/voilajsx/people">VoilaJSX Team</a> — powering modern web development.
-</p>

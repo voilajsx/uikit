@@ -9,7 +9,6 @@ import React, { forwardRef, createContext, useContext, useState, useEffect } fro
 import { cva } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 /**
@@ -237,82 +236,117 @@ const HeaderNav = forwardRef(({
   };
 
   // Desktop Navigation Component
-  const DesktopNavigation = () => {
-    const [hoveredItem, setHoveredItem] = useState(null);
+  // Desktop Navigation Component - Fixed for Touch Support
+const DesktopNavigation = () => {
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [clickedItem, setClickedItem] = useState(null); // ✅ NEW: Track clicked dropdowns
 
-    // Handle navigation click
-    const handleNavClick = (onClick) => {
+  // ✅ NEW: Handle dropdown toggle for touch devices
+  const handleDropdownToggle = (index, hasDropdown, mainOnClick) => {
+    if (hasDropdown) {
+      // Toggle dropdown for touch devices
+      if (clickedItem === index) {
+        setClickedItem(null); // Close if already open
+      } else {
+        setClickedItem(index); // Open this dropdown
+      }
+    } else {
+      // Execute main action if no dropdown
       setHoveredItem(null);
-      onClick?.();
+      setClickedItem(null);
+      mainOnClick?.();
+    }
+  };
+
+  // ✅ NEW: Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setClickedItem(null);
     };
 
-    return (
-      <nav className={cn("hidden md:flex items-center space-x-1", className)} ref={ref} {...props}>
-        {items.map((item, index) => {
-          const hasDropdown = item.items && item.items.length > 0;
-          const isHovered = isMounted && hoveredItem === index;
+    if (clickedItem !== null) {
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [clickedItem]);
 
-          return (
-            <div 
-              key={item.key || index}
-              className="relative group"
-              onMouseEnter={() => isMounted && hasDropdown && setHoveredItem(index)}
-              onMouseLeave={() => isMounted && hasDropdown && setHoveredItem(null)}
-            >
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className={cn(
-                  getButtonStyles(item.isActive),
-                  item.className
-                )}
-                onClick={() => handleNavClick(item.onClick)}
-              >
-                {item.icon && <item.icon className="h-4 w-4 mr-2" />}
-                <span>{item.label}</span>
-                {hasDropdown && (
-                  <ChevronDown className={cn(
-                    "h-3 w-3 ml-1 transition-transform duration-200",
-                    isHovered && "rotate-180"
-                  )} />
-                )}
-              </Button>
-              
-              {hasDropdown && isHovered && isMounted && (
-                <>
-                  <div className="absolute top-full left-0 w-full h-2 bg-transparent z-40" />
-                  
-                  <div 
-                    className="absolute top-full left-0 w-48 bg-background border border-border/50 rounded-lg shadow-lg z-50 mt-2"
-                    onMouseEnter={() => setHoveredItem(index)}
-                    onMouseLeave={() => setHoveredItem(null)}
-                  >
-                    <div className="py-1">
-                      {item.items.map((subItem, subIndex) => (
-                        <button
-                          key={subItem.key || subIndex}
-                          className={cn(
-                            "w-full px-3 py-2 text-left text-sm rounded-md transition-colors flex items-center cursor-pointer",
-                            subItem.isActive 
-                              ? "bg-secondary text-secondary-foreground" 
-                              : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                          )}
-                          onClick={() => handleNavClick(subItem.onClick)}
-                        >
-                          {subItem.icon && <subItem.icon className="h-4 w-4 mr-2" />}
-                          <span>{subItem.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          );
-        })}
-      </nav>
-    );
+  // Handle navigation click
+  const handleNavClick = (onClick) => {
+    setHoveredItem(null);
+    setClickedItem(null);
+    onClick?.();
   };
+
+  return (
+    <nav className={cn("hidden md:flex items-center space-x-1", className)} ref={ref} {...props}>
+      {items.map((item, index) => {
+        const hasDropdown = item.items && item.items.length > 0;
+        const isHovered = isMounted && hoveredItem === index;
+        const isClicked = isMounted && clickedItem === index; // ✅ NEW: Check clicked state
+        const isOpen = isHovered || isClicked; // ✅ NEW: Open on hover OR click
+
+        return (
+          <div 
+            key={item.key || index}
+            className="relative group"
+            onMouseEnter={() => isMounted && hasDropdown && setHoveredItem(index)}
+            onMouseLeave={() => isMounted && hasDropdown && setHoveredItem(null)}
+            onClick={(e) => e.stopPropagation()} // ✅ NEW: Prevent closing when clicking inside
+          >
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className={cn(
+                getButtonStyles(item.isActive),
+                item.className
+              )}
+              onClick={() => handleDropdownToggle(index, hasDropdown, item.onClick)} // ✅ FIXED: Handle both dropdown toggle and main action
+            >
+              {item.icon && <item.icon className="h-4 w-4 mr-2" />}
+              <span>{item.label}</span>
+              {hasDropdown && (
+                <ChevronDown className={cn(
+                  "h-3 w-3 ml-1 transition-transform duration-200",
+                  isOpen && "rotate-180" // ✅ FIXED: Use isOpen instead of just isHovered
+                )} />
+              )}
+            </Button>
+            
+            {hasDropdown && isOpen && isMounted && ( // ✅ FIXED: Use isOpen instead of just isHovered
+              <>
+                <div className="absolute top-full left-0 w-full h-2 bg-transparent z-40" />
+                
+                <div 
+                  className="absolute top-full left-0 w-48 bg-background border border-border/50 rounded-lg shadow-lg z-50 mt-2"
+                  onMouseEnter={() => setHoveredItem(index)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                >
+                  <div className="py-1">
+                    {item.items.map((subItem, subIndex) => (
+                      <button
+                        key={subItem.key || subIndex}
+                        className={cn(
+                          "w-full px-3 py-2 text-left text-sm rounded-md transition-colors flex items-center cursor-pointer",
+                          subItem.isActive 
+                            ? "bg-secondary text-secondary-foreground" 
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                        )}
+                        onClick={() => handleNavClick(subItem.onClick)}
+                      >
+                        {subItem.icon && <subItem.icon className="h-4 w-4 mr-2" />}
+                        <span>{subItem.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        );
+      })}
+    </nav>
+  );
+};
 
   // Mobile Navigation Component
   const MobileNavigation = () => {

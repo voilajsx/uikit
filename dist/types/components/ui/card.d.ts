@@ -2,6 +2,7 @@
  * Card container component
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
+ * @param {boolean} [props.asChild=false] - Render as child component
  * @param {React.ReactNode} props.children - Card content
  * @returns {JSX.Element} Card component
  */
@@ -10,6 +11,7 @@ export const Card: import("react").ForwardRefExoticComponent<import("react").Ref
  * Card header component
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
+ * @param {boolean} [props.asChild=false] - Render as child component
  * @param {React.ReactNode} props.children - Card header content
  * @returns {JSX.Element} CardHeader component
  */
@@ -18,6 +20,7 @@ export const CardHeader: import("react").ForwardRefExoticComponent<import("react
  * Card title component
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
+ * @param {boolean} [props.asChild=false] - Render as child component
  * @param {React.ReactNode} props.children - Card title content
  * @returns {JSX.Element} CardTitle component
  */
@@ -26,6 +29,7 @@ export const CardTitle: import("react").ForwardRefExoticComponent<import("react"
  * Card description component
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
+ * @param {boolean} [props.asChild=false] - Render as child component
  * @param {React.ReactNode} props.children - Card description content
  * @returns {JSX.Element} CardDescription component
  */
@@ -34,6 +38,7 @@ export const CardDescription: import("react").ForwardRefExoticComponent<import("
  * Card content component
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
+ * @param {boolean} [props.asChild=false] - Render as child component
  * @param {React.ReactNode} props.children - Card content
  * @returns {JSX.Element} CardContent component
  */
@@ -42,6 +47,7 @@ export const CardContent: import("react").ForwardRefExoticComponent<import("reac
  * Card footer component
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
+ * @param {boolean} [props.asChild=false] - Render as child component
  * @param {React.ReactNode} props.children - Card footer content
  * @returns {JSX.Element} CardFooter component
  */

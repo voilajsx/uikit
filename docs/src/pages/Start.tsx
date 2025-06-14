@@ -488,13 +488,12 @@ function Start() {
             </div>
 
             <Alert>
-
-  <CheckCircle className="h-4 w-4" />
-  <AlertDescription className="pt-1">
-    <strong>That's it!</strong> You now have themed components that automatically 
-    adapt to your chosen color scheme.
-  </AlertDescription>
-</Alert>
+              <CheckCircle className="h-4 w-4" />
+              <AlertDescription className="pt-1">
+                <strong>That's it!</strong> You now have themed components that automatically 
+                adapt to your chosen color scheme.
+              </AlertDescription>
+            </Alert>
           </section>
 
           {/* UI Components */}

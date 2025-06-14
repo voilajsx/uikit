@@ -291,6 +291,11 @@ const Container = forwardRef(({
   children,
   ...props
 }, ref) => {
+  const {
+    sidebarSize,
+    // Remove this prop to prevent DOM warning
+    ...domProps
+  } = props;
   const layout = sidebar === "left" ? "sidebar-left" : sidebar === "right" ? "sidebar-right" : "none";
   const hasSidebar = sidebar !== "none" && sidebarContent;
   return /* @__PURE__ */ jsxs(
@@ -301,7 +306,7 @@ const Container = forwardRef(({
         containerVariants({ variant, layout, size }),
         className
       ),
-      ...props,
+      ...domProps,
       children: [
         hasSidebar && sidebar === "left" && /* @__PURE__ */ jsx(
           ContainerSidebar,
