@@ -73,21 +73,21 @@ const authExamples = [
 const layoutExamples = [
   {
     id: 'page',
-    name: 'Page Template',
+    name: 'Page Layout',
     description: 'Clean page layout with navigation',
     path: '/examples/layouts/page',
     features: ['Header navigation', 'Responsive layout', 'Clean structure']
   },
   {
     id: 'admin',
-    name: 'Admin Template',
+    name: 'Admin Layout',
     description: 'Dashboard with sidebar navigation',
     path: '/examples/layouts/admin',
     features: ['Sidebar navigation', 'Admin dashboard', 'Data overview']
   },
   {
     id: 'blank',
-    name: 'Blank Template',
+    name: 'Blank Layout',
     description: 'Minimal layout for custom content',
     path: '/examples/layouts/blank',
     features: ['Minimal design', 'Flexible content', 'Custom layouts']
@@ -230,7 +230,6 @@ function Examples() {
       <Container
         sidebar="right"
         sidebarContent={<SidebarContent />}
-        sidebarSize="default"
         sidebarSticky={true}
         width="xl"
         padding="md"

@@ -55,7 +55,18 @@ const sidebarVariants = cva(
   }
 );
 const headerVariants = cva(
-  "w-full border-b transition-all duration-200 z-40 sticky top-0 bg-background/80 backdrop-blur-sm border-border/40 supports-[backdrop-filter]:bg-background/60 text-foreground"
+  "w-full border-b transition-all duration-200 z-40 bg-background/80 backdrop-blur-sm border-border/40 supports-[backdrop-filter]:bg-background/60 text-foreground",
+  {
+    variants: {
+      sticky: {
+        true: "sticky top-0",
+        false: "relative"
+      }
+    },
+    defaultVariants: {
+      sticky: true
+    }
+  }
 );
 const getSizeConfig = (size = "default") => {
   const configs = {
@@ -152,7 +163,7 @@ function AdminNavigation({
     }
   };
   const MenuItem = ({ item, isSubmenu = false }) => {
-    const hasSubmenu = !isSubmenu && item.submenu?.length > 0;
+    const hasSubmenu = !isSubmenu && item.items?.length > 0;
     const isExpanded = expandedMenus.has(item.key);
     const isActive = item.path ? currentPath === item.path : item.isActive;
     return /* @__PURE__ */ jsxs("div", { children: [
@@ -169,7 +180,7 @@ function AdminNavigation({
           className: getMenuItemStyles(isActive, isSubmenu),
           children: [
             !isSubmenu && item.icon && /* @__PURE__ */ jsx(item.icon, { className: cn(config.icon, "flex-shrink-0") }),
-            /* @__PURE__ */ jsx("span", { className: "flex-1 truncate text-left", children: item.title }),
+            /* @__PURE__ */ jsx("span", { className: "flex-1 truncate text-left", children: item.label }),
             item.badge && config.showBadges && /* @__PURE__ */ jsx(
               Badge,
               {
@@ -194,7 +205,7 @@ function AdminNavigation({
       hasSubmenu && /* @__PURE__ */ jsx("div", { className: cn(
         "overflow-hidden transition-all duration-300",
         isExpanded ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
-      ), children: /* @__PURE__ */ jsx("div", { className: cn(config.spacing, "pb-2"), children: item.submenu.map((subItem) => /* @__PURE__ */ jsx(MenuItem, { item: subItem, isSubmenu: true }, subItem.path || subItem.key)) }) })
+      ), children: /* @__PURE__ */ jsx("div", { className: cn(config.spacing, "pb-2"), children: item.items.map((subItem) => /* @__PURE__ */ jsx(MenuItem, { item: subItem, isSubmenu: true }, subItem.path || subItem.key)) }) })
     ] }, item.key || item.path);
   };
   const sections = navigationItems.reduce((acc, item) => {
@@ -236,6 +247,7 @@ const AdminTemplate = forwardRef(({
   logo,
   headerActions,
   navigationItems = [],
+  // ✅ Now expects unified structure with 'label' and 'items'
   currentPath = "",
   onNavigate = () => {
   },
@@ -243,6 +255,7 @@ const AdminTemplate = forwardRef(({
   sidebarFooter,
   children,
   sticky = true,
+  // ✅ This prop now actually controls sticky behavior
   logoComponent,
   headerActionsComponent,
   collapsible = true,
@@ -288,8 +301,8 @@ const AdminTemplate = forwardRef(({
     setSidebarOpen(!sidebarOpen);
   };
   const getHeaderClasses = () => {
-    const scrollClasses = isScrolled ? "shadow-sm" : "";
-    return cn(headerVariants(), scrollClasses);
+    const scrollClasses = isScrolled && sticky ? "shadow-sm" : "";
+    return cn(headerVariants({ sticky }), scrollClasses);
   };
   const getMobileToggleStyles = () => {
     return "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors";

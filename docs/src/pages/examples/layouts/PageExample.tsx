@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { Page } from '@voilajsx/uikit/page';
+import { PageLayout as Page } from '@voilajsx/uikit/page';
 import { Footer } from '@voilajsx/uikit/footer';
 import { Button } from '@voilajsx/uikit/button';
 import { Input } from '@voilajsx/uikit/input';

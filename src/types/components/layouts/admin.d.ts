@@ -1,7 +1,7 @@
 /**
- * @fileoverview TypeScript types for AdminTemplate with unified navigation
+ * @fileoverview TypeScript types for AdminLayout with unified navigation
  * @package @voilajsx/uikit
- * @file /src/components/layouts/admin.types.ts
+ * @file /src/components/layouts/admin.d.ts
  */
 
 import { ComponentType, ReactNode } from 'react';
@@ -42,9 +42,9 @@ export interface NavigationItem {
 }
 
 /**
- * AdminTemplate component props
+ * AdminLayout component props
  */
-export interface AdminTemplateProps {
+export interface AdminLayoutProps {
   /** Additional CSS classes */
   className?: string;
   /** Sidebar color scheme */
@@ -110,3 +110,7 @@ export interface SizeConfig {
   spacing: string;
   showBadges: boolean;
 }
+
+export declare const AdminLayout: React.ForwardRefExoticComponent<
+  AdminLayoutProps & React.RefAttributes<HTMLDivElement>
+>;

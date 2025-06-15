@@ -48,27 +48,27 @@
 
 ## Complete Component Inventory
 
-### 🏗️ Layout Templates (4 Total)
+### 🏗️ Layout Components (4 Total)
 
 Full-page layouts that structure entire applications:
 
 ```jsx
 // Standard website layout with header/content/footer
 import {
-  Page,
+  PageLayout,
   PageHeader,
   PageContent,
   PageFooter,
 } from '@voilajsx/uikit/page';
 
 // Admin dashboard with sidebar navigation
-import { AdminTemplate } from '@voilajsx/uikit/admin';
+import { AdminLayout } from '@voilajsx/uikit/admin';
 
 // Authentication pages (6 variants: simple, card, split-gradient, split-image, card-gradient, card-image)
-import { AuthTemplate } from '@voilajsx/uikit/auth';
+import { AuthLayout } from '@voilajsx/uikit/auth';
 
 // Simple content pages, error pages, maintenance pages
-import { BlankTemplate } from '@voilajsx/uikit/blank';
+import { BlankLayout } from '@voilajsx/uikit/blank';
 ```
 
 ### 🧱 Section Components (3 Total)
@@ -267,15 +267,14 @@ import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
 - **ruby**: Sophisticated red with gold accents - perfect for premium brands
 - **studio**: Designer grays with amber accent - ideal for design tools and creative platforms
 
-## Template Selection Decision Tree
+## Layout Selection Decision Tree
 
-| Need                                       | Use Template    | When to Choose                                        |
-| ------------------------------------------ | --------------- | ----------------------------------------------------- |
-| Full website with header/footer navigation | `Page`          | Marketing sites, documentation, company websites      |
-| Admin dashboard with persistent sidebar    | `AdminTemplate` | CRM systems, analytics dashboards, admin panels       |
-| Authentication flows                       | `AuthTemplate`  | Login, signup, password reset, onboarding             |
-| Simple content or error pages              | `BlankTemplate` | 404 pages, maintenance, about us, terms               |
-| Content section with optional sidebar      | `Container`     | Documentation sections, settings pages, content areas |
+| Need                                       | Use Layout    | When to Choose                                   |
+| ------------------------------------------ | ------------- | ------------------------------------------------ |
+| Full website with header/footer navigation | `PageLayout`  | Marketing sites, documentation, company websites |
+| Admin dashboard with persistent sidebar    | `AdminLayout` | CRM systems, analytics dashboards, admin panels  |
+| Authentication flows                       | `AuthLayout`  | Login, signup, password reset, onboarding        |
+| Simple content or error pages              | `BlankLayout` | 404 pages, maintenance, about us, terms          |
 
 # UIKit Color System Guidelines (CRITICAL FOR THEME COMPATIBILITY)
 
@@ -634,27 +633,27 @@ const {
 </Button>
 ```
 
-## Layout Templates (Complete API Reference)
+## Layout Components (Complete API Reference)
 
-### 1. Page Template - Standard Website Layout
+### 1. Page Layout - Standard Website Layout
 
 ```typescript
 // Complete page layout with header/content/footer
 import {
-  Page,
+  PageLayout,
   PageHeader,
   PageContent,
   PageFooter,
 } from '@voilajsx/uikit/page';
 
-// Page Props (complete interface)
-interface PageProps {
+// PageLayout Props (complete interface)
+interface PageLayoutProps {
   variant?: 'default' | 'minimal' | 'contained';
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'; // Controls width and spacing
   children: React.ReactNode;
 }
 
-// PageHeader Props (inherits size from Page if not specified)
+// PageHeader Props (inherits size from PageLayout if not specified)
 interface PageHeaderProps {
   variant?: 'default' | 'primary' | 'black'; // Color scheme
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
@@ -662,21 +661,21 @@ interface PageHeaderProps {
   children: React.ReactNode;
 }
 
-// PageContent Props (inherits size from Page if not specified)
+// PageContent Props (inherits size from PageLayout if not specified)
 interface PageContentProps {
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   children: React.ReactNode;
 }
 
-// PageFooter Props (inherits size from Page if not specified)
+// PageFooter Props (inherits size from PageLayout if not specified)
 interface PageFooterProps {
   variant?: 'default' | 'muted' | 'dark'; // Color scheme
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   children: React.ReactNode;
 }
 
-// Standard Page Pattern
-<Page variant="default" size="xl">
+// Standard PageLayout Pattern
+<PageLayout variant="default" size="xl">
   <PageHeader variant="default" sticky={true}>
     <HeaderLogo>{logo}</HeaderLogo>
     <HeaderNav items={navItems} />
@@ -685,17 +684,17 @@ interface PageFooterProps {
   <PageFooter variant="default">
     <FooterBasic />
   </PageFooter>
-</Page>;
+</PageLayout>;
 ```
 
-### 2. Admin Template - Dashboard with Sidebar
+### 2. Admin Layout - Dashboard with Sidebar
 
 ```typescript
 // Admin dashboard with sidebar and header
-import { AdminTemplate } from '@voilajsx/uikit/admin';
+import { AdminLayout } from '@voilajsx/uikit/admin';
 
-// AdminTemplate Props (complete interface)
-interface AdminTemplateProps {
+// AdminLayout Props (complete interface)
+interface AdminLayoutProps {
   variant?: 'default' | 'primary' | 'black'; // Sidebar color scheme
   size?: 'compact' | 'default' | 'wide'; // Sidebar width (192px/256px/320px)
   title?: string; // Header title text
@@ -771,7 +770,7 @@ const navigationItems = [
 ];
 
 // Standard Admin Pattern
-<AdminTemplate
+<AdminLayout
   variant="default"
   size="default"
   title="Admin Dashboard"
@@ -781,17 +780,17 @@ const navigationItems = [
   headerActions={<HeaderButtons />}
 >
   {/* Dashboard content */}
-</AdminTemplate>;
+</AdminLayout>;
 ```
 
-### 3. Auth Template - Authentication Pages
+### 3. Auth Layout - Authentication Pages
 
 ```typescript
 // Authentication page layouts
-import { AuthTemplate } from '@voilajsx/uikit/auth';
+import { AuthLayout } from '@voilajsx/uikit/auth';
 
-// AuthTemplate Props (complete interface)
-interface AuthTemplateProps {
+// AuthLayout Props (complete interface)
+interface AuthLayoutProps {
   variant: 'simple' | 'card' | 'split-gradient' | 'split-image' | 'card-gradient' | 'card-image';
   title?: string; // Page title
   subtitle?: string; // Page subtitle
@@ -825,36 +824,36 @@ const AUTH_VARIANTS = {
 };
 
 // Standard Auth Patterns
-<AuthTemplate variant="card" title="Sign In" subtitle="Welcome back">
+<AuthLayout variant="card" title="Sign In" subtitle="Welcome back">
   <LoginForm />
-</AuthTemplate>
+</AuthLayout>
 
-<AuthTemplate
+<AuthLayout
   variant="split-gradient"
   title="Join Us"
   splitContent={<WelcomeContent />}
 >
   <SignupForm />
-</AuthTemplate>
+</AuthLayout>
 
-<AuthTemplate
+<AuthLayout
   variant="card-image"
   imageUrl="/background.jpg"
   imageOverlay="dark"
   title="Welcome"
 >
   <AuthForm />
-</AuthTemplate>
+</AuthLayout>
 ```
 
-### 4. Blank Template - Simple Content Pages
+### 4. Blank Layout - Simple Content Pages
 
 ```typescript
 // Simple content pages and error states
-import { BlankTemplate } from '@voilajsx/uikit/blank';
+import { BlankLayout } from '@voilajsx/uikit/blank';
 
-// BlankTemplate Props (complete interface)
-interface BlankTemplateProps {
+// BlankLayout Props (complete interface)
+interface BlankLayoutProps {
   variant?: 'default' | 'card' | 'error' | 'maintenance' | 'suspension';
   title?: string; // Page title
   subtitle?: string; // Page subtitle
@@ -877,7 +876,7 @@ const BLANK_VARIANTS = {
 };
 
 // Standard Blank Patterns
-<BlankTemplate
+<BlankLayout
   variant="error"
   title="404 - Page Not Found"
   subtitle="The page you're looking for doesn't exist"
@@ -889,9 +888,9 @@ const BLANK_VARIANTS = {
   }
 />
 
-<BlankTemplate variant="card" title="About Us">
+<BlankLayout variant="card" title="About Us">
   <AboutContent />
-</BlankTemplate>
+</BlankLayout>
 ```
 
 ---
@@ -1402,13 +1401,13 @@ export default App;
 
 ```jsx
 /**
- * Complete page using Page template with all sections
+ * Complete page using PageLayout with all sections
  * @module @voilajsx/uikit
  * @file examples/complete-page.jsx
  */
 
 import {
-  Page,
+  PageLayout,
   PageHeader,
   PageContent,
   PageFooter,
@@ -1433,7 +1432,7 @@ function HomePage() {
   ];
 
   return (
-    <Page variant="default" size="xl">
+    <PageLayout variant="default" size="xl">
       <PageHeader variant="default" sticky={true}>
         <HeaderLogo>
           <div className="flex items-center gap-2">
@@ -1490,7 +1489,7 @@ function HomePage() {
           copyright="© 2024 Brand. All rights reserved."
         />
       </PageFooter>
-    </Page>
+    </PageLayout>
   );
 }
 
@@ -1506,7 +1505,7 @@ export default HomePage;
  * @file examples/admin-dashboard.jsx
  */
 
-import { AdminTemplate } from '@voilajsx/uikit/admin';
+import { AdminLayout } from '@voilajsx/uikit/admin';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import { Button } from '@voilajsx/uikit/button';
 import { Badge } from '@voilajsx/uikit/badge';
@@ -1585,7 +1584,7 @@ function AdminDashboard() {
   );
 
   return (
-    <AdminTemplate
+    <AdminLayout
       variant="default"
       size="default"
       title="Admin Dashboard"
@@ -1640,7 +1639,7 @@ function AdminDashboard() {
           </Card>
         </div>
       </div>
-    </AdminTemplate>
+    </AdminLayout>
   );
 }
 
@@ -1656,7 +1655,7 @@ export default AdminDashboard;
  * @file examples/auth-page.jsx
  */
 
-import { AuthTemplate } from '@voilajsx/uikit/auth';
+import { AuthLayout } from '@voilajsx/uikit/auth';
 import {
   Form,
   FormField,
@@ -1690,7 +1689,7 @@ function LoginPage() {
   );
 
   return (
-    <AuthTemplate
+    <AuthLayout
       variant="card"
       title="Welcome back"
       subtitle="Sign in to your account to continue"
@@ -1759,7 +1758,7 @@ function LoginPage() {
           </Button>
         </form>
       </Form>
-    </AuthTemplate>
+    </AuthLayout>
   );
 }
 
@@ -1926,13 +1925,13 @@ const navigationItems = [
     icon: LucideIcon,     // Optional
     path: '/path',        // Optional
     isActive: boolean,    // Optional
-    section: 'main',      // Optional (AdminTemplate only)
+    section: 'main',      // Optional (AdminLayout only)
     items: [...]          // Optional (unified: all components use 'items')
   }
 ];
 
-// ✅ Works with AdminTemplate
-<AdminTemplate navigationItems={navigationItems} />
+// ✅ Works with AdminLayout
+<AdminLayout navigationItems={navigationItems} />
 
 // ✅ Works with Container
 <Container sidebarContent={navigationItems} />
@@ -1941,14 +1940,14 @@ const navigationItems = [
 <HeaderNav items={navigationItems} />
 ```
 
-### 3. Template Selection Guide
+### 3. Layout Selection Guide
 
 ```jsx
-// Choose the right template:
-Page; // Full website with header/footer
-AdminTemplate; // Dashboard with sidebar
-AuthTemplate; // Login/signup pages
-BlankTemplate; // Simple content/error pages
+// Choose the right layout:
+PageLayout; // Full website with header/footer
+AdminLayout; // Dashboard with sidebar
+AuthLayout; // Login/signup pages
+BlankLayout; // Simple content/error pages
 Container; // Content section with optional sidebar
 ```
 
@@ -2001,7 +2000,7 @@ size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
 // Variant props (color schemes)
 variant?: 'default' | 'primary' | 'black'  // For headers/sidebars
 variant?: 'default' | 'muted' | 'dark'     // For footers
-variant?: 'simple' | 'card' | 'split-gradient' // For auth templates
+variant?: 'simple' | 'card' | 'split-gradient' // For auth layouts
 ```
 
 ### 9. File Structure Requirements

@@ -155,7 +155,7 @@ function Sections() {
       <Container 
         sidebar="right" 
         sidebarContent={navigationItems}
-        sidebarSize="default"
+       
         sidebarSticky={true}
         width="xl"
         padding="md"
@@ -169,7 +169,7 @@ function Sections() {
             <h1 className="text-5xl font-bold tracking-tight">Section Components</h1>
             <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
               Mix and match reusable page sections to build custom layouts. Perfect for unique designs 
-              that need more flexibility than pre-built templates.
+              that need more flexibility than pre-built Layouts.
             </p>
           </section>
 
@@ -194,7 +194,7 @@ function Sections() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Build exactly what you need by combining sections. No constraints of pre-built templates.
+                    Build exactly what you need by combining sections. No constraints of pre-built Layouts.
                   </p>
                 </CardContent>
               </Card>
@@ -410,9 +410,9 @@ function Sections() {
           {/* Composition Guide */}
           <section id="composition-guide" className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold mb-4">When to Use Sections vs Templates?</h2>
+              <h2 className="text-3xl font-bold mb-4">When to Use Sections vs Layouts?</h2>
               <p className="text-muted-foreground text-lg">
-                Understanding when to compose with sections versus using pre-built templates.
+                Understanding when to compose with sections versus using pre-built Layouts.
               </p>
             </div>
 
@@ -440,7 +440,7 @@ function Sections() {
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader>
                   <CardTitle className="text-primary">
-                    Use Templates When
+                    Use Layouts When
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -461,8 +461,8 @@ function Sections() {
 <Alert className="bg-primary/5 border-primary/20 dark:bg-primary/10 dark:border-primary/30">
   <Building className="h-4 w-4 text-primary dark:text-primary" />
   <AlertDescription className="text-foreground dark:text-foreground">
-    <strong>Pro tip:</strong> Start with templates for speed, then extract and customize 
-    with sections as your needs evolve. Templates are built using these same sections!
+    <strong>Pro tip:</strong> Start with Layouts for speed, then extract and customize 
+    with sections as your needs evolve. Layouts are built using these same sections!
   </AlertDescription>
 </Alert>
           </section>
@@ -529,13 +529,13 @@ function Sections() {
                 <Link to="/components/layouts">
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
-                      <span>Layout Templates</span>
+                      <span>Layout Components</span>
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      Compare with pre-built templates for common use cases.
+                      Compare with pre-built Layouts for common use cases.
                     </p>
                   </CardContent>
                 </Link>

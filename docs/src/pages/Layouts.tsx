@@ -31,11 +31,11 @@ import {
 import CodeBlock from '../components/CodeBlock';
 import Layout from '../components/Layout';
 
-const quickStartCode = `import { AdminTemplate } from '@voilajsx/uikit/admin';
+const quickStartCode = `import { AdminLayout } from '@voilajsx/uikit/admin';
 
 function Dashboard() {
   return (
-    <AdminTemplate
+    <AdminLayout
       title="Admin Dashboard"
       navigationItems={[
         { title: 'Dashboard', icon: Home, path: '/dashboard' },
@@ -43,7 +43,7 @@ function Dashboard() {
       ]}
     >
       <h1>Dashboard Content</h1>
-    </AdminTemplate>
+    </AdminLayout>
   );
 }`;
 
@@ -111,7 +111,7 @@ function Layouts() {
     },
     {
       key: 'available-layouts',
-      label: 'Available Templates',
+      label: 'Available Layouts',
       icon: LayoutIcon,
       onClick: () => scrollToSection('available-layouts'),
       isActive: activeSection === 'available-layouts'
@@ -137,7 +137,6 @@ function Layouts() {
       <Container 
         sidebar="right" 
         sidebarContent={navigationItems}
-        sidebarSize="default"
         sidebarSticky={true}
         width="xl"
         padding="md"
@@ -146,9 +145,9 @@ function Layouts() {
           {/* Header */}
           <section id="overview" className="space-y-6">
             <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-              Complete Page Templates
+              Complete Page Layouts
             </Badge>
-            <h1 className="text-5xl font-bold tracking-tight">Layout Templates</h1>
+            <h1 className="text-5xl font-bold tracking-tight">Layouts</h1>
             <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
               Ready-to-use page layouts that handle the complexity of modern web applications. 
               Build faster with pre-designed patterns for common use cases.
@@ -158,9 +157,9 @@ function Layouts() {
           {/* Why Layouts */}
           <section id="why-layouts" className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Why Use Layout Templates?</h2>
+              <h2 className="text-3xl font-bold mb-4">Why Use Layouts?</h2>
               <p className="text-muted-foreground text-lg">
-                Layout templates solve common web development challenges and accelerate your development workflow.
+                Layouts solve common web development challenges and accelerate your development workflow.
               </p>
             </div>
             
@@ -238,9 +237,9 @@ function Layouts() {
           {/* Available Layouts */}
           <section id="available-layouts" className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Four Useful Layout Templates</h2>
+              <h2 className="text-3xl font-bold mb-4">Four Useful Layout Layouts</h2>
               <p className="text-muted-foreground text-lg">
-                Choose the right layout for your use case. Each template is designed for specific scenarios and user flows.
+                Choose the right layout for your use case. Each Layout is designed for specific scenarios and user flows.
               </p>
             </div>
 
@@ -411,7 +410,7 @@ function Layouts() {
             <div>
               <h2 className="text-3xl font-bold mb-4">Which Layout Should You Choose?</h2>
               <p className="text-muted-foreground text-lg">
-                Quick guide to help you pick the right layout template for your project.
+                Quick guide to help you pick the right layout  for your project.
               </p>
             </div>
 
@@ -499,7 +498,7 @@ function Layouts() {
             <div>
               <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
               <p className="text-muted-foreground text-lg">
-                Choose your path and start building with UIKit layout templates.
+                Choose your path and start building with UIKit layout Layouts.
               </p>
             </div>
             
@@ -514,7 +513,7 @@ function Layouts() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      Install UIKit and set up your first layout template in minutes.
+                      Install UIKit and set up your first layout  in minutes.
                     </p>
                   </CardContent>
                 </Link>

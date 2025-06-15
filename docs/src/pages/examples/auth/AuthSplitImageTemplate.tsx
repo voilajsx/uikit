@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { AuthTemplate } from '@voilajsx/uikit/auth';
+import { AuthLayout as AuthTemplate } from '@voilajsx/uikit/auth';
 import { Button } from '@voilajsx/uikit/button';
 import { Input } from '@voilajsx/uikit/input';
 import { Label } from '@voilajsx/uikit/label';

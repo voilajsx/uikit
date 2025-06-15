@@ -1,5 +1,5 @@
 /**
- * @fileoverview Simplified Page template with consistent prop naming
+ * @fileoverview Simplified PageLayout with consistent prop naming
  * @description Clean page layout using compound components with standardized props
  * @package @voilajsx/uikit
  * @file /src/components/layouts/page.jsx
@@ -36,15 +36,15 @@ const pageVariants = cva(
 );
 
 /**
- * Main Page Layout Component - Simplified with consistent props
+ * Main PageLayout Component - Simplified with consistent props
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
  * @param {'default'|'minimal'|'contained'} [props.variant='default'] - Page layout variant
  * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size='xl'] - Page width and spacing
  * @param {React.ReactNode} props.children - Page sections (Header, Content, Footer)
- * @returns {JSX.Element} Page layout container
+ * @returns {JSX.Element} PageLayout container
  */
-const Page = forwardRef(({
+const PageLayout = forwardRef(({
   className,
   variant = "default",
   size = "xl",
@@ -70,13 +70,13 @@ const Page = forwardRef(({
   );
 });
 
-Page.displayName = "Page";
+PageLayout.displayName = "PageLayout";
 
 /**
  * Page Header component
  * @param {Object} props - Component props
  * @param {'default'|'primary'|'black'} [props.variant='default'] - Header style variant
- * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Header size (inherits from Page if not specified)
+ * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Header size (inherits from PageLayout if not specified)
  * @param {boolean} [props.sticky=true] - Whether header should be sticky
  * @param {React.ReactNode} props.children - Header content
  * @returns {JSX.Element} Page header
@@ -94,7 +94,7 @@ const PageHeader = forwardRef(({
     <Header
       ref={ref}
       variant={variant}
-      size={size || pageSize} // Use prop or inherit from Page
+      size={size || pageSize} // Use prop or inherit from PageLayout
       sticky={sticky}
       {...props}
     >
@@ -137,7 +137,7 @@ const pageContentInnerVariants = cva(
  * Page Content component - Main content area
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
- * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Content size (inherits from Page if not specified)
+ * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Content size (inherits from PageLayout if not specified)
  * @param {React.ReactNode} props.children - Main content
  * @returns {JSX.Element} Page content area
  */
@@ -169,7 +169,7 @@ PageContent.displayName = "PageContent";
  * Page Footer component
  * @param {Object} props - Component props
  * @param {'default'|'muted'|'dark'} [props.variant='default'] - Footer style variant
- * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Footer size (inherits from Page if not specified)
+ * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Footer size (inherits from PageLayout if not specified)
  * @param {React.ReactNode} props.children - Footer content
  * @returns {JSX.Element} Page footer
  */
@@ -185,7 +185,7 @@ const PageFooter = forwardRef(({
     <Footer 
       ref={ref} 
       variant={variant}
-      size={size || pageSize} // Use prop or inherit from Page
+      size={size || pageSize} // Use prop or inherit from PageLayout
       {...props}
     >
       {children}
@@ -202,22 +202,22 @@ PageFooter.displayName = "PageFooter";
 const usePage = () => {
   const context = useContext(PageContext);
   if (!context) {
-    throw new Error('usePage must be used within a Page component');
+    throw new Error('usePage must be used within a PageLayout component');
   }
   return context;
 };
 
 // Attach compound components
-Page.Header = PageHeader;
-Page.Content = PageContent;
-Page.Footer = PageFooter;
+PageLayout.Header = PageHeader;
+PageLayout.Content = PageContent;
+PageLayout.Footer = PageFooter;
 
 // Re-export header compound components for convenience
-Page.Logo = HeaderLogo;
-Page.Nav = HeaderNav;
+PageLayout.Logo = HeaderLogo;
+PageLayout.Nav = HeaderNav;
 
 export { 
-  Page, 
+  PageLayout, 
   PageHeader, 
   PageContent, 
   PageFooter,

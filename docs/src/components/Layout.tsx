@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Page } from '@voilajsx/uikit/page';
+import { PageLayout as Page } from '@voilajsx/uikit/page';
 import { Container } from '@voilajsx/uikit/container';
 import { Button } from '@voilajsx/uikit/button';
 import { Badge } from '@voilajsx/uikit/badge';

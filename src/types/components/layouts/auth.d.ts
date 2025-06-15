@@ -1,5 +1,5 @@
 /**
- * @fileoverview TypeScript declarations for Auth layout
+ * @fileoverview TypeScript declarations for AuthLayout
  * @description Type definitions for auth layout component
  * @package @voilajsx/uikit
  * @file /src/components/layouts/auth.d.ts
@@ -17,7 +17,7 @@ export type AuthVariant =
 
 export type AuthImageOverlay = 'light' | 'dark' | 'none'
 
-export interface AuthTemplateProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AuthLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: AuthVariant
   title?: string
   subtitle?: string
@@ -37,4 +37,4 @@ export interface AuthTemplateProps extends React.HTMLAttributes<HTMLDivElement> 
   cardContent?: React.ReactNode
 }
 
-export declare const AuthTemplate: React.FC<AuthTemplateProps>
+export declare const AuthLayout: React.FC<AuthLayoutProps>

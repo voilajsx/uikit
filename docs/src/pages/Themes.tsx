@@ -10,6 +10,7 @@ import { Container } from '@voilajsx/uikit/container';
 import Layout from '../components/Layout';
 import { Button } from '@voilajsx/uikit/button';
 import { Badge } from '@voilajsx/uikit/badge';
+import { Alert, AlertDescription } from '@voilajsx/uikit/alert';
 import { useTheme } from '@voilajsx/uikit/theme-provider';
 import { 
   Palette, 
@@ -21,8 +22,13 @@ import {
   Settings, 
   Code2, 
   Sparkles,
-  Info
+  Info,
+  AlertTriangle,
+  Copy,
+  CheckCircle,
+   Check,  Building, Gamepad2, Gem,  Waves 
 } from 'lucide-react';
+
 import CodeBlock from '../components/CodeBlock';
 
 const basicThemeCode = `import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
@@ -82,14 +88,6 @@ const brandTheme = {
     chart3: 'oklch(0.45 0.18 240)',
     chart4: 'oklch(0.65 0.2 190)',
     chart5: 'oklch(0.6 0.24 210)',
-    sidebar: 'oklch(0.97 0.01 85)',
-    sidebarForeground: 'oklch(0.15 0.02 85)',
-    sidebarPrimary: 'oklch(0.5 0.2 220)',
-    sidebarPrimaryForeground: 'oklch(0.98 0.02 85)',
-    sidebarAccent: 'oklch(0.94 0.02 85)',
-    sidebarAccentForeground: 'oklch(0.25 0.05 85)',
-    sidebarBorder: 'oklch(0.88 0.03 85)',
-    sidebarRing: 'oklch(0.5 0.2 220)',
   },
   
   dark: {
@@ -117,28 +115,15 @@ const brandTheme = {
     chart3: 'oklch(0.55 0.22 240)',
     chart4: 'oklch(0.7 0.24 190)',
     chart5: 'oklch(0.65 0.27 210)',
-    sidebar: 'oklch(0.1 0.025 85)',
-    sidebarForeground: 'oklch(0.95 0.02 85)',
-    sidebarPrimary: 'oklch(0.65 0.25 220)',
-    sidebarPrimaryForeground: 'oklch(0.08 0.02 85)',
-    sidebarAccent: 'oklch(0.15 0.03 85)',
-    sidebarAccentForeground: 'oklch(0.95 0.02 85)',
-    sidebarBorder: 'oklch(0.22 0.04 85)',
-    sidebarRing: 'oklch(0.65 0.25 220)',
   },
 };
 
-// Method 1: Register via Provider (Recommended)
+// Register via Provider
 <ThemeProvider theme="brand" customThemes={[brandTheme]}>
   <App />
-</ThemeProvider>
+</ThemeProvider>`;
 
-// Method 2: Runtime Registration
-const { registerTheme, setTheme } = useTheme();
-useEffect(() => {
-  registerTheme(brandTheme);
-  setTheme('brand');
-}, []);`;
+
 
 const runtimeThemeCode = `import { useTheme } from '@voilajsx/uikit/theme-provider';
 
@@ -186,79 +171,110 @@ function DynamicThemes() {
   );
 }`;
 
-// Fixed theme colors based on actual CSS values
+// Color palette data - all semantic colors used in UIKit
+
+
+// Built-in themes display data - using semantic colors only
 const builtInThemes = [
   {
     id: 'default',
     name: 'Default',
-    description: 'Clean oceanic blues',
-    colors: { 
-      primary: 'bg-[oklch(0.42_0.26_230)]', // Ocean blue
-      accent: 'bg-[oklch(0.6_0.2_200)]',    // Ocean cyan
-      secondary: 'bg-[oklch(0.86_0.035_210)]' // Light blue-gray
+    description: 'Ocean blue professional colors with clean design',
+    bestFor: 'Business applications, documentation, company websites',
+    icon: Waves,
+    colors: {
+      primary: 'oklch(0.48 0.18 240)',
+      secondary: 'oklch(0.88 0.03 220)', 
+      accent: 'oklch(0.52 0.12 200)'
     },
-    bestFor: 'Business apps, dashboards, professional tools'
-  },
-  {
-    id: 'metro',
-    name: 'Metro',
-    description: 'Clean transit-inspired systematic design',
-    colors: { 
-      primary: 'bg-[oklch(0.35_0.08_240)]',  // Metro blue
-      accent: 'bg-[oklch(0.45_0.12_200)]',   // Transit teal
-      secondary: 'bg-[oklch(0.94_0.008_240)]' // Light gray-blue
-    },
-    bestFor: 'Admin panels, data applications, systematic UIs'
-  },
-  {
-    id: 'studio',
-    name: 'Studio',
-    description: 'Sophisticated designer grays with amber accents',
-    colors: { 
-      primary: 'bg-[oklch(0.32_0.02_270)]',  // Studio charcoal
-      accent: 'bg-[oklch(0.55_0.15_45)]',    // Creative amber
-      secondary: 'bg-[oklch(0.95_0.003_270)]' // Light studio gray
-    },
-    bestFor: 'Design tools, portfolios, creative applications'
-  },
-  {
-    id: 'ruby',
-    name: 'Ruby',
-    description: 'Premium ruby red with rose accents',
-    colors: { 
-      primary: 'bg-[oklch(0.48_0.18_20)]',   // Ruby red
-      accent: 'bg-[oklch(0.46_0.01_240)]',   // Accent gray
-      secondary: 'bg-[oklch(0.9_0.005_0)]'   // Light gray
-    },
-    bestFor: 'Finance, luxury brands, premium products'
-  },
-  {
-    id: 'neon',
-    name: 'Neon',
-    description: 'Electric cyberpunk with glowing highlights',
-    colors: { 
-      primary: 'bg-[oklch(0.45_0.28_320)]',  // Electric magenta
-      accent: 'bg-[oklch(0.55_0.25_180)]',   // Electric cyan
-      secondary: 'bg-[oklch(0.92_0.015_280)]' // Light purple-gray
-    },
-    bestFor: 'Gaming, tech startups, creative tools'
+    category: 'Professional',
+    mood: 'Trustworthy & Clean'
   },
   {
     id: 'aurora',
     name: 'Aurora',
-    description: 'Northern lights with purple-green magic',
-    colors: { 
-      primary: 'bg-[oklch(0.48_0.2_290)]',   // Aurora purple
-      accent: 'bg-[oklch(0.52_0.18_150)]',   // Aurora green
-      secondary: 'bg-[oklch(0.91_0.012_300)]' // Soft lavender
+    description: 'Northern lights purple-green gradients for magical experiences',
+    bestFor: 'Creative applications, portfolios, artistic platforms',
+    icon: Sparkles,
+    colors: {
+      primary: 'oklch(0.48 0.2 290)',
+      secondary: 'oklch(0.81 0.012 300)',
+      accent: 'oklch(0.62 0.18 150)'
     },
-    bestFor: 'Creative apps, elegant brands, portfolios'
+    category: 'Creative',
+    mood: 'Magical & Elegant'
+  },
+  {
+    id: 'metro',
+    name: 'Metro',
+    description: 'Clean transit-inspired gray-blue for systematic design',
+    bestFor: 'Admin panels, dashboards, analytics platforms',
+    icon: Building,
+    colors: {
+      primary: 'oklch(0.35 0.08 240)',
+      secondary: 'oklch(0.84 0.008 240)',
+      accent: 'oklch(0.55 0.12 200)'
+    },
+    category: 'Professional',
+    mood: 'Systematic & Modern'
+  },
+  {
+    id: 'neon',
+    name: 'Neon',
+    description: 'Electric cyberpunk magenta-cyan for high-tech vibes',
+    bestFor: 'Gaming applications, tech platforms, modern interfaces',
+    icon: Gamepad2,
+    colors: {
+      primary: 'oklch(0.45 0.28 320)',
+      secondary: 'oklch(0.82 0.015 280)',
+      accent: 'oklch(0.65 0.25 180)'
+    },
+    category: 'Tech',
+    mood: 'Electric & Futuristic'
+  },
+  {
+    id: 'ruby',
+    name: 'Ruby',
+    description: 'Sophisticated red with gold accents for premium brands',
+    bestFor: 'Luxury brands, premium products, high-end services',
+    icon: Gem,
+    colors: {
+      primary: 'oklch(0.48 0.18 20)',
+      secondary: 'oklch(0.8 0.005 0)',
+      accent: 'oklch(0.56 0.01 240)'
+    },
+    category: 'Premium',
+    mood: 'Luxurious & Bold'
+  },
+  {
+    id: 'studio',
+    name: 'Studio',
+    description: 'Designer grays with amber accent for creative tools',
+    bestFor: 'Design tools, creative platforms, professional portfolios',
+    icon: Brush,
+    colors: {
+      primary: 'oklch(0.32 0.02 270)',
+      secondary: 'oklch(0.85 0.003 270)',
+      accent: 'oklch(0.65 0.15 45)'
+    },
+    category: 'Creative',
+    mood: 'Sophisticated & Minimal'
   }
 ];
 
+const categoryColors = {
+  'Professional': 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+  'Creative': 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
+  'Tech': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+  'Premium': 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+};
+
 function Themes() {
-  const { theme: currentTheme, setTheme } = useTheme();
+  const { theme: currentTheme, setTheme, variant, toggleVariant } = useTheme();
   const [activeSection, setActiveSection] = useState('overview');
+  const [hoveredTheme, setHoveredTheme] = useState(null);
+
+  const [copiedColor, setCopiedColor] = useState('');
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -271,6 +287,12 @@ function Themes() {
         behavior: 'smooth'
       });
     }
+  };
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    setCopiedColor(text);
+    setTimeout(() => setCopiedColor(''), 2000);
   };
 
   useEffect(() => {
@@ -288,7 +310,7 @@ function Themes() {
       }
     );
 
-    const sections = ['overview', 'theme-benefits', 'built-in-themes', 'basic-usage', 'theme-switching', 'custom-themes', 'dynamic-themes', 'oklch-colors'];
+    const sections = ['overview', 'theme-benefits', 'built-in-themes', 'color-palette', 'basic-usage', 'theme-switching', 'custom-themes', 'dynamic-themes', 'oklch-colors'];
     sections.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
@@ -321,9 +343,16 @@ function Themes() {
       isActive: activeSection === 'built-in-themes'
     },
     {
+      key: 'color-palette',
+      label: 'Color Palette',
+      icon: Eye,
+      onClick: () => scrollToSection('color-palette'),
+      isActive: activeSection === 'color-palette'
+    },
+    {
       key: 'basic-usage',
       label: 'Basic Usage',
-      icon: Eye,
+      icon: Settings,
       onClick: () => scrollToSection('basic-usage'),
       isActive: activeSection === 'basic-usage'
     },
@@ -357,48 +386,18 @@ function Themes() {
     }
   ];
 
-  // Sidebar content component
-  const SidebarContent = () => (
-    <nav className="space-y-2">
-      <div className="px-3 py-2">
-        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-          On This Page
-        </h3>
-      </div>
-      {sidebarNavigation.map((item) => {
-        const Icon = item.icon;
-        return (
-          <button
-            key={item.key}
-            onClick={item.onClick}
-            className={`w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-left ${
-              item.isActive
-                ? 'bg-primary/10 text-primary font-medium'
-                : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-            }`}
-          >
-            <Icon className="h-4 w-4 flex-shrink-0" />
-            <span className="truncate">{item.label}</span>
-          </button>
-        );
-      })}
-    </nav>
-  );
-
   return (
     <Layout>
       <Container
         sidebar="right"
-        sidebarContent={<SidebarContent />}
-        sidebarSize="default"
+        sidebarContent={sidebarNavigation}
         sidebarSticky={true}
-        width="xl"
-        padding="md"
+        size="xl"
       >
         <div className="space-y-16">
           {/* Header */}
           <section id="overview" className="space-y-6">
-            <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+            <Badge variant="secondary">
               <Sparkles className="h-3 w-3 mr-1" />
               6 Beautiful Themes + Custom Support
             </Badge>
@@ -486,54 +485,254 @@ function Themes() {
           </section>
 
           {/* Built-in Themes */}
-          <section id="built-in-themes" className="space-y-8">
+          {/* Built-in Themes */}
+<section id="built-in-themes" className="space-y-8">
+  <div>
+    <h2 className="text-3xl font-bold mb-4">6 Professional Built-in Themes</h2>
+    <p className="text-muted-foreground text-lg">
+      Click any theme to switch instantly and see all components adapt automatically.
+    </p>
+  </div>
+
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {builtInThemes.map((themeInfo) => (
+      <Card
+        key={themeInfo.id}
+        className={`cursor-pointer transition-all hover:shadow-lg group border ${
+          currentTheme === themeInfo.id
+            ? 'ring-2 ring-primary shadow-lg border-primary/50'
+            : 'hover:shadow-md border-border hover:border-primary/30'
+        }`}
+        onClick={() => setTheme(themeInfo.id)}
+      >
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <CardTitle className="text-xl">{themeInfo.name}</CardTitle>
+                {currentTheme === themeInfo.id && (
+                  <Badge variant="default" className="text-xs">
+                    Active
+                  </Badge>
+                )}
+              </div>
+              <p className="text-sm text-muted-foreground mb-3">{themeInfo.description}</p>
+            </div>
+          </div>
+        </CardHeader>
+        
+        <CardContent>
+          <div className="flex gap-2 mb-4">
+            <div 
+              className="w-8 h-8 rounded-full shadow-sm border"
+              style={{ backgroundColor: themeInfo.colors.primary }}
+            />
+            <div 
+              className="w-8 h-8 rounded-full shadow-sm border"
+              style={{ backgroundColor: themeInfo.colors.accent }}
+            />
+            <div 
+              className="w-8 h-8 rounded-full shadow-sm border"
+              style={{ backgroundColor: themeInfo.colors.secondary }}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground">
+            <strong>Perfect for:</strong> {themeInfo.bestFor}
+          </p>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+</section>
+
+          {/* Color Palette Section - Interactive Live Preview */}
+          <section id="color-palette" className="space-y-8">
+  <div>
+    <h2 className="text-3xl font-bold mb-4">Live Color Palette</h2>
+    <p className="text-muted-foreground text-lg">
+      See all semantic colors in action. Switch themes above to see colors adapt automatically.
+    </p>
+  </div>
+
+  <Alert>
+    <AlertTriangle className="h-4 w-4" />
+    <AlertDescription>
+      <strong>Important:</strong> Always use these semantic colors instead of hardcoded colors for theme compatibility.
+    </AlertDescription>
+  </Alert>
+
+  {/* Background Colors Table */}
+  <div className="space-y-4">
+    <h3 className="text-xl font-semibold">Background Colors</h3>
+    <div className="bg-card rounded-lg overflow-hidden shadow-sm">
+      <div className="bg-muted px-6 py-4">
+        <div className="grid grid-cols-4 gap-6 font-medium text-sm">
+          <div>Color Name</div>
+          <div>Preview</div>
+          <div>Class Name</div>
+          <div>Usage</div>
+        </div>
+      </div>
+      <div className="divide-y divide-border">
+        {[
+          { name: 'background', usage: 'Main page background' },
+          { name: 'card', usage: 'Card and panel backgrounds' },
+          { name: 'popover', usage: 'Dropdown/modal backgrounds' },
+          { name: 'muted', usage: 'Subtle background areas' },
+          { name: 'primary', usage: 'Primary button backgrounds' },
+          { name: 'secondary', usage: 'Secondary button backgrounds' },
+          { name: 'accent', usage: 'Accent element backgrounds' },
+          { name: 'destructive', usage: 'Error/danger backgrounds' }
+        ].map((color) => (
+          <div key={color.name} className="px-6 py-4 grid grid-cols-4 gap-6 items-center text-sm hover:bg-muted/30 transition-colors">
             <div>
-              <h2 className="text-3xl font-bold mb-4">6 Professional Built-in Themes</h2>
-              <p className="text-muted-foreground text-lg">
-                Click any theme to switch instantly and see all components adapt automatically.
-              </p>
+              <code className="font-mono font-semibold text-foreground">{color.name}</code>
             </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {builtInThemes.map((themeInfo) => (
-                <Card 
-                  key={themeInfo.id} 
-                  className={`cursor-pointer transition-all hover:shadow-lg group border ${
-                    currentTheme === themeInfo.id 
-                      ? 'ring-2 ring-primary shadow-lg border-primary/50' 
-                      : 'hover:shadow-md border-border hover:border-primary/30'
-                  }`}
-                  onClick={() => setTheme(themeInfo.id)}
-                >
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <CardTitle className="text-xl">{themeInfo.name}</CardTitle>
-                          {currentTheme === themeInfo.id && (
-                            <Badge variant="default" className="text-xs">
-                              Active
-                            </Badge>
-                          )}
-                        </div>
-                        <p className="text-sm text-muted-foreground">{themeInfo.description}</p>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex gap-2 mb-4">
-                      <div className={`w-8 h-8 rounded-full ${themeInfo.colors.primary} shadow-sm border border-border/20`} />
-                      <div className={`w-8 h-8 rounded-full ${themeInfo.colors.accent} shadow-sm border border-border/20`} />
-                      <div className={`w-8 h-8 rounded-full ${themeInfo.colors.secondary} shadow-sm border border-border/20`} />
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      <strong>Perfect for:</strong> {themeInfo.bestFor}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+            <div>
+              <div className={`w-20 h-10 rounded-md bg-${color.name} shadow-sm ring-1 ring-border`}></div>
             </div>
-          </section>
+            <div>
+              <code className="text-xs bg-muted text-muted-foreground px-3 py-1.5 rounded-md font-medium">bg-{color.name}</code>
+            </div>
+            <div className="text-muted-foreground">
+              {color.usage}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* Text Colors Table */}
+  <div className="space-y-4">
+    <h3 className="text-xl font-semibold">Text Colors</h3>
+    <div className="bg-card rounded-lg overflow-hidden shadow-sm">
+      <div className="bg-muted px-6 py-4">
+        <div className="grid grid-cols-4 gap-6 font-medium text-sm">
+          <div>Color Name</div>
+          <div>Preview</div>
+          <div>Class Name</div>
+          <div>Usage</div>
+        </div>
+      </div>
+      <div className="divide-y divide-border">
+        {[
+          { name: 'foreground', usage: 'Primary text color' },
+          { name: 'muted-foreground', usage: 'Secondary/subtle text' },
+          { name: 'card-foreground', usage: 'Text on card backgrounds' },
+          { name: 'popover-foreground', usage: 'Text on popover backgrounds' },
+          { name: 'primary-foreground', usage: 'Text on primary backgrounds' },
+          { name: 'secondary-foreground', usage: 'Text on secondary backgrounds' },
+          { name: 'accent-foreground', usage: 'Text on accent backgrounds' },
+          { name: 'destructive-foreground', usage: 'Text on destructive backgrounds' }
+        ].map((color) => (
+          <div key={color.name} className="px-6 py-4 grid grid-cols-4 gap-6 items-center text-sm hover:bg-muted/30 transition-colors">
+            <div>
+              <code className="font-mono font-semibold text-foreground">{color.name}</code>
+            </div>
+            <div>
+              <span className={`text-${color.name} font-semibold text-base`}>Sample Text</span>
+            </div>
+            <div>
+              <code className="text-xs bg-muted text-muted-foreground px-3 py-1.5 rounded-md font-medium">text-{color.name}</code>
+            </div>
+            <div className="text-muted-foreground">
+              {color.usage}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* Border Colors Table */}
+  <div className="space-y-4">
+    <h3 className="text-xl font-semibold">Border Colors</h3>
+    <div className="bg-card rounded-lg overflow-hidden shadow-sm">
+      <div className="bg-muted px-6 py-4">
+        <div className="grid grid-cols-4 gap-6 font-medium text-sm">
+          <div>Color Name</div>
+          <div>Preview</div>
+          <div>Class Name</div>
+          <div>Usage</div>
+        </div>
+      </div>
+      <div className="divide-y divide-border">
+        {[
+          { name: 'border', usage: 'Standard borders and dividers' },
+          { name: 'input', usage: 'Input field borders' },
+          { name: 'ring', usage: 'Focus ring colors' }
+        ].map((color) => (
+          <div key={color.name} className="px-6 py-4 grid grid-cols-4 gap-6 items-center text-sm hover:bg-muted/30 transition-colors">
+            <div>
+              <code className="font-mono font-semibold text-foreground">{color.name}</code>
+            </div>
+            <div>
+              <div className={`w-20 h-10 rounded-md bg-background border-2 border-${color.name}`}></div>
+            </div>
+            <div>
+              <code className="text-xs bg-muted text-muted-foreground px-3 py-1.5 rounded-md font-medium">border-{color.name}</code>
+            </div>
+            <div className="text-muted-foreground">
+              {color.usage}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* Usage Guidelines */}
+  <Card>
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2">
+        <Sparkles className="h-5 w-5" />
+        Color Usage Guidelines
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-4">
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="space-y-3">
+          <h4 className="font-semibold text-green-600 mb-3">✅ Always Use These</h4>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <code className="bg-muted px-3 py-1.5 rounded-md text-xs font-medium">bg-background</code>
+              <span className="text-sm">for page backgrounds</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <code className="bg-muted px-3 py-1.5 rounded-md text-xs font-medium">text-foreground</code>
+              <span className="text-sm">for primary text</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <code className="bg-muted px-3 py-1.5 rounded-md text-xs font-medium">bg-card</code>
+              <span className="text-sm">for card backgrounds</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <code className="bg-muted px-3 py-1.5 rounded-md text-xs font-medium">border-border</code>
+              <span className="text-sm">for all borders</span>
+            </div>
+          </div>
+        </div>
+        <div className="space-y-3">
+          <h4 className="font-semibold text-red-600 mb-3">❌ Never Use These</h4>
+          <div className="space-y-2 text-sm text-muted-foreground line-through">
+            <div>bg-white, bg-black</div>
+            <div>text-gray-600, text-slate-800</div>
+            <div>bg-blue-500, bg-red-600</div>
+            <div>border-gray-200, border-slate-300</div>
+            <div>Any hardcoded color values</div>
+          </div>
+        </div>
+      </div>
+      <Alert>
+        <Info className="h-4 w-4" />
+        <AlertDescription className="text-sm">
+          <strong>Pro tip:</strong> Using semantic colors ensures your components work with all 6 themes and their light/dark variants (12 total combinations).
+        </AlertDescription>
+      </Alert>
+    </CardContent>
+  </Card>
+</section>
 
           {/* Basic Usage */}
           <section id="basic-usage" className="space-y-6">

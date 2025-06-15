@@ -1,5 +1,5 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useEffect, useMemo } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "./utils.js";
 import { Button } from "./button.js";
@@ -43,15 +43,15 @@ const sidebarVariants = cva(
         right: "order-last"
       },
       size: {
-        sm: "md:w-36 lg:w-48",
-        // Compact sidebar
-        md: "md:w-48 lg:w-64",
-        // Default sidebar  
-        lg: "md:w-64 lg:w-80",
-        // Wide sidebar
-        xl: "md:w-64 lg:w-80",
+        sm: "md:w-32 lg:w-32 xl:w-48",
+        // iPad optimized: 128px->160px->192px
+        md: "md:w-32 lg:w-32 xl:w-48",
+        // iPad optimized: 160px->208px->256px  
+        lg: "md:w-48 lg:w-64 xl:w-80",
+        // iPad optimized: 192px->240px->320px
+        xl: "md:w-48 lg:w-64 xl:w-80",
         // Same as lg
-        full: "md:w-64 lg:w-80"
+        full: "md:w-48 lg:w-64 xl:w-80"
         // Same as lg
       },
       sticky: {
@@ -71,11 +71,11 @@ const sidebarContentVariants = cva(
   {
     variants: {
       size: {
-        sm: "p-3",
-        md: "p-3",
-        lg: "p-4",
-        xl: "p-4",
-        full: "p-4"
+        sm: "p-1",
+        md: "p-1",
+        lg: "p-1",
+        xl: "p-1",
+        full: "p-1"
       },
       sticky: {
         true: "pb-4",
@@ -94,8 +94,11 @@ const mainVariants = cva(
   {
     variants: {
       size: {
-        sm: "p-3",
-        md: "p-3"
+        sm: "p-1",
+        md: "p-1",
+        lg: "p-1",
+        xl: "p-1",
+        full: "p-1"
       },
       hasSidebar: {
         true: "md:min-h-screen",
@@ -156,7 +159,7 @@ const getSizeConfig = (size = "md") => {
 };
 const NavigationRenderer = ({ items, size = "md" }) => {
   const config = getSizeConfig(size);
-  const getInitialExpandedItems = () => {
+  const initialExpandedItems = useMemo(() => {
     const expanded = /* @__PURE__ */ new Set();
     const addExpandableItems = (items2, depth = 0) => {
       items2.forEach((item, index) => {
@@ -169,8 +172,8 @@ const NavigationRenderer = ({ items, size = "md" }) => {
     };
     addExpandableItems(items);
     return expanded;
-  };
-  const [expandedItems, setExpandedItems] = useState(getInitialExpandedItems());
+  }, [items]);
+  const [expandedItems, setExpandedItems] = useState(initialExpandedItems);
   const toggleExpanded = (itemKey) => {
     const newExpanded = new Set(expandedItems);
     if (newExpanded.has(itemKey)) {
@@ -241,11 +244,17 @@ const ContainerSidebar = forwardRef(({
   ...props
 }, ref) => {
   if (!content) return null;
-  const getHeaderHeight = () => {
-    const header = document.querySelector("header");
-    return header ? header.offsetHeight : 0;
-  };
-  const headerHeight = sticky ? getHeaderHeight() : 0;
+  const [headerHeight, setHeaderHeight] = useState(0);
+  useEffect(() => {
+    if (!sticky) return;
+    const updateHeight = () => {
+      const header = document.querySelector("header");
+      setHeaderHeight(header ? header.offsetHeight : 0);
+    };
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, [sticky]);
   return /* @__PURE__ */ jsx(
     "aside",
     {
@@ -292,10 +301,11 @@ const Container = forwardRef(({
   ...props
 }, ref) => {
   const {
-    sidebarSize,
-    // Remove this prop to prevent DOM warning
+    sidebar: _sidebar,
+    sidebarContent: _sidebarContent,
+    sidebarSticky: _sidebarSticky,
     ...domProps
-  } = props;
+  } = { sidebar, sidebarContent, sidebarSticky, ...props };
   const layout = sidebar === "left" ? "sidebar-left" : sidebar === "right" ? "sidebar-right" : "none";
   const hasSidebar = sidebar !== "none" && sidebarContent;
   return /* @__PURE__ */ jsxs(

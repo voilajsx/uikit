@@ -1,5 +1,5 @@
 /**
- * @fileoverview TypeScript declarations for Page layout
+ * @fileoverview TypeScript declarations for PageLayout
  * @description Type definitions for page layout component
  * @package @voilajsx/uikit
  * @file /src/components/layouts/page.d.ts
@@ -17,7 +17,7 @@ export interface PageConfig {
   size: PageSize
 }
 
-export interface PageProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PageLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: PageVariant
   size?: PageSize
 }
@@ -37,8 +37,8 @@ export interface PageFooterProps extends React.HTMLAttributes<HTMLElement> {
   size?: PageSize
 }
 
-export declare const Page: React.ForwardRefExoticComponent<
-  PageProps & React.RefAttributes<HTMLDivElement>
+export declare const PageLayout: React.ForwardRefExoticComponent<
+  PageLayoutProps & React.RefAttributes<HTMLDivElement>
 > & {
   Header: typeof PageHeader
   Content: typeof PageContent

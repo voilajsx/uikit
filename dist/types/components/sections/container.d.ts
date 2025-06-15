@@ -1,5 +1,5 @@
 /**
- * Main Container component - Simplified with consistent props and border fixes
+ * Main Container component - Simplified with consistent props and iPad optimization
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
  * @param {'default'|'contained'|'minimal'} [props.variant='default'] - Container variant

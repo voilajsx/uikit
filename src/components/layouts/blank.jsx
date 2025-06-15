@@ -1,5 +1,5 @@
 /**
- * BlankTemplate - Unified blank page layout component with variants
+ * BlankLayout - Unified blank page layout component with variants
  * @module @voilajsx/uikit
  * @file src/components/layouts/blank.jsx
  */
@@ -8,7 +8,7 @@ import React from 'react';
 import { cn } from '../../lib/utils';
 
 /**
- * BlankTemplate - Unified blank page layout with multiple variants
+ * BlankLayout - Unified blank page layout with multiple variants
  * Supports all blank page layout patterns through a single component
  * @param {Object} props - Component props
  * @param {string} [props.variant='default'] - Layout variant ('default' | 'card' | 'error' | 'maintenance' | 'suspension')
@@ -21,9 +21,9 @@ import { cn } from '../../lib/utils';
  * @param {string} [props.className] - Additional CSS classes
  * @param {Object} [props.containerProps] - Container props for customization
  * @param {React.ReactNode} props.children - Main content
- * @returns {JSX.Element} BlankTemplate component
+ * @returns {JSX.Element} BlankLayout component
  */
-function BlankTemplate({
+function BlankLayout({
   variant = 'default',
   title,
   subtitle,
@@ -133,6 +133,6 @@ function BlankTemplate({
 }
 
 /**
- * Export BlankTemplate as default and named export
+ * Export BlankLayout as default and named export
  */
-export { BlankTemplate as default, BlankTemplate };
+export { BlankLayout as default, BlankLayout };

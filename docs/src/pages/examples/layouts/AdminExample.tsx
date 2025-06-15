@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { AdminTemplate } from '@voilajsx/uikit/admin';
+import { AdminLayout as AdminTemplate } from '@voilajsx/uikit/admin';
 import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
 import { Button } from '@voilajsx/uikit/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';

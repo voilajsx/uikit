@@ -1,5 +1,5 @@
 /**
- * @fileoverviewAuth Template
+ * @fileoverviewAuth Layout
  * @module @voilajsx/uikit
  * @file src/components/layouts/auth.jsx
  */
@@ -8,7 +8,7 @@ import React from 'react';
 import { cn } from '../../lib/utils';
 
 /**
- * AuthTemplate - Unified authentication layout with multiple variants
+ * AuthLayout - Unified authentication layout with multiple variants
  * Supports all authentication layout patterns through a single component
  * @param {Object} props - Component props
  * @param {string} [props.variant='simple'] - Layout variant ('simple' | 'card' | 'split-gradient' | 'split-image' | 'card-gradient' | 'card-image')
@@ -31,9 +31,9 @@ import { cn } from '../../lib/utils';
  * @param {React.ReactNode} [props.cardContent] - Left side content for card variants
  * 
  * @param {React.ReactNode} props.children - Form content
- * @returns {JSX.Element} AuthTemplate component
+ * @returns {JSX.Element} AuthLayout component
  */
-function AuthTemplate({
+function AuthLayout({
   variant = 'simple',
   title,
   subtitle,
@@ -395,6 +395,6 @@ function AuthTemplate({
 }
 
 /**
- * Export AuthTemplate as default and named export
+ * Export AuthLayout as default and named export
  */
-export { AuthTemplate as default, AuthTemplate };
+export { AuthLayout as default, AuthLayout };

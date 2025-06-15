@@ -248,7 +248,6 @@ function Components() {
  <Container
       sidebar="right"
       sidebarContent={<SidebarContent />}
-      sidebarSize="default"
       sidebarSticky={true}
       width="xl"
       padding="md"
@@ -531,13 +530,13 @@ function Components() {
             <Card className="group hover:shadow-lg transition-shadow cursor-pointer">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span>Layout Templates</span>
+                  <span>Layouts</span>
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Combine components with layout templates for faster development.
+                  Combine ui components with layouts for faster development.
                 </p>
               </CardContent>
             </Card>

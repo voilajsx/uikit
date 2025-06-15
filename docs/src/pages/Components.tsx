@@ -121,7 +121,6 @@ function Components() {
       <Container
         sidebar="right"
         sidebarContent={<SidebarContent />}
-        sidebarSize="default"
         sidebarSticky={true}
         width="xl"
         padding="md"
@@ -250,9 +249,9 @@ function Components() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <CardTitle className="text-2xl">Layouts</CardTitle>
-                        <Badge variant="secondary">4 Templates</Badge>
+                        <Badge variant="secondary">4 Layouts</Badge>
                       </div>
-                      <p className="text-muted-foreground">Complete page templates and wrappers</p>
+                      <p className="text-muted-foreground">Complete page Layouts and wrappers</p>
                     </div>
                   </div>
                 </CardHeader>
@@ -306,7 +305,7 @@ function Components() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground text-sm">
-                      Fastest way to build. Complete page templates ready to use.
+                      Fastest way to build. Complete page Layouts ready to use.
                     </p>
                     <div className="mt-3">
                       <Badge variant="secondary" className="text-xs">Recommended</Badge>

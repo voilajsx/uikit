@@ -1,5 +1,5 @@
 /**
- * @fileoverview Admin layout template for @voilajsx/uikit - Fixed sticky header implementation
+ * @fileoverview Admin layout Layout for @voilajsx/uikit - Fixed sticky header implementation
  * @description Clean admin layout with proper theming for light/dark modes and working sticky header
  * @package @voilajsx/uikit
  * @file /src/components/layouts/admin.jsx
@@ -14,7 +14,7 @@ import { Separator } from '@voilajsx/uikit/separator';
 import { Menu, X, ChevronRight } from "lucide-react";
 
 /**
- * Admin template variants
+ * Admin Layout variants
  */
 const adminVariants = cva(
   "min-h-screen bg-background flex",
@@ -316,10 +316,10 @@ function AdminNavigation({
 }
 
 /**
- * Enhanced Admin template with proper color contrast handling
+ * Enhanced Admin Layout with proper color contrast handling
  * ✅ FIXED: Now properly handles sticky header based on sticky prop
  */
-const AdminTemplate = forwardRef(({ 
+const AdminLayout = forwardRef(({ 
   className,
   variant = "default",
   size = "default",
@@ -598,6 +598,6 @@ const AdminTemplate = forwardRef(({
   );
 });
 
-AdminTemplate.displayName = "AdminTemplate";
+AdminLayout.displayName = "AdminLayout";
 
-export { AdminTemplate };
+export { AdminLayout };

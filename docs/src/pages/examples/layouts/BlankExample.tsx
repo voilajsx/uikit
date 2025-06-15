@@ -4,7 +4,7 @@
  * @file docs/src/pages/examples/layouts/BlankExample.tsx
  */
 import React, { useState } from 'react';
-import { BlankTemplate } from '@voilajsx/uikit/blank';
+import { BlankLayout as BlankTemplate } from '@voilajsx/uikit/blank';
 import { Button } from '@voilajsx/uikit/button';
 import { Input } from '@voilajsx/uikit/input';
 import { Card, CardContent } from '@voilajsx/uikit/card';

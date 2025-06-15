@@ -67,7 +67,7 @@ const pageContentVariants = cva(
   "flex-1 w-full"
 );
 const pageContentInnerVariants = cva(
-  "mx-auto py-6",
+  "mx-auto ",
   {
     variants: {
       size: {
