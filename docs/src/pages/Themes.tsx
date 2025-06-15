@@ -117,60 +117,143 @@ const brandTheme = {
     chart5: 'oklch(0.65 0.27 210)',
   },
 };
+`;
 
-// Register via Provider
-<ThemeProvider theme="brand" customThemes={[brandTheme]}>
-  <App />
-</ThemeProvider>`;
+const minimalThemeCode = `/**
+ * Minimal Brand Theme - Only 3 colors defined!
+ * Missing colors automatically use default theme values
+ */
+const brandTheme = {
+  id: 'brand',
+  name: 'Brand Theme',
+  
+  light: {
+    // Only define your brand colors
+    primary: 'oklch(0.45 0.25 280)',    // Your brand purple
+    accent: 'oklch(0.65 0.18 120)',     // Your brand green  
+    background: 'oklch(0.98 0.01 280)', // Subtle brand background
+  },
+  
+  dark: {
+    // Lighter versions for dark mode
+    primary: 'oklch(0.65 0.22 280)',    // Lighter brand purple
+    accent: 'oklch(0.75 0.20 120)',     // Lighter brand green
+    background: 'oklch(0.08 0.02 280)', // Dark with subtle brand tint
+  }
+};
+`;
 
+const cssBundleCode = `// 1. Create theme file
+// themes/brand.js
+export default {
+  id: 'brand',
+  name: 'Brand Theme',
+  light: { primary: 'oklch(0.45 0.25 280)' },
+  dark: { primary: 'oklch(0.65 0.22 280)' }
+};
 
+// 2. Bundle themes to CSS
+npx voila-bundle
 
-const runtimeThemeCode = `import { useTheme } from '@voilajsx/uikit/theme-provider';
+// 3. Import generated CSS
+import "@voilajsx/uikit/styles";
+import "./themes.css";
 
-function DynamicThemes() {
+// 4. Use theme
+setTheme('brand'); // ✅ Fast, cached CSS`;
+
+const runtimeThemeCode = `// Create theme at runtime
+const userTheme = {
+  id: 'user-custom',
+  name: 'User Theme',
+  light: {
+    primary: userColor,    // From color picker
+    accent: accentColor    // User selection
+  }
+};
+
+// Register and apply immediately
+registerTheme(userTheme);  // ✅ CSS injected automatically
+setTheme('user-custom');   // ✅ Works instantly
+
+// Perfect for:
+// - Theme editors
+// - User customization
+// - A/B testing
+// - Plugin themes`;
+
+const hybridApproachCode = `// Best of both worlds
+import "./themes.css";           // Built-in themes (fast)
+import { useTheme } from "@voilajsx/uikit/theme-provider";
+
+function App() {
   const { setTheme, registerTheme } = useTheme();
-
-  const createUserTheme = (primaryColor, accentColor) => ({
-    id: 'user-theme',
-    name: 'User Theme',
-    light: { 
-      background: 'oklch(0.99 0.005 0)',
-      foreground: 'oklch(0.15 0.02 0)',
-      primary: primaryColor,
-      primaryForeground: 'oklch(0.98 0.01 0)',
-      accent: accentColor,
-      accentForeground: 'oklch(0.98 0.01 0)',
-      // ... other required colors
-    },
-    dark: { 
-      background: 'oklch(0.08 0.02 0)',
-      foreground: 'oklch(0.95 0.02 0)',
-      primary: primaryColor,
-      primaryForeground: 'oklch(0.08 0.02 0)',
-      accent: accentColor,
-      accentForeground: 'oklch(0.08 0.02 0)',
-      // ... other required colors
-    }
-  });
-
-  const handleColorChange = (primary, accent) => {
-    const newTheme = createUserTheme(primary, accent);
-    registerTheme(newTheme);
-    setTheme('user-theme');
-  };
-
-  return (
-    <div className="flex gap-2">
-      <Button onClick={() => handleColorChange('oklch(0.6 0.3 350)', 'oklch(0.5 0.2 200)')}>
-        Create Pink & Blue Theme
-      </Button>
-      <Button onClick={() => handleColorChange('oklch(0.5 0.25 120)', 'oklch(0.6 0.2 60)')}>
-        Create Green & Yellow Theme
-      </Button>
-    </div>
-  );
+  
+  // Use built-in themes (CSS bundle)
+  setTheme('aurora');
+  setTheme('neon');
+  
+  // Add user themes (dynamic)
+  registerTheme(userCustomTheme);
+  setTheme('user-custom');
+  
+  return <YourApp />;
 }`;
 
+
+const cssBundleApproachCode = `// 1. Create theme file
+// themes/brand.js
+export default {
+  id: 'brand',
+  name: 'Brand Theme',
+  light: {
+    primary: 'oklch(0.45 0.25 280)',
+    accent: 'oklch(0.65 0.18 120)',
+    background: 'oklch(0.98 0.01 280)'
+  },
+  dark: {
+    primary: 'oklch(0.65 0.22 280)',
+    accent: 'oklch(0.75 0.20 120)',
+    background: 'oklch(0.08 0.02 280)'
+  }
+};
+
+// 2. Bundle themes to CSS
+npx voila-bundle
+
+// 3. Import generated CSS
+import "@voilajsx/uikit/styles";
+import "./themes.css";
+
+// 4. Use theme
+setTheme('brand'); // ✅ Fast, cached CSS`;
+
+const dynamicApproachCode = `import { useTheme } from "@voilajsx/uikit/theme-provider";
+
+function ThemeEditor() {
+  const { registerTheme, setTheme } = useTheme();
+  
+  // Create theme at runtime
+  const testTheme = {
+    id: 'test-theme',
+    name: 'Test Theme',
+    light: {
+      primary: 'oklch(0.45 0.25 280)',
+      accent: 'oklch(0.65 0.18 120)'
+      // Missing colors auto-filled from default
+    },
+    dark: {
+      primary: 'oklch(0.65 0.22 280)',
+      accent: 'oklch(0.75 0.20 120)'
+    }
+  };
+  
+  // Register and apply instantly
+  registerTheme(testTheme);  // ✅ CSS injected
+  setTheme('test-theme');    // ✅ Applied immediately
+  
+  return <div>Theme applied!</div>;
+}`;
 // Color palette data - all semantic colors used in UIKit
 
 
@@ -759,28 +842,149 @@ function Themes() {
           </section>
 
           {/* Custom Themes */}
-          <section id="custom-themes" className="space-y-6">
-            <div>
-              <h2 className="text-3xl font-bold mb-4">Custom Brand Themes</h2>
-              <p className="text-muted-foreground text-lg">
-                Create custom themes using OKLCH color format for perfect brand consistency.
-              </p>
-            </div>
-            
-            <CodeBlock code={customThemeCode} title="Complete Custom Theme Definition" />
-          </section>
+<section id="custom-themes" className="space-y-6">
+  <div>
+    <h2 className="text-3xl font-bold mb-4">Custom Brand Themes</h2>
+    <p className="text-muted-foreground text-lg mb-4">
+      Create custom themes using OKLCH color format for perfect brand consistency.
+    </p>
+    <div className="bg-muted/50 rounded-lg p-4 border-l-4 border-primary">
+      <p className="text-sm">
+        <strong>💡 Smart Fallbacks:</strong> Define only the colors you want to customize. 
+        Missing semantic colors automatically fallback to the default theme, ensuring your 
+        theme always works perfectly.
+      </p>
+    </div>
+  </div>
+  
+  {/* Two approaches */}
+  <div className="grid md:grid-cols-1 gap-6">
+    {/* Minimal Theme */}
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold">Minimal Theme (Recommended)</h3>
+      <p className="text-sm text-muted-foreground">
+        Define only your brand colors. Rest auto-filled from default theme.
+      </p>
+      <CodeBlock 
+        code={minimalThemeCode} 
+        title="Minimal Custom Theme (3 colors)" 
+      />
+    </div>
+    
+    {/* Complete Theme */}
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold">Complete Theme (Advanced)</h3>
+      <p className="text-sm text-muted-foreground">
+        Full control over all 24+ semantic colors for precise design systems.
+      </p>
+      <CodeBlock 
+        code={customThemeCode} 
+        title="Complete Custom Theme Definition" 
+      />
+    </div>
+  </div>
+  
+  {/* Benefits */}
+  <div className="grid md:grid-cols-3 gap-4 mt-6">
+    <div className="p-4 bg-card rounded-lg border">
+      <h4 className="font-medium mb-2 text-primary">🎨 Brand Consistency</h4>
+      <p className="text-sm text-muted-foreground">
+        Use exact brand colors with OKLCH for consistent appearance across all displays.
+      </p>
+    </div>
+    <div className="p-4 bg-card rounded-lg border">
+      <h4 className="font-medium mb-2 text-primary">⚡ Quick Setup</h4>
+      <p className="text-sm text-muted-foreground">
+        Define 2-3 brand colors and get a complete theme with smart fallbacks.
+      </p>
+    </div>
+    <div className="p-4 bg-card rounded-lg border">
+      <h4 className="font-medium mb-2 text-primary">🔧 Always Works</h4>
+      <p className="text-sm text-muted-foreground">
+        Missing colors automatically use default theme values - no broken themes.
+      </p>
+    </div>
+  </div>
+</section>
 
           {/* Dynamic Theme Creation */}
           <section id="dynamic-themes" className="space-y-6">
-            <div>
-              <h2 className="text-3xl font-bold mb-4">Dynamic Theme Generation</h2>
-              <p className="text-muted-foreground text-lg">
-                Register and apply new themes at runtime for user-generated themes or A/B testing.
-              </p>
-            </div>
-            
-            <CodeBlock code={runtimeThemeCode} title="Runtime Theme Registration" />
-          </section>
+  <div>
+    <h2 className="text-3xl font-bold mb-4">Custom Theme Usage</h2>
+    <p className="text-muted-foreground text-lg mb-4">
+      Two approaches to implement custom themes depending on your use case and requirements.
+    </p>
+    <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-4 border-l-4 border-amber-500">
+      <p className="text-sm text-amber-800 dark:text-amber-200">
+        <strong>📋 Quick Guide:</strong> Use Dynamic Registration for testing and development. 
+        Switch to CSS Bundle approach for production builds for optimal performance.
+      </p>
+    </div>
+  </div>
+  
+  {/* Two approaches */}
+  <div className="grid lg:grid-cols-1 gap-6">
+    {/* Approach 1: CSS Bundle */}
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <h3 className="text-xl font-semibold">Approach 1: CSS Bundle</h3>
+        <Badge variant="default" className="text-xs">Production</Badge>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Best performance. Themes bundled at build time with CLI tool.
+      </p>
+      <CodeBlock 
+        code={cssBundleApproachCode} 
+        title="CSS Bundle Workflow (Recommended for Production)" 
+      />
+      <div className="text-xs text-muted-foreground space-y-1">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span>✅ Fastest performance</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span>✅ Perfect for SSR</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span>✅ Production ready</span>
+        </div>
+      </div>
+    </div>
+    
+    {/* Approach 2: Dynamic Registration */}
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <h3 className="text-xl font-semibold">Approach 2: Dynamic Registration</h3>
+        <Badge variant="outline" className="text-xs">Development</Badge>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Runtime theme creation. Perfect for testing and user-generated themes.
+      </p>
+      <CodeBlock 
+        code={dynamicApproachCode} 
+        title="Dynamic Registration (Great for Testing)" 
+      />
+      <div className="text-xs text-muted-foreground space-y-1">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+          <span>🚀 Instant theme testing</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+          <span>🎨 User customization</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+          <span>⚡ No build step needed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+ 
+</section>
 
           {/* OKLCH Explanation */}
           <section id="oklch-colors" className="space-y-6">
