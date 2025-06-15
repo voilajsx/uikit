@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import "react";
 import { cn } from "./utils.js";
-function BlankTemplate({
+function BlankLayout({
   variant = "default",
   title,
   subtitle,
@@ -72,7 +72,7 @@ function BlankTemplate({
   ) });
 }
 export {
-  BlankTemplate,
-  BlankTemplate as default
+  BlankLayout,
+  BlankLayout as default
 };
 //# sourceMappingURL=blank.js.map

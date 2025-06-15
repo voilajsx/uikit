@@ -1,18 +1,18 @@
 /**
- * Main Page Layout Component - Simplified with consistent props
+ * Main PageLayout Component - Simplified with consistent props
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
  * @param {'default'|'minimal'|'contained'} [props.variant='default'] - Page layout variant
  * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size='xl'] - Page width and spacing
  * @param {React.ReactNode} props.children - Page sections (Header, Content, Footer)
- * @returns {JSX.Element} Page layout container
+ * @returns {JSX.Element} PageLayout container
  */
-export const Page: import("react").ForwardRefExoticComponent<import("react").RefAttributes<any>>;
+export const PageLayout: import("react").ForwardRefExoticComponent<import("react").RefAttributes<any>>;
 /**
  * Page Header component
  * @param {Object} props - Component props
  * @param {'default'|'primary'|'black'} [props.variant='default'] - Header style variant
- * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Header size (inherits from Page if not specified)
+ * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Header size (inherits from PageLayout if not specified)
  * @param {boolean} [props.sticky=true] - Whether header should be sticky
  * @param {React.ReactNode} props.children - Header content
  * @returns {JSX.Element} Page header
@@ -22,7 +22,7 @@ export const PageHeader: import("react").ForwardRefExoticComponent<import("react
  * Page Content component - Main content area
  * @param {Object} props - Component props
  * @param {string} [props.className] - Additional CSS classes
- * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Content size (inherits from Page if not specified)
+ * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Content size (inherits from PageLayout if not specified)
  * @param {React.ReactNode} props.children - Main content
  * @returns {JSX.Element} Page content area
  */
@@ -31,7 +31,7 @@ export const PageContent: import("react").ForwardRefExoticComponent<import("reac
  * Page Footer component
  * @param {Object} props - Component props
  * @param {'default'|'muted'|'dark'} [props.variant='default'] - Footer style variant
- * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Footer size (inherits from Page if not specified)
+ * @param {'sm'|'md'|'lg'|'xl'|'full'} [props.size] - Footer size (inherits from PageLayout if not specified)
  * @param {React.ReactNode} props.children - Footer content
  * @returns {JSX.Element} Page footer
  */

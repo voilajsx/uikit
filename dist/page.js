@@ -20,7 +20,7 @@ const pageVariants = cva(
     }
   }
 );
-const Page = forwardRef(({
+const PageLayout = forwardRef(({
   className,
   variant = "default",
   size = "xl",
@@ -41,7 +41,7 @@ const Page = forwardRef(({
     }
   ) });
 });
-Page.displayName = "Page";
+PageLayout.displayName = "PageLayout";
 const PageHeader = forwardRef(({
   variant = "default",
   size,
@@ -124,20 +124,20 @@ PageFooter.displayName = "PageFooter";
 const usePage = () => {
   const context = useContext(PageContext);
   if (!context) {
-    throw new Error("usePage must be used within a Page component");
+    throw new Error("usePage must be used within a PageLayout component");
   }
   return context;
 };
-Page.Header = PageHeader;
-Page.Content = PageContent;
-Page.Footer = PageFooter;
-Page.Logo = HeaderLogo;
-Page.Nav = HeaderNav;
+PageLayout.Header = PageHeader;
+PageLayout.Content = PageContent;
+PageLayout.Footer = PageFooter;
+PageLayout.Logo = HeaderLogo;
+PageLayout.Nav = HeaderNav;
 export {
-  Page,
   PageContent,
   PageFooter,
   PageHeader,
+  PageLayout,
   pageVariants,
   usePage
 };

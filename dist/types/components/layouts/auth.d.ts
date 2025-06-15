@@ -1,5 +1,5 @@
 /**
- * AuthTemplate - Unified authentication layout with multiple variants
+ * AuthLayout - Unified authentication layout with multiple variants
  * Supports all authentication layout patterns through a single component
  * @param {Object} props - Component props
  * @param {string} [props.variant='simple'] - Layout variant ('simple' | 'card' | 'split-gradient' | 'split-image' | 'card-gradient' | 'card-image')
@@ -22,9 +22,9 @@
  * @param {React.ReactNode} [props.cardContent] - Left side content for card variants
  *
  * @param {React.ReactNode} props.children - Form content
- * @returns {JSX.Element} AuthTemplate component
+ * @returns {JSX.Element} AuthLayout component
  */
-export function AuthTemplate({ variant, title, subtitle, logo, footer, className, containerProps, splitContent, imageUrl, imageAlt, imageOverlay, cardContent, children, }: {
+export function AuthLayout({ variant, title, subtitle, logo, footer, className, containerProps, splitContent, imageUrl, imageAlt, imageOverlay, cardContent, children, }: {
     variant?: string | undefined;
     title?: string | undefined;
     subtitle?: string | undefined;
@@ -40,5 +40,5 @@ export function AuthTemplate({ variant, title, subtitle, logo, footer, className
     children: React.ReactNode;
 }): JSX.Element;
 import React from 'react';
-export { AuthTemplate as default };
+export { AuthLayout as default };
 //# sourceMappingURL=auth.d.ts.map

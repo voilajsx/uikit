@@ -239,7 +239,7 @@ function AdminNavigation({
     )
   ] }, sectionKey)) });
 }
-const AdminTemplate = forwardRef(({
+const AdminLayout = forwardRef(({
   className,
   variant = "default",
   size = "default",
@@ -448,8 +448,8 @@ const AdminTemplate = forwardRef(({
     }
   );
 });
-AdminTemplate.displayName = "AdminTemplate";
+AdminLayout.displayName = "AdminLayout";
 export {
-  AdminTemplate
+  AdminLayout
 };
 //# sourceMappingURL=admin.js.map

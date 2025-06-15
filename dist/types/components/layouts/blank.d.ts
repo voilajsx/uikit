@@ -1,5 +1,5 @@
 /**
- * BlankTemplate - Unified blank page layout with multiple variants
+ * BlankLayout - Unified blank page layout with multiple variants
  * Supports all blank page layout patterns through a single component
  * @param {Object} props - Component props
  * @param {string} [props.variant='default'] - Layout variant ('default' | 'card' | 'error' | 'maintenance' | 'suspension')
@@ -12,9 +12,9 @@
  * @param {string} [props.className] - Additional CSS classes
  * @param {Object} [props.containerProps] - Container props for customization
  * @param {React.ReactNode} props.children - Main content
- * @returns {JSX.Element} BlankTemplate component
+ * @returns {JSX.Element} BlankLayout component
  */
-export function BlankTemplate({ variant, title, subtitle, logo, icon, actions, footer, className, containerProps, children, }: {
+export function BlankLayout({ variant, title, subtitle, logo, icon, actions, footer, className, containerProps, children, }: {
     variant?: string | undefined;
     title?: string | undefined;
     subtitle?: string | undefined;
@@ -27,5 +27,5 @@ export function BlankTemplate({ variant, title, subtitle, logo, icon, actions, f
     children: React.ReactNode;
 }): JSX.Element;
 import React from 'react';
-export { BlankTemplate as default };
+export { BlankLayout as default };
 //# sourceMappingURL=blank.d.ts.map

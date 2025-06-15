@@ -1,7 +1,7 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import "react";
 import { cn } from "./utils.js";
-function AuthTemplate({
+function AuthLayout({
   variant = "simple",
   title,
   subtitle,
@@ -174,7 +174,7 @@ function AuthTemplate({
   ] }) }) }) });
 }
 export {
-  AuthTemplate,
-  AuthTemplate as default
+  AuthLayout,
+  AuthLayout as default
 };
 //# sourceMappingURL=auth.js.map
