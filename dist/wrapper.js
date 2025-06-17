@@ -5,65 +5,69 @@ import { AdminLayout } from "./admin.js";
 import { PageLayout, PageHeader, PageContent, PageFooter } from "./page.js";
 import AuthLayout from "./auth.js";
 import BlankLayout from "./blank.js";
+const __vite_import_meta_env__ = {};
 function getLayoutConfig() {
+  const env = typeof window !== "undefined" && __vite_import_meta_env__ ? __vite_import_meta_env__ : {};
   const config = {
     // Theme configuration
-    theme: process.env.VOILA_THEME || "default",
-    variant: process.env.VOILA_VARIANT || "light",
-    detectSystem: process.env.VOILA_DETECT_SYSTEM === "true",
+    theme: env.VOILA_THEME || "default",
+    variant: env.VOILA_VARIANT || "light",
+    detectSystem: env.VOILA_DETECT_SYSTEM === "true",
     // Layout configuration
-    layout: process.env.VOILA_LAYOUT || "admin",
-    layoutVariant: process.env.VOILA_LAYOUT_VARIANT || "default",
-    layoutSize: process.env.VOILA_LAYOUT_SIZE || "default",
+    layout: env.VOILA_LAYOUT || "admin",
+    layoutVariant: env.VOILA_LAYOUT_VARIANT || "default",
+    layoutSize: env.VOILA_LAYOUT_SIZE || "default",
     // Content configuration
-    title: process.env.VOILA_TITLE || "Platform",
-    logo: process.env.VOILA_LOGO,
+    title: env.VOILA_TITLE || "Platform",
+    logo: env.VOILA_LOGO,
     // Navigation configuration
-    navigation: process.env.VOILA_NAV ? JSON.parse(process.env.VOILA_NAV) : [],
+    navigation: env.VOILA_NAV ? JSON.parse(env.VOILA_NAV) : [],
     // Admin layout specific props
     adminLayout: {
-      variant: process.env.VOILA_ADMIN_VARIANT || "default",
-      size: process.env.VOILA_ADMIN_SIZE || "default",
-      collapsible: process.env.VOILA_ADMIN_COLLAPSIBLE !== "false",
-      defaultSidebarOpen: process.env.VOILA_ADMIN_SIDEBAR_OPEN !== "false"
+      variant: env.VOILA_ADMIN_VARIANT || "default",
+      size: env.VOILA_ADMIN_SIZE || "default",
+      collapsible: env.VOILA_ADMIN_COLLAPSIBLE !== "false",
+      defaultSidebarOpen: env.VOILA_ADMIN_SIDEBAR_OPEN !== "false"
     },
     // Page layout specific props
     pageLayout: {
-      variant: process.env.VOILA_PAGE_VARIANT || "default",
-      size: process.env.VOILA_PAGE_SIZE || "xl"
+      variant: env.VOILA_PAGE_VARIANT || "default",
+      size: env.VOILA_PAGE_SIZE || "xl"
     },
     // Header specific props
     header: {
-      variant: process.env.VOILA_HEADER_VARIANT || "default",
-      sticky: process.env.VOILA_HEADER_STICKY !== "false",
-      size: process.env.VOILA_HEADER_SIZE || "md"
+      variant: env.VOILA_HEADER_VARIANT || "default",
+      sticky: env.VOILA_HEADER_STICKY !== "false",
+      size: env.VOILA_HEADER_SIZE || "md"
     },
     // Footer specific props
     footer: {
-      variant: process.env.VOILA_FOOTER_VARIANT || "default",
-      size: process.env.VOILA_FOOTER_SIZE || "md"
+      variant: env.VOILA_FOOTER_VARIANT || "default",
+      size: env.VOILA_FOOTER_SIZE || "md"
     },
     // Auth layout specific props
     authLayout: {
-      variant: process.env.VOILA_AUTH_VARIANT || "card",
-      imageUrl: process.env.VOILA_AUTH_IMAGE_URL,
-      imageOverlay: process.env.VOILA_AUTH_IMAGE_OVERLAY || "dark"
+      variant: env.VOILA_AUTH_VARIANT || "card",
+      imageUrl: env.VOILA_AUTH_IMAGE_URL,
+      imageOverlay: env.VOILA_AUTH_IMAGE_OVERLAY || "dark"
     },
     // Blank layout specific props
     blankLayout: {
-      variant: process.env.VOILA_BLANK_VARIANT || "default"
+      variant: env.VOILA_BLANK_VARIANT || "default"
     },
     // Additional custom props (JSON format)
-    customProps: process.env.VOILA_CUSTOM_PROPS ? JSON.parse(process.env.VOILA_CUSTOM_PROPS) : {}
+    customProps: env.VOILA_CUSTOM_PROPS ? JSON.parse(env.VOILA_CUSTOM_PROPS) : {}
   };
-  console.log("🔧 Layout configuration loaded:", {
-    theme: config.theme,
-    variant: config.variant,
-    layout: config.layout,
-    title: config.title,
-    navItems: config.navigation.length,
-    customProps: Object.keys(config.customProps).length
-  });
+  if (typeof window !== "undefined" && window.console) {
+    console.log("🔧 Layout configuration loaded:", {
+      theme: config.theme,
+      variant: config.variant,
+      layout: config.layout,
+      title: config.title,
+      navItems: config.navigation.length,
+      customProps: Object.keys(config.customProps).length
+    });
+  }
   return config;
 }
 function LayoutWrapper({ children, overrides = {} }) {

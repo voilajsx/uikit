@@ -18,7 +18,8 @@ import { BlankLayout } from '../components/layouts/blank.jsx';
  */
 function getLayoutConfig() {
   // Use import.meta.env for Vite (browser-compatible) instead of process.env
-  const env = typeof import !== 'undefined' && import.meta?.env ? import.meta.env : {};
+  // Fallback to empty object if import.meta.env is not available
+  const env = (typeof window !== 'undefined' && import.meta?.env) ? import.meta.env : {};
   
   const config = {
     // Theme configuration
