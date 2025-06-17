@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Cross-platform React components with beautiful themes and OKLCH color science",
   "type": "module",
   "keywords": [
@@ -238,6 +238,14 @@
     "./adapters": {
       "import": "./dist/adapters.js",
       "types": "./dist/types/adapters/index.d.ts"
+    },
+    "./wrapper": {
+      "import": "./dist/wrapper.js",
+      "types": "./dist/types/lib/layout-wrapper.d.ts"
+    },
+    "./plugin": {
+      "import": "./dist/plugin.js",
+      "types": "./dist/types/lib/layout-plugin.d.ts"
     }
   },
   "files": [

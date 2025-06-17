@@ -95,6 +95,10 @@ export default defineConfig({
         utils: path.resolve(__dirname, 'src/lib/utils.js'),
         platform: path.resolve(__dirname, 'src/lib/platform.js'),
 
+        // Layout System - NEW entries for VoilaJS integration
+        wrapper: path.resolve(__dirname, 'src/lib/layout-wrapper.jsx'),
+        plugin: path.resolve(__dirname, 'src/lib/layout-plugin.jsx'),
+
         // Cross-Platform Adapters - Flat structure
         adapters: path.resolve(__dirname, 'src/adapters/index.js'),
       },
@@ -148,6 +152,15 @@ export default defineConfig({
 
         // React Native (when available)
         'react-native',
+
+        // Build tools (for Vite plugin)
+        'vite',
+
+        // Node.js built-ins (for Vite plugin)
+        'node:fs',
+        'node:path',
+        'fs',
+        'path',
       ],
       output: {
         // Proper asset handling
