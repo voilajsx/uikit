@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "Cross-platform React components with beautiful themes and OKLCH color science",
   "type": "module",
   "keywords": [
@@ -16,7 +16,9 @@
     "themes",
     "react-native",
     "tauri",
-    "expo"
+    "expo",
+    "chrome-extension",
+    "popup-layout"
   ],
   "author": {
     "name": "Krishna Teja GS",
@@ -207,6 +209,10 @@
       "import": "./dist/page.js",
       "types": "./dist/types/components/layouts/page.d.ts"
     },
+    "./popup": {
+      "import": "./dist/popup.js",
+      "types": "./dist/types/components/layouts/popup.d.ts"
+    },
     "./container": {
       "import": "./dist/container.js",
       "types": "./dist/types/components/sections/container.d.ts"
@@ -250,6 +256,7 @@
   },
   "files": [
     "dist",
+    "bin",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"

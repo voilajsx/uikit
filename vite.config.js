@@ -75,6 +75,7 @@ export default defineConfig({
         auth: path.resolve(__dirname, 'src/components/layouts/auth.jsx'),
         blank: path.resolve(__dirname, 'src/components/layouts/blank.jsx'),
         page: path.resolve(__dirname, 'src/components/layouts/page.jsx'),
+        popup: path.resolve(__dirname, 'src/components/layouts/popup.jsx'), // ✅ NEW
 
         // Section Components - Flat structure
         container: path.resolve(
@@ -215,6 +216,10 @@ export default defineConfig({
         __dirname,
         './src/components/sections/container.jsx'
       ),
+      '@voilajsx/uikit/popup': path.resolve(
+        __dirname,
+        './src/components/layouts/popup.jsx'
+      ), // ✅ NEW
     },
   },
   css: {
