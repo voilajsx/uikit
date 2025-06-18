@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Cross-platform React components with beautiful themes and OKLCH color science",
   "type": "module",
   "keywords": [
@@ -34,9 +34,6 @@
   "bugs": {
     "url": "https://github.com/voilajsx/uikit/issues"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/types/index.d.ts",
   "sideEffects": [
     "**/*.css",
     "./dist/styles.css"
