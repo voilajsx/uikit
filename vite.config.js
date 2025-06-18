@@ -15,6 +15,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
+        index: path.resolve(__dirname, 'src/index.js'), // Or src/index.ts if you created a .ts file
+
         // CSS entry
         styles: path.resolve(__dirname, 'src/style.js'),
 

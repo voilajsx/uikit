@@ -45,7 +45,7 @@ export function reinjectedAllThemeCSS(): void;
 export function ThemeProvider({ children, theme, variant, detectSystem, customThemes, autoInjectCSS }: {
     children: React.ReactNode;
     theme?: string | undefined;
-    variant?: "dark" | "light" | undefined;
+    variant?: "light" | "dark" | undefined;
     detectSystem?: boolean | undefined;
     customThemes?: any[] | undefined;
     autoInjectCSS?: boolean | undefined;
