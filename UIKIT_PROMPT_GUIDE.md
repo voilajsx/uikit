@@ -48,7 +48,7 @@
 
 ## Complete Component Inventory
 
-### 🏗️ Layout Components (4 Total)
+### 🏗️ Layout Components (5 Total)
 
 Full-page layouts that structure entire applications:
 
@@ -69,6 +69,14 @@ import { AuthLayout } from '@voilajsx/uikit/auth';
 
 // Simple content pages, error pages, maintenance pages
 import { BlankLayout } from '@voilajsx/uikit/blank';
+
+// Compact popup layout for Chrome extensions and web overlays
+import {
+  PopupLayout,
+  PopupHeader,
+  PopupContent,
+  PopupFooter,
+} from '@voilajsx/uikit/popup';
 ```
 
 ### 🧱 Section Components (3 Total)
@@ -269,12 +277,208 @@ import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
 
 ## Layout Selection Decision Tree
 
-| Need                                       | Use Layout    | When to Choose                                   |
-| ------------------------------------------ | ------------- | ------------------------------------------------ |
-| Full website with header/footer navigation | `PageLayout`  | Marketing sites, documentation, company websites |
-| Admin dashboard with persistent sidebar    | `AdminLayout` | CRM systems, analytics dashboards, admin panels  |
-| Authentication flows                       | `AuthLayout`  | Login, signup, password reset, onboarding        |
-| Simple content or error pages              | `BlankLayout` | 404 pages, maintenance, about us, terms          |
+| Need                                       | Use Layout    | When to Choose                                     |
+| ------------------------------------------ | ------------- | -------------------------------------------------- |
+| Full website with header/footer navigation | `PageLayout`  | Marketing sites, documentation, company websites   |
+| Admin dashboard with persistent sidebar    | `AdminLayout` | CRM systems, analytics dashboards, admin panels    |
+| Authentication flows                       | `AuthLayout`  | Login, signup, password reset, onboarding          |
+| Simple content or error pages              | `BlankLayout` | 404 pages, maintenance, about us, terms            |
+| Chrome extensions, mobile overlays, popups | `PopupLayout` | Extension popups, mobile overlays, dropdown panels |
+
+## PopupLayout Component (Complete API Reference)
+
+### PopupLayout - Compact layout optimized for small interfaces
+
+```typescript
+// PopupLayout - Perfect for Chrome extensions and web overlays
+import {
+  PopupLayout,
+  PopupHeader,
+  PopupContent,
+  PopupFooter,
+} from '@voilajsx/uikit/popup';
+
+// PopupLayout Props (complete interface)
+interface PopupLayoutProps {
+  variant?: 'default' | 'compact' | 'mini'; // Style intensity
+  size?: 'sm' | 'md' | 'lg' | 'auto'; // Width and height control
+  title?: string; // Header title text
+  subtitle?: string; // Header subtitle text
+  logo?: React.ReactNode; // Logo/icon component
+  badge?: React.ReactNode; // Status badge
+  headerActions?: React.ReactNode; // Header action buttons
+  showBack?: boolean; // Show back button (default: false)
+  showClose?: boolean; // Show close button (default: false)
+  showDivider?: boolean; // Show header divider (default: true)
+  onBack?: () => void; // Back button handler
+  onClose?: () => void; // Close button handler
+  footer?: React.ReactNode; // Footer content
+  scrollable?: boolean; // Enable content scrolling (default: true)
+  className?: string; // Additional CSS classes
+  children: React.ReactNode; // Main content (REQUIRED)
+}
+
+// Size Configurations
+const POPUP_SIZES = {
+  sm: '288px × 320px', // Ultra compact - Quick notes, mini widgets
+  md: '320px × 384px', // Standard popup - Most Chrome extensions
+  lg: '384px × 512px', // Large popup - Feature-rich extensions
+  auto: 'Responsive', // min-w-72, max-w-lg - Mobile overlays
+};
+
+// Variant Descriptions
+const POPUP_VARIANTS = {
+  default: 'Full styling with shadows and borders',
+  compact: 'Medium styling with reduced padding',
+  mini: 'Minimal styling for tight spaces',
+};
+```
+
+### PopupLayout Usage Patterns
+
+```jsx
+// Chrome Extension Popup (Standard)
+<PopupLayout
+  variant="default"
+  size="md"
+  title="Extension Name"
+  subtitle="Brief description"
+  logo={<ExtensionIcon />}
+  badge={<Badge variant="default">Active</Badge>}
+  headerActions={<SettingsButton />}
+  footer={<ActionButtons />}
+>
+  <ExtensionControls />
+</PopupLayout>
+
+// Mobile Overlay (Responsive)
+<PopupLayout
+  variant="compact"
+  size="auto"
+  title="Notifications"
+  showBack={true}
+  onBack={() => goBack()}
+  footer={<Button className="w-full">Mark All Read</Button>}
+>
+  <NotificationList />
+</PopupLayout>
+
+// Mini Widget (Compact)
+<PopupLayout
+  variant="mini"
+  size="sm"
+  title="Quick Note"
+  showClose={true}
+  onClose={() => close()}
+>
+  <Input placeholder="Add note..." />
+  <Button size="sm" className="w-full mt-2">Save</Button>
+</PopupLayout>
+
+// Chrome Extension with Tabs
+<PopupLayout
+  variant="default"
+  size="lg"
+  title="Advanced Extension"
+  logo={<Logo />}
+  badge={<Badge>Pro</Badge>}
+  headerActions={<MoreActions />}
+>
+  <Tabs defaultValue="tab1">
+    <TabsList className="grid w-full grid-cols-3">
+      <TabsTrigger value="tab1">General</TabsTrigger>
+      <TabsTrigger value="tab2">Settings</TabsTrigger>
+      <TabsTrigger value="tab3">About</TabsTrigger>
+    </TabsList>
+    <TabsContent value="tab1">
+      <GeneralContent />
+    </TabsContent>
+    <TabsContent value="tab2">
+      <SettingsContent />
+    </TabsContent>
+    <TabsContent value="tab3">
+      <AboutContent />
+    </TabsContent>
+  </Tabs>
+</PopupLayout>
+```
+
+### PopupLayout Sub-components
+
+```jsx
+// PopupHeader - Standalone header for custom layouts
+<PopupHeader
+  title="Custom Header"
+  subtitle="With subtitle"
+  logo={<Icon />}
+  badge={<Badge>New</Badge>}
+  actions={<Button>Action</Button>}
+  showBack={true}
+  showClose={true}
+  onBack={() => {}}
+  onClose={() => {}}
+/>
+
+// PopupContent - Scrollable content container
+<PopupContent scrollable={true}>
+  <div className="space-y-4">
+    <Card>Content here</Card>
+  </div>
+</PopupContent>
+
+// PopupFooter - Footer actions container
+<PopupFooter>
+  <div className="flex gap-2">
+    <Button variant="outline" className="flex-1">Cancel</Button>
+    <Button className="flex-1">Confirm</Button>
+  </div>
+</PopupFooter>
+```
+
+### PopupLayout Best Practices
+
+```jsx
+// ✅ Chrome Extension Manifest Integration
+{
+  "action": {
+    "default_popup": "popup.html"  // Uses PopupLayout
+  },
+  "options_page": "options.html"   // Can use PopupLayout or PageLayout
+}
+
+// ✅ Web Application Integration
+<Popover>
+  <PopoverContent className="p-0 w-auto">
+    <PopupLayout variant="compact" size="auto">
+      <CustomContent />
+    </PopupLayout>
+  </PopoverContent>
+</Popover>
+
+// ✅ Mobile Overlay Pattern
+<Sheet>
+  <SheetContent className="p-0">
+    <PopupLayout
+      variant="default"
+      size="auto"
+      title="Mobile Menu"
+      showClose={true}
+    >
+      <MobileNavigation />
+    </PopupLayout>
+  </SheetContent>
+</Sheet>
+
+// ✅ Theme Compatibility - Works with all 6 themes
+<ThemeProvider theme="neon" variant="dark">
+  <PopupLayout variant="default" size="md">
+    <GamingExtensionUI />
+  </PopupLayout>
+</ThemeProvider>
+
+// ✅ Responsive Breakpoints for PopupLayout
+className="w-80 max-h-96 md:w-96 md:max-h-[32rem]"
+```
 
 # UIKit Color System Guidelines (CRITICAL FOR THEME COMPATIBILITY)
 
@@ -437,6 +641,37 @@ className="bg-[#f5f5f5] text-[#333333]"
   </CardHeader>
   <CardContent className="text-foreground">Content here</CardContent>
 </Card>
+```
+
+### PopupLayout Color Patterns
+
+```jsx
+// ✅ PopupLayout with semantic colors
+<PopupLayout
+  variant="default"
+  size="md"
+  className="bg-background border-border" // Automatically applied
+  title="Extension Name"
+  badge={<Badge variant="default">Active</Badge>}
+>
+  <div className="space-y-3">
+    <Card className="bg-card text-card-foreground">
+      <CardContent className="p-3">
+        <div className="text-foreground">Main content</div>
+        <div className="text-muted-foreground text-sm">Subtitle</div>
+      </CardContent>
+    </Card>
+  </div>
+</PopupLayout>
+
+// ✅ PopupLayout themed for different applications
+<ThemeProvider theme="neon" variant="dark">
+  <PopupLayout variant="default" size="md" title="Gaming Extension">
+    <div className="bg-card/50 border border-border rounded p-3">
+      <div className="text-foreground">Gaming UI automatically adapts</div>
+    </div>
+  </PopupLayout>
+</ThemeProvider>
 ```
 
 ### Forms & Inputs
@@ -893,7 +1128,88 @@ const BLANK_VARIANTS = {
 </BlankLayout>
 ```
 
----
+### 5. Popup Layout - Compact Interface Layout
+
+```typescript
+// Compact layout for Chrome extensions and web overlays
+import {
+  PopupLayout,
+  PopupHeader,
+  PopupContent,
+  PopupFooter,
+} from '@voilajsx/uikit/popup';
+
+// PopupLayout Props (complete interface)
+interface PopupLayoutProps {
+  variant?: 'default' | 'compact' | 'mini'; // Style intensity
+  size?: 'sm' | 'md' | 'lg' | 'auto'; // Width and height control
+  title?: string; // Header title text
+  subtitle?: string; // Header subtitle text
+  logo?: React.ReactNode; // Logo/icon component
+  badge?: React.ReactNode; // Status badge
+  headerActions?: React.ReactNode; // Header action buttons
+  showBack?: boolean; // Show back button (default: false)
+  showClose?: boolean; // Show close button (default: false)
+  showDivider?: boolean; // Show header divider (default: true)
+  onBack?: () => void; // Back button handler
+  onClose?: () => void; // Close button handler
+  footer?: React.ReactNode; // Footer content
+  scrollable?: boolean; // Enable content scrolling (default: true)
+  className?: string; // Additional CSS classes
+  children: React.ReactNode; // Main content (REQUIRED)
+}
+
+// Size Configurations
+const POPUP_SIZES = {
+  sm: '288px × 320px',    // Ultra compact - Quick notes, mini widgets
+  md: '320px × 384px',    // Standard popup - Most Chrome extensions
+  lg: '384px × 512px',    // Large popup - Feature-rich extensions
+  auto: 'Responsive',     // min-w-72, max-w-lg - Mobile overlays
+};
+
+// Variant Descriptions
+const POPUP_VARIANTS = {
+  default: 'Full styling with shadows and borders',
+  compact: 'Medium styling with reduced padding',
+  mini: 'Minimal styling for tight spaces',
+};
+
+// Standard Popup Patterns
+<PopupLayout
+  variant="default"
+  size="md"
+  title="Extension Name"
+  subtitle="Brief description"
+  logo={<ExtensionIcon />}
+  badge={<Badge variant="default">Active</Badge>}
+  headerActions={<SettingsButton />}
+  footer={<ActionButtons />}
+>
+  <ExtensionControls />
+</PopupLayout>
+
+<PopupLayout
+  variant="compact"
+  size="auto"
+  title="Notifications"
+  showBack={true}
+  onBack={() => goBack()}
+  footer={<Button className="w-full">Mark All Read</Button>}
+>
+  <NotificationList />
+</PopupLayout>
+
+<PopupLayout
+  variant="mini"
+  size="sm"
+  title="Quick Note"
+  showClose={true}
+  onClose={() => close()}
+>
+  <Input placeholder="Add note..." />
+  <Button size="sm" className="w-full mt-2">Save</Button>
+</PopupLayout>
+```
 
 ## Section Components (Complete API Reference)
 
@@ -1646,7 +1962,172 @@ function AdminDashboard() {
 export default AdminDashboard;
 ```
 
-### 4. Authentication Page
+### 4. Chrome Extension Popup (COMPLETE EXAMPLE)
+
+```jsx
+/**
+ * Complete Chrome extension popup using PopupLayout
+ * @module @voilajsx/uikit
+ * @file examples/chrome-extension-popup.jsx
+ */
+
+import { PopupLayout } from '@voilajsx/uikit/popup';
+import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
+import { Button } from '@voilajsx/uikit/button';
+import { Badge } from '@voilajsx/uikit/badge';
+import { Switch } from '@voilajsx/uikit/switch';
+import { Card, CardContent } from '@voilajsx/uikit/card';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@voilajsx/uikit/tabs';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@voilajsx/uikit/dropdown-menu';
+import { Zap, Settings, MoreVertical, RefreshCw } from 'lucide-react';
+import '@voilajsx/uikit/styles';
+
+function ChromeExtensionPopup() {
+  const [isEnabled, setIsEnabled] = useState(true);
+  const [autoMode, setAutoMode] = useState(false);
+
+  const logo = (
+    <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+      <Zap className="h-4 w-4 text-primary-foreground" />
+    </div>
+  );
+
+  const headerActions = (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+          <MoreVertical className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem>
+          <Settings className="mr-2 h-4 w-4" />
+          Settings
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <RefreshCw className="mr-2 h-4 w-4" />
+          Refresh
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
+  const footer = (
+    <div className="flex gap-2">
+      <Button size="sm" className="flex-1">
+        Open Dashboard
+      </Button>
+      <Button variant="outline" size="sm">
+        <Settings className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+
+  return (
+    <ThemeProvider theme="studio" variant="light" detectSystem={true}>
+      <PopupLayout
+        variant="default"
+        size="md"
+        title="Page Optimizer"
+        subtitle="Boost your browsing experience"
+        logo={logo}
+        badge={
+          <Badge variant={isEnabled ? 'default' : 'secondary'}>
+            {isEnabled ? 'Active' : 'Inactive'}
+          </Badge>
+        }
+        headerActions={headerActions}
+        footer={footer}
+      >
+        <Tabs defaultValue="controls" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-4">
+            <TabsTrigger value="controls">Controls</TabsTrigger>
+            <TabsTrigger value="stats">Stats</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="controls" className="space-y-4 mt-0">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm font-medium">Enable Extension</div>
+                <div className="text-xs text-muted-foreground">
+                  Activate page optimization
+                </div>
+              </div>
+              <Switch checked={isEnabled} onCheckedChange={setIsEnabled} />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm font-medium">Auto Mode</div>
+                <div className="text-xs text-muted-foreground">
+                  Automatically optimize pages
+                </div>
+              </div>
+              <Switch
+                checked={autoMode}
+                onCheckedChange={setAutoMode}
+                disabled={!isEnabled}
+              />
+            </div>
+
+            <Card>
+              <CardContent className="p-3">
+                <div className="text-center">
+                  <div className="text-lg font-bold text-primary">247</div>
+                  <div className="text-xs text-muted-foreground">
+                    Pages optimized today
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="stats" className="space-y-3 mt-0">
+            <div className="grid grid-cols-2 gap-3">
+              <Card>
+                <CardContent className="p-3 text-center">
+                  <div className="text-lg font-bold">1.2K</div>
+                  <div className="text-xs text-muted-foreground">This week</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-3 text-center">
+                  <div className="text-lg font-bold">15K</div>
+                  <div className="text-xs text-muted-foreground">All time</div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="space-y-2 text-xs">
+              <div className="flex justify-between">
+                <span>Ads blocked</span>
+                <span className="font-medium">156</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Trackers blocked</span>
+                <span className="font-medium">89</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Scripts optimized</span>
+                <span className="font-medium">42</span>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </PopupLayout>
+    </ThemeProvider>
+  );
+}
+
+export default ChromeExtensionPopup;
+```
+
+### 5. Authentication Page (COMPLETE EXAMPLE)
 
 ```jsx
 /**
@@ -1765,7 +2246,7 @@ function LoginPage() {
 export default LoginPage;
 ```
 
-### 5. Theme Selector Component
+### 6. Theme Selector Component (COMPLETE EXAMPLE)
 
 ```jsx
 /**
@@ -1938,6 +2419,11 @@ const navigationItems = [
 
 // ✅ Works with HeaderNav
 <HeaderNav items={navigationItems} />
+
+// ✅ Works with PopupLayout (in combination with other components)
+<PopupLayout title="Extension">
+  <Container sidebarContent={navigationItems} />
+</PopupLayout>
 ```
 
 ### 3. Layout Selection Guide
@@ -1948,10 +2434,47 @@ PageLayout; // Full website with header/footer
 AdminLayout; // Dashboard with sidebar
 AuthLayout; // Login/signup pages
 BlankLayout; // Simple content/error pages
-Container; // Content section with optional sidebar
+PopupLayout; // Chrome extensions, mobile overlays, popups
 ```
 
-### 4. Theme Usage Patterns
+### 4. PopupLayout Usage Patterns
+
+```jsx
+// Chrome Extension Popup
+<PopupLayout
+  variant="default"
+  size="md"
+  title="Extension Name"
+  badge={<Badge>Active</Badge>}
+  headerActions={<MoreActions />}
+  footer={<ActionButtons />}
+>
+  <ExtensionControls />
+</PopupLayout>
+
+// Mobile Overlay
+<PopupLayout
+  variant="compact"
+  size="auto"
+  title="Mobile Menu"
+  showBack={true}
+  onBack={() => goBack()}
+>
+  <MobileNavigation />
+</PopupLayout>
+
+// Mini Widget
+<PopupLayout
+  variant="mini"
+  size="sm"
+  title="Quick Note"
+  showClose={true}
+>
+  <Input placeholder="Type here..." />
+</PopupLayout>
+```
+
+### 5. Theme Usage Patterns
 
 ```jsx
 const { theme, variant, setTheme, setVariant, toggleVariant } = useTheme();
@@ -1961,9 +2484,15 @@ const { theme, variant, setTheme, setVariant, toggleVariant } = useTheme();
 
 // Variants:
 'light' | 'dark';
+
+// Chrome Extension Theme Recommendations:
+('studio'); // Professional business extensions
+('metro'); // Utility/productivity extensions
+('neon'); // Gaming/entertainment extensions
+('default'); // General purpose extensions
 ```
 
-### 5. DataTable Usage
+### 6. DataTable Usage
 
 ```jsx
 const columns = [
@@ -1977,21 +2506,24 @@ const columns = [
 <DataTable columns={columns} data={arrayOfObjects} />;
 ```
 
-### 6. Responsive Classes
+### 7. Responsive Classes
 
 ```jsx
 // ALWAYS include responsive breakpoints
 className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4';
+
+// PopupLayout responsive patterns
+className = 'w-80 max-h-96 md:w-96 md:max-h-[32rem]';
 ```
 
-### 7. Icon Usage
+### 8. Icon Usage
 
 ```jsx
 // ALWAYS use Lucide React icons
-import { Home, Users, Settings } from 'lucide-react';
+import { Home, Users, Settings, Zap, Shield } from 'lucide-react';
 ```
 
-### 8. Common Prop Patterns
+### 9. Common Prop Patterns
 
 ```jsx
 // Size props (most components)
@@ -2001,9 +2533,16 @@ size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
 variant?: 'default' | 'primary' | 'black'  // For headers/sidebars
 variant?: 'default' | 'muted' | 'dark'     // For footers
 variant?: 'simple' | 'card' | 'split-gradient' // For auth layouts
+variant?: 'default' | 'compact' | 'mini'   // For popup layouts
+
+// PopupLayout specific
+size?: 'sm' | 'md' | 'lg' | 'auto'         // Width control
+showBack?: boolean                         // Back button
+showClose?: boolean                        // Close button
+scrollable?: boolean                       // Content scrolling
 ```
 
-### 9. File Structure Requirements
+### 10. File Structure Requirements
 
 ```jsx
 /**
@@ -2013,7 +2552,51 @@ variant?: 'simple' | 'card' | 'split-gradient' // For auth layouts
  */
 ```
 
-### 10. Zero Migration from shadcn/ui
+### 11. Chrome Extension Integration
+
+```jsx
+// manifest.json
+{
+  "action": {
+    "default_popup": "popup.html"  // Uses PopupLayout
+  },
+  "options_page": "options.html"   // Can use PopupLayout or PageLayout
+}
+
+// popup.html
+<div id="root"></div>
+<script type="module" src="popup.js"></script>
+
+// popup.js
+import { createRoot } from 'react-dom/client';
+import ChromeExtensionPopup from './ChromeExtensionPopup.jsx';
+
+createRoot(document.getElementById('root')).render(<ChromeExtensionPopup />);
+```
+
+### 12. Web Application Integration
+
+```jsx
+// Mobile overlay in Sheet
+<Sheet>
+  <SheetContent className="p-0">
+    <PopupLayout variant="compact" size="auto">
+      <MobileContent />
+    </PopupLayout>
+  </SheetContent>
+</Sheet>
+
+// Dropdown panel in Popover
+<Popover>
+  <PopoverContent className="p-0 w-auto">
+    <PopupLayout variant="mini" size="sm">
+      <QuickActions />
+    </PopupLayout>
+  </PopoverContent>
+</Popover>
+```
+
+### 13. Zero Migration from shadcn/ui
 
 ```jsx
 // Just change the import path - everything else stays the same
@@ -2023,5 +2606,32 @@ variant?: 'simple' | 'card' | 'split-gradient' // For auth layouts
 // All props, APIs, and usage patterns remain identical
 <Button variant="default" size="lg">Same API</Button>
 ```
+
+---
+
+## Quick Setup Checklist
+
+### ✅ Required for Every Project:
+
+1. **Install**: `npm install @voilajsx/uikit`
+2. **Import styles**: `import '@voilajsx/uikit/styles'`
+3. **Wrap app**: `<ThemeProvider><App /></ThemeProvider>`
+4. **Use semantic colors**: `bg-background`, `text-foreground`, etc.
+5. **Choose appropriate layout**: PopupLayout for extensions, PageLayout for websites
+
+### ✅ Chrome Extension Specific:
+
+1. **Use PopupLayout** for `action.default_popup`
+2. **Size appropriately**: `size="md"` for most extensions
+3. **Include theme provider** in popup
+4. **Test in both light/dark** themes
+5. **Handle "use client" warnings** in consumer config
+
+### ✅ Performance Tips:
+
+1. **Tree-shake imports**: Import individual components
+2. **Use appropriate variants**: `mini` for tight spaces, `default` for full features
+3. **Enable scrollable content**: `scrollable={true}` for long content
+4. **Optimize for target platform**: Extensions vs web vs mobile
 
 ---
