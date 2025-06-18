@@ -61,6 +61,10 @@ export default defineConfig({
         __dirname,
         '../src/components/ui/separator.jsx'
       ),
+      '@voilajsx/uikit/dropdown-menu': path.resolve(
+        __dirname,
+        '../src/components/ui/dropdown-menu.jsx'
+      ),
 
       // Sections (3 components)
       '@voilajsx/uikit/header': path.resolve(
@@ -92,6 +96,10 @@ export default defineConfig({
       '@voilajsx/uikit/auth': path.resolve(
         __dirname,
         '../src/components/layouts/auth.jsx'
+      ),
+      '@voilajsx/uikit/popup': path.resolve(
+        __dirname,
+        '../src/components/layouts/popup.jsx'
       ),
 
       // Theme system

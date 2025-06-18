@@ -57,7 +57,7 @@ function Home() {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
-              <span>4 Page Layouts</span>
+              <span>5 Page Layouts</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
@@ -124,7 +124,7 @@ function Home() {
                   <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <LayoutIcon className="h-6 w-6 text-primary" />
                   </div>
-                  <Badge variant="secondary" className="text-xs">4 Layouts</Badge>
+                  <Badge variant="secondary" className="text-xs">5 Layouts</Badge>
                 </div>
                 <CardTitle className="text-xl">Complete Layouts</CardTitle>
               </CardHeader>
@@ -133,9 +133,9 @@ function Home() {
                   Ready-to-use page layouts: Auth, Admin Dashboard, Generic Page and Blank layouts. Build faster.
                 </p>
                 <div className="flex flex-wrap gap-1 text-xs">
-                  <Badge variant="outline" className="text-xs">AuthTemplate</Badge>
-                  <Badge variant="outline" className="text-xs">AdminTemplate</Badge>
-                  <Badge variant="outline" className="text-xs">FormTemplate</Badge>
+                  <Badge variant="outline" className="text-xs">AuthLayout</Badge>
+                  <Badge variant="outline" className="text-xs">AdminLayout</Badge>
+                  <Badge variant="outline" className="text-xs">BlankLayout</Badge>
                 </div>
               </CardContent>
             </Card>

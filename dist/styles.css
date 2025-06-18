@@ -816,6 +816,10 @@
     margin-block: calc(var(--spacing) * 1);
   }
 
+  .mt-0 {
+    margin-top: calc(var(--spacing) * 0);
+  }
+
   .mt-0\.5 {
     margin-top: calc(var(--spacing) * .5);
   }
@@ -1108,8 +1112,20 @@
     max-height: calc(var(--spacing) * 0);
   }
 
+  .max-h-80 {
+    max-height: calc(var(--spacing) * 80);
+  }
+
   .max-h-96 {
     max-height: calc(var(--spacing) * 96);
+  }
+
+  .max-h-\[32rem\] {
+    max-height: 32rem;
+  }
+
+  .max-h-\[80vh\] {
+    max-height: 80vh;
   }
 
   .max-h-\[300px\] {
@@ -1244,6 +1260,10 @@
     width: calc(var(--spacing) * 80);
   }
 
+  .w-96 {
+    width: calc(var(--spacing) * 96);
+  }
+
   .w-\[1px\] {
     width: 1px;
   }
@@ -1306,6 +1326,10 @@
 
   .min-w-0 {
     min-width: calc(var(--spacing) * 0);
+  }
+
+  .min-w-72 {
+    min-width: calc(var(--spacing) * 72);
   }
 
   .min-w-\[8rem\] {
@@ -2152,6 +2176,16 @@
 
   .bg-card {
     background-color: var(--color-card);
+  }
+
+  .bg-card\/50 {
+    background-color: #fdfdfe80;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-card\/50 {
+      background-color: color-mix(in oklab, var(--color-card) 50%, transparent);
+    }
   }
 
   .bg-card\/95 {
@@ -4701,6 +4735,10 @@
       height: 100vh;
     }
 
+    .md\:max-h-\[32rem\] {
+      max-height: 32rem;
+    }
+
     .md\:min-h-screen {
       min-height: 100vh;
     }
@@ -4711,6 +4749,10 @@
 
     .md\:w-48 {
       width: calc(var(--spacing) * 48);
+    }
+
+    .md\:w-96 {
+      width: calc(var(--spacing) * 96);
     }
 
     .md\:max-w-\[420px\] {

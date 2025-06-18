@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { cn } from '@voilajsx/uikit/lib/utils';
+import { cn } from "../../lib/utils";
 import { Button } from '@voilajsx/uikit/button';
 import { Badge } from '@voilajsx/uikit/badge';
 import { Separator } from '@voilajsx/uikit/separator';

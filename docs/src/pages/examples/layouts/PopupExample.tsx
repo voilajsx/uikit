@@ -46,7 +46,7 @@ export default function PopupLayoutExamples() {
   const [isEnabled, setIsEnabled] = useState(true);
   const [autoMode, setAutoMode] = useState(false);
   const [currentSize, setCurrentSize] = useState('lg');
-  const [currentTheme, setCurrentTheme] = useState('neon');
+  const [currentTheme, setCurrentTheme] = useState('default');
   const [currentThemeVariant, setCurrentThemeVariant] = useState('light');
 
   const Logo = ({ icon: Icon = Zap, color = 'bg-primary' }) => (

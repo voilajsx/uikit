@@ -35,6 +35,7 @@ import AuthCardImageTemplate from './pages/examples/auth/AuthCardImageTemplate';
 import PageExample from './pages/examples/layouts/PageExample';
 import AdminExample from './pages/examples/layouts/AdminExample';
 import BlankExample from './pages/examples/layouts/BlankExample';
+import PopupExample from './pages/examples/layouts/PopupExample';
 
 // Section examples
 import ContainerExample from './pages/examples/sections/ContainerExample';
@@ -77,6 +78,7 @@ function App(): JSX.Element {
         <Route path="/examples/layouts/page" element={<PageExample />} />
         <Route path="/examples/layouts/admin" element={<AdminExample />} />
         <Route path="/examples/layouts/blank" element={<BlankExample />} />
+        <Route path="/examples/layouts/popup" element={<PopupExample />} />
 
         {/* Section examples */}
         <Route path="/examples/sections/container" element={<ContainerExample />} />

@@ -1,5 +1,5 @@
 /**
- * Layouts documentation for @voilajsx/uikit - Clean and focused
+ * Layouts documentation for @voilajsx/uikit - Complete with PopupLayout
  * @module @voilajsx/uikit
  * @file docs/pages/Layouts.tsx
  */
@@ -26,7 +26,10 @@ import {
   Building,
   ExternalLink,
   HelpCircle,
-  Rocket
+  Rocket,
+  Chrome,
+  Monitor,
+  TabletSmartphone
 } from 'lucide-react';
 import CodeBlock from '../components/CodeBlock';
 import Layout from '../components/Layout';
@@ -38,12 +41,29 @@ function Dashboard() {
     <AdminLayout
       title="Admin Dashboard"
       navigationItems={[
-        { title: 'Dashboard', icon: Home, path: '/dashboard' },
-        { title: 'Users', icon: Users, path: '/users' }
+        { key: 'dashboard', label: 'Dashboard', icon: Home, path: '/dashboard' },
+        { key: 'users', label: 'Users', icon: Users, path: '/users' }
       ]}
     >
       <h1>Dashboard Content</h1>
     </AdminLayout>
+  );
+}`;
+
+const popupExampleCode = `import { PopupLayout } from '@voilajsx/uikit/popup';
+
+function ChromeExtensionPopup() {
+  return (
+    <PopupLayout
+      variant="default"
+      size="md"
+      logo={<ExtensionLogo />}
+      headerActions={<EnableToggle />}
+      footer={<LoginAndSettings />}
+    >
+      <SearchBox />
+      <ExtensionControls />
+    </PopupLayout>
   );
 }`;
 
@@ -150,7 +170,7 @@ function Layouts() {
             <h1 className="text-5xl font-bold tracking-tight">Layouts</h1>
             <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
               Ready-to-use page layouts that handle the complexity of modern web applications. 
-              Build faster with pre-designed patterns for common use cases.
+              Build faster with pre-designed patterns for common use cases, from full websites to Chrome extensions.
             </p>
           </section>
 
@@ -159,22 +179,22 @@ function Layouts() {
             <div>
               <h2 className="text-3xl font-bold mb-4">Why Use Layouts?</h2>
               <p className="text-muted-foreground text-lg">
-                Layouts solve common web development challenges and accelerate your development workflow.
+                Layouts solve common web development challenges and accelerate your development workflow across all platforms.
               </p>
             </div>
             
-            <div className="grid lg:grid-cols-3 gap-8">
+            <div className="grid lg:grid-cols-4 gap-6">
               <Card>
                 <CardHeader>
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-lg bg-primary/10">
                       <Zap className="h-6 w-6 text-primary" />
                     </div>
-                    <CardTitle className="text-xl">Faster Development</CardTitle>
+                    <CardTitle className="text-lg">Faster Development</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Skip the tedious layout setup and focus on your business logic. Get production-ready layouts in minutes.
                   </p>
                 </CardContent>
@@ -186,12 +206,12 @@ function Layouts() {
                     <div className="p-2 rounded-lg bg-primary/10">
                       <Palette className="h-6 w-6 text-primary" />
                     </div>
-                    <CardTitle className="text-xl">Consistent Design</CardTitle>
+                    <CardTitle className="text-lg">Consistent Design</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Professional layouts that maintain design consistency across your application and themes.
+                  <p className="text-muted-foreground text-sm">
+                    Professional layouts that maintain design consistency across your application and all 6 themes.
                   </p>
                 </CardContent>
               </Card>
@@ -202,12 +222,28 @@ function Layouts() {
                     <div className="p-2 rounded-lg bg-primary/10">
                       <Smartphone className="h-6 w-6 text-primary" />
                     </div>
-                    <CardTitle className="text-xl">Mobile-First</CardTitle>
+                    <CardTitle className="text-lg">Cross-Platform</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">
-                    Every layout is designed mobile-first with responsive behavior that works across all devices.
+                  <p className="text-muted-foreground text-sm">
+                    From full websites to Chrome extensions and mobile overlays - layouts work everywhere.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary/10">
+                      <Chrome className="h-6 w-6 text-primary" />
+                    </div>
+                    <CardTitle className="text-lg">Extension Ready</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground text-sm">
+                    Purpose-built layouts for Chrome extensions, popups, and compact interfaces.
                   </p>
                 </CardContent>
               </Card>
@@ -217,19 +253,29 @@ function Layouts() {
           {/* Quick Example */}
           <section id="quick-example" className="space-y-6">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Quick Example</h2>
+              <h2 className="text-3xl font-bold mb-4">Quick Examples</h2>
               <p className="text-muted-foreground text-lg">
-                Here's how easy it is to create a complete admin dashboard:
+                Here's how easy it is to create complete layouts for different use cases:
               </p>
             </div>
             
-            <CodeBlock code={quickStartCode} title="Complete Dashboard in Minutes" />
+            <div className="grid lg:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-xl font-semibold mb-3">Admin Dashboard</h3>
+                <CodeBlock code={quickStartCode} title="Complete Dashboard in Minutes" />
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-semibold mb-3">Chrome Extension</h3>
+                <CodeBlock code={popupExampleCode} title="Extension Popup with All Features" />
+              </div>
+            </div>
             
             <Alert>
               <CheckCircle className="h-4 w-4" />
               <AlertDescription className="pt-1">
-                <strong>That's it!</strong> You get a complete dashboard with navigation, responsive sidebar, 
-                header, and theme integration - all with just a few lines of code.
+                <strong>That's it!</strong> You get complete, production-ready layouts with navigation, 
+                responsive design, theme integration, and platform-specific optimizations - all with just a few lines of code.
               </AlertDescription>
             </Alert>
           </section>
@@ -237,13 +283,13 @@ function Layouts() {
           {/* Available Layouts */}
           <section id="available-layouts" className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Four Useful Layout Layouts</h2>
+              <h2 className="text-3xl font-bold mb-4">Five Powerful Layouts</h2>
               <p className="text-muted-foreground text-lg">
-                Choose the right layout for your use case. Each Layout is designed for specific scenarios and user flows.
+                Choose the right layout for your use case. Each layout is designed for specific scenarios and user flows.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid lg:grid-cols-2 gap-6">
               {/* Page Layout */}
               <Card className="border-2 border-primary/20">
                 <CardHeader>
@@ -338,32 +384,17 @@ function Layouts() {
                   <div className="grid grid-cols-3 gap-2">
                     <Button variant="outline" size="sm" asChild>
                       <Link to="/examples/layouts/auth/simple">
-                        Simple <ExternalLink className="ml-1 h-3 w-3" />
+                        <span className="text-xs">Simple</span>
                       </Link>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
                       <Link to="/examples/layouts/auth/card">
-                        Card <ExternalLink className="ml-1 h-3 w-3" />
+                        <span className="text-xs">Card</span>
                       </Link>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
                       <Link to="/examples/layouts/auth/split-gradient">
-                        Split Gradient <ExternalLink className="ml-1 h-3 w-3" />
-                      </Link>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to="/examples/layouts/auth/split-image">
-                        Split Image <ExternalLink className="ml-1 h-3 w-3" />
-                      </Link>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to="/examples/layouts/auth/card-gradient">
-                        Card Gradient <ExternalLink className="ml-1 h-3 w-3" />
-                      </Link>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to="/examples/layouts/auth/card-image">
-                        Card Image <ExternalLink className="ml-1 h-3 w-3" />
+                        <span className="text-xs">Split</span>
                       </Link>
                     </Button>
                   </div>
@@ -402,6 +433,59 @@ function Layouts() {
                   </Button>
                 </CardContent>
               </Card>
+
+              {/* Popup Layout - NEW */}
+              <Card className="border-2 border-primary/20 lg:col-span-2">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 rounded-lg bg-primary/10">
+                      <TabletSmartphone className="h-8 w-8 text-primary" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl">Popup Layout</CardTitle>
+                      <Badge variant="default" className="mt-1 bg-primary">New!</Badge>
+                      <Badge variant="secondary" className="mt-1 ml-2">4 Sizes × 3 Variants</Badge>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Compact layout optimized for Chrome extensions, mobile overlays, and popup interfaces. 
+                    Features 4 size options and 3 style variants for maximum flexibility.
+                  </p>
+                  
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-sm">Perfect For:</h4>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li>• Chrome extension popups</li>
+                        <li>• Mobile overlay panels</li>
+                        <li>• Dropdown interfaces</li>
+                        <li>• Mini widgets & notifications</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-sm">Size Options:</h4>
+                      <div className="grid grid-cols-2 gap-1 text-xs">
+                        <Badge variant="outline">sm (288×320)</Badge>
+                        <Badge variant="outline">md (320×384)</Badge>
+                        <Badge variant="outline">lg (384×512)</Badge>
+                        <Badge variant="outline">auto (responsive)</Badge>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 flex-wrap">
+                    <Button variant="outline" size="sm" asChild>
+                      <Link to="/examples/layouts/popup">
+                        Live Demo <ExternalLink className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                    
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </section>
 
@@ -410,15 +494,16 @@ function Layouts() {
             <div>
               <h2 className="text-3xl font-bold mb-4">Which Layout Should You Choose?</h2>
               <p className="text-muted-foreground text-lg">
-                Quick guide to help you pick the right layout  for your project.
+                Quick guide to help you pick the right layout for your project.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader>
-                  <CardTitle className="text-primary">
-                    Building a Website or Blog?
+                  <CardTitle className="text-primary flex items-center gap-2">
+                    <Monitor className="h-5 w-5" />
+                    Building a Website?
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -436,7 +521,8 @@ function Layouts() {
 
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader>
-                  <CardTitle className="text-primary">
+                  <CardTitle className="text-primary flex items-center gap-2">
+                    <Settings className="h-5 w-5" />
                     Building an Admin Panel?
                   </CardTitle>
                 </CardHeader>
@@ -455,8 +541,9 @@ function Layouts() {
 
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader>
-                  <CardTitle className="text-primary">
-                    Need Authentication Pages?
+                  <CardTitle className="text-primary flex items-center gap-2">
+                    <Shield className="h-5 w-5" />
+                    Need Authentication?
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -474,8 +561,9 @@ function Layouts() {
 
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader>
-                  <CardTitle className="text-primary">
-                    Simple Content or Error Pages?
+                  <CardTitle className="text-primary flex items-center gap-2">
+                    <Minus className="h-5 w-5" />
+                    Simple Content Pages?
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -490,6 +578,38 @@ function Layouts() {
                   </ul>
                 </CardContent>
               </Card>
+
+              <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 lg:col-span-2">
+                <CardHeader>
+                  <CardTitle className="text-primary flex items-center gap-2">
+                    <Chrome className="h-5 w-5" />
+                    Chrome Extensions & Compact Interfaces?
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-foreground">
+                    Use <strong>Popup Layout</strong> for extensions and mobile overlays.
+                  </p>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>✓ Chrome extension popups</li>
+                      <li>✓ Browser extension interfaces</li>
+                      <li>✓ Mobile overlay panels</li>
+                      <li>✓ Dropdown interfaces</li>
+                    </ul>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>✓ Mini widgets & tools</li>
+                      <li>✓ Notification panels</li>
+                      <li>✓ Quick action menus</li>
+                      <li>✓ Compact settings dialogs</li>
+                    </ul>
+                  </div>
+                  <div className="pt-2">
+                    <Badge variant="default" className="mr-2">4 Sizes Available</Badge>
+                    <Badge variant="outline">Perfect for Extensions</Badge>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </section>
 
@@ -498,7 +618,7 @@ function Layouts() {
             <div>
               <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
               <p className="text-muted-foreground text-lg">
-                Choose your path and start building with UIKit layout Layouts.
+                Choose your path and start building with UIKit layouts.
               </p>
             </div>
             
@@ -513,7 +633,7 @@ function Layouts() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      Install UIKit and set up your first layout  in minutes.
+                      Install UIKit and set up your first layout in minutes.
                     </p>
                   </CardContent>
                 </Link>
@@ -529,11 +649,13 @@ function Layouts() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      Explore interactive examples and see layouts in action.
+                      Explore interactive examples and see all layouts in action.
                     </p>
                   </CardContent>
                 </Link>
               </Card>
+
+             
 
               <Card className="group hover:shadow-lg transition-shadow cursor-pointer" asChild>
                 <Link to="/themes">
@@ -550,6 +672,10 @@ function Layouts() {
                   </CardContent>
                 </Link>
               </Card>
+
+             
+
+             
             </div>
           </section>
         </div>
