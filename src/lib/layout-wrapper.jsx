@@ -1,5 +1,5 @@
 /**
- * @fileoverview Enhanced layout wrapper with VITE__ double underscore environment variables
+ * @fileoverview Enhanced layout wrapper with VITE__ environment variables and debugging
  * @description Uses VoilaJS dot notation convention with VITE__ prefix for browser compatibility
  * @package @voilajsx/uikit
  * @file /src/lib/layout-wrapper.js
@@ -29,12 +29,22 @@ function parseNavigationConfig(navConfig) {
 }
 
 /**
- * Reads layout configuration from VITE__ environment variables (VoilaJS dot notation style)
+ * Reads layout configuration from VITE__ environment variables with debugging
  * @returns {Object} Complete layout configuration
  */
 function getLayoutConfig() {
   // Use import.meta.env for Vite environment variables
   const env = import.meta.env || {};
+  
+  // Debug: Show raw environment variables
+  console.log('🔍 DEBUG getLayoutConfig: Raw environment variables:', {
+    VITE__LAYOUT__THEME: env.VITE__LAYOUT__THEME,
+    VITE__LAYOUT__VARIANT: env.VITE__LAYOUT__VARIANT,
+    VITE__LAYOUT__TYPE: env.VITE__LAYOUT__TYPE,
+    VITE__LAYOUT__TITLE: env.VITE__LAYOUT__TITLE,
+    VITE__LAYOUT__ADMIN__VARIANT: env.VITE__LAYOUT__ADMIN__VARIANT,
+    VITE__LAYOUT__ADMIN__SIZE: env.VITE__LAYOUT__ADMIN__SIZE,
+  });
   
   const config = {
     // Theme configuration
@@ -93,6 +103,17 @@ function getLayoutConfig() {
     customProps: parseNavigationConfig(env.VITE__LAYOUT__CUSTOM_PROPS) || {},
   };
   
+  // Debug: Show final configuration
+  console.log('🔧 DEBUG getLayoutConfig: Final config:', {
+    theme: config.theme,
+    variant: config.variant,
+    layout: config.layout,
+    title: config.title,
+    navItems: config.navigation.length,
+    adminVariant: config.adminLayout.variant,
+    adminSize: config.adminLayout.size,
+  });
+  
   if (typeof window !== 'undefined' && window.console) {
     console.log('🔧 Layout configuration loaded:', {
       theme: config.theme,
@@ -109,7 +130,7 @@ function getLayoutConfig() {
 }
 
 /**
- * Enhanced layout wrapper component with VITE__ environment variables
+ * Enhanced layout wrapper component with VITE__ environment variables and debugging
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - App content
  * @param {string} [props.layout] - Override layout type
@@ -123,6 +144,15 @@ export function LayoutWrapper({ children, layout, navigation, overrides = {} }) 
   // Allow prop overrides
   const finalLayout = layout || config.layout;
   const finalNavigation = navigation || config.navigation;
+  
+  // Debug: Show what's being passed to ThemeProvider
+  console.log('🎨 DEBUG LayoutWrapper: Passing to ThemeProvider:', {
+    theme: config.theme,
+    variant: config.variant,
+    detectSystem: config.detectSystem,
+    finalLayout: finalLayout,
+    overrides: overrides
+  });
   
   return (
     <ThemeProvider 
@@ -144,6 +174,12 @@ export function LayoutWrapper({ children, layout, navigation, overrides = {} }) 
  * @returns {JSX.Element} Layout-wrapped content with all props
  */
 function renderLayoutFromConfig(children, layout, navigation, config) {
+  console.log('🏗️ DEBUG renderLayoutFromConfig:', {
+    layout: layout,
+    navigationCount: navigation.length,
+    theme: config.theme
+  });
+
   switch (layout) {
     case 'admin':
       return (
@@ -233,6 +269,7 @@ function renderLayoutFromConfig(children, layout, navigation, config) {
         </BlankLayout>
       );
       
+    case 'none':
     default:
       // No layout wrapper - just theme provider
       return children;
