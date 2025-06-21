@@ -1,6 +1,6 @@
 /**
- * @fileoverview Enhanced layout wrapper with prop drilling and theme control
- * @description Provides environment-based layout wrapping with deep prop injection
+ * @fileoverview Enhanced layout wrapper with VITE__ double underscore environment variables
+ * @description Uses VoilaJS dot notation convention with VITE__ prefix for browser compatibility
  * @package @voilajsx/uikit
  * @file /src/lib/layout-wrapper.js
  */
@@ -13,74 +13,84 @@ import { AuthLayout } from '../components/layouts/auth.jsx';
 import { BlankLayout } from '../components/layouts/blank.jsx';
 
 /**
- * Reads layout configuration from environment variables with prop drilling support
+ * Parses navigation configuration from JSON string
+ * @param {string} navConfig - Navigation configuration as JSON string
+ * @returns {Array} Parsed navigation items
+ */
+function parseNavigationConfig(navConfig) {
+  if (!navConfig) return [];
+  
+  try {
+    return JSON.parse(navConfig);
+  } catch (error) {
+    console.warn('Failed to parse navigation JSON:', navConfig);
+    return [];
+  }
+}
+
+/**
+ * Reads layout configuration from VITE__ environment variables (VoilaJS dot notation style)
  * @returns {Object} Complete layout configuration
  */
 function getLayoutConfig() {
-  // Use import.meta.env for Vite (browser-compatible) instead of process.env
-  // Fallback to empty object if import.meta.env is not available
-  const env = (typeof window !== 'undefined' && import.meta?.env) ? import.meta.env : {};
+  // Use import.meta.env for Vite environment variables
+  const env = import.meta.env || {};
   
   const config = {
     // Theme configuration
-    theme: env.VOILA_THEME || 'default',
-    variant: env.VOILA_VARIANT || 'light',
-    detectSystem: env.VOILA_DETECT_SYSTEM === 'true',
+    theme: env.VITE__LAYOUT__THEME || 'default',
+    variant: env.VITE__LAYOUT__VARIANT || 'light',
+    detectSystem: env.VITE__LAYOUT__DETECT_SYSTEM === 'true',
     
     // Layout configuration
-    layout: env.VOILA_LAYOUT || 'admin',
-    layoutVariant: env.VOILA_LAYOUT_VARIANT || 'default',
-    layoutSize: env.VOILA_LAYOUT_SIZE || 'default',
+    layout: env.VITE__LAYOUT__TYPE || 'admin',
+    title: env.VITE__LAYOUT__TITLE || env.VITE__APP__NAME || 'Platform',
+    logo: env.VITE__LAYOUT__LOGO,
     
-    // Content configuration
-    title: env.VOILA_TITLE || 'Platform',
-    logo: env.VOILA_LOGO,
-    
-    // Navigation configuration
-    navigation: env.VOILA_NAV ? JSON.parse(env.VOILA_NAV) : [],
+    // Navigation configuration (JSON string)
+    navigation: parseNavigationConfig(env.VITE__LAYOUT__NAVIGATION),
     
     // Admin layout specific props
     adminLayout: {
-      variant: env.VOILA_ADMIN_VARIANT || 'default',
-      size: env.VOILA_ADMIN_SIZE || 'default',
-      collapsible: env.VOILA_ADMIN_COLLAPSIBLE !== 'false',
-      defaultSidebarOpen: env.VOILA_ADMIN_SIDEBAR_OPEN !== 'false',
+      variant: env.VITE__LAYOUT__ADMIN__VARIANT || 'default',
+      size: env.VITE__LAYOUT__ADMIN__SIZE || 'default',
+      collapsible: env.VITE__LAYOUT__ADMIN__COLLAPSIBLE !== 'false',
+      defaultSidebarOpen: env.VITE__LAYOUT__ADMIN__SIDEBAR_OPEN !== 'false',
     },
     
     // Page layout specific props
     pageLayout: {
-      variant: env.VOILA_PAGE_VARIANT || 'default',
-      size: env.VOILA_PAGE_SIZE || 'xl',
+      variant: env.VITE__LAYOUT__PAGE__VARIANT || 'default',
+      size: env.VITE__LAYOUT__PAGE__SIZE || 'xl',
     },
     
     // Header specific props
     header: {
-      variant: env.VOILA_HEADER_VARIANT || 'default',
-      sticky: env.VOILA_HEADER_STICKY !== 'false',
-      size: env.VOILA_HEADER_SIZE || 'md',
+      variant: env.VITE__LAYOUT__HEADER__VARIANT || 'default',
+      sticky: env.VITE__LAYOUT__HEADER__STICKY !== 'false',
+      size: env.VITE__LAYOUT__HEADER__SIZE || 'md',
     },
     
     // Footer specific props
     footer: {
-      variant: env.VOILA_FOOTER_VARIANT || 'default',
-      size: env.VOILA_FOOTER_SIZE || 'md',
+      variant: env.VITE__LAYOUT__FOOTER__VARIANT || 'default',
+      size: env.VITE__LAYOUT__FOOTER__SIZE || 'md',
     },
     
     // Auth layout specific props
     authLayout: {
-      variant: env.VOILA_AUTH_VARIANT || 'card',
-      imageUrl: env.VOILA_AUTH_IMAGE_URL,
-      imageOverlay: env.VOILA_AUTH_IMAGE_OVERLAY || 'dark',
+      variant: env.VITE__LAYOUT__AUTH__VARIANT || 'card',
+      imageUrl: env.VITE__LAYOUT__AUTH__IMAGE_URL,
+      imageOverlay: env.VITE__LAYOUT__AUTH__IMAGE_OVERLAY || 'dark',
     },
     
     // Blank layout specific props
     blankLayout: {
-      variant: env.VOILA_BLANK_VARIANT || 'default',
+      variant: env.VITE__LAYOUT__BLANK__VARIANT || 'default',
     },
     
     // Additional custom props (JSON format)
-    customProps: env.VOILA_CUSTOM_PROPS ? 
-      JSON.parse(env.VOILA_CUSTOM_PROPS) : {},
+    customProps: parseNavigationConfig(env.VITE__LAYOUT__CUSTOM_PROPS) || {},
   };
   
   if (typeof window !== 'undefined' && window.console) {
@@ -90,7 +100,8 @@ function getLayoutConfig() {
       layout: config.layout,
       title: config.title,
       navItems: config.navigation.length,
-      customProps: Object.keys(config.customProps).length
+      customProps: Object.keys(config.customProps).length,
+      source: 'VITE__ environment variables'
     });
   }
   
@@ -98,14 +109,20 @@ function getLayoutConfig() {
 }
 
 /**
- * Enhanced layout wrapper component with full prop drilling
+ * Enhanced layout wrapper component with VITE__ environment variables
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - App content
+ * @param {string} [props.layout] - Override layout type
+ * @param {Array} [props.navigation] - Override navigation items
  * @param {Object} [props.overrides] - Manual overrides for env config
- * @returns {JSX.Element} Wrapped app with layout theme and layout
+ * @returns {JSX.Element} Wrapped app with theme and layout
  */
-export function LayoutWrapper({ children, overrides = {} }) {
+export function LayoutWrapper({ children, layout, navigation, overrides = {} }) {
   const config = { ...getLayoutConfig(), ...overrides };
+  
+  // Allow prop overrides
+  const finalLayout = layout || config.layout;
+  const finalNavigation = navigation || config.navigation;
   
   return (
     <ThemeProvider 
@@ -113,7 +130,7 @@ export function LayoutWrapper({ children, overrides = {} }) {
       variant={config.variant}
       detectSystem={config.detectSystem}
     >
-      {renderLayoutFromConfig(children, config)}
+      {renderLayoutFromConfig(children, finalLayout, finalNavigation, config)}
     </ThemeProvider>
   );
 }
@@ -121,11 +138,13 @@ export function LayoutWrapper({ children, overrides = {} }) {
 /**
  * Renders appropriate layout with full prop drilling based on configuration
  * @param {React.ReactNode} children - App content
+ * @param {string} layout - Layout type
+ * @param {Array} navigation - Navigation items
  * @param {Object} config - Complete layout configuration
  * @returns {JSX.Element} Layout-wrapped content with all props
  */
-function renderLayoutFromConfig(children, config) {
-  switch (config.layout) {
+function renderLayoutFromConfig(children, layout, navigation, config) {
+  switch (layout) {
     case 'admin':
       return (
         <AdminLayout
@@ -133,7 +152,7 @@ function renderLayoutFromConfig(children, config) {
           size={config.adminLayout.size}
           title={config.title}
           logo={config.logo ? <img src={config.logo} alt="Logo" className="h-8 w-auto" /> : undefined}
-          navigationItems={config.navigation}
+          navigationItems={navigation}
           currentPath={typeof window !== 'undefined' ? window.location.pathname : '/'}
           onNavigate={handleLayoutNavigation}
           collapsible={config.adminLayout.collapsible}
@@ -162,9 +181,9 @@ function renderLayoutFromConfig(children, config) {
             ) : (
               <span className="text-xl font-bold">{config.title}</span>
             )}
-            {config.navigation.length > 0 && (
+            {navigation.length > 0 && (
               <nav className="ml-auto">
-                {config.navigation.map(item => (
+                {navigation.map(item => (
                   <button
                     key={item.key}
                     onClick={() => handleLayoutNavigation(item.path, item)}
@@ -255,7 +274,7 @@ function handleLayoutNavigation(path, item) {
       const newVariant = currentVariant === 'dark' ? 'light' : 'dark';
       document.documentElement.classList.toggle('dark', newVariant === 'dark');
       localStorage.setItem('uikit-theme', JSON.stringify({ 
-        theme: process.env.VOILA_THEME || 'default',
+        theme: import.meta.env.VITE__LAYOUT__THEME || 'default',
         variant: newVariant 
       }));
       return;
