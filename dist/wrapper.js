@@ -6,58 +6,81 @@ import { PageLayout, PageHeader, PageContent, PageFooter } from "./page.js";
 import AuthLayout from "./auth.js";
 import BlankLayout from "./blank.js";
 const __vite_import_meta_env__ = {};
+function parseNavigationConfig(navConfig) {
+  if (!navConfig) return [];
+  try {
+    return JSON.parse(navConfig);
+  } catch (error) {
+    console.warn("Failed to parse navigation JSON:", navConfig);
+    return [];
+  }
+}
 function getLayoutConfig() {
-  const env = typeof window !== "undefined" && __vite_import_meta_env__ ? __vite_import_meta_env__ : {};
+  const env = __vite_import_meta_env__ || {};
+  console.log("🔍 DEBUG getLayoutConfig: Raw environment variables:", {
+    VITE__LAYOUT__THEME: env.VITE__LAYOUT__THEME,
+    VITE__LAYOUT__VARIANT: env.VITE__LAYOUT__VARIANT,
+    VITE__LAYOUT__TYPE: env.VITE__LAYOUT__TYPE,
+    VITE__LAYOUT__TITLE: env.VITE__LAYOUT__TITLE,
+    VITE__LAYOUT__ADMIN__VARIANT: env.VITE__LAYOUT__ADMIN__VARIANT,
+    VITE__LAYOUT__ADMIN__SIZE: env.VITE__LAYOUT__ADMIN__SIZE
+  });
   const config = {
     // Theme configuration
-    theme: env.VOILA_THEME || "default",
-    variant: env.VOILA_VARIANT || "light",
-    detectSystem: env.VOILA_DETECT_SYSTEM === "true",
+    theme: env.VITE__LAYOUT__THEME || "default",
+    variant: env.VITE__LAYOUT__VARIANT || "light",
+    detectSystem: env.VITE__LAYOUT__DETECT_SYSTEM === "true",
     // Layout configuration
-    layout: env.VOILA_LAYOUT || "admin",
-    layoutVariant: env.VOILA_LAYOUT_VARIANT || "default",
-    layoutSize: env.VOILA_LAYOUT_SIZE || "default",
-    // Content configuration
-    title: env.VOILA_TITLE || "Platform",
-    logo: env.VOILA_LOGO,
-    // Navigation configuration
-    navigation: env.VOILA_NAV ? JSON.parse(env.VOILA_NAV) : [],
+    layout: env.VITE__LAYOUT__TYPE || "admin",
+    title: env.VITE__LAYOUT__TITLE || env.VITE__APP__NAME || "Platform",
+    logo: env.VITE__LAYOUT__LOGO,
+    // Navigation configuration (JSON string)
+    navigation: parseNavigationConfig(env.VITE__LAYOUT__NAVIGATION),
     // Admin layout specific props
     adminLayout: {
-      variant: env.VOILA_ADMIN_VARIANT || "default",
-      size: env.VOILA_ADMIN_SIZE || "default",
-      collapsible: env.VOILA_ADMIN_COLLAPSIBLE !== "false",
-      defaultSidebarOpen: env.VOILA_ADMIN_SIDEBAR_OPEN !== "false"
+      variant: env.VITE__LAYOUT__ADMIN__VARIANT || "default",
+      size: env.VITE__LAYOUT__ADMIN__SIZE || "default",
+      collapsible: env.VITE__LAYOUT__ADMIN__COLLAPSIBLE !== "false",
+      defaultSidebarOpen: env.VITE__LAYOUT__ADMIN__SIDEBAR_OPEN !== "false"
     },
     // Page layout specific props
     pageLayout: {
-      variant: env.VOILA_PAGE_VARIANT || "default",
-      size: env.VOILA_PAGE_SIZE || "xl"
+      variant: env.VITE__LAYOUT__PAGE__VARIANT || "default",
+      size: env.VITE__LAYOUT__PAGE__SIZE || "xl"
     },
     // Header specific props
     header: {
-      variant: env.VOILA_HEADER_VARIANT || "default",
-      sticky: env.VOILA_HEADER_STICKY !== "false",
-      size: env.VOILA_HEADER_SIZE || "md"
+      variant: env.VITE__LAYOUT__HEADER__VARIANT || "default",
+      sticky: env.VITE__LAYOUT__HEADER__STICKY !== "false",
+      size: env.VITE__LAYOUT__HEADER__SIZE || "md"
     },
     // Footer specific props
     footer: {
-      variant: env.VOILA_FOOTER_VARIANT || "default",
-      size: env.VOILA_FOOTER_SIZE || "md"
+      variant: env.VITE__LAYOUT__FOOTER__VARIANT || "default",
+      size: env.VITE__LAYOUT__FOOTER__SIZE || "md"
     },
     // Auth layout specific props
     authLayout: {
-      variant: env.VOILA_AUTH_VARIANT || "card",
-      imageUrl: env.VOILA_AUTH_IMAGE_URL,
-      imageOverlay: env.VOILA_AUTH_IMAGE_OVERLAY || "dark"
+      variant: env.VITE__LAYOUT__AUTH__VARIANT || "card",
+      imageUrl: env.VITE__LAYOUT__AUTH__IMAGE_URL,
+      imageOverlay: env.VITE__LAYOUT__AUTH__IMAGE_OVERLAY || "dark"
     },
     // Blank layout specific props
     blankLayout: {
-      variant: env.VOILA_BLANK_VARIANT || "default"
+      variant: env.VITE__LAYOUT__BLANK__VARIANT || "default"
     },
     // Additional custom props (JSON format)
-    customProps: env.VOILA_CUSTOM_PROPS ? JSON.parse(env.VOILA_CUSTOM_PROPS) : {}
+    customProps: parseNavigationConfig(env.VITE__LAYOUT__CUSTOM_PROPS) || {}
   };
+  console.log("🔧 DEBUG getLayoutConfig: Final config:", {
+    theme: config.theme,
+    variant: config.variant,
+    layout: config.layout,
+    title: config.title,
+    navItems: config.navigation.length,
+    adminVariant: config.adminLayout.variant,
+    adminSize: config.adminLayout.size
+  });
   if (typeof window !== "undefined" && window.console) {
     console.log("🔧 Layout configuration loaded:", {
       theme: config.theme,
@@ -65,25 +88,40 @@ function getLayoutConfig() {
       layout: config.layout,
       title: config.title,
       navItems: config.navigation.length,
-      customProps: Object.keys(config.customProps).length
+      customProps: Object.keys(config.customProps).length,
+      source: "VITE__ environment variables"
     });
   }
   return config;
 }
-function LayoutWrapper({ children, overrides = {} }) {
+function LayoutWrapper({ children, layout, navigation, overrides = {} }) {
   const config = { ...getLayoutConfig(), ...overrides };
+  const finalLayout = layout || config.layout;
+  const finalNavigation = navigation || config.navigation;
+  console.log("🎨 DEBUG LayoutWrapper: Passing to ThemeProvider:", {
+    theme: config.theme,
+    variant: config.variant,
+    detectSystem: config.detectSystem,
+    finalLayout,
+    overrides
+  });
   return /* @__PURE__ */ jsx(
     ThemeProvider,
     {
       theme: config.theme,
       variant: config.variant,
       detectSystem: config.detectSystem,
-      children: renderLayoutFromConfig(children, config)
+      children: renderLayoutFromConfig(children, finalLayout, finalNavigation, config)
     }
   );
 }
-function renderLayoutFromConfig(children, config) {
-  switch (config.layout) {
+function renderLayoutFromConfig(children, layout, navigation, config) {
+  console.log("🏗️ DEBUG renderLayoutFromConfig:", {
+    layout,
+    navigationCount: navigation.length,
+    theme: config.theme
+  });
+  switch (layout) {
     case "admin":
       return /* @__PURE__ */ jsx(
         AdminLayout,
@@ -92,7 +130,7 @@ function renderLayoutFromConfig(children, config) {
           size: config.adminLayout.size,
           title: config.title,
           logo: config.logo ? /* @__PURE__ */ jsx("img", { src: config.logo, alt: "Logo", className: "h-8 w-auto" }) : void 0,
-          navigationItems: config.navigation,
+          navigationItems: navigation,
           currentPath: typeof window !== "undefined" ? window.location.pathname : "/",
           onNavigate: handleLayoutNavigation,
           collapsible: config.adminLayout.collapsible,
@@ -118,7 +156,7 @@ function renderLayoutFromConfig(children, config) {
                 size: config.header.size,
                 children: [
                   config.logo ? /* @__PURE__ */ jsx("img", { src: config.logo, alt: "Logo", className: "h-8 w-auto mr-3" }) : /* @__PURE__ */ jsx("span", { className: "text-xl font-bold", children: config.title }),
-                  config.navigation.length > 0 && /* @__PURE__ */ jsx("nav", { className: "ml-auto", children: config.navigation.map((item) => /* @__PURE__ */ jsx(
+                  navigation.length > 0 && /* @__PURE__ */ jsx("nav", { className: "ml-auto", children: navigation.map((item) => /* @__PURE__ */ jsx(
                     "button",
                     {
                       onClick: () => handleLayoutNavigation(item.path, item),
@@ -170,6 +208,7 @@ function renderLayoutFromConfig(children, config) {
           children
         }
       );
+    case "none":
     default:
       return children;
   }
@@ -191,7 +230,7 @@ function handleLayoutNavigation(path, item) {
       const newVariant = currentVariant === "dark" ? "light" : "dark";
       document.documentElement.classList.toggle("dark", newVariant === "dark");
       localStorage.setItem("uikit-theme", JSON.stringify({
-        theme: process.env.VOILA_THEME || "default",
+        theme: "default",
         variant: newVariant
       }));
       return;

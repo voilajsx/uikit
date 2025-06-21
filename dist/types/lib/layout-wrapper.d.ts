@@ -1,12 +1,16 @@
 /**
- * Enhanced layout wrapper component with full prop drilling
+ * Enhanced layout wrapper component with VITE__ environment variables and debugging
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - App content
+ * @param {string} [props.layout] - Override layout type
+ * @param {Array} [props.navigation] - Override navigation items
  * @param {Object} [props.overrides] - Manual overrides for env config
- * @returns {JSX.Element} Wrapped app with layout theme and layout
+ * @returns {JSX.Element} Wrapped app with theme and layout
  */
-export function LayoutWrapper({ children, overrides }: {
+export function LayoutWrapper({ children, layout, navigation, overrides }: {
     children: React.ReactNode;
+    layout?: string | undefined;
+    navigation?: any[] | undefined;
     overrides?: Object | undefined;
 }): JSX.Element;
 /**
