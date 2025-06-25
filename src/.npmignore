@@ -1,0 +1,15 @@
+src/
+.github/
+.vscode/
+.env*
+*.log
+.DS_Store
+node_modules/
+coverage/
+.nyc_output/
+docs/
+examples/
+tests/
+**/*.test.*
+**/*.spec.*
+**/*.stories.*
