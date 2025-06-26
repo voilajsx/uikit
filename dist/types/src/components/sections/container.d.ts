@@ -1,5 +1,5 @@
 /**
- * Container component with consistent prop naming and navigation support
+ * Container component with standardized prop naming and tone system
  * @module @voilajsx/uikit
  * @file src/components/sections/container.tsx
  */
@@ -12,9 +12,10 @@ interface ContainerSidebarProps {
     content?: React.ReactNode | NavigationItem[];
     position?: 'left' | 'right';
     size?: Size;
-    sticky?: boolean;
+    sidebarPosition?: 'sticky' | 'fixed' | 'relative';
+    tone?: 'clean' | 'subtle' | 'brand' | 'contrast';
     currentPath?: string;
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    onNavigate?: (href: string, item: NavigationItem) => void;
     className?: string;
     style?: React.CSSProperties;
 }
@@ -36,11 +37,13 @@ interface ContainerMainProps {
  */
 declare const ContainerMain: React.ForwardRefExoticComponent<ContainerMainProps & React.RefAttributes<HTMLDivElement>>;
 /**
- * Container component props
+ * Container component props with standardized system
  */
 export interface ContainerProps {
-    /** Container style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    /** Visual styling tone (applies to sidebar only) */
+    tone?: 'clean' | 'subtle' | 'brand' | 'contrast';
+    /** Container positioning */
+    position?: 'sticky' | 'fixed' | 'relative';
     /** Sidebar position */
     sidebar?: 'none' | 'left' | 'right';
     /** Navigation items (takes priority over sidebarContent) */
@@ -50,9 +53,9 @@ export interface ContainerProps {
     /** Current path for active states */
     currentPath?: string;
     /** Navigation handler */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    onNavigate?: (href: string, item: NavigationItem) => void;
     /** Whether sidebar should be sticky */
-    sticky?: boolean;
+    sidebarPosition?: 'sticky' | 'fixed' | 'relative';
     /** Container size */
     size?: Size;
     /** Container content */

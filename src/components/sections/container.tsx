@@ -14,18 +14,12 @@ import { ChevronRight } from 'lucide-react';
 import type { NavigationItem, Size } from '@/types';
 
 /**
- * Container variants with tone-based styling and position support
+ * Container variants - only layout and size, no tone styling
  */
 const containerVariants = cva(
-  'w-full mx-auto',
+  'w-full mx-auto bg-background text-foreground',
   {
     variants: {
-      tone: {
-        clean: 'bg-white text-foreground',
-        subtle: 'bg-muted/20 text-foreground',
-        brand: 'bg-primary/10 text-foreground',
-        contrast: 'bg-muted/40 text-foreground'
-      },
       layout: {
         none: 'block p-1',
         'sidebar-left': 'flex flex-col md:flex-row min-h-screen overflow-visible gap-3 md:gap-4 p-1',
@@ -45,7 +39,6 @@ const containerVariants = cva(
       }
     },
     defaultVariants: {
-      tone: 'clean',
       layout: 'none',
       size: 'xl',
       position: 'relative'
@@ -54,10 +47,10 @@ const containerVariants = cva(
 );
 
 /**
- * Sidebar variants
+ * Sidebar variants with tone-based styling and rounded edges
  */
 const sidebarVariants = cva(
-  'flex-shrink-0 bg-background border-r border-border',
+  'flex-shrink-0 rounded-lg', // Added rounded-lg for rounded edges
   {
     variants: {
       position: {
@@ -67,20 +60,27 @@ const sidebarVariants = cva(
       size: {
         sm: 'md:w-48 lg:w-52 xl:w-56',
         md: 'md:w-56 lg:w-64 xl:w-72',
-        lg: 'md:w-64 lg:w-72 xl:w-80',
-        xl: 'md:w-72 lg:w-80 xl:w-96',
-        full: 'md:w-80 lg:w-96 xl:w-[28rem]',
+        lg: 'md:w-64 lg:w-72 xl:w-80', // Same size for lg, xl, full
+        xl: 'md:w-64 lg:w-72 xl:w-80', // Same size for lg, xl, full
+        full: 'md:w-64 lg:w-72 xl:w-80', // Same size for lg, xl, full
       },
       sidebarPosition: {
         sticky: 'md:sticky md:top-0 md:h-screen md:overflow-y-auto',
         fixed: 'md:fixed md:top-0 md:h-screen md:overflow-y-auto',
         relative: 'md:h-full',
       },
+      tone: {
+        clean: '', // No background or border for clean
+        subtle: 'bg-muted/30 border border-border/50',
+        brand: 'bg-primary/10 border border-primary/20',
+        contrast: 'bg-muted border border-border'
+      }
     },
     defaultVariants: {
       position: 'left',
       size: 'md',
       sidebarPosition: 'relative',
+      tone: 'clean'
     },
   }
 );
@@ -267,6 +267,7 @@ interface ContainerSidebarProps {
   position?: 'left' | 'right';
   size?: Size;
   sidebarPosition?: 'sticky' | 'fixed' | 'relative';
+  tone?: 'clean' | 'subtle' | 'brand' | 'contrast';
   currentPath?: string;
   onNavigate?: (href: string, item: NavigationItem) => void;
   className?: string;
@@ -281,6 +282,7 @@ const ContainerSidebar = forwardRef<HTMLDivElement, ContainerSidebarProps>(({
   position = 'left',
   size = 'md',
   sidebarPosition = 'relative',
+  tone = 'clean',
   currentPath = '',
   onNavigate,
   className,
@@ -324,7 +326,7 @@ const ContainerSidebar = forwardRef<HTMLDivElement, ContainerSidebarProps>(({
     <aside 
       ref={ref}
       className={cn(
-        sidebarVariants({ position, size, sidebarPosition }),
+        sidebarVariants({ position, size, sidebarPosition, tone }),
         className
       )}
       style={sidebarPosition !== 'relative' ? { ...style, top: `${headerHeight + 10}px` } : style}
@@ -370,7 +372,7 @@ ContainerMain.displayName = 'ContainerMain';
  * Container component props with standardized system
  */
 export interface ContainerProps {
-  /** Visual styling tone */
+  /** Visual styling tone (applies to sidebar only) */
   tone?: 'clean' | 'subtle' | 'brand' | 'contrast';
   /** Container positioning */
   position?: 'sticky' | 'fixed' | 'relative';
@@ -426,7 +428,7 @@ const ContainerComponent = forwardRef<HTMLDivElement, ContainerProps>(({
   return (
     <div 
       ref={ref}
-      className={cn(containerVariants({ tone, layout, size, position }), className)}
+      className={cn(containerVariants({ layout, size, position }), className)}
       style={style}
     >
       {/* Left Sidebar */}
@@ -436,6 +438,7 @@ const ContainerComponent = forwardRef<HTMLDivElement, ContainerProps>(({
           position="left"
           size={size}
           sidebarPosition={sidebarPosition}
+          tone={tone}
           currentPath={currentPath}
           onNavigate={onNavigate}
         />
@@ -453,6 +456,7 @@ const ContainerComponent = forwardRef<HTMLDivElement, ContainerProps>(({
           position="right"
           size={size}
           sidebarPosition={sidebarPosition}
+          tone={tone}
           currentPath={currentPath}
           onNavigate={onNavigate}
         />

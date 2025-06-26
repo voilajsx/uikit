@@ -1,318 +1,346 @@
 /**
- * Global type definitions for @voilajsx/uikit
+ * LLM-optimized type definitions for @voilajsx/uikit
  * @module @voilajsx/uikit
  * @file src/types/index.ts
  */
 import type { ComponentType, ReactNode, ReactElement, HTMLAttributes, ForwardRefExoticComponent, RefAttributes } from 'react';
 /**
- * Standardized size variants used across all components
+ * @llm-decision-tree Component Selection Rules
+ *
+ * Dashboard/admin interface → AdminLayout
+ * Public website → PageLayout
+ * Chrome extension/popup → PopupLayout
+ * Login/signup pages → AuthLayout
+ * Error/simple pages → BlankLayout
+ */
+/**
+ * Standardized size variants - CONSISTENT across ALL components
+ * @llm-rule Use same sizes everywhere for predictability
  */
 export type Size = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 /**
- * Theme identifiers for the UIKit theme system
+ * System color scheme preference
+ * @llm-rule mode: System-level light/dark preference
  */
-export type Theme = 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+export type Mode = 'light' | 'dark';
 /**
- * Theme variant (light/dark mode)
+ * Semantic tone system for component emphasis
+ * @llm-rule tone: Component-level visual emphasis
+ * clean → Pure, minimal, white/light backgrounds
+ * subtle → Muted, supporting, gray areas
+ * brand → Primary colored, branded elements
+ * contrast → High emphasis, dark/bold areas
  */
-export type ThemeVariant = 'light' | 'dark';
+export type Tone = 'clean' | 'subtle' | 'brand' | 'contrast';
 /**
- * Navigation item interface used across all navigation components
- * Supports nested navigation with collapsible items
+ * @llm-defaults Context-aware tone defaults:
+ * AdminLayout: "subtle" (professional gray)
+ * PageLayout: "clean" (pure white)
+ * AuthLayout: "clean" (focused minimal)
+ * PopupLayout: "clean" (clean extension)
+ * BlankLayout: "clean" (simple pages)
+ * Header: "clean" (clean headers)
+ * Footer: "contrast" (bold footers)
+ */
+/**
+ * Layout scheme types - structural arrangements for each component
+ */
+export type AdminLayoutScheme = 'sidebar' | 'topbar' | 'hybrid';
+export type PageLayoutScheme = 'default' | 'blog' | 'docs' | 'marketing';
+export type AuthLayoutScheme = 'simple' | 'card' | 'split' | 'hero';
+export type BlankLayoutScheme = 'default' | 'centered' | 'error' | 'maintenance';
+export type PopupLayoutScheme = 'modal' | 'drawer' | 'floating';
+/**
+ * Standardized navigation interface - SINGLE structure for ALL components
+ * @llm-rules Navigation Usage:
+ * - href: Use for page navigation (links)
+ * - onClick: Use for app functions (modals, actions)
+ * - items: Use for submenus (max 2 levels deep)
+ * - badge: Use for notifications/counts
+ * - isActive: Use for current page highlighting
  */
 export interface NavigationItem {
-    /** Unique identifier for the navigation item */
+    /** REQUIRED: Unique identifier */
     key: string;
-    /** Display text for the navigation item */
+    /** REQUIRED: Display text */
     label: string;
-    /** Optional icon component (Lucide React icon) */
+    /** OPTIONAL: Page navigation - USE for routing */
+    href?: string;
+    /** OPTIONAL: App function - USE for actions/modals */
+    onClick?: () => void;
+    /** OPTIONAL: Icon component from lucide-react */
     icon?: ComponentType<{
         className?: string;
     }>;
-    /** Optional URL path for navigation */
-    path?: string;
-    /** Whether this item is currently active */
-    isActive?: boolean;
-    /** Click handler function */
-    onClick?: () => void;
-    /** Optional badge text (e.g., "12", "New") */
-    badge?: string;
-    /** Optional section grouping (e.g., "main", "system") */
-    section?: string;
-    /** Additional CSS classes */
-    className?: string;
-    /** Nested navigation items for collapsible menus */
+    /** OPTIONAL: Nested items - USE for dropdowns (max 2 levels) */
     items?: NavigationItem[];
+    /** OPTIONAL: Badge text for notifications */
+    badge?: string;
+    /** OPTIONAL: Current page indicator */
+    isActive?: boolean;
+    /** OPTIONAL: Additional CSS classes */
+    className?: string;
 }
 /**
- * Base component props that most components should extend
+ * Base props that ALL components should extend
+ * @llm-props Base pattern for all components
  */
 export interface BaseComponentProps {
-    /** Additional CSS classes */
+    /** OPTIONAL: Additional CSS classes */
     className?: string;
-    /** Child components or content */
-    children?: ReactNode;
-    /** Inline styles */
+    /** OPTIONAL: Inline styles */
     style?: React.CSSProperties;
 }
 /**
  * Props for components that support navigation
+ * @llm-props Navigation components
  */
 export interface NavigationProps {
-    /** Array of navigation items */
+    /** RECOMMENDED: Navigation items using standard structure */
     navigation?: NavigationItem[];
-    /** Current path for determining active states */
+    /** OPTIONAL: Current path for active state detection */
     currentPath?: string;
-    /** Navigation handler function */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    /** OPTIONAL: Navigation handler function */
+    onNavigate?: (href: string, item: NavigationItem) => void;
 }
 /**
- * Props for components that support theming variants
+ * Props for components that support tone theming
+ * @llm-props Tone system
  */
-export interface VariantProps {
-    /** Component style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+export interface ToneProps {
+    /** RECOMMENDED: Visual emphasis - clean/subtle/brand/contrast */
+    tone?: Tone;
 }
 /**
  * Props for components that support sizing
+ * @llm-props Size system
  */
 export interface SizeProps {
-    /** Component size */
+    /** OPTIONAL: Component size - sm/md/lg/xl/full */
     size?: Size;
 }
 /**
- * Props for components that support sticky positioning
+ * Standard layout component props - ALL layouts extend this
+ * @llm-props Layout components base
+ * REQUIRED: children
+ * RECOMMENDED: tone
+ * OPTIONAL: size, className, style
  */
-export interface StickyProps {
-    /** Whether component should be sticky */
-    sticky?: boolean;
+export interface LayoutProps extends BaseComponentProps, ToneProps, SizeProps {
+    /** REQUIRED: Layout content */
+    children: ReactNode;
 }
 /**
- * Common layout component props
+ * Admin layout props
+ * @llm-props AdminLayout
+ * REQUIRED: children
+ * RECOMMENDED: scheme="sidebar", tone="subtle", navigation
+ * OPTIONAL: size, className
+ * @llm-defaults scheme="sidebar", tone="subtle", size="lg"
  */
-export interface LayoutProps extends BaseComponentProps, VariantProps, SizeProps, StickyProps, NavigationProps {
-    /** Layout title */
+export interface AdminLayoutProps extends LayoutProps, NavigationProps {
+    /** REQUIRED: Main content */
+    children: ReactNode;
+    /** RECOMMENDED: Layout structure (default: "sidebar") */
+    scheme?: AdminLayoutScheme;
+    /** RECOMMENDED: Layout tone (default: "subtle") */
+    tone?: Tone;
+    /** RECOMMENDED: Sidebar navigation items */
+    navigation?: NavigationItem[];
+    /** OPTIONAL: Layout size (default: "lg") */
+    size?: Size;
+    /** OPTIONAL: Page title */
     title?: string;
-    /** Logo component */
+    /** OPTIONAL: Logo component */
     logo?: ReactNode;
-    /** Header actions (buttons, theme toggle, etc.) */
+    /** OPTIONAL: Header actions */
     headerActions?: ReactNode;
 }
 /**
- * Theme configuration object
+ * Page layout props
+ * @llm-props PageLayout
+ * REQUIRED: children
+ * RECOMMENDED: scheme="default", tone="clean"
+ * OPTIONAL: navigation, size, className
+ * @llm-defaults scheme="default", tone="clean", size="xl"
  */
+export interface PageLayoutProps extends LayoutProps, NavigationProps {
+    /** REQUIRED: Main content */
+    children: ReactNode;
+    /** RECOMMENDED: Layout structure (default: "default") */
+    scheme?: PageLayoutScheme;
+    /** RECOMMENDED: Layout tone (default: "clean") */
+    tone?: Tone;
+    /** OPTIONAL: Header navigation items */
+    navigation?: NavigationItem[];
+    /** OPTIONAL: Layout size (default: "xl") */
+    size?: Size;
+    /** OPTIONAL: Page title */
+    title?: string;
+    /** OPTIONAL: Logo component */
+    logo?: ReactNode;
+    /** OPTIONAL: Header actions */
+    headerActions?: ReactNode;
+    /** OPTIONAL: Footer navigation */
+    footerNavigation?: NavigationItem[];
+    /** OPTIONAL: Copyright text */
+    copyright?: ReactNode;
+}
+/**
+ * Auth layout props
+ * @llm-props AuthLayout
+ * REQUIRED: children
+ * RECOMMENDED: scheme="card", tone="clean"
+ * OPTIONAL: title, size, className
+ * @llm-defaults scheme="card", tone="clean", size="md"
+ */
+export interface AuthLayoutProps extends LayoutProps {
+    /** REQUIRED: Form content */
+    children: ReactNode;
+    /** RECOMMENDED: Layout structure (default: "card") */
+    scheme?: AuthLayoutScheme;
+    /** RECOMMENDED: Layout tone (default: "clean") */
+    tone?: Tone;
+    /** OPTIONAL: Layout size (default: "md") */
+    size?: Size;
+    /** OPTIONAL: Page title */
+    title?: string;
+    /** OPTIONAL: Page subtitle */
+    subtitle?: string;
+    /** OPTIONAL: Logo component */
+    logo?: ReactNode;
+    /** OPTIONAL: Footer content */
+    footer?: ReactNode;
+    /** OPTIONAL: Split content (for split scheme) */
+    splitContent?: ReactNode;
+    /** OPTIONAL: Background image URL (for hero scheme) */
+    imageUrl?: string;
+}
+/**
+ * Blank layout props
+ * @llm-props BlankLayout
+ * REQUIRED: children
+ * RECOMMENDED: scheme="default", tone="clean"
+ * OPTIONAL: title, size, className
+ * @llm-defaults scheme="default", tone="clean", size="lg"
+ */
+export interface BlankLayoutProps extends LayoutProps {
+    /** REQUIRED: Main content */
+    children: ReactNode;
+    /** RECOMMENDED: Layout structure (default: "default") */
+    scheme?: BlankLayoutScheme;
+    /** RECOMMENDED: Layout tone (default: "clean") */
+    tone?: Tone;
+    /** OPTIONAL: Layout size (default: "lg") */
+    size?: Size;
+    /** OPTIONAL: Page title */
+    title?: string;
+    /** OPTIONAL: Page subtitle */
+    subtitle?: string;
+    /** OPTIONAL: Logo component */
+    logo?: ReactNode;
+    /** OPTIONAL: Footer content */
+    footer?: ReactNode;
+}
+/**
+ * Popup layout props
+ * @llm-props PopupLayout
+ * REQUIRED: children
+ * RECOMMENDED: scheme="modal", tone="clean"
+ * OPTIONAL: title, size, className
+ * @llm-defaults scheme="modal", tone="clean", size="md"
+ */
+export interface PopupLayoutProps extends LayoutProps {
+    /** REQUIRED: Main content */
+    children: ReactNode;
+    /** RECOMMENDED: Layout structure (default: "modal") */
+    scheme?: PopupLayoutScheme;
+    /** RECOMMENDED: Layout tone (default: "clean") */
+    tone?: Tone;
+    /** OPTIONAL: Layout size (default: "md") */
+    size?: Size;
+    /** OPTIONAL: Popup title */
+    title?: string;
+    /** OPTIONAL: Popup subtitle */
+    subtitle?: string;
+    /** OPTIONAL: Show close button */
+    showClose?: boolean;
+    /** OPTIONAL: Close handler */
+    onClose?: () => void;
+}
+/**
+ * Header component props (Section component - no scheme)
+ * @llm-props Header
+ * REQUIRED: children
+ * RECOMMENDED: tone="clean"
+ * OPTIONAL: size, className
+ */
+export interface HeaderProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
+    /** REQUIRED: Header content */
+    children: ReactNode;
+    /** RECOMMENDED: Header tone (default: "clean") */
+    tone?: Tone;
+    /** OPTIONAL: Header size */
+    size?: Size;
+    /** OPTIONAL: Header positioning */
+    position?: 'sticky' | 'fixed' | 'relative';
+}
+/**
+ * Footer component props (Section component - no scheme)
+ * @llm-props Footer
+ * REQUIRED: children
+ * RECOMMENDED: tone="contrast"
+ * OPTIONAL: size, className
+ */
+export interface FooterProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
+    /** REQUIRED: Footer content */
+    children: ReactNode;
+    /** RECOMMENDED: Footer tone (default: "contrast") */
+    tone?: Tone;
+    /** OPTIONAL: Footer navigation */
+    navigation?: NavigationItem[];
+    /** OPTIONAL: Footer size */
+    size?: Size;
+    /** OPTIONAL: Footer positioning */
+    position?: 'sticky' | 'fixed' | 'relative';
+}
+/**
+ * Container component props (Section component - no scheme)
+ * @llm-props Container
+ * REQUIRED: children
+ * RECOMMENDED: tone="clean"
+ * OPTIONAL: size, className
+ */
+export interface ContainerProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
+    /** REQUIRED: Container content */
+    children: ReactNode;
+    /** RECOMMENDED: Container tone (default: "clean") */
+    tone?: Tone;
+    /** OPTIONAL: Container size */
+    size?: Size;
+    /** OPTIONAL: Sidebar position */
+    sidebar?: 'none' | 'left' | 'right';
+    /** OPTIONAL: Sidebar sticky behavior */
+    sticky?: boolean;
+}
+/**
+ * Legacy types for backward compatibility
+ */
+export type Theme = 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+export type ThemeVariant = Mode;
 export interface ThemeConfig {
-    /** Theme identifier */
     id: Theme;
-    /** Human-readable theme name */
     name: string;
-    /** Theme description */
     description?: string;
-    /** CSS variables for the theme */
     cssVars: {
         light: Record<string, string>;
         dark: Record<string, string>;
     };
 }
 /**
- * Theme provider context type
- */
-export interface ThemeContextType {
-    /** Current theme */
-    theme: Theme;
-    /** Current variant (light/dark) */
-    variant: ThemeVariant;
-    /** Set theme function */
-    setTheme: (theme: Theme) => void;
-    /** Set variant function */
-    setVariant: (variant: ThemeVariant) => void;
-    /** Toggle between light and dark variants */
-    toggleVariant: () => void;
-    /** Available themes */
-    availableThemes: ThemeConfig[];
-    /** Register a custom theme */
-    registerTheme: (theme: ThemeConfig) => void;
-}
-/**
- * Theme provider props
- */
-export interface ThemeProviderProps {
-    /** Initial theme */
-    theme?: Theme;
-    /** Initial variant */
-    variant?: ThemeVariant;
-    /** Whether to detect system preference */
-    detectSystem?: boolean;
-    /** Custom themes to register */
-    customThemes?: ThemeConfig[];
-    /** Child components */
-    children: ReactNode;
-}
-/**
- * Layout configuration for the layout wrapper
- */
-export interface LayoutConfig {
-    /** Theme configuration */
-    theme: Theme;
-    /** Theme variant */
-    variant: ThemeVariant;
-    /** Whether to detect system preference */
-    detectSystem: boolean;
-    /** Layout type */
-    layout: string;
-    /** Layout title */
-    title: string;
-    /** Logo URL or component */
-    logo?: string;
-    /** Navigation items */
-    navigation: NavigationItem[];
-    /** Admin layout specific configuration */
-    adminLayout: {
-        variant: 'default' | 'muted' | 'primary' | 'black';
-        size: Size;
-        collapsible: boolean;
-        defaultSidebarOpen: boolean;
-    };
-    /** Page layout specific configuration */
-    pageLayout: {
-        variant: 'default' | 'muted' | 'primary' | 'black';
-        size: Size;
-    };
-    /** Header specific configuration */
-    header: {
-        variant: 'default' | 'muted' | 'primary' | 'black';
-        sticky: boolean;
-        size: Size;
-    };
-    /** Footer specific configuration */
-    footer: {
-        variant: 'default' | 'muted' | 'primary' | 'black';
-        size: Size;
-    };
-    /** Auth layout specific configuration */
-    authLayout: {
-        variant: 'simple' | 'card' | 'split-gradient' | 'split-image' | 'card-gradient' | 'card-image';
-        imageUrl?: string;
-        imageOverlay: 'light' | 'dark' | 'none';
-    };
-    /** Blank layout specific configuration */
-    blankLayout: {
-        variant: 'default' | 'card' | 'error' | 'maintenance' | 'suspension';
-    };
-    /** Additional custom properties */
-    customProps: Record<string, any>;
-}
-/**
  * Platform detection types
  */
 export type Platform = 'web' | 'native' | 'tauri' | 'unknown';
-/**
- * Footer link interface (for legacy support)
- */
-export interface FooterLink {
-    /** Unique key */
-    key: string;
-    /** Display text */
-    label: string;
-    /** Click handler */
-    onClick: () => void;
-    /** Additional CSS classes */
-    className?: string;
-}
-/**
- * Footer column interface
- */
-export interface FooterColumn {
-    /** Unique key */
-    key: string;
-    /** Column title */
-    title: string;
-    /** Column links */
-    links: FooterLink[];
-}
-/**
- * Social link interface
- */
-export interface SocialLink {
-    /** Unique key */
-    key: string;
-    /** Accessibility label */
-    label: string;
-    /** Icon component */
-    icon: ComponentType<{
-        className?: string;
-    }>;
-    /** Click handler */
-    onClick: () => void;
-    /** Additional CSS classes */
-    className?: string;
-}
-/**
- * Form field types for enhanced form components
- */
-export type FormFieldType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'switch' | 'slider' | 'date' | 'time' | 'file';
-/**
- * Data table column definition
- */
-export interface DataTableColumn<T = any> {
-    /** Unique key (property name in data) */
-    key: string;
-    /** Column header text */
-    title: string;
-    /** Whether column is sortable */
-    sortable?: boolean;
-    /** Custom cell renderer */
-    render?: (value: any, row: T, index: number) => ReactNode;
-    /** Column width */
-    width?: string | number;
-    /** Column alignment */
-    align?: 'left' | 'center' | 'right';
-    /** Whether column is hidden */
-    hidden?: boolean;
-}
-/**
- * Data table props
- */
-export interface DataTableProps<T = any> {
-    /** Table columns */
-    columns: DataTableColumn<T>[];
-    /** Table data */
-    data: T[];
-    /** Whether table is searchable */
-    searchable?: boolean;
-    /** Whether table is sortable */
-    sortable?: boolean;
-    /** Custom search placeholder */
-    searchPlaceholder?: string;
-    /** Loading state */
-    loading?: boolean;
-    /** Empty state message */
-    emptyMessage?: string;
-    /** Additional CSS classes */
-    className?: string;
-}
-/**
- * Color mode preference
- */
-export type ColorMode = 'light' | 'dark' | 'system';
-/**
- * Responsive breakpoint values
- */
-export interface Breakpoints {
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-    '2xl': string;
-}
-/**
- * Animation duration presets
- */
-export type AnimationDuration = 'fast' | 'normal' | 'slow';
-/**
- * Component state variants
- */
-export type ComponentState = 'default' | 'loading' | 'error' | 'success' | 'warning';
 /**
  * Re-export commonly used React types for convenience
  */

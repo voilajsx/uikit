@@ -1,29 +1,34 @@
-import { jsxs as d, jsx as r } from "react/jsx-runtime";
-import { forwardRef as X, useState as k, useEffect as z } from "react";
+import { jsxs as i, jsx as r, Fragment as O } from "react/jsx-runtime";
+import { forwardRef as P, useState as v, useEffect as N } from "react";
 import { c as B } from "./index-DACAHwoB.js";
-import { c as n } from "./utils-qaFjX9_3.js";
-import { Button as Y } from "./button.js";
-import { Badge as $ } from "./badge.js";
-import { Separator as q } from "./separator.js";
-import { X as A } from "./x-BxwubQiM.js";
-import { M as D } from "./menu-DBhEanGo.js";
-import { C as F } from "./chevron-right-pz9eCjj-.js";
-const G = B(
-  "min-h-screen bg-background flex",
+import { c as t } from "./utils-qaFjX9_3.js";
+import { Button as W } from "./button.js";
+import { Badge as X } from "./badge.js";
+import { M as Y } from "./menu-DBhEanGo.js";
+import { X as $ } from "./x-BxwubQiM.js";
+import { C as q } from "./chevron-right-pz9eCjj-.js";
+const D = B(
+  "min-h-screen",
   {
     variants: {
-      variant: {
-        default: "",
-        muted: "",
-        primary: "",
-        black: ""
+      scheme: {
+        sidebar: "bg-background flex",
+        topbar: "bg-background flex flex-col",
+        hybrid: "bg-background flex flex-col"
+      },
+      tone: {
+        clean: "",
+        subtle: "bg-muted/10",
+        brand: "bg-primary/5",
+        contrast: "bg-zinc-900"
       }
     },
     defaultVariants: {
-      variant: "default"
+      scheme: "sidebar",
+      tone: "subtle"
     }
   }
-), J = B(
+), F = B(
   "border-r transition-all duration-300 ease-in-out fixed left-0 top-0 z-50 h-full flex flex-col",
   {
     variants: {
@@ -39,20 +44,20 @@ const G = B(
         full: "w-[28rem]"
         // 448px
       },
-      variant: {
-        default: [
+      tone: {
+        clean: [
           "bg-white border-border",
           "text-foreground"
         ],
-        muted: [
+        subtle: [
           "bg-muted/30 border-border/50",
           "text-foreground"
         ],
-        primary: [
+        brand: [
           "bg-primary border-primary-foreground/20",
           "text-primary-foreground"
         ],
-        black: [
+        contrast: [
           "bg-zinc-900 border-zinc-700/40",
           "text-zinc-100"
         ]
@@ -60,24 +65,31 @@ const G = B(
     },
     defaultVariants: {
       size: "md",
-      variant: "default"
+      tone: "subtle"
     }
   }
-), Q = B(
-  "w-full border-b transition-all duration-200 z-40 bg-background/80 backdrop-blur-sm border-border/40 supports-[backdrop-filter]:bg-background/60 text-foreground",
+), G = B(
+  "w-full border-b transition-all duration-200 z-40",
   {
     variants: {
+      tone: {
+        clean: "bg-background/80 backdrop-blur-sm border-border/40 text-foreground",
+        subtle: "bg-muted/50 backdrop-blur-sm border-border/30 text-foreground",
+        brand: "bg-primary border-primary-foreground/20 text-primary-foreground",
+        contrast: "bg-zinc-900 border-zinc-700/40 text-zinc-100"
+      },
       sticky: {
         true: "sticky top-0",
         false: "relative"
       }
     },
     defaultVariants: {
+      tone: "clean",
       sticky: !0
     }
   }
-), H = (x = "md") => {
-  const a = {
+), E = (x = "md") => {
+  const c = {
     sm: {
       sidebarHeader: "h-12 px-3 text-xs",
       menuButton: "px-2 py-1.5 text-xs min-h-[28px]",
@@ -119,324 +131,266 @@ const G = B(
       showBadges: !0
     }
   };
-  return a[x] || a.md;
+  return c[x] || c.md;
 };
-function Z({
+function J({
   navigationItems: x = [],
-  currentPath: a = "",
-  onNavigate: g = () => {
+  currentPath: c = "",
+  onNavigate: n = () => {
   },
-  size: f = "md",
-  variant: i = "default"
+  size: m = "md",
+  tone: b = "subtle"
 }) {
-  const [p, N] = k(/* @__PURE__ */ new Set()), l = H(f), b = (e) => {
-    const o = new Set(p);
-    o.has(e) ? o.delete(e) : o.add(e), N(o);
-  }, h = (e, o = !1) => {
-    const s = "w-full flex items-center gap-3 rounded-lg transition-all duration-200 group text-left font-medium";
-    if (o) {
-      const t = `${l.submenuButton} font-normal`;
-      switch (i) {
-        case "muted":
-          return n(
-            t,
+  const [h, k] = v(/* @__PURE__ */ new Set()), l = E(m), p = (e) => {
+    const s = new Set(h);
+    s.has(e) ? s.delete(e) : s.add(e), k(s);
+  }, y = (e, s = !1) => {
+    const d = "w-full flex items-center gap-3 rounded-lg transition-all duration-200 group text-left font-medium";
+    if (s) {
+      const a = `${l.submenuButton} font-normal`;
+      switch (b) {
+        case "subtle":
+          return t(
+            a,
             e ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-background/50"
           );
-        case "primary":
-          return n(
-            t,
+        case "brand":
+          return t(
+            a,
             e ? "bg-primary-foreground/20 text-primary-foreground shadow-sm" : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10"
           );
-        case "black":
-          return n(
-            t,
+        case "contrast":
+          return t(
+            a,
             e ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-300 hover:text-zinc-100 hover:bg-zinc-800/70"
           );
         default:
-          return n(
-            t,
+          return t(
+            a,
             e ? "bg-secondary text-secondary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-muted/70"
           );
       }
     } else {
-      const t = l.menuButton;
-      switch (i) {
-        case "muted":
-          return n(
-            s,
-            t,
+      const a = l.menuButton;
+      switch (b) {
+        case "subtle":
+          return t(
+            d,
+            a,
             e ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-background/50"
           );
-        case "primary":
-          return n(
-            s,
-            t,
+        case "brand":
+          return t(
+            d,
+            a,
             e ? "bg-primary-foreground/20 text-primary-foreground shadow-sm" : "text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10"
           );
-        case "black":
-          return n(
-            s,
-            t,
+        case "contrast":
+          return t(
+            d,
+            a,
             e ? "bg-zinc-800 text-zinc-100 shadow-sm" : "text-zinc-200 hover:text-zinc-100 hover:bg-zinc-800/80"
           );
         default:
-          return n(
-            s,
-            t,
+          return t(
+            d,
+            a,
             e ? "bg-secondary text-secondary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-muted/70"
           );
       }
     }
-  }, y = ({ item: e, isSubmenu: o = !1 }) => {
-    const s = !o && e.items && e.items.length > 0, t = p.has(e.key), m = e.path ? a === e.path : !!e.isActive;
-    return /* @__PURE__ */ d("div", { className: "w-full", children: [
-      /* @__PURE__ */ d(
+  }, w = ({ item: e, isSubmenu: s = !1 }) => {
+    const d = !s && e.items && e.items.length > 0, a = h.has(e.key), g = e.href ? c === e.href : !!e.isActive;
+    return /* @__PURE__ */ i("div", { className: "w-full", children: [
+      /* @__PURE__ */ i(
         "button",
         {
           onClick: () => {
-            s ? b(e.key) : e.path ? g(e.path, e) : e.onClick && e.onClick();
+            d ? p(e.key) : e.href ? n(e.href, e) : e.onClick && e.onClick();
           },
-          className: h(m, o),
+          className: y(g, s),
           children: [
-            !o && e.icon && /* @__PURE__ */ r(e.icon, { className: n(l.icon, "flex-shrink-0") }),
+            !s && e.icon && /* @__PURE__ */ r(e.icon, { className: t(l.icon, "flex-shrink-0") }),
             /* @__PURE__ */ r("span", { className: "flex-1 truncate text-left", children: e.label }),
             e.badge && l.showBadges && /* @__PURE__ */ r(
-              $,
+              X,
               {
-                variant: m ? "secondary" : "outline",
-                className: n(
+                variant: g ? "secondary" : "outline",
+                className: t(
                   "text-xs h-4 px-1 ml-1 flex-shrink-0",
-                  i === "primary" && !m && "border-primary-foreground/30 text-primary-foreground/80 bg-primary-foreground/10",
-                  i === "black" && !m && "border-zinc-600 text-zinc-300 bg-zinc-800/50"
+                  b === "brand" && !g && "border-primary-foreground/30 text-primary-foreground/80 bg-primary-foreground/10",
+                  b === "contrast" && !g && "border-zinc-600 text-zinc-300 bg-zinc-800/50"
                 ),
                 children: e.badge
               }
             ),
-            s && /* @__PURE__ */ r(F, { className: n(
+            d && /* @__PURE__ */ r(q, { className: t(
               l.icon,
               "flex-shrink-0 transition-transform duration-200",
-              t && "rotate-90"
+              a && "rotate-90"
             ) })
           ]
         }
       ),
-      s && t && e.items && /* @__PURE__ */ r("div", { className: n(
+      d && a && e.items && /* @__PURE__ */ r("div", { className: t(
         "overflow-hidden transition-all duration-300 mt-1",
         "max-h-96 opacity-100"
-      ), children: /* @__PURE__ */ r("div", { className: n(l.spacing, "pb-2"), children: e.items.map((c) => /* @__PURE__ */ r(y, { item: c, isSubmenu: !0 }, c.key)) }) })
+      ), children: /* @__PURE__ */ r("div", { className: t(l.spacing, "pb-2"), children: e.items.map((o) => /* @__PURE__ */ r(w, { item: o, isSubmenu: !0 }, o.key)) }) })
     ] }, e.key);
-  }, w = x.reduce((e, o) => {
-    const s = o.section || "main";
-    return e[s] || (e[s] = []), e[s].push(o), e;
-  }, {}), v = () => {
-    switch (i) {
-      case "muted":
-        return "px-3 mb-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider";
-      case "primary":
-        return "px-3 mb-4 text-xs font-semibold text-primary-foreground/70 uppercase tracking-wider";
-      case "black":
-        return "px-3 mb-4 text-xs font-semibold text-zinc-400 uppercase tracking-wider";
-      default:
-        return "px-3 mb-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider";
-    }
   };
-  return /* @__PURE__ */ r("nav", { className: "p-6 space-y-8", children: Object.entries(w).map(([e, o]) => /* @__PURE__ */ d("div", { children: [
-    /* @__PURE__ */ r("h3", { className: v(), children: e.charAt(0).toUpperCase() + e.slice(1) }),
-    /* @__PURE__ */ r("div", { className: l.spacing, children: o.map((s) => /* @__PURE__ */ r(y, { item: s }, s.key)) }),
-    e !== "system" && /* @__PURE__ */ r(
-      q,
-      {
-        className: n(
-          "mt-6",
-          i === "primary" && "bg-primary-foreground/20",
-          i === "black" && "bg-zinc-800/60"
-        )
-      }
-    )
-  ] }, e)) });
+  return /* @__PURE__ */ r("nav", { className: "p-6 space-y-2", children: /* @__PURE__ */ r("div", { className: l.spacing, children: x.map((e) => /* @__PURE__ */ r(w, { item: e }, e.key)) }) });
 }
-const E = X(({
+const H = P(({
   className: x,
-  variant: a = "default",
-  size: g = "md",
-  sticky: f = !0,
-  navigation: i = [],
-  currentPath: p = "",
-  onNavigate: N = () => {
+  scheme: c = "sidebar",
+  tone: n = "subtle",
+  size: m = "lg",
+  navigation: b = [],
+  currentPath: h = "",
+  onNavigate: k = () => {
   },
   title: l = "Admin Panel",
-  logo: b,
-  headerActions: h,
-  sidebarContent: y,
-  sidebarFooter: w,
-  collapsible: v = !0,
-  defaultSidebarOpen: e = !0,
-  children: o
-}, s) => {
-  const [t, m] = k(e), [c, L] = k(!1), [V, j] = k(!1), S = H(g);
-  z(() => {
+  logo: p,
+  headerActions: y,
+  sidebarContent: w,
+  sidebarFooter: e,
+  collapsible: s = !0,
+  defaultSidebarOpen: d = !0,
+  children: a
+}, g) => {
+  const [o, z] = v(d), [f, L] = v(!1), [V, j] = v(!1), M = E(m);
+  N(() => {
     const u = () => {
-      const M = window.innerWidth < 1024;
-      L(M), M && e === !0 && m(!1);
+      const S = window.innerWidth < 1024;
+      L(S), S && d === !0 && z(!1);
     };
     return u(), window.addEventListener("resize", u), () => window.removeEventListener("resize", u);
-  }, [e]), z(() => {
+  }, [d]), N(() => {
     const u = () => {
       j(window.scrollY > 0);
     };
-    if (f)
-      return window.addEventListener("scroll", u), () => window.removeEventListener("scroll", u);
-  }, [f]), z(() => (c && t ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
+    return window.addEventListener("scroll", u), () => window.removeEventListener("scroll", u);
+  }, []), N(() => (f && o ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
     document.body.style.overflow = "unset";
-  }), [c, t]);
+  }), [f, o]);
   const C = () => {
-    m(!t);
-  }, I = () => {
-    const u = V && f ? "shadow-sm" : "";
-    return n(Q({ sticky: f }), u);
-  }, O = () => "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors", R = () => {
-    switch (a) {
-      case "muted":
-        return "border-border/20 bg-muted/20";
-      case "primary":
-        return "border-primary-foreground/20 bg-primary-foreground/10";
-      case "black":
-        return "border-zinc-800/40 bg-zinc-900/50";
-      default:
-        return "border-border/20 bg-muted/20";
-    }
-  }, P = () => {
-    switch (a) {
-      case "muted":
-        return "text-muted-foreground";
-      case "primary":
-        return "text-primary-foreground/90";
-      case "black":
-        return "text-zinc-200";
-      default:
-        return "text-muted-foreground";
-    }
-  }, T = () => {
-    switch (a) {
-      case "muted":
-        return "text-muted-foreground hover:bg-muted hover:text-foreground";
-      case "primary":
-        return "text-primary-foreground hover:bg-primary-foreground/20 hover:text-primary-foreground";
-      case "black":
-        return "text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100";
-      default:
-        return "text-muted-foreground hover:bg-muted hover:text-foreground";
-    }
-  }, U = () => {
-    switch (a) {
-      case "muted":
-        return "border-border/20 bg-muted/20";
-      case "primary":
-        return "border-primary-foreground/20 bg-primary-foreground/10";
-      case "black":
-        return "border-zinc-800/40 bg-zinc-900/50";
-      default:
-        return "border-border/20 bg-muted/20";
-    }
-  }, W = () => c ? "" : {
-    sm: t ? "lg:ml-48" : "lg:ml-0",
-    md: t ? "lg:ml-64" : "lg:ml-0",
-    lg: t ? "lg:ml-80" : "lg:ml-0",
-    xl: t ? "lg:ml-96" : "lg:ml-0",
-    full: t ? "lg:ml-[28rem]" : "lg:ml-0"
-  }[g];
-  return /* @__PURE__ */ d(
+    z(!o);
+  }, I = () => c === "topbar" ? null : /* @__PURE__ */ i(O, { children: [
+    f && o && /* @__PURE__ */ r(
+      "div",
+      {
+        className: "fixed inset-0 z-40 bg-black/50 backdrop-blur-sm",
+        onClick: () => z(!1),
+        "aria-hidden": "true"
+      }
+    ),
+    /* @__PURE__ */ r("aside", { className: t(
+      F({ size: m, tone: n }),
+      f ? [
+        o ? "translate-x-0" : "-translate-x-full"
+      ] : [
+        o ? "translate-x-0" : "-translate-x-full"
+      ]
+    ), children: /* @__PURE__ */ i("div", { className: "flex flex-col h-full", children: [
+      /* @__PURE__ */ i("div", { className: t(
+        "flex items-center justify-between border-b flex-shrink-0",
+        M.sidebarHeader,
+        n === "subtle" && "border-border/20 bg-muted/20",
+        n === "brand" && "border-primary-foreground/20 bg-primary-foreground/10",
+        n === "contrast" && "border-zinc-800/40 bg-zinc-900/50"
+      ), children: [
+        /* @__PURE__ */ r("h2", { className: t(
+          "font-semibold uppercase tracking-wider",
+          n === "subtle" && "text-muted-foreground",
+          n === "brand" && "text-primary-foreground/90",
+          n === "contrast" && "text-zinc-200",
+          n === "clean" && "text-muted-foreground"
+        ), children: "Navigation" }),
+        s && f && /* @__PURE__ */ r(
+          W,
+          {
+            variant: "ghost",
+            size: "icon",
+            onClick: C,
+            className: t(
+              "flex-shrink-0",
+              n === "subtle" && "text-muted-foreground hover:bg-muted hover:text-foreground",
+              n === "brand" && "text-primary-foreground hover:bg-primary-foreground/20 hover:text-primary-foreground",
+              n === "contrast" && "text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
+            ),
+            "aria-label": "Close sidebar",
+            children: /* @__PURE__ */ r($, { className: "h-4 w-4" })
+          }
+        )
+      ] }),
+      /* @__PURE__ */ r("div", { className: "flex-1 overflow-y-auto", children: w || /* @__PURE__ */ r(
+        J,
+        {
+          navigationItems: b,
+          currentPath: h,
+          onNavigate: k,
+          size: m,
+          tone: n
+        }
+      ) }),
+      e && /* @__PURE__ */ r("div", { className: t(
+        "flex-shrink-0 border-t",
+        n === "subtle" && "border-border/20 bg-muted/20",
+        n === "brand" && "border-primary-foreground/20 bg-primary-foreground/10",
+        n === "contrast" && "border-zinc-800/40 bg-zinc-900/50"
+      ), children: e })
+    ] }) })
+  ] }), R = () => c === "topbar" || f ? "" : {
+    sm: o ? "lg:ml-48" : "lg:ml-0",
+    md: o ? "lg:ml-64" : "lg:ml-0",
+    lg: o ? "lg:ml-80" : "lg:ml-0",
+    xl: o ? "lg:ml-96" : "lg:ml-0",
+    full: o ? "lg:ml-[28rem]" : "lg:ml-0"
+  }[m];
+  return /* @__PURE__ */ i(
     "div",
     {
-      ref: s,
-      className: n(G({ variant: a }), x),
+      ref: g,
+      className: t(D({ scheme: c, tone: n }), x),
       children: [
-        c && t && /* @__PURE__ */ r(
-          "div",
-          {
-            className: "fixed inset-0 z-40 bg-black/50 backdrop-blur-sm",
-            onClick: () => m(!1),
-            "aria-hidden": "true"
-          }
-        ),
-        /* @__PURE__ */ r("aside", { className: n(
-          J({ size: g, variant: a }),
-          c ? [
-            t ? "translate-x-0" : "-translate-x-full"
-          ] : [
-            t ? "translate-x-0" : "-translate-x-full"
-          ]
-        ), children: /* @__PURE__ */ d("div", { className: "flex flex-col h-full", children: [
-          /* @__PURE__ */ d("div", { className: n(
-            "flex items-center justify-between border-b flex-shrink-0",
-            S.sidebarHeader,
-            R()
-          ), children: [
-            /* @__PURE__ */ r("h2", { className: n(
-              "font-semibold uppercase tracking-wider",
-              P()
-            ), children: "Navigation" }),
-            v && c && /* @__PURE__ */ r(
-              Y,
-              {
-                variant: "ghost",
-                size: "icon",
-                onClick: C,
-                className: n("flex-shrink-0", T()),
-                "aria-label": "Close sidebar",
-                children: /* @__PURE__ */ r(A, { className: "h-4 w-4" })
-              }
-            )
-          ] }),
-          /* @__PURE__ */ r("div", { className: "flex-1 overflow-y-auto", children: y || /* @__PURE__ */ r(
-            Z,
-            {
-              navigationItems: i,
-              currentPath: p,
-              onNavigate: N,
-              size: g,
-              variant: a
-            }
-          ) }),
-          w && /* @__PURE__ */ r("div", { className: n(
-            "flex-shrink-0 border-t",
-            U()
-          ), children: w })
-        ] }) }),
-        /* @__PURE__ */ d("div", { className: n(
+        I(),
+        /* @__PURE__ */ i("div", { className: t(
           "flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out",
-          W()
+          R()
         ), children: [
-          /* @__PURE__ */ r("header", { className: I(), children: /* @__PURE__ */ d("div", { className: n(
+          /* @__PURE__ */ r("header", { className: t(
+            G({ tone: n, sticky: !0 }),
+            V && "shadow-sm"
+          ), children: /* @__PURE__ */ i("div", { className: t(
             "flex items-center justify-between px-4 lg:px-6",
-            S.sidebarHeader
+            M.sidebarHeader
           ), children: [
-            /* @__PURE__ */ d("div", { className: "flex items-center gap-4 min-w-0", children: [
-              v && /* @__PURE__ */ r(
+            /* @__PURE__ */ i("div", { className: "flex items-center gap-4 min-w-0", children: [
+              s && /* @__PURE__ */ r(
                 "button",
                 {
-                  className: O(),
+                  className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors",
                   onClick: C,
-                  "aria-label": t ? "Close sidebar" : "Open sidebar",
-                  children: /* @__PURE__ */ r(D, { className: "h-5 w-5" })
+                  "aria-label": o ? "Close sidebar" : "Open sidebar",
+                  children: /* @__PURE__ */ r(Y, { className: "h-5 w-5" })
                 }
               ),
-              /* @__PURE__ */ d("div", { className: "flex items-center gap-3 min-w-0", children: [
-                b && /* @__PURE__ */ r("div", { className: "flex-shrink-0", children: b }),
+              /* @__PURE__ */ i("div", { className: "flex items-center gap-3 min-w-0", children: [
+                p && /* @__PURE__ */ r("div", { className: "flex-shrink-0", children: p }),
                 /* @__PURE__ */ r("h1", { className: "text-lg font-semibold truncate", children: l })
               ] })
             ] }),
-            h && /* @__PURE__ */ r("div", { className: "flex-shrink-0", children: h })
+            y && /* @__PURE__ */ r("div", { className: "flex-shrink-0", children: y })
           ] }) }),
-          /* @__PURE__ */ r("main", { className: "flex-1 min-w-0", children: /* @__PURE__ */ r("div", { className: "p-4 lg:p-6 w-full", children: /* @__PURE__ */ r("div", { className: "w-full max-w-7xl mx-auto", children: o }) }) })
+          /* @__PURE__ */ r("main", { className: "flex-1 min-w-0", children: /* @__PURE__ */ r("div", { className: "p-4 lg:p-6 w-full", children: /* @__PURE__ */ r("div", { className: "w-full max-w-7xl mx-auto", children: a }) }) })
         ] })
       ]
     }
   );
 });
-E.displayName = "AdminLayout";
-const ie = E;
+H.displayName = "AdminLayout";
+const te = H;
 export {
-  ie as AdminLayout
+  te as AdminLayout
 };
 //# sourceMappingURL=admin.js.map

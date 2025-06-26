@@ -1,20 +1,14 @@
-import { jsx as r, jsxs as w } from "react/jsx-runtime";
-import { forwardRef as b, useState as k, useEffect as C } from "react";
-import { c as y } from "./index-DACAHwoB.js";
-import { c as h } from "./utils-qaFjX9_3.js";
+import { jsx as s, jsxs as b } from "react/jsx-runtime";
+import { forwardRef as y, useState as C, useEffect as N } from "react";
+import { c as v } from "./index-DACAHwoB.js";
+import { c as u } from "./utils-qaFjX9_3.js";
 import { Button as E } from "./button.js";
 import { Badge as B } from "./badge.js";
-import { C as I } from "./chevron-right-pz9eCjj-.js";
-const V = y(
-  "w-full mx-auto",
+import { C as z } from "./chevron-right-pz9eCjj-.js";
+const I = v(
+  "w-full mx-auto bg-background text-foreground",
   {
     variants: {
-      variant: {
-        default: "bg-white text-foreground",
-        muted: "bg-muted/20 text-foreground",
-        primary: "bg-primary/10 text-foreground",
-        black: "bg-muted/40 text-foreground"
-      },
       layout: {
         none: "block p-1",
         "sidebar-left": "flex flex-col md:flex-row min-h-screen overflow-visible gap-3 md:gap-4 p-1",
@@ -26,16 +20,22 @@ const V = y(
         lg: "max-w-6xl",
         xl: "max-w-7xl",
         full: "max-w-full"
+      },
+      position: {
+        sticky: "sticky top-0 z-20",
+        fixed: "fixed top-0 left-0 right-0 z-20",
+        relative: "relative"
       }
     },
     defaultVariants: {
-      variant: "default",
       layout: "none",
-      size: "xl"
+      size: "xl",
+      position: "relative"
     }
   }
-), z = y(
-  "flex-shrink-0 bg-background border-r border-border",
+), V = v(
+  "flex-shrink-0 rounded-lg",
+  // Added rounded-lg for rounded edges
   {
     variants: {
       position: {
@@ -46,21 +46,33 @@ const V = y(
         sm: "md:w-48 lg:w-52 xl:w-56",
         md: "md:w-56 lg:w-64 xl:w-72",
         lg: "md:w-64 lg:w-72 xl:w-80",
-        xl: "md:w-72 lg:w-80 xl:w-96",
-        full: "md:w-80 lg:w-96 xl:w-[28rem]"
+        // Same size for lg, xl, full
+        xl: "md:w-64 lg:w-72 xl:w-80",
+        // Same size for lg, xl, full
+        full: "md:w-64 lg:w-72 xl:w-80"
+        // Same size for lg, xl, full
       },
-      sticky: {
-        true: "md:sticky md:top-0 md:h-screen md:overflow-y-auto",
-        false: "md:h-full"
+      sidebarPosition: {
+        sticky: "md:sticky md:top-0 md:h-screen md:overflow-y-auto",
+        fixed: "md:fixed md:top-0 md:h-screen md:overflow-y-auto",
+        relative: "md:h-full"
+      },
+      tone: {
+        clean: "",
+        // No background or border for clean
+        subtle: "bg-muted/30 border border-border/50",
+        brand: "bg-primary/10 border border-primary/20",
+        contrast: "bg-muted border border-border"
       }
     },
     defaultVariants: {
       position: "left",
       size: "md",
-      sticky: !1
+      sidebarPosition: "relative",
+      tone: "clean"
     }
   }
-), H = y(
+), H = v(
   "flex-1 min-w-0",
   {
     variants: {
@@ -77,7 +89,7 @@ const V = y(
     }
   }
 ), j = (t = "md") => {
-  const l = {
+  const o = {
     sm: {
       button: "text-xs py-1.5 px-2 min-h-[28px]",
       icon: "h-3 w-3 mr-2 flex-shrink-0",
@@ -109,179 +121,183 @@ const V = y(
       showBadges: !0
     }
   };
-  return l[t] || l.md;
+  return o[t] || o.md;
 };
 function A({
-  items: t,
-  size: l = "md",
-  currentPath: m = "",
-  onNavigate: n
+  navigation: t,
+  size: o = "md",
+  currentPath: i = "",
+  onNavigate: l
 }) {
-  const [o, f] = k(/* @__PURE__ */ new Set()), d = j(l);
-  C(() => {
-    const e = /* @__PURE__ */ new Set(), a = (i) => {
-      i.forEach((s) => {
-        s.items && s.items.length > 0 && (e.add(s.key), a(s.items));
+  const [a, c] = C(/* @__PURE__ */ new Set()), d = j(o);
+  N(() => {
+    const e = /* @__PURE__ */ new Set(), n = (m) => {
+      m.forEach((r) => {
+        r.items && r.items.length > 0 && (e.add(r.key), n(r.items));
       });
     };
-    a(t), f(e);
+    n(t), c(e);
   }, [t]);
-  const p = (e) => {
-    const a = new Set(o);
-    a.has(e) ? a.delete(e) : a.add(e), f(a);
-  }, x = (e) => {
-    e.items && e.items.length > 0 ? p(e.key) : e.path && n ? n(e.path, e) : e.onClick && e.onClick();
-  }, c = (e, a = 0) => {
-    const i = e.items && e.items.length > 0, s = o.has(e.key), u = e.path ? m === e.path : e.isActive;
-    return /* @__PURE__ */ w("div", { className: "w-full", children: [
-      /* @__PURE__ */ w(
+  const h = (e) => {
+    const n = new Set(a);
+    n.has(e) ? n.delete(e) : n.add(e), c(n);
+  }, f = (e) => {
+    e.items && e.items.length > 0 ? h(e.key) : e.href && l ? l(e.href, e) : e.onClick && e.onClick();
+  }, p = (e, n = 0) => {
+    const m = e.items && e.items.length > 0, r = a.has(e.key), x = e.href ? i === e.href : e.isActive;
+    return /* @__PURE__ */ b("div", { className: "w-full", children: [
+      /* @__PURE__ */ b(
         E,
         {
-          variant: u ? "secondary" : "ghost",
-          className: h(
+          variant: x ? "secondary" : "ghost",
+          className: u(
             "w-full justify-start transition-all items-center",
             d.button,
-            a > 0 && "ml-4 w-[calc(100%-1rem)]",
+            n > 0 && "ml-4 w-[calc(100%-1rem)]",
             e.className
           ),
-          onClick: () => x(e),
+          onClick: () => f(e),
           children: [
-            e.icon && /* @__PURE__ */ r(e.icon, { className: d.icon }),
-            /* @__PURE__ */ r("span", { className: "flex-1 text-left truncate", children: e.label }),
-            e.badge && d.showBadges && /* @__PURE__ */ r(B, { variant: "secondary", className: "text-xs ml-auto", children: e.badge }),
-            i && /* @__PURE__ */ r(
-              I,
+            e.icon && /* @__PURE__ */ s(e.icon, { className: d.icon }),
+            /* @__PURE__ */ s("span", { className: "flex-1 text-left truncate", children: e.label }),
+            e.badge && d.showBadges && /* @__PURE__ */ s(B, { variant: "secondary", className: "text-xs ml-auto", children: e.badge }),
+            m && /* @__PURE__ */ s(
+              z,
               {
-                className: h(
+                className: u(
                   "h-4 w-4 ml-2 transition-transform duration-200 text-muted-foreground",
-                  s && "rotate-90"
+                  r && "rotate-90"
                 )
               }
             )
           ]
         }
       ),
-      i && s && e.items && /* @__PURE__ */ r("div", { className: "mt-1 space-y-1", children: e.items.map(
-        (S) => c(S, a + 1)
+      m && r && e.items && /* @__PURE__ */ s("div", { className: "mt-1 space-y-1", children: e.items.map(
+        (g) => p(g, n + 1)
       ) })
     ] }, e.key);
   };
-  return /* @__PURE__ */ r("nav", { className: h("w-full p-3", d.spacing), children: t.map((e) => c(e)) });
+  return /* @__PURE__ */ s("nav", { className: u("w-full p-3", d.spacing), children: t.map((e) => p(e)) });
 }
-const g = b(({
+const w = y(({
   content: t,
-  position: l = "left",
-  size: m = "md",
-  sticky: n = !1,
-  currentPath: o = "",
-  onNavigate: f,
-  className: d,
-  style: p
-}, x) => {
+  position: o = "left",
+  size: i = "md",
+  sidebarPosition: l = "relative",
+  tone: a = "clean",
+  currentPath: c = "",
+  onNavigate: d,
+  className: h,
+  style: f
+}, p) => {
   if (!t) return null;
-  const [c, e] = k(0);
-  C(() => {
-    if (!n) return;
-    const i = () => {
-      const s = document.querySelector("header");
-      e(s ? s.offsetHeight : 0);
+  const [e, n] = C(0);
+  N(() => {
+    if (l === "relative") return;
+    const r = () => {
+      const x = document.querySelector("header");
+      n(x ? x.offsetHeight : 0);
     };
-    return i(), window.addEventListener("resize", i), () => window.removeEventListener("resize", i);
-  }, [n]);
-  const a = () => Array.isArray(t) ? /* @__PURE__ */ r(
+    return r(), window.addEventListener("resize", r), () => window.removeEventListener("resize", r);
+  }, [l]);
+  const m = () => Array.isArray(t) ? /* @__PURE__ */ s(
     A,
     {
-      items: t,
-      size: m,
-      currentPath: o,
-      onNavigate: f
+      navigation: t,
+      size: i,
+      currentPath: c,
+      onNavigate: d
     }
-  ) : /* @__PURE__ */ r("div", { className: "p-3", children: t });
-  return /* @__PURE__ */ r(
+  ) : /* @__PURE__ */ s("div", { className: "p-3", children: t });
+  return /* @__PURE__ */ s(
     "aside",
     {
-      ref: x,
-      className: h(
-        z({ position: l, size: m, sticky: n }),
-        d
+      ref: p,
+      className: u(
+        V({ position: o, size: i, sidebarPosition: l, tone: a }),
+        h
       ),
-      style: n ? { ...p, top: `${c + 10}px` } : p,
-      children: a()
+      style: l !== "relative" ? { ...f, top: `${e + 10}px` } : f,
+      children: m()
     }
   );
 });
-g.displayName = "ContainerSidebar";
-const v = b(({
+w.displayName = "ContainerSidebar";
+const k = y(({
   size: t = "md",
-  children: l,
-  className: m,
-  style: n
-}, o) => /* @__PURE__ */ r(
+  children: o,
+  className: i,
+  style: l
+}, a) => /* @__PURE__ */ s(
   "main",
   {
-    ref: o,
-    className: h(H({ size: t }), m),
-    style: n,
-    children: l
+    ref: a,
+    className: u(H({ size: t }), i),
+    style: l,
+    children: o
   }
 ));
-v.displayName = "ContainerMain";
-const N = b(({
+k.displayName = "ContainerMain";
+const S = y(({
   className: t,
-  style: l,
-  variant: m = "default",
-  sidebar: n = "none",
-  navigation: o = [],
-  sidebarContent: f,
-  currentPath: d = "",
-  onNavigate: p,
-  sticky: x = !1,
-  size: c = "xl",
-  children: e
-}, a) => {
-  const i = n === "left" ? "sidebar-left" : n === "right" ? "sidebar-right" : "none", s = n !== "none" && (o.length > 0 || f), u = o.length > 0 ? o : f;
-  return /* @__PURE__ */ w(
+  style: o,
+  tone: i = "clean",
+  position: l = "relative",
+  sidebar: a = "none",
+  navigation: c = [],
+  sidebarContent: d,
+  currentPath: h = "",
+  onNavigate: f,
+  sidebarPosition: p = "relative",
+  size: e = "xl",
+  children: n
+}, m) => {
+  const r = a === "left" ? "sidebar-left" : a === "right" ? "sidebar-right" : "none", x = a !== "none" && (c.length > 0 || d), g = c.length > 0 ? c : d;
+  return /* @__PURE__ */ b(
     "div",
     {
-      ref: a,
-      className: h(V({ variant: m, layout: i, size: c }), t),
-      style: l,
+      ref: m,
+      className: u(I({ layout: r, size: e, position: l }), t),
+      style: o,
       children: [
-        s && n === "left" && /* @__PURE__ */ r(
-          g,
+        x && a === "left" && /* @__PURE__ */ s(
+          w,
           {
-            content: u,
+            content: g,
             position: "left",
-            size: c,
-            sticky: x,
-            currentPath: d,
-            onNavigate: p
+            size: e,
+            sidebarPosition: p,
+            tone: i,
+            currentPath: h,
+            onNavigate: f
           }
         ),
-        /* @__PURE__ */ r(v, { size: c, children: e }),
-        s && n === "right" && /* @__PURE__ */ r(
-          g,
+        /* @__PURE__ */ s(k, { size: e, children: n }),
+        x && a === "right" && /* @__PURE__ */ s(
+          w,
           {
-            content: u,
+            content: g,
             position: "right",
-            size: c,
-            sticky: x,
-            currentPath: d,
-            onNavigate: p
+            size: e,
+            sidebarPosition: p,
+            tone: i,
+            currentPath: h,
+            onNavigate: f
           }
         )
       ]
     }
   );
 });
-N.displayName = "Container";
-const F = Object.assign(N, {
-  Sidebar: g,
-  Main: v
+S.displayName = "Container";
+const F = Object.assign(S, {
+  Sidebar: w,
+  Main: k
 });
 export {
   F as Container,
-  v as ContainerMain,
-  g as ContainerSidebar
+  k as ContainerMain,
+  w as ContainerSidebar
 };
 //# sourceMappingURL=container.js.map

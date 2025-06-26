@@ -1,20 +1,22 @@
 /**
- * Popup Layout with consistent prop naming and standardized variants
+ * Popup Layout with standardized scheme + tone system
  * @module @voilajsx/uikit
  * @file src/components/layouts/popup.tsx
  */
 import * as React from 'react';
-import type { Size } from '@/types';
+import type { Size, PopupLayoutScheme, Tone } from '@/types';
 /**
- * Popup Layout props
+ * Popup Layout props with standardized system
  */
 export interface PopupLayoutProps {
-    /** Popup style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    /** Layout structure/arrangement */
+    scheme?: PopupLayoutScheme;
+    /** Visual styling tone */
+    tone?: Tone;
     /** Popup size */
     size?: Size;
-    /** Whether popup header should be sticky */
-    sticky?: boolean;
+    /** Popup positioning */
+    position?: 'sticky' | 'fixed' | 'relative';
     /** Header title text */
     title?: string;
     /** Header subtitle text */
@@ -50,7 +52,7 @@ export interface PopupLayoutProps {
  * PopupHeader - Standalone header component
  */
 export interface PopupHeaderProps {
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    tone?: Tone;
     size?: Size;
     title?: string;
     subtitle?: string;
@@ -68,7 +70,7 @@ declare const PopupHeader: React.ForwardRefExoticComponent<PopupHeaderProps & Re
  * PopupContent - Scrollable content container
  */
 export interface PopupContentProps {
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    tone?: Tone;
     size?: Size;
     scrollable?: boolean;
     className?: string;
@@ -79,7 +81,7 @@ declare const PopupContent: React.ForwardRefExoticComponent<PopupContentProps & 
  * PopupFooter - Footer actions container
  */
 export interface PopupFooterProps {
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    tone?: Tone;
     size?: Size;
     actions?: React.ReactNode;
     className?: string;

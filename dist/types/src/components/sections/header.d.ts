@@ -1,5 +1,5 @@
 /**
- * Header component with responsive navigation and standardized props
+ * Header component with proper responsive behavior and light hover colors
  * @module @voilajsx/uikit
  * @file src/components/sections/header.tsx
  */
@@ -7,11 +7,11 @@ import * as React from 'react';
 import { type VariantProps } from 'class-variance-authority';
 import type { NavigationItem, Size } from '@/types';
 /**
- * Header variants with semantic colors
+ * Header variants with tone-based semantic colors
  */
 declare const headerVariants: (props?: ({
-    variant?: "default" | "muted" | "primary" | "black" | null | undefined;
-    sticky?: boolean | null | undefined;
+    tone?: "clean" | "subtle" | "brand" | "contrast" | null | undefined;
+    position?: "sticky" | "fixed" | "relative" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
  * Container variants for responsive sizing
@@ -23,12 +23,12 @@ declare const containerVariants: (props?: ({
  * Header component props
  */
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, VariantProps<typeof headerVariants> {
-    /** Header style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    /** Visual styling tone */
+    tone?: 'clean' | 'subtle' | 'brand' | 'contrast';
     /** Header size (width + height + padding) */
     size?: Size;
-    /** Whether header should be sticky */
-    sticky?: boolean;
+    /** Header positioning */
+    position?: 'sticky' | 'fixed' | 'relative';
     /** Header content */
     children: React.ReactNode;
 }
@@ -52,10 +52,10 @@ export interface HeaderNavProps extends React.HTMLAttributes<HTMLDivElement> {
     /** Current path for active states */
     currentPath?: string;
     /** Navigation handler */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    onNavigate?: (href: string, item: NavigationItem) => void;
 }
 /**
- * Smart Header Navigation with responsive mobile menu
+ * Header Navigation with proper responsive behavior
  */
 declare const HeaderNav: React.ForwardRefExoticComponent<HeaderNavProps & React.RefAttributes<HTMLDivElement>>;
 /**

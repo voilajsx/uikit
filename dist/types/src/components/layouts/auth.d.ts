@@ -1,17 +1,19 @@
 /**
- * Auth Layout with consistent prop naming and standardized size variants
+ * Auth Layout with standardized prop naming and scheme system - FIXED TYPES
  * @module @voilajsx/uikit
  * @file src/components/layouts/auth.tsx
  */
 import * as React from 'react';
-import type { Size } from '@/types';
+import type { Size, AuthLayoutScheme, Tone } from '@/types';
 /**
- * Auth Layout props
+ * Auth Layout props with standardized system - USING TYPES
  */
 export interface AuthLayoutProps {
-    /** Auth layout variant */
-    variant?: 'simple' | 'card' | 'split-gradient' | 'split-image' | 'card-gradient' | 'card-image';
-    /** Content container size */
+    /** Layout structure/arrangement - USING TYPE */
+    scheme?: AuthLayoutScheme;
+    /** Visual styling tone - USING TYPE */
+    tone?: Tone;
+    /** Content container size - USING TYPE */
     size?: Size;
     /** Page title */
     title?: string;
@@ -25,21 +27,21 @@ export interface AuthLayoutProps {
     className?: string;
     /** Container props for customization */
     containerProps?: React.HTMLAttributes<HTMLDivElement>;
-    /** Left side content for split variants */
+    /** Left side content for split scheme */
     splitContent?: React.ReactNode;
-    /** Background image URL for image variants */
+    /** Background image URL for hero scheme */
     imageUrl?: string;
     /** Image alt text */
     imageAlt?: string;
     /** Image overlay */
     imageOverlay?: 'light' | 'dark' | 'none';
-    /** Additional card content for card variants */
+    /** Additional card content for card scheme */
     cardContent?: React.ReactNode;
     /** Form content */
     children: React.ReactNode;
 }
 /**
- * AuthLayout with standardized props
+ * AuthLayout with standardized props - FULLY CONSISTENT
  */
 declare const AuthLayout: React.ForwardRefExoticComponent<AuthLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export { AuthLayout };

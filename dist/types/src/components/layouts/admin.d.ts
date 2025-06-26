@@ -1,26 +1,26 @@
 /**
- * Admin Layout with consistent prop naming and navigation support
+ * Admin Layout with standardized scheme + tone system - FIXED PROPS ALIGNMENT
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */
 import * as React from 'react';
-import type { NavigationItem, Size } from '@/types';
+import type { NavigationItem, Size, AdminLayoutScheme, Tone } from '@/types';
 /**
- * Admin Layout props
+ * Admin Layout props with standardized system - ALIGNED WITH TYPES
  */
 export interface AdminLayoutProps {
-    /** Admin layout style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
-    /** Sidebar size */
+    /** Layout structure/arrangement */
+    scheme?: AdminLayoutScheme;
+    /** Visual styling tone */
+    tone?: Tone;
+    /** Layout size */
     size?: Size;
-    /** Whether header should be sticky */
-    sticky?: boolean;
-    /** Navigation items */
+    /** Navigation items - USES STANDARD NavigationItem INTERFACE */
     navigation?: NavigationItem[];
     /** Current path for active states */
     currentPath?: string;
-    /** Navigation handler */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    /** Navigation handler - FIXED PARAMETER NAME */
+    onNavigate?: (href: string, item: NavigationItem) => void;
     /** Dashboard title */
     title?: string;
     /** Logo component */
@@ -41,7 +41,7 @@ export interface AdminLayoutProps {
     children: React.ReactNode;
 }
 /**
- * AdminLayout with compound components
+ * AdminLayout with standardized props - FULLY ALIGNED
  */
 declare const AdminLayout: React.ForwardRefExoticComponent<AdminLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export { AdminLayout };

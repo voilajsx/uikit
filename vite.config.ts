@@ -37,7 +37,9 @@ const getComponentEntries = () => {
   // Utils and Lib
   entries['utils'] = resolve(__dirname, 'src/lib/utils.ts');
   entries['platform'] = resolve(__dirname, 'src/lib/platform.ts');
-  entries['wrapper'] = resolve(__dirname, 'src/layout/layout-wrapper.tsx');
+  
+  // Adapters
+  //entries['adapters'] = resolve(__dirname, 'src/adapters/index.ts');
   
   return entries;
 };
@@ -81,5 +83,24 @@ export default defineConfig({
     postcss: {
       plugins: [],
     },
+  },
+  // Exclude examples from build and development
+  root: '.',
+  publicDir: 'public',
+  // Explicitly exclude examples folder
+  server: {
+    fs: {
+      allow: [
+        // Allow serving files from the project root
+        '.',
+        // Explicitly deny examples folder
+        '!examples',
+      ],
+    },
+  },
+  // Only include src files in the build
+  define: {
+    // Exclude examples from any build process
+    __EXCLUDE_EXAMPLES__: true,
   },
 });

@@ -1,113 +1,107 @@
 /**
- * @fileoverview Enhanced theme provider with dynamic CSS injection and default fallbacks
- * @description Theme context provider that can handle themes without CSS bundling
- * @package @voilajsx/uikit
- * @file /src/themes/theme-provider.tsx
+ * Ultra-simple theme provider with pre-bundled themes
+ * @module @voilajsx/uikit
+ * @file src/themes/theme-provider.tsx
  */
 import React, { ReactNode } from 'react';
-export interface ThemeColors {
-    background: string;
-    foreground: string;
-    card: string;
-    cardForeground: string;
-    popover: string;
-    popoverForeground: string;
-    primary: string;
-    primaryForeground: string;
-    secondary: string;
-    secondaryForeground: string;
-    muted: string;
-    mutedForeground: string;
-    accent: string;
-    accentForeground: string;
-    destructive: string;
-    destructiveForeground: string;
-    border: string;
-    input: string;
-    ring: string;
-    chart1: string;
-    chart2: string;
-    chart3: string;
-    chart4: string;
-    chart5: string;
-    sidebar: string;
-    sidebarForeground: string;
-    sidebarPrimary: string;
-    sidebarPrimaryForeground: string;
-    sidebarAccent: string;
-    sidebarAccentForeground: string;
-    sidebarBorder: string;
-    sidebarRing: string;
-}
-export interface ThemeDefinition {
-    id: string;
-    name: string;
-    light: ThemeColors;
-    dark: ThemeColors;
-}
-export interface ThemeMetadata {
-    id: string;
-    name: string;
-}
-export type ThemeVariant = 'light' | 'dark';
-export interface ThemeValidation {
-    isComplete: boolean;
-    lightMissing: string[];
-    darkMissing: string[];
-}
+/**
+ * @llm-rule Pre-bundled themes - CSS included in package
+ * Simple selection from 6 built-in themes
+ */
+export type Theme = 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+/**
+ * @llm-rule System color scheme preference
+ * light: Light system theme
+ * dark: Dark system theme
+ */
+export type Mode = 'light' | 'dark';
+/**
+ * @llm-rule Component visual emphasis system
+ * clean → Pure, minimal, white/light backgrounds
+ * subtle → Muted, supporting, gray areas
+ * brand → Primary colored, branded elements
+ * contrast → High emphasis, dark/bold areas
+ */
+export type Tone = 'clean' | 'subtle' | 'brand' | 'contrast';
+/**
+ * @llm-props ThemeProvider context - Zero complexity
+ * REQUIRED: children
+ * RECOMMENDED: theme, mode
+ * OPTIONAL: detectSystem
+ */
 export interface ThemeContextValue {
-    theme: string;
-    variant: ThemeVariant;
-    availableThemes: ThemeMetadata[];
-    setTheme: (newTheme: string | ThemeDefinition) => void;
-    setVariant: (newVariant: ThemeVariant) => void;
-    toggleVariant: () => void;
-    registerTheme: (theme: ThemeDefinition) => void;
-    registerThemes: (themes: ThemeDefinition[]) => void;
-    getAvailableThemes: () => ThemeMetadata[];
-    getThemeDefinition: (themeId: string) => ThemeDefinition | null;
-    unregisterTheme: (themeId: string) => void;
-    reinjectedAllThemeCSS: () => void;
+    /** Current theme from pre-bundled options */
+    theme: Theme;
+    /** System color mode */
+    mode: Mode;
+    /** Available themes */
+    availableThemes: Theme[];
+    /** Set theme from pre-bundled options */
+    setTheme: (theme: Theme) => void;
+    /** Set system color mode */
+    setMode: (mode: Mode) => void;
+    /** Toggle between light and dark modes */
+    toggleMode: () => void;
+    /** Get CSS classes for tone */
+    getToneClasses: (tone: Tone) => string;
+    /** Get default tone for component */
+    getDefaultTone: (component: string) => Tone;
 }
+/**
+ * @llm-props ThemeProvider props
+ * REQUIRED: children
+ * RECOMMENDED: theme="default", mode="light"
+ * OPTIONAL: detectSystem
+ * @llm-defaults theme="default", mode="light", detectSystem=true
+ */
 export interface ThemeProviderProps {
+    /** REQUIRED: Child components */
     children: ReactNode;
-    theme?: string;
-    variant?: ThemeVariant;
+    /** RECOMMENDED: Theme from pre-bundled options (default: "default") */
+    theme?: Theme;
+    /** RECOMMENDED: System color mode (default: "light") */
+    mode?: Mode;
+    /** OPTIONAL: Auto-detect system preference (default: true) */
     detectSystem?: boolean;
-    customThemes?: ThemeDefinition[];
-    autoInjectCSS?: boolean;
 }
 /**
- * Register a custom theme with optional CSS injection and default fallbacks
+ * @llm-rule Available pre-bundled themes
+ * All themes ship as CSS with the package
  */
-export declare function registerTheme(theme: ThemeDefinition, injectCSS?: boolean): void;
+export declare const AVAILABLE_THEMES: Theme[];
 /**
- * Register multiple themes at once
+ * Ultra-simple theme provider with pre-bundled themes
+ * @llm-pattern Basic usage (recommended)
+ * <ThemeProvider theme="aurora" mode="dark">
+ *   <App />
+ * </ThemeProvider>
+ *
+ * @llm-pattern Auto-detect system preference
+ * <ThemeProvider theme="default" detectSystem>
+ *   <App />
+ * </ThemeProvider>
  */
-export declare function registerThemes(themes: ThemeDefinition[], injectCSS?: boolean): void;
+export declare function ThemeProvider({ children, theme, mode, detectSystem }: ThemeProviderProps): React.JSX.Element;
 /**
- * Get all available themes (built-in + custom)
- */
-export declare function getAvailableThemes(): ThemeMetadata[];
-/**
- * Get theme definition by ID
- */
-export declare function getThemeDefinition(themeId: string): ThemeDefinition | null;
-/**
- * Remove a custom theme and its CSS
- */
-export declare function unregisterTheme(themeId: string): void;
-/**
- * Re-inject CSS for all registered dynamic themes
- * Useful for SSR or when styles get cleared
- */
-export declare function reinjectedAllThemeCSS(): void;
-/**
- * Enhanced theme provider component with dynamic CSS injection and default fallbacks
- */
-export declare function ThemeProvider({ children, theme, variant, detectSystem, customThemes, autoInjectCSS }: ThemeProviderProps): React.JSX.Element;
-/**
- * Hook to access enhanced theme context
+ * Hook to access theme context
+ * @llm-pattern Basic theme usage
+ * const { theme, mode, setTheme, setMode, toggleMode } = useTheme();
+ *
+ * @llm-pattern Component styling
+ * const { getToneClasses, getDefaultTone } = useTheme();
+ * const tone = getDefaultTone('AdminLayout');
+ * const classes = getToneClasses(tone); // Works automatically in both modes
  */
 export declare function useTheme(): ThemeContextValue;
+/**
+ * @llm-pattern Theme switcher component example
+ * const ThemeSwitcher = () => {
+ *   const { theme, availableThemes, setTheme } = useTheme();
+ *   return (
+ *     <select value={theme} onChange={e => setTheme(e.target.value as Theme)}>
+ *       {availableThemes.map(t => <option key={t} value={t}>{t}</option>)}
+ *     </select>
+ *   );
+ * };
+ */ 
 //# sourceMappingURL=theme-provider.d.ts.map

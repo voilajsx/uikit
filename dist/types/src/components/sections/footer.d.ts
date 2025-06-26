@@ -1,41 +1,28 @@
 /**
- * Footer component with consistent prop naming and navigation support
+ * Footer component with standardized prop naming and tone system
  * @module @voilajsx/uikit
  * @file src/components/sections/footer.tsx
  */
 import * as React from 'react';
 import type { Size, NavigationItem } from '@/types';
 /**
- * Footer component props
+ * Footer component props with standardized system
  */
 export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
-    /** Footer style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    /** Visual styling tone */
+    tone?: 'clean' | 'subtle' | 'brand' | 'contrast';
     /** Footer size (width + padding + spacing) */
     size?: Size;
-    /** Whether footer should be sticky */
-    sticky?: boolean;
+    /** Footer positioning */
+    position?: 'sticky' | 'fixed' | 'relative';
     /** Navigation items */
     navigation?: NavigationItem[];
     /** Current path for active states */
     currentPath?: string;
     /** Navigation handler */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    onNavigate?: (href: string, item: NavigationItem) => void;
     /** Footer content */
     children: React.ReactNode;
-}
-/**
- * Footer link interface (legacy support)
- */
-export interface FooterLink {
-    /** Unique key */
-    key: string;
-    /** Display text */
-    label: string;
-    /** Click handler */
-    onClick: () => void;
-    /** Additional CSS classes */
-    className?: string;
 }
 /**
  * Basic Footer props
@@ -46,11 +33,9 @@ export interface FooterBasicProps extends React.HTMLAttributes<HTMLDivElement> {
     /** Current path for active states */
     currentPath?: string;
     /** Navigation handler */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    onNavigate?: (href: string, item: NavigationItem) => void;
     /** Footer logo/brand */
     logo?: React.ReactNode;
-    /** Navigation links (legacy - use navigation instead) */
-    links?: FooterLink[];
     /** Social media links */
     social?: React.ReactNode;
     /** Copyright text */
@@ -68,8 +53,8 @@ export interface FooterColumn {
     key: string;
     /** Column title */
     title: string;
-    /** Column links */
-    links: FooterLink[];
+    /** Column navigation items */
+    items: NavigationItem[];
 }
 /**
  * Advanced Footer props
@@ -77,14 +62,18 @@ export interface FooterColumn {
 export interface FooterAdvancedProps extends React.HTMLAttributes<HTMLDivElement> {
     /** Brand section (logo + description) */
     brand?: React.ReactNode;
-    /** Footer columns with links (up to 5) */
+    /** Footer columns with navigation items (up to 5) */
     columns?: FooterColumn[];
     /** Newsletter signup */
     newsletter?: React.ReactNode;
     /** Social media links */
     social?: React.ReactNode;
-    /** Legal links (privacy, terms, etc.) */
-    legal?: React.ReactNode;
+    /** Legal navigation items */
+    legal?: NavigationItem[];
+    /** Current path for active states */
+    currentPath?: string;
+    /** Navigation handler */
+    onNavigate?: (href: string, item: NavigationItem) => void;
     /** Copyright text */
     copyright?: React.ReactNode;
 }

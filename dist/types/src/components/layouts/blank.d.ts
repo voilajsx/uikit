@@ -1,16 +1,18 @@
 /**
- * Blank Layout with consistent prop naming and standardized size variants
+ * Blank Layout with standardized scheme + tone system
  * @module @voilajsx/uikit
  * @file src/components/layouts/blank.tsx
  */
 import * as React from 'react';
-import type { Size } from '@/types';
+import type { Size, BlankLayoutScheme, Tone } from '@/types';
 /**
- * Blank Layout props
+ * Blank Layout props with standardized system
  */
 export interface BlankLayoutProps {
-    /** Blank layout variant */
-    variant?: 'default' | 'card' | 'error' | 'maintenance' | 'suspension';
+    /** Layout structure/arrangement */
+    scheme?: BlankLayoutScheme;
+    /** Visual styling tone */
+    tone?: Tone;
     /** Content container size */
     size?: Size;
     /** Page title */

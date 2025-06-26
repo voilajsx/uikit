@@ -1,32 +1,36 @@
 /**
- * Page Layout with consistent prop naming and navigation support
+ * Page Layout with standardized scheme + tone system
  * @module @voilajsx/uikit
  * @file src/components/layouts/page.tsx
  */
 import * as React from 'react';
-import type { NavigationItem, Size } from '@/types';
+import type { NavigationItem, Size, PageLayoutScheme, Tone } from '@/types';
 /**
- * Page Layout props
+ * Page Layout props with standardized system
  */
 export interface PageLayoutProps {
-    /** Page style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    /** Layout structure/arrangement */
+    scheme?: PageLayoutScheme;
+    /** Visual styling tone */
+    tone?: Tone;
     /** Page size (width and spacing) */
     size?: Size;
-    /** Whether header should be sticky */
-    sticky?: boolean;
+    /** Header positioning */
+    position?: 'sticky' | 'fixed' | 'relative';
     /** Navigation items for header */
     navigation?: NavigationItem[];
     /** Current path for active states */
     currentPath?: string;
     /** Navigation handler */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    onNavigate?: (href: string, item: NavigationItem) => void;
     /** Page title */
     title?: string;
     /** Logo component */
     logo?: React.ReactNode;
     /** Header actions (buttons, theme toggle, etc.) */
     headerActions?: React.ReactNode;
+    /** Sidebar content for blog/docs schemes */
+    sidebarContent?: React.ReactNode;
     /** Footer navigation items */
     footerNavigation?: NavigationItem[];
     /** Footer content (if not using footerNavigation) */
@@ -39,21 +43,21 @@ export interface PageLayoutProps {
     children: React.ReactNode;
 }
 /**
- * Page Header props
+ * Page Header props with standardized system
  */
 export interface PageHeaderProps {
-    /** Header style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    /** Header tone (inherits from PageLayout if not specified) */
+    tone?: Tone;
     /** Header size (inherits from PageLayout if not specified) */
     size?: Size;
-    /** Whether header should be sticky */
-    sticky?: boolean;
+    /** Header positioning */
+    position?: 'sticky' | 'fixed' | 'relative';
     /** Navigation items */
     navigation?: NavigationItem[];
     /** Current path for active states */
     currentPath?: string;
     /** Navigation handler */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    onNavigate?: (href: string, item: NavigationItem) => void;
     /** Additional CSS classes */
     className?: string;
     /** Header content */
@@ -67,6 +71,8 @@ declare const PageHeader: React.ForwardRefExoticComponent<PageHeaderProps & Reac
  * Page Content props
  */
 export interface PageContentProps {
+    /** Content scheme (inherits from PageLayout if not specified) */
+    scheme?: PageLayoutScheme;
     /** Content size (inherits from PageLayout if not specified) */
     size?: Size;
     /** Additional CSS classes */
@@ -79,11 +85,11 @@ export interface PageContentProps {
  */
 declare const PageContent: React.ForwardRefExoticComponent<PageContentProps & React.RefAttributes<HTMLElement>>;
 /**
- * Page Footer props
+ * Page Footer props with standardized system
  */
 export interface PageFooterProps {
-    /** Footer style variant */
-    variant?: 'default' | 'muted' | 'primary' | 'black';
+    /** Footer tone (inherits from PageLayout if not specified) */
+    tone?: Tone;
     /** Footer size (inherits from PageLayout if not specified) */
     size?: Size;
     /** Footer navigation items */
@@ -91,7 +97,7 @@ export interface PageFooterProps {
     /** Current path for active states */
     currentPath?: string;
     /** Navigation handler */
-    onNavigate?: (path: string, item: NavigationItem) => void;
+    onNavigate?: (href: string, item: NavigationItem) => void;
     /** Additional CSS classes */
     className?: string;
     /** Footer content */
@@ -105,7 +111,8 @@ declare const PageFooter: React.ForwardRefExoticComponent<PageFooterProps & Reac
  * Hook to access page configuration
  */
 declare const usePage: () => {
-    variant: "default" | "muted" | "primary" | "black";
+    scheme: PageLayoutScheme;
+    tone: Tone;
     size: Size;
 };
 /**

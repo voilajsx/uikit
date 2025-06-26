@@ -1,20 +1,25 @@
-import { jsxs as m, jsx as a, Fragment as w } from "react/jsx-runtime";
-import { forwardRef as x } from "react";
-import { c as o } from "./index-DACAHwoB.js";
+import { jsxs as o, jsx as a, Fragment as z } from "react/jsx-runtime";
+import { forwardRef as b } from "react";
+import { c as i } from "./index-DACAHwoB.js";
 import { c as r } from "./utils-qaFjX9_3.js";
-import { Button as f } from "./button.js";
-import { Separator as z } from "./separator.js";
-import { C as V } from "./chevron-left-C1pkx4AF.js";
+import { Button as x } from "./button.js";
+import { Separator as V } from "./separator.js";
+import { C as k } from "./chevron-left-C1pkx4AF.js";
 import { X as C } from "./x-BxwubQiM.js";
-const E = o(
+const I = i(
   "flex flex-col border rounded-lg overflow-hidden",
   {
     variants: {
-      variant: {
-        default: "bg-background border-border shadow-lg",
-        muted: "bg-muted/30 border-border/50 shadow-md",
-        primary: "bg-primary/5 border-primary/20 shadow-lg",
-        black: "bg-zinc-900 border-zinc-700 shadow-xl text-zinc-100"
+      scheme: {
+        modal: "shadow-lg",
+        drawer: "shadow-md h-full rounded-none",
+        floating: "shadow-xl"
+      },
+      tone: {
+        clean: "bg-background border-border",
+        subtle: "bg-muted/30 border-border/50",
+        brand: "bg-primary/5 border-primary/20",
+        contrast: "bg-zinc-900 border-zinc-700 text-zinc-100"
       },
       size: {
         sm: "w-72 max-h-80",
@@ -28,26 +33,28 @@ const E = o(
         full: "min-w-72 max-w-lg max-h-[80vh]"
         // Responsive
       },
-      sticky: {
-        true: "sticky top-0 z-50",
-        false: "relative"
+      position: {
+        sticky: "sticky top-0 z-50",
+        fixed: "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50",
+        relative: "relative"
       }
     },
     defaultVariants: {
-      variant: "default",
+      scheme: "modal",
+      tone: "clean",
       size: "md",
-      sticky: !1
+      position: "relative"
     }
   }
-), N = o(
+), N = i(
   "flex items-center gap-3",
   {
     variants: {
-      variant: {
-        default: "",
-        muted: "",
-        primary: "",
-        black: ""
+      tone: {
+        clean: "",
+        subtle: "",
+        brand: "",
+        contrast: ""
       },
       size: {
         sm: "p-2",
@@ -58,19 +65,19 @@ const E = o(
       }
     },
     defaultVariants: {
-      variant: "default",
+      tone: "clean",
       size: "md"
     }
   }
-), P = o(
+), P = i(
   "flex-1",
   {
     variants: {
-      variant: {
-        default: "",
-        muted: "",
-        primary: "",
-        black: ""
+      tone: {
+        clean: "",
+        subtle: "",
+        brand: "",
+        contrast: ""
       },
       size: {
         sm: "p-2",
@@ -85,20 +92,20 @@ const E = o(
       }
     },
     defaultVariants: {
-      variant: "default",
+      tone: "clean",
       size: "md",
       scrollable: !0
     }
   }
-), F = o(
+), F = i(
   "border-t",
   {
     variants: {
-      variant: {
-        default: "border-border",
-        muted: "border-border/50",
-        primary: "border-primary/20",
-        black: "border-zinc-700"
+      tone: {
+        clean: "border-border",
+        subtle: "border-border/50",
+        brand: "border-primary/20",
+        contrast: "border-zinc-700"
       },
       size: {
         sm: "p-2",
@@ -109,26 +116,26 @@ const E = o(
       }
     },
     defaultVariants: {
-      variant: "default",
+      tone: "clean",
       size: "md"
     }
   }
-), h = o(
+), f = i(
   "h-8 w-8 p-0 shrink-0",
   {
     variants: {
-      variant: {
-        default: "text-muted-foreground hover:text-foreground hover:bg-muted",
-        muted: "text-muted-foreground hover:text-foreground hover:bg-background/50",
-        primary: "text-primary/80 hover:text-primary hover:bg-primary/10",
-        black: "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+      tone: {
+        clean: "text-muted-foreground hover:text-foreground hover:bg-muted",
+        subtle: "text-muted-foreground hover:text-foreground hover:bg-background/50",
+        brand: "text-primary/80 hover:text-primary hover:bg-primary/10",
+        contrast: "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
       }
     },
     defaultVariants: {
-      variant: "default"
+      tone: "clean"
     }
   }
-), H = o(
+), H = i(
   "font-semibold truncate",
   {
     variants: {
@@ -139,19 +146,19 @@ const E = o(
         xl: "text-base",
         full: "text-base"
       },
-      variant: {
-        default: "text-foreground",
-        muted: "text-foreground",
-        primary: "text-foreground",
-        black: "text-zinc-100"
+      tone: {
+        clean: "text-foreground",
+        subtle: "text-foreground",
+        brand: "text-foreground",
+        contrast: "text-zinc-100"
       }
     },
     defaultVariants: {
       size: "md",
-      variant: "default"
+      tone: "clean"
     }
   }
-), L = o(
+), L = i(
   "truncate mt-0.5",
   {
     variants: {
@@ -162,158 +169,159 @@ const E = o(
         xl: "text-sm",
         full: "text-sm"
       },
-      variant: {
-        default: "text-muted-foreground",
-        muted: "text-muted-foreground",
-        primary: "text-muted-foreground",
-        black: "text-zinc-400"
+      tone: {
+        clean: "text-muted-foreground",
+        subtle: "text-muted-foreground",
+        brand: "text-muted-foreground",
+        contrast: "text-zinc-400"
       }
     },
     defaultVariants: {
       size: "md",
-      variant: "default"
+      tone: "clean"
     }
   }
-), j = x(({
-  variant: e = "default",
+), j = b(({
+  scheme: s = "modal",
+  tone: e = "clean",
   size: t = "md",
-  sticky: i = !1,
-  title: l,
-  subtitle: s,
-  logo: d,
-  badge: n,
-  headerActions: c,
+  position: d = "relative",
+  title: n,
+  subtitle: l,
+  logo: c,
+  badge: m,
+  headerActions: p,
   showBack: u = !1,
-  showClose: p = !1,
-  showDivider: b = !0,
+  showClose: h = !1,
+  showDivider: v = !0,
   onBack: g,
-  onClose: v,
-  footer: y,
-  scrollable: S = !0,
-  className: X,
-  style: q,
-  children: B
-}, D) => {
-  const k = l || s || d || n || c || u || p;
-  return /* @__PURE__ */ m(
+  onClose: S,
+  footer: w,
+  scrollable: X = !0,
+  className: q,
+  style: B,
+  children: D
+}, E) => {
+  const y = n || l || c || m || p || u || h;
+  return /* @__PURE__ */ o(
     "div",
     {
-      ref: D,
-      className: r(E({ variant: e, size: t, sticky: i }), X),
-      style: q,
+      ref: E,
+      className: r(I({ scheme: s, tone: e, size: t, position: d }), q),
+      style: B,
       children: [
-        k && /* @__PURE__ */ m(w, { children: [
-          /* @__PURE__ */ m("div", { className: r(N({ variant: e, size: t })), children: [
+        y && /* @__PURE__ */ o(z, { children: [
+          /* @__PURE__ */ o("div", { className: r(N({ tone: e, size: t })), children: [
             u && /* @__PURE__ */ a(
-              f,
+              x,
               {
                 variant: "ghost",
-                className: r(h({ variant: e })),
+                className: r(f({ tone: e })),
                 onClick: g,
                 "aria-label": "Go back",
-                children: /* @__PURE__ */ a(V, { className: "h-4 w-4" })
+                children: /* @__PURE__ */ a(k, { className: "h-4 w-4" })
               }
             ),
-            d && /* @__PURE__ */ a("div", { className: "shrink-0", children: d }),
-            /* @__PURE__ */ m("div", { className: "flex-1 min-w-0", children: [
-              l && /* @__PURE__ */ m("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ a("h1", { className: r(H({ size: t, variant: e })), children: l }),
-                n && n
+            c && /* @__PURE__ */ a("div", { className: "shrink-0", children: c }),
+            /* @__PURE__ */ o("div", { className: "flex-1 min-w-0", children: [
+              n && /* @__PURE__ */ o("div", { className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ a("h1", { className: r(H({ size: t, tone: e })), children: n }),
+                m && m
               ] }),
-              s && /* @__PURE__ */ a("p", { className: r(L({ size: t, variant: e })), children: s })
+              l && /* @__PURE__ */ a("p", { className: r(L({ size: t, tone: e })), children: l })
             ] }),
-            c && /* @__PURE__ */ a("div", { className: "shrink-0 flex items-center gap-1", children: c }),
-            p && /* @__PURE__ */ a(
-              f,
+            p && /* @__PURE__ */ a("div", { className: "shrink-0 flex items-center gap-1", children: p }),
+            h && /* @__PURE__ */ a(
+              x,
               {
                 variant: "ghost",
-                className: r(h({ variant: e })),
-                onClick: v,
+                className: r(f({ tone: e })),
+                onClick: S,
                 "aria-label": "Close",
                 children: /* @__PURE__ */ a(C, { className: "h-4 w-4" })
               }
             )
           ] }),
-          b && /* @__PURE__ */ a(z, { className: r(
-            e === "muted" && "bg-border/50",
-            e === "primary" && "bg-primary/20",
-            e === "black" && "bg-zinc-700"
+          v && /* @__PURE__ */ a(V, { className: r(
+            e === "subtle" && "bg-border/50",
+            e === "brand" && "bg-primary/20",
+            e === "contrast" && "bg-zinc-700"
           ) })
         ] }),
         /* @__PURE__ */ a(
           "div",
           {
             className: r(
-              P({ variant: e, size: t, scrollable: S }),
-              !k && N({ variant: e, size: t })
+              P({ tone: e, size: t, scrollable: X }),
+              !y && N({ tone: e, size: t })
             ),
-            children: B
+            children: D
           }
         ),
-        y && /* @__PURE__ */ m(w, { children: [
-          /* @__PURE__ */ a(z, { className: r(
-            e === "muted" && "bg-border/50",
-            e === "primary" && "bg-primary/20",
-            e === "black" && "bg-zinc-700"
+        w && /* @__PURE__ */ o(z, { children: [
+          /* @__PURE__ */ a(V, { className: r(
+            e === "subtle" && "bg-border/50",
+            e === "brand" && "bg-primary/20",
+            e === "contrast" && "bg-zinc-700"
           ) }),
-          /* @__PURE__ */ a("div", { className: r(F({ variant: e, size: t })), children: y })
+          /* @__PURE__ */ a("div", { className: r(F({ tone: e, size: t })), children: w })
         ] })
       ]
     }
   );
 });
 j.displayName = "PopupLayout";
-const G = x(({
-  variant: e = "default",
-  size: t = "md",
-  title: i,
-  subtitle: l,
-  logo: s,
-  badge: d,
-  actions: n,
-  showBack: c = !1,
-  showClose: u = !1,
-  onBack: p,
-  onClose: b,
-  className: g
-}, v) => /* @__PURE__ */ m("div", { ref: v, className: r(N({ variant: e, size: t }), g), children: [
-  c && /* @__PURE__ */ a(f, { variant: "ghost", className: r(h({ variant: e })), onClick: p, children: /* @__PURE__ */ a(V, { className: "h-4 w-4" }) }),
-  s && /* @__PURE__ */ a("div", { className: "shrink-0", children: s }),
-  /* @__PURE__ */ m("div", { className: "flex-1 min-w-0", children: [
-    i && /* @__PURE__ */ m("div", { className: "flex items-center gap-2", children: [
-      /* @__PURE__ */ a("h1", { className: r(H({ size: t, variant: e })), children: i }),
-      d && d
-    ] }),
-    l && /* @__PURE__ */ a("p", { className: r(L({ size: t, variant: e })), children: l })
-  ] }),
+const G = b(({
+  tone: s = "clean",
+  size: e = "md",
+  title: t,
+  subtitle: d,
+  logo: n,
+  badge: l,
+  actions: c,
+  showBack: m = !1,
+  showClose: p = !1,
+  onBack: u,
+  onClose: h,
+  className: v
+}, g) => /* @__PURE__ */ o("div", { ref: g, className: r(N({ tone: s, size: e }), v), children: [
+  m && /* @__PURE__ */ a(x, { variant: "ghost", className: r(f({ tone: s })), onClick: u, children: /* @__PURE__ */ a(k, { className: "h-4 w-4" }) }),
   n && /* @__PURE__ */ a("div", { className: "shrink-0", children: n }),
-  u && /* @__PURE__ */ a(f, { variant: "ghost", className: r(h({ variant: e })), onClick: b, children: /* @__PURE__ */ a(C, { className: "h-4 w-4" }) })
+  /* @__PURE__ */ o("div", { className: "flex-1 min-w-0", children: [
+    t && /* @__PURE__ */ o("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ a("h1", { className: r(H({ size: e, tone: s })), children: t }),
+      l && l
+    ] }),
+    d && /* @__PURE__ */ a("p", { className: r(L({ size: e, tone: s })), children: d })
+  ] }),
+  c && /* @__PURE__ */ a("div", { className: "shrink-0", children: c }),
+  p && /* @__PURE__ */ a(x, { variant: "ghost", className: r(f({ tone: s })), onClick: h, children: /* @__PURE__ */ a(C, { className: "h-4 w-4" }) })
 ] }));
 G.displayName = "PopupHeader";
-const O = x(({
-  variant: e = "default",
-  size: t = "md",
-  scrollable: i = !0,
-  className: l,
-  children: s
-}, d) => /* @__PURE__ */ a(
+const O = b(({
+  tone: s = "clean",
+  size: e = "md",
+  scrollable: t = !0,
+  className: d,
+  children: n
+}, l) => /* @__PURE__ */ a(
   "div",
   {
-    ref: d,
-    className: r(P({ variant: e, size: t, scrollable: i }), l),
-    children: s
+    ref: l,
+    className: r(P({ tone: s, size: e, scrollable: t }), d),
+    children: n
   }
 ));
 O.displayName = "PopupContent";
-const R = x(({
-  variant: e = "default",
-  size: t = "md",
-  actions: i,
-  className: l,
-  children: s
-}, d) => /* @__PURE__ */ a("div", { ref: d, className: r(F({ variant: e, size: t }), l), children: i || s }));
+const R = b(({
+  tone: s = "clean",
+  size: e = "md",
+  actions: t,
+  className: d,
+  children: n
+}, l) => /* @__PURE__ */ a("div", { ref: l, className: r(F({ tone: s, size: e }), d), children: t || n }));
 R.displayName = "PopupFooter";
-const Y = Object.assign(j, {
+const Z = Object.assign(j, {
   Header: G,
   Content: O,
   Footer: R
@@ -322,6 +330,6 @@ export {
   O as PopupContent,
   R as PopupFooter,
   G as PopupHeader,
-  Y as PopupLayout
+  Z as PopupLayout
 };
 //# sourceMappingURL=popup.js.map

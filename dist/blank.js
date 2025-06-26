@@ -1,24 +1,30 @@
-import { jsx as t, jsxs as f } from "react/jsx-runtime";
-import { forwardRef as g } from "react";
+import { jsx as e, jsxs as f } from "react/jsx-runtime";
+import { forwardRef as b } from "react";
 import { c as a } from "./index-DACAHwoB.js";
-import { c as e } from "./utils-qaFjX9_3.js";
-const h = a(
-  "min-h-screen bg-background flex items-center justify-center p-4",
+import { c as t } from "./utils-qaFjX9_3.js";
+const y = a(
+  "min-h-screen flex items-center justify-center p-4",
   {
     variants: {
-      variant: {
+      scheme: {
         default: "",
-        card: "",
-        error: "",
-        maintenance: "",
-        suspension: ""
+        centered: "flex-col",
+        error: "flex-col",
+        maintenance: "flex-col"
+      },
+      tone: {
+        clean: "bg-background",
+        subtle: "bg-muted/20",
+        brand: "bg-primary/5",
+        contrast: "bg-zinc-900"
       }
     },
     defaultVariants: {
-      variant: "default"
+      scheme: "default",
+      tone: "clean"
     }
   }
-), y = a(
+), N = a(
   "w-full space-y-8 text-center",
   {
     variants: {
@@ -29,37 +35,35 @@ const h = a(
         xl: "max-w-5xl",
         full: "max-w-6xl"
       },
-      variant: {
+      scheme: {
         default: "",
-        card: "p-8 sm:p-12 bg-card border border-border rounded-xl shadow-lg",
-        error: "",
-        maintenance: "",
-        suspension: ""
+        centered: "",
+        error: "max-w-2xl",
+        maintenance: "max-w-3xl"
       }
     },
     defaultVariants: {
-      size: "md",
-      variant: "default"
-    }
-  }
-), N = a(
-  "flex justify-center",
-  {
-    variants: {
-      variant: {
-        default: "",
-        card: "",
-        error: "text-muted-foreground",
-        maintenance: "text-primary animate-pulse",
-        suspension: "text-destructive"
-      }
-    },
-    defaultVariants: {
-      variant: "default"
+      size: "lg",
+      scheme: "default"
     }
   }
 ), V = a(
-  "font-bold tracking-tight text-foreground",
+  "flex justify-center",
+  {
+    variants: {
+      scheme: {
+        default: "",
+        centered: "",
+        error: "text-destructive",
+        maintenance: "text-primary animate-pulse"
+      }
+    },
+    defaultVariants: {
+      scheme: "default"
+    }
+  }
+), p = a(
+  "font-bold tracking-tight",
   {
     variants: {
       size: {
@@ -68,14 +72,21 @@ const h = a(
         lg: "text-4xl sm:text-5xl",
         xl: "text-5xl sm:text-6xl",
         full: "text-6xl sm:text-7xl"
+      },
+      tone: {
+        clean: "text-foreground",
+        subtle: "text-foreground",
+        brand: "text-foreground",
+        contrast: "text-zinc-100"
       }
     },
     defaultVariants: {
-      size: "md"
+      size: "lg",
+      tone: "clean"
     }
   }
 ), w = a(
-  "text-muted-foreground",
+  "",
   {
     variants: {
       size: {
@@ -85,71 +96,77 @@ const h = a(
         xl: "text-2xl",
         full: "text-3xl"
       },
-      variant: {
-        default: "max-w-md mx-auto",
-        card: "",
-        error: "",
-        maintenance: "",
-        suspension: ""
+      tone: {
+        clean: "text-muted-foreground max-w-md mx-auto",
+        subtle: "text-muted-foreground",
+        brand: "text-muted-foreground",
+        contrast: "text-zinc-300"
       }
     },
     defaultVariants: {
-      size: "md",
-      variant: "default"
+      size: "lg",
+      tone: "clean"
     }
   }
-), b = a(
+), z = a(
   "text-center",
   {
     variants: {
-      variant: {
+      scheme: {
         default: "",
-        card: "",
-        error: "text-sm text-muted-foreground",
-        maintenance: "text-sm text-muted-foreground",
-        suspension: "text-sm text-muted-foreground"
+        centered: "",
+        error: "text-sm",
+        maintenance: "text-sm"
+      },
+      tone: {
+        clean: "text-muted-foreground",
+        subtle: "text-muted-foreground",
+        brand: "text-muted-foreground",
+        contrast: "text-zinc-400"
       }
     },
     defaultVariants: {
-      variant: "default"
+      scheme: "default",
+      tone: "clean"
     }
   }
-), o = g(({
-  variant: s = "default",
-  size: n = "md",
-  title: l,
-  subtitle: d,
-  logo: x,
-  icon: m,
+), g = b(({
+  scheme: l = "default",
+  tone: n = "clean",
+  size: s = "lg",
+  title: x,
+  subtitle: c,
+  logo: m,
+  icon: d,
   actions: i,
-  footer: c,
-  className: v,
+  footer: o,
+  className: h,
   containerProps: r,
   children: u
-}, p) => /* @__PURE__ */ t("div", { ref: p, className: e(h({ variant: s }), v), children: /* @__PURE__ */ f(
+}, v) => /* @__PURE__ */ e("div", { ref: v, className: t(y({ scheme: l, tone: n }), h), children: /* @__PURE__ */ f(
   "div",
   {
     ...r,
-    className: e(
-      y({ size: n, variant: s }),
+    className: t(
+      N({ size: s, scheme: l }),
       r == null ? void 0 : r.className
     ),
     children: [
-      x && /* @__PURE__ */ t("div", { className: "flex justify-center", children: x }),
-      m && /* @__PURE__ */ t("div", { className: e(N({ variant: s })), children: m }),
-      (l || d) && /* @__PURE__ */ f("div", { className: "space-y-4", children: [
-        l && /* @__PURE__ */ t("h1", { className: e(V({ size: n })), children: l }),
-        d && /* @__PURE__ */ t("p", { className: e(w({ size: n, variant: s })), children: d })
+      m && /* @__PURE__ */ e("div", { className: "flex justify-center", children: m }),
+      d && /* @__PURE__ */ e("div", { className: t(V({ scheme: l })), children: d }),
+      (x || c) && /* @__PURE__ */ f("div", { className: "space-y-4", children: [
+        x && /* @__PURE__ */ e("h1", { className: t(p({ size: s, tone: n })), children: x }),
+        c && /* @__PURE__ */ e("p", { className: t(w({ size: s, tone: n })), children: c })
       ] }),
-      u && /* @__PURE__ */ t("div", { className: "space-y-6", children: u }),
-      i && /* @__PURE__ */ t("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: i }),
-      c && /* @__PURE__ */ t("div", { className: e(b({ variant: s })), children: c })
+      u && /* @__PURE__ */ e("div", { className: "space-y-6", children: u }),
+      i && /* @__PURE__ */ e("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: i }),
+      o && /* @__PURE__ */ e("div", { className: t(z({ scheme: l, tone: n })), children: o })
     ]
   }
 ) }));
-o.displayName = "BlankLayout";
-const L = o;
+g.displayName = "BlankLayout";
+const C = g;
 export {
-  L as BlankLayout
+  C as BlankLayout
 };
 //# sourceMappingURL=blank.js.map
