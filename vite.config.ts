@@ -37,6 +37,7 @@ const getComponentEntries = () => {
   // Utils and Lib
   entries['utils'] = resolve(__dirname, 'src/lib/utils.ts');
   entries['platform'] = resolve(__dirname, 'src/lib/platform.ts');
+  entries['wrapper'] = resolve(__dirname, 'src/components/layouts/layout-wrapper.tsx');
   
   // Adapters
   //entries['adapters'] = resolve(__dirname, 'src/adapters/index.ts');
@@ -74,10 +75,23 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
         },
+        // Ensure CSS is properly named and placed
+        assetFileNames: (assetInfo) => {
+          // Name the main CSS file as styles.css to match package.json exports
+          if (assetInfo.name === 'style.css' || 
+              assetInfo.name === 'uikit.css' || 
+              assetInfo.name?.endsWith('globals.css')) {
+            return 'styles.css';
+          }
+          return assetInfo.name || 'assets/[name].[ext]';
+        },
       },
     },
+    // Keep cssCodeSplit false to bundle all CSS into one file
     cssCodeSplit: false,
     sourcemap: true,
+    // Ensure CSS is extracted
+    cssTarget: 'esnext',
   },
   css: {
     postcss: {

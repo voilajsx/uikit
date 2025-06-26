@@ -48,8 +48,8 @@
       "types": "./dist/types/index.d.ts"
     },
     "./styles": {
-      "import": "./dist/uikit.css",
-      "require": "./dist/uikit.css"
+      "import": "./dist/styles.css",
+      "require": "./dist/styles.css"
     },
     "./accordion": {
       "import": "./dist/accordion.js",
