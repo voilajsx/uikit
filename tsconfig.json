@@ -17,21 +17,19 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./dist/types",
+    "rootDir": "./src",                          // ✅ NEW: Flatten folder output
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@voilajsx/uikit/*": ["./src/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
+  "include": ["src/**/*"],                      // ✅ NEW: Clean, only includes src/
   "exclude": [
     "node_modules",
     "dist",
+    "examples",                                 // ✅ NEW: excludes examples
     "**/*.test.ts",
     "**/*.test.tsx"
   ]
