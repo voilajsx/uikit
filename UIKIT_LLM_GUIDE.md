@@ -1,4 +1,4 @@
-# @voilajsx/uikit - COMPLETE LLM Usage Guide v2.0
+# @voilajsx/uikit - COMPLETE LLM Usage Guide v2.1
 
 ## 🎯 QUICK START (30 SECONDS)
 
@@ -39,7 +39,7 @@ What are you building?
 ```jsx
 // ✅ CORRECT - Use child components
 <AdminLayout scheme="sidebar" tone="subtle">
-  <AdminLayout.Header title="Dashboard" />
+  <AdminLayout.Header title="Dashboard" position="sticky" />
   <AdminLayout.Sidebar navigation={nav} />
   <AdminLayout.Content>
     <YourContent />
@@ -486,6 +486,7 @@ function AdminDashboard() {
       <AdminLayout scheme="sidebar" tone="subtle" size="lg">
         <AdminLayout.Header
           title="Admin Dashboard"
+          position="sticky"
           breadcrumbs={[
             { label: 'Admin', href: '/admin' },
             { label: 'Dashboard' },
@@ -569,12 +570,13 @@ function Website() {
             </Button>
           }
         />
-        <PageLayout.Content>
+        <PageLayout.Content
+          title="Welcome to Our Platform"
+          breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
+          onNavigate={(href) => (window.location.href = href)}
+        >
           <div className="space-y-12">
             <section className="text-center py-12">
-              <h1 className="text-4xl font-bold text-foreground mb-4">
-                Welcome to Our Platform
-              </h1>
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Build amazing applications with our comprehensive UI kit.
               </p>
@@ -862,6 +864,59 @@ function ChromeExtension() {
 
 ---
 
+## 📍 BREADCRUMBS SYSTEM (NEW FEATURE)
+
+### AdminLayout.Header Breadcrumbs
+
+```jsx
+<AdminLayout.Header
+  title="User Management"
+  position="sticky"
+  breadcrumbs={[
+    { label: 'Admin', href: '/admin' },
+    { label: 'Users', href: '/admin/users' },
+    { label: 'John Doe' }, // Current page - no href
+  ]}
+  actions={<Button>Edit User</Button>}
+/>
+```
+
+### PageLayout.Content Breadcrumbs
+
+```jsx
+<PageLayout.Content
+  title="User Profile"
+  breadcrumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Users', href: '/users' },
+    { label: 'John Doe' }, // Current page - no href
+  ]}
+  onNavigate={(href, item) => navigate(href)}
+>
+  <UserProfileContent />
+</PageLayout.Content>
+```
+
+### Breadcrumb Structure
+
+```jsx
+const breadcrumbs = [
+  {
+    label: 'Home', // REQUIRED: Display text
+    href: '/', // OPTIONAL: Link (omit for current page)
+  },
+  {
+    label: 'Products',
+    href: '/products',
+  },
+  {
+    label: 'iPhone 15', // Current page - no href
+  },
+];
+```
+
+---
+
 ## 🎨 COLOR SYSTEM (COMPLETE REFERENCE)
 
 ### ✅ Semantic Color Classes (ALWAYS USE)
@@ -938,6 +993,96 @@ tone="clean"     // Pure, minimal, white/light backgrounds
 tone="subtle"    // Muted, professional, gray backgrounds
 tone="brand"     // Primary colored, branded elements
 tone="contrast"  // High emphasis, dark/bold backgrounds
+```
+
+---
+
+## 📐 COMPOUND COMPONENT PROPS (DETAILED)
+
+### AdminLayout Props
+
+```jsx
+// AdminLayout Root
+<AdminLayout
+  scheme="sidebar|compact"              // Layout structure (default: 'sidebar')
+  tone="clean|subtle|brand|contrast"    // Visual emphasis (default: 'subtle')
+  size="sm|md|lg|xl|full"              // Layout size (default: 'lg')
+  defaultSidebarOpen={true}            // Initial sidebar state (default: true)
+  position="relative|sticky|fixed"     // Positioning behavior (default: 'relative')
+>
+
+// AdminLayout.Header
+<AdminLayout.Header
+  title="Dashboard"                    // Page title (optional)
+  position="sticky|fixed|relative"     // Header positioning (default: 'sticky')
+  breadcrumbs={[                      // Breadcrumb navigation (optional)
+    { label: 'Admin', href: '/admin' },
+    { label: 'Dashboard' }
+  ]}
+  actions={<Button>Action</Button>}    // Header actions (optional)
+/>
+
+// AdminLayout.Sidebar
+<AdminLayout.Sidebar
+  navigation={navigationItems}         // Navigation items (optional)
+  currentPath="/admin"                // Current path for active states (optional)
+  onNavigate={handleNavigation}       // Navigation handler (optional)
+  logo={<Logo />}                     // Logo component (optional)
+  footer={<SidebarFooter />}          // Footer content (optional)
+  position="relative|sticky|fixed"    // Sidebar positioning (optional)
+/>
+
+// AdminLayout.Content
+<AdminLayout.Content>
+  {/* Your admin content here */}
+</AdminLayout.Content>
+```
+
+### PageLayout Props
+
+```jsx
+// PageLayout Root
+<PageLayout
+  scheme="default|sidebar"             // Layout structure (default: 'default')
+  tone="clean|subtle|brand|contrast"   // Visual emphasis (default: 'clean')
+  size="sm|md|lg|xl|full"             // Layout size (default: 'xl')
+>
+
+// PageLayout.Header
+<PageLayout.Header
+  navigation={navigationItems}         // Navigation items (optional)
+  currentPath="/"                     // Current path for active states (optional)
+  onNavigate={handleNavigation}       // Navigation handler (optional)
+  logo={<Logo />}                     // Logo component (optional)
+  title="My Site"                     // Site title if no logo (optional)
+  actions={<HeaderActions />}         // Header actions (optional)
+  position="sticky|fixed|relative"    // Header positioning (default: 'sticky')
+/>
+
+// PageLayout.Content
+<PageLayout.Content
+  title="Page Title"                  // Page title above content (optional)
+  breadcrumbs={[                     // Page breadcrumbs (optional)
+    { label: "Home", href: "/" },
+    { label: "About" }
+  ]}
+  sidebar="none|left|right"          // Sidebar position (default: 'none')
+  navigation={sidebarNav}            // Sidebar navigation (optional)
+  sidebarContent={<CustomSidebar />} // Custom sidebar content (optional)
+  onNavigate={handleNavigation}      // Navigation handler (optional)
+  sidebarPosition="sticky|fixed|relative" // Sidebar positioning (optional)
+>
+  {/* Your page content here */}
+</PageLayout.Content>
+
+// PageLayout.Footer
+<PageLayout.Footer
+  navigation={footerNav}             // Footer navigation (optional)
+  copyright="© 2024 Company"         // Copyright text (optional)
+  position="sticky|fixed|relative"   // Footer positioning (default: 'relative')
+>
+  {/* Custom footer content (optional) */}
+</PageLayout.Footer>
 ```
 
 ---
@@ -1467,6 +1612,40 @@ const navigation = [
 ❌ <AdminLayout scheme="default" />        // Wrong: use "sidebar"
 ```
 
+### 📍 BREADCRUMBS
+
+#### ✅ DO - Proper Breadcrumbs
+
+```jsx
+// Use proper breadcrumb structure
+const breadcrumbs = [
+  { label: 'Home', href: '/' },           // ✅ Clickable with href
+  { label: 'Products', href: '/products' }, // ✅ Clickable with href
+  { label: 'iPhone 15' }                 // ✅ Current page - no href
+];
+
+// AdminLayout breadcrumbs
+<AdminLayout.Header
+  breadcrumbs={breadcrumbs}
+  title="Product Details"
+/>
+
+// PageLayout breadcrumbs
+<PageLayout.Content
+  breadcrumbs={breadcrumbs}
+  title="Product Details"
+/>
+```
+
+#### ❌ DON'T - Wrong Breadcrumbs
+
+```jsx
+// Never use wrong breadcrumb structure
+❌ [{ name: 'Home', link: '/' }]           // Wrong property names
+❌ [{ label: 'Home', url: '/' }]           // Wrong: use href
+❌ [{ label: 'Home', href: '/', active: true }] // Wrong: use no href for current
+```
+
 ### 🎨 THEME SYSTEM
 
 #### ✅ DO - Two-Level System
@@ -1673,6 +1852,8 @@ import '@voilajsx/uikit/styles';
 4. **✅ NEVER** use hardcoded colors: `bg-white text-black`
 5. **✅ COMPOUND** layouts need child components: `<AdminLayout><AdminLayout.Header/></AdminLayout>`
 6. **✅ SINGLE** layouts take direct children: `<AuthLayout><LoginForm/></AuthLayout>`
+7. **✅ BREADCRUMBS** use proper structure: `{ label: 'Home', href: '/' }`
+8. **✅ POSITIONING** AdminHeader defaults to sticky: `position="sticky"`
 
 ### 🔍 **Quality Checklist** (Every Component)
 
@@ -1682,6 +1863,8 @@ import '@voilajsx/uikit/styles';
 - [ ] Standard navigation structure (key + label)
 - [ ] Appropriate scheme/tone/size props
 - [ ] Individual imports (not barrel imports)
+- [ ] Proper breadcrumb structure when used
+- [ ] Correct positioning props
 
 ### ⚡ **Success Factors** (High Quality Code)
 
@@ -1690,6 +1873,8 @@ import '@voilajsx/uikit/styles';
 - **Semantic Colors**: Future-proof theming
 - **Type Safety**: Proper TypeScript usage
 - **Performance**: Individual imports for tree-shaking
+- **Navigation**: Standard structure and handlers
+- **Breadcrumbs**: Proper hierarchy and current page indication
 
 ---
 
@@ -1720,6 +1905,13 @@ import '@voilajsx/uikit/styles';
 - [ ] Add icons using lucide-react components
 - [ ] Implement onNavigate handler for routing integration
 
+### Breadcrumbs
+
+- [ ] Use proper breadcrumb structure with label (required) and href (optional)
+- [ ] Include breadcrumbs in AdminLayout.Header or PageLayout.Content
+- [ ] Connect breadcrumbs to navigation handler
+- [ ] Current page has no href property
+
 ### Integration
 
 - [ ] Connect to your routing system (React Router, Next.js, etc.)
@@ -1733,5 +1925,6 @@ import '@voilajsx/uikit/styles';
 - [ ] Test all themes (default, aurora, metro, neon, ruby, studio)
 - [ ] Test responsive behavior on mobile/desktop
 - [ ] Verify navigation works across all layouts
+- [ ] Test breadcrumb navigation functionality
 
 Following this complete guide ensures 100% successful UIKit implementation with zero ambiguity for LLM code generation.

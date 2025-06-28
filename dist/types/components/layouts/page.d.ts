@@ -72,6 +72,13 @@ export interface PageContentProps {
     onNavigate?: (href: string, item: NavigationItem) => void;
     /** OPTIONAL: Whether sidebar should be sticky */
     sidebarPosition?: 'sticky' | 'fixed' | 'relative';
+    /** OPTIONAL: Breadcrumb items */
+    breadcrumbs?: {
+        label: string;
+        href?: string;
+    }[];
+    /** OPTIONAL: Page title (shown above breadcrumbs) */
+    title?: string;
     /** OPTIONAL: Additional CSS classes */
     className?: string;
     /** REQUIRED: Page content */

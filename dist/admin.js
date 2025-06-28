@@ -1,8 +1,8 @@
-import { jsx as e, jsxs as d, Fragment as j } from "react/jsx-runtime";
+import { jsx as e, jsxs as i, Fragment as j } from "react/jsx-runtime";
 import * as A from "react";
 import { createContext as Y, forwardRef as V, useState as L, useEffect as D, useContext as Z } from "react";
 import { c as X } from "./index-DACAHwoB.js";
-import { c as i } from "./utils-qaFjX9_3.js";
+import { c as d } from "./utils-qaFjX9_3.js";
 import { Button as W } from "./button.js";
 import { Badge as $ } from "./badge.js";
 import { Separator as K } from "./separator.js";
@@ -33,7 +33,7 @@ const G = Y({
       tone: "subtle"
     }
   }
-), de = X(
+), ie = X(
   "flex-1 flex flex-col min-w-0",
   {
     variants: {
@@ -50,50 +50,50 @@ const G = Y({
   }
 ), J = V(({
   scheme: b = "sidebar",
-  tone: x = "subtle",
-  size: g = "lg",
-  position: u = "relative",
+  tone: w = "subtle",
+  size: y = "lg",
+  position: f = "relative",
   // Add this line
   defaultSidebarOpen: m = !0,
-  className: w,
-  children: y
-}, v) => {
-  const [p, t] = L(m), [h, n] = L(!1);
+  className: x,
+  children: v
+}, z) => {
+  const [p, t] = L(m), [g, n] = L(!1);
   D(() => {
     const s = () => {
       const a = window.innerWidth < 1024;
       n(a), t(a ? !1 : m);
     };
     return s(), window.addEventListener("resize", s), () => window.removeEventListener("resize", s);
-  }, [m]), D(() => (h && p ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
+  }, [m]), D(() => (g && p ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
     document.body.style.overflow = "unset";
-  }), [h, p]);
-  const k = A.Children.toArray(y), S = k.find(
+  }), [g, p]);
+  const h = A.Children.toArray(v), S = h.find(
     (s) => A.isValidElement(s) && s.type === H
-  ), N = k.find(
+  ), k = h.find(
     (s) => A.isValidElement(s) && s.type === F
-  ), T = k.find(
+  ), T = h.find(
     (s) => A.isValidElement(s) && s.type === I
   );
   return /* @__PURE__ */ e(G.Provider, { value: {
     scheme: b,
-    tone: x,
-    size: g,
+    tone: w,
+    size: y,
     sidebarExpanded: p,
     setSidebarExpanded: t,
-    isMobile: h
-  }, children: /* @__PURE__ */ d(
+    isMobile: g
+  }, children: /* @__PURE__ */ i(
     "div",
     {
-      ref: v,
-      className: i(se({ tone: x }), w),
+      ref: z,
+      className: d(se({ tone: w }), x),
       children: [
-        /* @__PURE__ */ e("div", { className: i(
+        /* @__PURE__ */ e("div", { className: d(
           "flex-shrink-0",
-          u === "sticky" && "sticky top-0 max-h-screen overflow-y-auto"
+          f === "sticky" && "sticky top-0 max-h-screen overflow-y-auto"
         ), children: S }),
-        /* @__PURE__ */ d("div", { className: "flex-1 flex flex-col min-w-0", children: [
-          N,
+        /* @__PURE__ */ i("div", { className: "flex-1 flex flex-col min-w-0", children: [
+          k,
           T
         ] })
       ]
@@ -103,22 +103,22 @@ const G = Y({
 J.displayName = "AdminLayout";
 const H = V(({
   tone: b,
-  navigation: x = [],
-  currentPath: g = "",
-  onNavigate: u,
+  navigation: w = [],
+  currentPath: y = "",
+  onNavigate: f,
   logo: m,
-  position: w,
+  position: x,
   // Add this line
-  footer: y,
-  className: v
+  footer: v,
+  className: z
 }, p) => {
-  const { scheme: t, tone: h, size: n, sidebarExpanded: k, setSidebarExpanded: S, isMobile: N } = P(), [T, s] = L(/* @__PURE__ */ new Set()), [a, B] = L(!1), o = b || h, C = t === "compact", f = !C || a, O = () => {
-    C && B(!a);
+  const { scheme: t, tone: g, size: n, sidebarExpanded: h, setSidebarExpanded: S, isMobile: k } = P(), [T, s] = L(/* @__PURE__ */ new Set()), [a, B] = L(!1), o = b || g, N = t === "compact", u = !N || a, O = () => {
+    N && B(!a);
   }, Q = (r) => {
     const c = new Set(T);
     c.has(r) ? c.delete(r) : c.add(r), s(c);
   }, U = (r, c = !1) => {
-    const z = c ? "w-[92%] flex items-center transition-all duration-200 group text-left font-medium rounded-lg cursor-pointer" : "w-full flex items-center transition-all duration-200 group text-left font-medium rounded-lg cursor-pointer", E = c ? f ? "ml-4 px-3 py-2" : "px-2 py-2" : f ? "px-3 py-2.5" : "px-2 py-2.5 justify-center";
+    const C = c ? "w-[92%] flex items-center transition-all duration-200 group text-left font-medium rounded-lg cursor-pointer" : "w-full flex items-center transition-all duration-200 group text-left font-medium rounded-lg cursor-pointer", E = c ? u ? "ml-4 px-3 py-2" : "px-2 py-2" : u ? "px-3 py-2.5" : "px-2 py-2.5 justify-center";
     let l = "";
     switch (o) {
       case "clean":
@@ -136,31 +136,31 @@ const H = V(({
       default:
         l = r ? "bg-muted/10 text-foreground   shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-muted/50";
     }
-    return i(z, E, l);
+    return d(C, E, l);
   }, R = ({ item: r, isSubmenu: c = !1 }) => {
-    const z = !c && r.items && r.items.length > 0, E = T.has(r.key), l = r.href ? g === r.href : !!r.isActive, _ = /* @__PURE__ */ d(
+    const C = !c && r.items && r.items.length > 0, E = T.has(r.key), l = r.href ? y === r.href : !!r.isActive, _ = /* @__PURE__ */ i(
       "button",
       {
         onClick: () => {
-          if (C && !a) {
+          if (N && !a) {
             B(!0);
             return;
           }
-          z ? Q(r.key) : r.href && u ? u(r.href, r) : r.onClick && r.onClick();
+          C ? Q(r.key) : r.href && f ? f(r.href, r) : r.onClick && r.onClick();
         },
         className: U(l, c),
         children: [
-          !c && r.icon && /* @__PURE__ */ e(r.icon, { className: i(
+          !c && r.icon && /* @__PURE__ */ e(r.icon, { className: d(
             "flex-shrink-0",
-            f ? "h-4 w-4 mr-3" : "h-5 w-5"
+            u ? "h-4 w-4 mr-3" : "h-5 w-5"
           ) }),
-          f && /* @__PURE__ */ d(j, { children: [
+          u && /* @__PURE__ */ i(j, { children: [
             /* @__PURE__ */ e("span", { className: "flex-1 truncate text-left", children: r.label }),
             r.badge && /* @__PURE__ */ e(
               $,
               {
                 variant: l ? "secondary" : "outline",
-                className: i(
+                className: d(
                   "text-xs h-4 px-1 ml-1 flex-shrink-0",
                   // Badge colors based on tone
                   o === "brand" && !l && "bg-primary-foreground/10 text-primary-foreground border-primary-foreground/20",
@@ -171,7 +171,7 @@ const H = V(({
                 children: r.badge
               }
             ),
-            z && /* @__PURE__ */ e(oe, { className: i(
+            C && /* @__PURE__ */ e(oe, { className: d(
               "h-4 w-4 flex-shrink-0 transition-transform duration-200",
               E && "rotate-90"
             ) })
@@ -179,8 +179,8 @@ const H = V(({
         ]
       }
     );
-    return C && !a && !c && r.icon ? /* @__PURE__ */ d("div", { className: "w-full", children: [
-      /* @__PURE__ */ e(ee, { children: /* @__PURE__ */ d(re, { delayDuration: 300, children: [
+    return N && !a && !c && r.icon ? /* @__PURE__ */ i("div", { className: "w-full", children: [
+      /* @__PURE__ */ e(ee, { children: /* @__PURE__ */ i(re, { delayDuration: 300, children: [
         /* @__PURE__ */ e(te, { asChild: !0, children: _ }),
         /* @__PURE__ */ e(
           ne,
@@ -191,14 +191,14 @@ const H = V(({
           }
         )
       ] }) }),
-      z && E && f && r.items && /* @__PURE__ */ e("div", { className: "overflow-hidden transition-all duration-300 mt-1", children: /* @__PURE__ */ e("div", { className: "space-y-1 pb-2", children: r.items.map((M) => /* @__PURE__ */ e(R, { item: M, isSubmenu: !0 }, M.key)) }) })
-    ] }, r.key) : /* @__PURE__ */ d("div", { className: "w-full", children: [
+      C && E && u && r.items && /* @__PURE__ */ e("div", { className: "overflow-hidden transition-all duration-300 mt-1", children: /* @__PURE__ */ e("div", { className: "space-y-1 pb-2", children: r.items.map((M) => /* @__PURE__ */ e(R, { item: M, isSubmenu: !0 }, M.key)) }) })
+    ] }, r.key) : /* @__PURE__ */ i("div", { className: "w-full", children: [
       _,
-      z && E && f && r.items && /* @__PURE__ */ e("div", { className: "overflow-hidden transition-all duration-300 mt-1", children: /* @__PURE__ */ e("div", { className: "space-y-1 pb-2", children: r.items.map((M) => /* @__PURE__ */ e(R, { item: M, isSubmenu: !0 }, M.key)) }) })
+      C && E && u && r.items && /* @__PURE__ */ e("div", { className: "overflow-hidden transition-all duration-300 mt-1", children: /* @__PURE__ */ e("div", { className: "space-y-1 pb-2", children: r.items.map((M) => /* @__PURE__ */ e(R, { item: M, isSubmenu: !0 }, M.key)) }) })
     ] }, r.key);
   };
-  return console.log("Scheme:", t, "Size:", n, "IsCompact:"), /* @__PURE__ */ d(j, { children: [
-    N && k && /* @__PURE__ */ e(
+  return console.log("Scheme:", t, "Size:", n, "IsCompact:"), /* @__PURE__ */ i(j, { children: [
+    k && h && /* @__PURE__ */ e(
       "div",
       {
         className: "fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden",
@@ -210,13 +210,13 @@ const H = V(({
       "aside",
       {
         ref: p,
-        className: i(
+        className: d(
           "border-r transition-all duration-300 ease-in-out flex flex-col",
           // Mobile positioning
           // Positioning based on prop and mobile state
-          N ? "fixed left-0 top-0 z-50 h-full" : "sticky top-0 h-screen",
+          k ? "fixed left-0 top-0 z-50 h-full" : "sticky top-0 h-screen",
           // Expansion state
-          k ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
+          h ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
           // Width based on scheme and size
           t === "sidebar" && n === "sm" && "w-48",
           t === "sidebar" && n === "md" && "w-56",
@@ -238,26 +238,26 @@ const H = V(({
           (t === "sidebar" || t === "compact") && o === "subtle" && "bg-muted/90 backdrop-blur-sm border-border/30 text-foreground",
           (t === "sidebar" || t === "compact") && o === "brand" && "bg-primary border-primary-foreground/20 text-primary-foreground",
           (t === "sidebar" || t === "compact") && o === "contrast" && "bg-zinc-900 border-zinc-700/40 text-zinc-100",
-          v
+          z
         ),
-        children: /* @__PURE__ */ d("div", { className: "flex flex-col h-full", children: [
-          /* @__PURE__ */ e("div", { className: i(
+        children: /* @__PURE__ */ i("div", { className: "flex flex-col h-full", children: [
+          /* @__PURE__ */ e("div", { className: d(
             "flex items-center shadow-sm  flex-shrink-0",
-            f ? "justify-between h-16 px-4" : "justify-center h-16 px-2"
-          ), children: f ? /* @__PURE__ */ d(j, { children: [
-            m && /* @__PURE__ */ e("div", { className: i(
+            u ? "justify-between h-16 px-4" : "justify-center h-16 px-2"
+          ), children: u ? /* @__PURE__ */ i(j, { children: [
+            m && /* @__PURE__ */ e("div", { className: d(
               "flex-shrink-0",
               // Logo colors based on tone
               o === "brand" && "[&_*]:text-primary-foreground",
               o === "contrast" && "[&_*]:text-zinc-100"
             ), children: m }),
-            (N || C && a) && /* @__PURE__ */ e(
+            (k || N && a) && /* @__PURE__ */ e(
               W,
               {
                 variant: "ghost",
                 size: "icon",
                 onClick: () => {
-                  N ? S(!1) : C && B(!1);
+                  k ? S(!1) : N && B(!1);
                 },
                 className: "flex-shrink-0",
                 children: /* @__PURE__ */ e(ae, { className: "h-4 w-4" })
@@ -273,16 +273,16 @@ const H = V(({
               children: /* @__PURE__ */ e(q, { className: "h-4 w-4" })
             }
           ) }),
-          /* @__PURE__ */ e("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e("nav", { className: i("space-y-1", f ? "p-4" : "p-2"), children: x.map((r) => /* @__PURE__ */ e(R, { item: r }, r.key)) }) }),
-          y && f && /* @__PURE__ */ d(j, { children: [
-            /* @__PURE__ */ e(K, { className: i(
+          /* @__PURE__ */ e("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e("nav", { className: d("space-y-1", u ? "p-4" : "p-2"), children: w.map((r) => /* @__PURE__ */ e(R, { item: r }, r.key)) }) }),
+          v && u && /* @__PURE__ */ i(j, { children: [
+            /* @__PURE__ */ e(K, { className: d(
               // Separator colors based on tone
               o === "clean" && "bg-border/40",
               o === "subtle" && "bg-border/30",
               o === "brand" && "bg-primary-foreground/20",
               o === "contrast" && "bg-zinc-700/40"
             ) }),
-            /* @__PURE__ */ e("div", { className: "flex-shrink-0 p-4", children: y })
+            /* @__PURE__ */ e("div", { className: "flex-shrink-0 p-4", children: v })
           ] })
         ] })
       }
@@ -292,38 +292,45 @@ const H = V(({
 H.displayName = "AdminSidebar";
 const F = V(({
   tone: b,
-  size: x,
-  title: g,
-  breadcrumbs: u = [],
-  actions: m,
-  className: w
-}, y) => {
-  const { sidebarExpanded: v, setSidebarExpanded: p, isMobile: t } = P();
+  size: w,
+  title: y,
+  position: f = "sticky",
+  // Changed default to sticky
+  breadcrumbs: m = [],
+  actions: x,
+  className: v
+}, z) => {
+  const { sidebarExpanded: p, setSidebarExpanded: t, isMobile: g } = P();
   return /* @__PURE__ */ e(
     "header",
     {
-      ref: y,
-      className: i(
-        "w-full shadow-sm bg-muted/30 text-foreground flex-shrink-0",
-        w
+      ref: z,
+      className: d(
+        "w-full shadow-sm bg-background/80 backdrop-blur-sm text-foreground flex-shrink-0 z-30",
+        // Light transparency with backdrop blur
+        // Add positioning classes based on position prop
+        f === "sticky" && "sticky top-0",
+        f === "fixed" && "fixed top-0 left-0 right-0",
+        f === "relative" && "relative",
+        v
       ),
-      children: /* @__PURE__ */ d("div", { className: "flex items-center justify-between px-4 lg:px-6 h-16", children: [
-        /* @__PURE__ */ d("div", { className: "flex items-center gap-4 min-w-0", children: [
-          t && /* @__PURE__ */ e(
+      children: /* @__PURE__ */ i("div", { className: "flex items-center justify-between px-4 lg:px-6 h-16", children: [
+        /* @__PURE__ */ i("div", { className: "flex items-center gap-4 min-w-0", children: [
+          g && /* @__PURE__ */ e(
             "button",
             {
               className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors",
-              onClick: () => p(!v),
-              "aria-label": v ? "Close sidebar" : "Open sidebar",
+              onClick: () => t(!p),
+              "aria-label": p ? "Close sidebar" : "Open sidebar",
               children: /* @__PURE__ */ e(q, { className: "h-5 w-5" })
             }
           ),
-          /* @__PURE__ */ e("div", { className: "min-w-0", children: u.length > 0 && /* @__PURE__ */ e("nav", { className: "flex items-center gap-2  text-muted-foreground", children: u.map((h, n) => /* @__PURE__ */ d(A.Fragment, { children: [
-            n > 0 && /* @__PURE__ */ e("span", { children: "/" }),
-            h.href ? /* @__PURE__ */ e("button", { className: "hover:text-foreground transition-colors", children: h.label }) : /* @__PURE__ */ e("span", { children: h.label })
-          ] }, n)) }) })
+          /* @__PURE__ */ e("div", { className: "min-w-0", children: m.length > 0 && /* @__PURE__ */ e("nav", { className: "flex items-center gap-2  text-muted-foreground", children: m.map((n, h) => /* @__PURE__ */ i(A.Fragment, { children: [
+            h > 0 && /* @__PURE__ */ e("span", { children: "/" }),
+            n.href ? /* @__PURE__ */ e("button", { className: "hover:text-foreground transition-colors", children: n.label }) : /* @__PURE__ */ e("span", { children: n.label })
+          ] }, h)) }) })
         ] }),
-        m && /* @__PURE__ */ e("div", { className: "flex-shrink-0", children: m })
+        x && /* @__PURE__ */ e("div", { className: "flex-shrink-0", children: x })
       ] })
     }
   );
@@ -331,17 +338,17 @@ const F = V(({
 F.displayName = "AdminHeader";
 const I = V(({
   tone: b,
-  size: x,
-  className: g,
-  children: u
+  size: w,
+  className: y,
+  children: f
 }, m) => {
-  const { isMobile: w } = P();
-  return /* @__PURE__ */ e("div", { className: i(de({ mobile: w })), children: /* @__PURE__ */ e(
+  const { isMobile: x } = P();
+  return /* @__PURE__ */ e("div", { className: d(ie({ mobile: x })), children: /* @__PURE__ */ e(
     "main",
     {
       ref: m,
-      className: i("flex-1 min-w-0 overflow-auto", g),
-      children: /* @__PURE__ */ e("div", { className: "p-4 lg:p-6 w-full", children: /* @__PURE__ */ e("div", { className: "w-full  mx-auto", children: u }) })
+      className: d("flex-1 min-w-0 overflow-auto", y),
+      children: /* @__PURE__ */ e("div", { className: "p-4 lg:p-6 w-full", children: /* @__PURE__ */ e("div", { className: "w-full  mx-auto", children: f }) })
     }
   ) });
 });

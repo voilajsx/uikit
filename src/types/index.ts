@@ -254,6 +254,8 @@ export interface AdminLayoutProps extends LayoutSchemeProps<AdminLayoutScheme> {
  * AdminLayout.Header props
  */
 export interface AdminHeaderProps extends BaseComponentProps, ToneProps, SizeProps {
+  /** OPTIONAL: Header positioning (default: "sticky") */
+  position?: 'sticky' | 'fixed' | 'relative';
   /** OPTIONAL: Page title */
   title?: string;
   /** OPTIONAL: Breadcrumb items */
@@ -323,6 +325,10 @@ export interface PageContentProps extends BaseComponentProps, ToneProps, SizePro
   sidebarContent?: ReactNode;
   /** OPTIONAL: Whether sidebar should be sticky */
   sidebarPosition?: 'sticky' | 'fixed' | 'relative';
+  /** OPTIONAL: Breadcrumb items */
+  breadcrumbs?: { label: string; href?: string }[];
+  /** OPTIONAL: Page title (shown above breadcrumbs) */
+  title?: string;
   /** REQUIRED: Page content */
   children: ReactNode;
 }

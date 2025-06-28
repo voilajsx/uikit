@@ -625,6 +625,8 @@ export interface AdminHeaderProps {
   size?: Size;
   /** OPTIONAL: Page title */
   title?: string;
+  /** OPTIONAL: Header positioning (default: "sticky") */
+  position?: 'sticky' | 'fixed' | 'relative';
   /** OPTIONAL: Breadcrumb items */
   breadcrumbs?: { label: string; href?: string }[];
   /** OPTIONAL: Header actions (buttons, user menu, etc.) */
@@ -637,6 +639,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
   tone,
   size,
   title,
+  position = 'sticky', // Changed default to sticky
   breadcrumbs = [],
   actions,
   className,
@@ -644,10 +647,14 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
   const { sidebarExpanded, setSidebarExpanded, isMobile } = useAdmin();
 
   return (
-    <header 
+      <header 
       ref={ref}
       className={cn(
-        'w-full shadow-sm bg-muted/30 text-foreground flex-shrink-0',
+        'w-full shadow-sm bg-background/80 backdrop-blur-sm text-foreground flex-shrink-0 z-30', // Light transparency with backdrop blur
+        // Add positioning classes based on position prop
+        position === 'sticky' && 'sticky top-0',
+        position === 'fixed' && 'fixed top-0 left-0 right-0',
+        position === 'relative' && 'relative',
         className
       )}
     >

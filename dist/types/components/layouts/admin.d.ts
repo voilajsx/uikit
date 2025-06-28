@@ -62,6 +62,8 @@ export interface AdminHeaderProps {
     size?: Size;
     /** OPTIONAL: Page title */
     title?: string;
+    /** OPTIONAL: Header positioning (default: "sticky") */
+    position?: 'sticky' | 'fixed' | 'relative';
     /** OPTIONAL: Breadcrumb items */
     breadcrumbs?: {
         label: string;

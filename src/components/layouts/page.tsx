@@ -189,11 +189,16 @@ export interface PageContentProps {
   onNavigate?: (href: string, item: NavigationItem) => void;
   /** OPTIONAL: Whether sidebar should be sticky */
   sidebarPosition?: 'sticky' | 'fixed' | 'relative';
+  /** OPTIONAL: Breadcrumb items */
+  breadcrumbs?: { label: string; href?: string }[];
+  /** OPTIONAL: Page title (shown above breadcrumbs) */
+  title?: string;
   /** OPTIONAL: Additional CSS classes */
   className?: string;
   /** REQUIRED: Page content */
   children: React.ReactNode;
 }
+
 
 const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
   tone,
@@ -204,6 +209,8 @@ const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
   currentPath = '',
   onNavigate,
   sidebarPosition = 'relative',
+  breadcrumbs = [],
+  title,
   className,
   children,
 }, ref) => {
@@ -212,6 +219,57 @@ const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
   // Auto-detect sidebar from scheme if not explicitly set
   const finalSidebar = sidebar !== 'none' ? sidebar : (scheme === 'sidebar' ? 'left' : 'none');
   
+  // Handle breadcrumb navigation
+  const handleBreadcrumbClick = (crumb: { label: string; href?: string }) => {
+    if (crumb.href && onNavigate) {
+      // Create a navigation item for the breadcrumb
+      const navItem: NavigationItem = {
+        key: crumb.href,
+        label: crumb.label,
+        href: crumb.href
+      };
+      onNavigate(crumb.href, navItem);
+    }
+  };
+
+  // Render breadcrumbs component
+  const renderBreadcrumbs = () => {
+    if (breadcrumbs.length === 0) return null;
+
+    return (
+      <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+        {breadcrumbs.map((crumb, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && (
+              <span className="text-muted-foreground/60">/</span>
+            )}
+            {crumb.href ? (
+              <button 
+                onClick={() => handleBreadcrumbClick(crumb)}
+                className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+              >
+                {crumb.label}
+              </button>
+            ) : (
+              <span className="text-foreground font-medium">{crumb.label}</span>
+            )}
+          </React.Fragment>
+        ))}
+      </nav>
+    );
+  };
+
+  // Render page title
+  const renderTitle = () => {
+    if (!title) return null;
+    
+    return (
+      <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
+        {title}
+      </h1>
+    );
+  };
+
   if (finalSidebar === 'none') {
     // Simple content without sidebar
     return (
@@ -227,6 +285,15 @@ const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
           (size || pageSize) === 'xl' && 'max-w-7xl px-4 sm:px-6 lg:px-8 py-8',
           (size || pageSize) === 'full' && 'max-w-full px-4 sm:px-6 lg:px-8 py-8'
         )}>
+          {/* Page header section with title and breadcrumbs */}
+          {(title || breadcrumbs.length > 0) && (
+            <div className="mb-8">
+              {renderBreadcrumbs()}
+              {renderTitle()}
+            </div>
+          )}
+          
+          {/* Main content */}
           {children}
         </div>
       </main>
@@ -246,6 +313,15 @@ const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
         tone={tone || pageTone}
         size={size || pageSize}
       >
+        {/* Page header section with title and breadcrumbs */}
+        {(title || breadcrumbs.length > 0) && (
+          <div className="mb-8">
+            {renderBreadcrumbs()}
+            {renderTitle()}
+          </div>
+        )}
+        
+        {/* Main content */}
         {children}
       </Container>
     </div>
