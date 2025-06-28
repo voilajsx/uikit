@@ -255,35 +255,39 @@ const HeaderNav = forwardRef<HTMLDivElement, HeaderNavProps>(({
     const baseStyles = 'px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-md flex items-center gap-2';
     
     switch (tone) {
-      case 'subtle':
-        return cn(
-          baseStyles,
-          isActive 
-            ? 'bg-background text-foreground shadow-sm' 
-            : 'text-muted-foreground hover:text-foreground hover:bg-white/80'
-        );
-      case 'brand':
-        return cn(
-          baseStyles,
-          isActive 
-            ? 'bg-primary-foreground/20 text-primary-foreground shadow-sm' 
-            : 'text-primary-foreground/90 hover:text-primary-foreground hover:bg-white/10'
-        );
-      case 'contrast':
-        return cn(
-          baseStyles,
-          isActive 
-            ? 'bg-zinc-700 text-zinc-100 shadow-sm' 
-            : 'text-zinc-200 hover:text-zinc-100 hover:bg-white/5'
-        );
-      default: // clean
-        return cn(
-          baseStyles,
-          isActive 
-            ? 'bg-gray-100 text-foreground shadow-sm' 
-            : 'text-foreground hover:text-foreground hover:bg-gray-50'
-        );
-    }
+  case 'subtle':
+    return cn(
+      baseStyles,
+      'cursor-pointer',
+      isActive 
+        ? 'bg-background text-foreground shadow-sm' 
+        : 'text-muted-foreground hover:text-foreground hover:bg-background/60' // ← CHANGED
+    );
+  case 'brand':
+    return cn(
+      baseStyles,
+      'cursor-pointer',
+      isActive 
+        ? 'bg-primary-foreground/20 text-primary-foreground shadow-sm' 
+        : 'text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10'
+    );
+  case 'contrast':
+    return cn(
+      baseStyles,
+      'cursor-pointer', 
+      isActive 
+        ? 'bg-muted text-foreground shadow-sm' 
+        : 'text-muted-background/50 dark:text-muted-foreground hover:text-foreground hover:bg-muted/50' // ← CHANGED
+    );
+  default: // clean
+    return cn(
+      baseStyles,
+      'cursor-pointer',
+      isActive 
+        ? 'bg-muted text-foreground shadow-sm' 
+        : 'text-foreground hover:text-foreground hover:bg-muted/50'
+    );
+}
   };
 
   // Mobile button styles
@@ -292,7 +296,7 @@ const HeaderNav = forwardRef<HTMLDivElement, HeaderNavProps>(({
       'w-full flex items-center px-3 py-2 text-left transition-colors duration-200 rounded-lg',
       isActive 
         ? 'bg-secondary text-secondary-foreground' 
-        : 'text-foreground hover:bg-gray-50'
+        : 'text-foreground hover:text-foreground hover:bg-muted'
     );
   };
 
@@ -300,13 +304,13 @@ const HeaderNav = forwardRef<HTMLDivElement, HeaderNavProps>(({
   const getMobileToggleStyles = () => {
     switch (tone) {
       case 'subtle':
-        return 'text-muted-foreground hover:text-foreground hover:bg-white/80';
+        return 'text-muted-foreground hover:text-foreground hover:bg-muted/50';
       case 'brand':
-        return 'text-primary-foreground hover:bg-white/10';
+        return 'text-primary-foreground hover:text-primary-foreground hover:bg-primary-foreground/10';
       case 'contrast':
-        return 'text-zinc-100 hover:bg-white/5';
+        return 'text-foreground hover:text-foreground hover:bg-muted/50';
       default: // clean
-        return 'text-foreground hover:bg-gray-50';
+        return 'text-foreground hover:text-foreground hover:bg-muted/50';
     }
   };
 
@@ -360,9 +364,9 @@ const HeaderNav = forwardRef<HTMLDivElement, HeaderNavProps>(({
                           type="button"
                           className={cn(
                             'w-full px-3 py-2 text-left text-sm transition-colors flex items-center gap-2',
-                            'hover:bg-gray-50 focus:bg-gray-50 focus:outline-none',
+                            'hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground focus:outline-none',
                             subIsActive 
-                              ? 'bg-gray-100 text-foreground font-medium' 
+                              ? 'bg-muted text-foreground font-medium' 
                               : 'text-foreground'
                           )}
                           onClick={() => {
@@ -445,7 +449,7 @@ const HeaderNav = forwardRef<HTMLDivElement, HeaderNavProps>(({
                                 'w-full flex items-center px-3 py-2 text-left transition-colors rounded-lg',
                                 subIsActive 
                                   ? 'bg-secondary text-secondary-foreground' 
-                                  : 'text-muted-foreground hover:text-foreground hover:bg-gray-50'
+                                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                               )}
                               onClick={() => handleItemClick(subItem)}
                             >

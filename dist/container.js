@@ -1,18 +1,21 @@
-import { jsx as s, jsxs as b } from "react/jsx-runtime";
-import { forwardRef as y, useState as C, useEffect as N } from "react";
-import { c as v } from "./index-DACAHwoB.js";
-import { c as u } from "./utils-qaFjX9_3.js";
-import { Button as E } from "./button.js";
-import { Badge as B } from "./badge.js";
-import { C as z } from "./chevron-right-pz9eCjj-.js";
-const I = v(
+import { jsx as r, jsxs as b } from "react/jsx-runtime";
+import { forwardRef as S, useState as z, useEffect as R } from "react";
+import { c as A } from "./index-DACAHwoB.js";
+import { c as k } from "./utils-qaFjX9_3.js";
+import { Button as G } from "./button.js";
+import { Badge as V } from "./badge.js";
+import { Select as $, SelectTrigger as O, SelectValue as T, SelectContent as q, SelectItem as D } from "./select.js";
+import { C as F } from "./chevron-right-pz9eCjj-.js";
+const H = A(
   "w-full mx-auto bg-background text-foreground",
   {
     variants: {
       layout: {
-        none: "block p-1",
-        "sidebar-left": "flex flex-col md:flex-row min-h-screen overflow-visible gap-3 md:gap-4 p-1",
-        "sidebar-right": "flex flex-col md:flex-row min-h-screen overflow-visible gap-3 md:gap-4 p-1"
+        none: "block",
+        "sidebar-left": "block md:flex",
+        // ✅ FIXED: Always flex for side-by-side
+        "sidebar-right": "block md:flex"
+        // ✅ FIXED: Always flex for side-by-side
       },
       size: {
         sm: "max-w-2xl",
@@ -22,8 +25,8 @@ const I = v(
         full: "max-w-full"
       },
       position: {
-        sticky: "sticky top-0 z-20",
-        fixed: "fixed top-0 left-0 right-0 z-20",
+        sticky: "relative",
+        fixed: "relative",
         relative: "relative"
       }
     },
@@ -33,9 +36,9 @@ const I = v(
       position: "relative"
     }
   }
-), V = v(
-  "flex-shrink-0 rounded-lg",
-  // Added rounded-lg for rounded edges
+), J = A(
+  "flex-shrink-0 rounded-lg m-4 max-md:hidden",
+  // ✅ OPTIMIZED: Added m-4 for consistent outer margin
   {
     variants: {
       position: {
@@ -43,26 +46,26 @@ const I = v(
         right: "order-last"
       },
       size: {
-        sm: "md:w-48 lg:w-52 xl:w-56",
-        md: "md:w-56 lg:w-64 xl:w-72",
-        lg: "md:w-64 lg:w-72 xl:w-80",
-        // Same size for lg, xl, full
-        xl: "md:w-64 lg:w-72 xl:w-80",
-        // Same size for lg, xl, full
-        full: "md:w-64 lg:w-72 xl:w-80"
-        // Same size for lg, xl, full
+        sm: "w-48",
+        // ✅ FIXED: Removed responsive prefixes for consistent width
+        md: "w-56",
+        lg: "w-64",
+        xl: "w-64",
+        full: "w-64"
       },
       sidebarPosition: {
-        sticky: "md:sticky md:top-0 md:h-screen md:overflow-y-auto",
-        fixed: "md:fixed md:top-0 md:h-screen md:overflow-y-auto",
-        relative: "md:h-full"
+        sticky: "sticky top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto",
+        // ✅ FIXED: Added self-start
+        fixed: "sticky top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto",
+        // ✅ FIXED: Added self-start  
+        relative: "self-start"
+        // ✅ FIXED: Added self-start
       },
       tone: {
-        clean: "",
-        // No background or border for clean
-        subtle: "bg-muted/30 border border-border/50",
-        brand: "bg-primary/10 border border-primary/20",
-        contrast: "bg-muted border border-border"
+        clean: "bg-muted/10 border border-border/60 dark:bg-muted/20 dark:border-border/50",
+        subtle: "bg-muted/50 border border-border/20 dark:bg-muted/60 dark:border-border/30",
+        brand: "bg-primary/10 border border-primary/15 dark:bg-primary/15 dark:border-primary/20",
+        contrast: "bg-muted/70 border border-border/50 dark:bg-muted/80 dark:border-border/60"
       }
     },
     defaultVariants: {
@@ -72,24 +75,32 @@ const I = v(
       tone: "clean"
     }
   }
-), H = v(
-  "flex-1 min-w-0",
+), L = A(
+  "flex-1 min-w-0 p-4",
+  // ✅ OPTIMIZED: Constant p-4 padding, removed min-w-0 conflict
   {
     variants: {
       size: {
-        sm: "p-2",
-        md: "p-3",
-        lg: "p-4",
-        xl: "p-4",
-        full: "p-4"
+        sm: "",
+        // ✅ OPTIMIZED: Removed size-based padding, using constant p-4
+        md: "",
+        lg: "",
+        xl: "",
+        full: ""
+      },
+      hasGap: {
+        true: "",
+        // ✅ OPTIMIZED: Removed ml-6, using sidebar m-4 instead
+        false: ""
       }
     },
     defaultVariants: {
-      size: "md"
+      size: "md",
+      hasGap: !1
     }
   }
-), j = (t = "md") => {
-  const o = {
+), Q = (a = "md") => {
+  const c = {
     sm: {
       button: "text-xs py-1.5 px-2 min-h-[28px]",
       icon: "h-3 w-3 mr-2 flex-shrink-0",
@@ -121,183 +132,204 @@ const I = v(
       showBadges: !0
     }
   };
-  return o[t] || o.md;
+  return c[a] || c.md;
 };
-function A({
-  navigation: t,
-  size: o = "md",
-  currentPath: i = "",
-  onNavigate: l
+function U({
+  navigation: a,
+  size: c = "md",
+  tone: s,
+  currentPath: x = "",
+  onNavigate: n
 }) {
-  const [a, c] = C(/* @__PURE__ */ new Set()), d = j(o);
-  N(() => {
-    const e = /* @__PURE__ */ new Set(), n = (m) => {
-      m.forEach((r) => {
-        r.items && r.items.length > 0 && (e.add(r.key), n(r.items));
+  const [h, p] = z(/* @__PURE__ */ new Set()), m = Q(c);
+  R(() => {
+    const e = /* @__PURE__ */ new Set(), o = (w) => {
+      w.forEach((d) => {
+        d.items && d.items.length > 0 && (e.add(d.key), o(d.items));
       });
     };
-    n(t), c(e);
-  }, [t]);
-  const h = (e) => {
-    const n = new Set(a);
-    n.has(e) ? n.delete(e) : n.add(e), c(n);
-  }, f = (e) => {
-    e.items && e.items.length > 0 ? h(e.key) : e.href && l ? l(e.href, e) : e.onClick && e.onClick();
-  }, p = (e, n = 0) => {
-    const m = e.items && e.items.length > 0, r = a.has(e.key), x = e.href ? i === e.href : e.isActive;
+    o(a), p(e);
+  }, [a]);
+  const u = (e) => {
+    const o = new Set(h);
+    o.has(e) ? o.delete(e) : o.add(e), p(o);
+  }, y = (e) => {
+    e.items && e.items.length > 0 ? u(e.key) : e.href && n ? n(e.href, e) : e.onClick && e.onClick();
+  }, f = (e, o = 0) => {
+    const w = e.items && e.items.length > 0, d = h.has(e.key), l = e.href ? x === e.href : e.isActive;
     return /* @__PURE__ */ b("div", { className: "w-full", children: [
       /* @__PURE__ */ b(
-        E,
+        G,
         {
-          variant: x ? "secondary" : "ghost",
-          className: u(
-            "w-full justify-start transition-all items-center",
-            d.button,
-            n > 0 && "ml-4 w-[calc(100%-1rem)]",
+          variant: "ghost",
+          className: k(
+            "w-full justify-start transition-all items-center cursor-pointer",
+            m.button,
+            o > 0 && "ml-4 w-[calc(100%-1rem)]",
+            // Tone-aware styling
+            s === "clean" && (l ? "bg-muted text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"),
+            s === "subtle" && (l ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-background/60"),
+            s === "brand" && (l ? "bg-primary/10 text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-primary/5"),
+            s === "contrast" && (l ? "bg-muted text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-muted/60"),
             e.className
           ),
-          onClick: () => f(e),
+          onClick: () => y(e),
           children: [
-            e.icon && /* @__PURE__ */ s(e.icon, { className: d.icon }),
-            /* @__PURE__ */ s("span", { className: "flex-1 text-left truncate", children: e.label }),
-            e.badge && d.showBadges && /* @__PURE__ */ s(B, { variant: "secondary", className: "text-xs ml-auto", children: e.badge }),
-            m && /* @__PURE__ */ s(
-              z,
+            e.icon && /* @__PURE__ */ r(e.icon, { className: m.icon }),
+            /* @__PURE__ */ r("span", { className: "flex-1 text-left truncate", children: e.label }),
+            e.badge && m.showBadges && /* @__PURE__ */ r(V, { variant: "secondary", className: "text-xs ml-auto", children: e.badge }),
+            w && /* @__PURE__ */ r(
+              F,
               {
-                className: u(
+                className: k(
                   "h-4 w-4 ml-2 transition-transform duration-200 text-muted-foreground",
-                  r && "rotate-90"
+                  d && "rotate-90"
                 )
               }
             )
           ]
         }
       ),
-      m && r && e.items && /* @__PURE__ */ s("div", { className: "mt-1 space-y-1", children: e.items.map(
-        (g) => p(g, n + 1)
+      w && d && e.items && /* @__PURE__ */ r("div", { className: "mt-1 space-y-1", children: e.items.map(
+        (v) => f(v, o + 1)
       ) })
     ] }, e.key);
   };
-  return /* @__PURE__ */ s("nav", { className: u("w-full p-3", d.spacing), children: t.map((e) => p(e)) });
+  return /* @__PURE__ */ r("nav", { className: k("w-full p-3", m.spacing), children: a.map((e) => f(e)) });
 }
-const w = y(({
-  content: t,
-  position: o = "left",
-  size: i = "md",
-  sidebarPosition: l = "relative",
-  tone: a = "clean",
-  currentPath: c = "",
-  onNavigate: d,
-  className: h,
-  style: f
-}, p) => {
-  if (!t) return null;
-  const [e, n] = C(0);
-  N(() => {
-    if (l === "relative") return;
-    const r = () => {
-      const x = document.querySelector("header");
-      n(x ? x.offsetHeight : 0);
-    };
-    return r(), window.addEventListener("resize", r), () => window.removeEventListener("resize", r);
-  }, [l]);
-  const m = () => Array.isArray(t) ? /* @__PURE__ */ s(
-    A,
+const C = S(({
+  content: a,
+  position: c = "left",
+  size: s = "md",
+  sidebarPosition: x = "relative",
+  tone: n = "clean",
+  currentPath: h = "",
+  onNavigate: p,
+  className: m,
+  style: u
+}, y) => {
+  if (!a) return null;
+  const f = () => Array.isArray(a) ? /* @__PURE__ */ r(
+    U,
     {
-      navigation: t,
-      size: i,
-      currentPath: c,
-      onNavigate: d
+      navigation: a,
+      size: s,
+      tone: n,
+      currentPath: h,
+      onNavigate: p
     }
-  ) : /* @__PURE__ */ s("div", { className: "p-3", children: t });
-  return /* @__PURE__ */ s(
+  ) : /* @__PURE__ */ r("div", { className: "p-3", children: a });
+  return /* @__PURE__ */ r(
     "aside",
     {
-      ref: p,
-      className: u(
-        V({ position: o, size: i, sidebarPosition: l, tone: a }),
-        h
+      ref: y,
+      className: k(
+        J({ position: c, size: s, sidebarPosition: x, tone: n }),
+        m
       ),
-      style: l !== "relative" ? { ...f, top: `${e + 10}px` } : f,
-      children: m()
+      style: u,
+      children: f()
     }
   );
 });
-w.displayName = "ContainerSidebar";
-const k = y(({
-  size: t = "md",
-  children: o,
-  className: i,
-  style: l
-}, a) => /* @__PURE__ */ s(
+C.displayName = "ContainerSidebar";
+const B = S(({
+  size: a = "md",
+  children: c,
+  className: s,
+  style: x
+}, n) => /* @__PURE__ */ r(
   "main",
   {
-    ref: a,
-    className: u(H({ size: t }), i),
-    style: l,
-    children: o
+    ref: n,
+    className: k(L({ size: a }), s),
+    style: x,
+    children: c
   }
 ));
-k.displayName = "ContainerMain";
-const S = y(({
-  className: t,
-  style: o,
-  tone: i = "clean",
-  position: l = "relative",
-  sidebar: a = "none",
-  navigation: c = [],
-  sidebarContent: d,
-  currentPath: h = "",
-  onNavigate: f,
-  sidebarPosition: p = "relative",
-  size: e = "xl",
-  children: n
-}, m) => {
-  const r = a === "left" ? "sidebar-left" : a === "right" ? "sidebar-right" : "none", x = a !== "none" && (c.length > 0 || d), g = c.length > 0 ? c : d;
+B.displayName = "ContainerMain";
+const j = S(({
+  className: a,
+  style: c,
+  tone: s = "clean",
+  position: x = "relative",
+  sidebar: n = "none",
+  navigation: h = [],
+  sidebarContent: p,
+  currentPath: m = "",
+  onNavigate: u,
+  sidebarPosition: y = "relative",
+  size: f = "xl",
+  children: e
+}, o) => {
+  var E;
+  const w = n === "left" ? "sidebar-left" : n === "right" ? "sidebar-right" : "none", d = n !== "none" && (h.length > 0 || p), l = h.length > 0 ? h : p, v = (g, N = "") => {
+    const t = [];
+    return g.forEach((i) => {
+      const I = N ? `${N} > ${i.label}` : i.label;
+      (i.href || i.onClick) && t.push({ key: i.key, label: I, item: i }), i.items && i.items.length > 0 && t.push(...v(i.items, I));
+    }), t;
+  }, M = (g) => {
+    if (!Array.isArray(l)) return;
+    const t = v(l).find((i) => i.key === g);
+    t && u && (t.item.href ? u(t.item.href, t.item) : t.item.onClick && t.item.onClick());
+  };
   return /* @__PURE__ */ b(
     "div",
     {
-      ref: m,
-      className: u(I({ layout: r, size: e, position: l }), t),
-      style: o,
+      ref: o,
+      className: k(H({ layout: w, size: f, position: x }), a),
+      style: c,
       children: [
-        x && a === "left" && /* @__PURE__ */ s(
-          w,
+        d && n === "left" && /* @__PURE__ */ r(
+          C,
           {
-            content: g,
+            content: l,
             position: "left",
-            size: e,
-            sidebarPosition: p,
-            tone: i,
-            currentPath: h,
-            onNavigate: f
+            size: f,
+            sidebarPosition: y,
+            tone: s,
+            currentPath: m,
+            onNavigate: u
           }
         ),
-        /* @__PURE__ */ s(k, { size: e, children: n }),
-        x && a === "right" && /* @__PURE__ */ s(
-          w,
+        /* @__PURE__ */ b(B, { size: f, children: [
+          d && Array.isArray(l) && /* @__PURE__ */ r("div", { className: "md:hidden mb-4", children: /* @__PURE__ */ b($, { value: (E = v(l).find((g) => g.item.href === m)) == null ? void 0 : E.key, onValueChange: M, children: [
+            /* @__PURE__ */ r(O, { className: "w-full", children: /* @__PURE__ */ r(T, { placeholder: "Navigate to..." }) }),
+            /* @__PURE__ */ r(q, { children: v(l).map(({ key: g, label: N, item: t }) => /* @__PURE__ */ r(D, { value: g, children: /* @__PURE__ */ b("div", { className: "flex items-center justify-between w-full", children: [
+              /* @__PURE__ */ b("div", { className: "flex items-center gap-2", children: [
+                t.icon && /* @__PURE__ */ r(t.icon, { className: "h-4 w-4" }),
+                /* @__PURE__ */ r("span", { children: N })
+              ] }),
+              t.badge && /* @__PURE__ */ r(V, { variant: "secondary", className: "text-xs", children: t.badge })
+            ] }) }, g)) })
+          ] }) }),
+          e
+        ] }),
+        d && n === "right" && /* @__PURE__ */ r(
+          C,
           {
-            content: g,
+            content: l,
             position: "right",
-            size: e,
-            sidebarPosition: p,
-            tone: i,
-            currentPath: h,
-            onNavigate: f
+            size: f,
+            sidebarPosition: y,
+            tone: s,
+            currentPath: m,
+            onNavigate: u
           }
         )
       ]
     }
   );
 });
-S.displayName = "Container";
-const F = Object.assign(S, {
-  Sidebar: w,
-  Main: k
+j.displayName = "Container";
+const re = Object.assign(j, {
+  Sidebar: C,
+  Main: B
 });
 export {
-  F as Container,
-  k as ContainerMain,
-  w as ContainerSidebar
+  re as Container,
+  B as ContainerMain,
+  C as ContainerSidebar
 };
 //# sourceMappingURL=container.js.map

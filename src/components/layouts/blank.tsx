@@ -1,5 +1,5 @@
 /**
- * Blank Layout with standardized scheme + tone system
+ * Blank Layout with simplified scheme system - simple and card only
  * @module @voilajsx/uikit
  * @file src/components/layouts/blank.tsx
  */
@@ -11,27 +11,25 @@ import { cn } from '@/lib/utils';
 import type { Size, BlankLayoutScheme, Tone } from '@/types';
 
 /**
- * Blank layout scheme variants - structural arrangements
+ * Blank layout scheme variants - simplified to 2 meaningful schemes
  */
 const blankVariants = cva(
   'min-h-screen flex items-center justify-center p-4',
   {
     variants: {
       scheme: {
-        default: '',
-        centered: 'flex-col',
-        error: 'flex-col',
-        maintenance: 'flex-col'
+        simple: 'flex-col',     // Simple centered layout
+        card: 'flex-col'        // Card-based layout
       },
       tone: {
         clean: 'bg-background',
         subtle: 'bg-muted/20',
         brand: 'bg-primary/5',
-        contrast: 'bg-zinc-900'
+        contrast: 'bg-zinc-400'
       }
     },
     defaultVariants: {
-      scheme: 'default',
+      scheme: 'simple',
       tone: 'clean'
     }
   }
@@ -41,52 +39,30 @@ const blankVariants = cva(
  * Content container variants based on scheme and size
  */
 const contentVariants = cva(
-  'w-full space-y-8 text-center',
+  'w-full space-y-6 text-center',
   {
     variants: {
+      scheme: {
+        simple: '',                    // No container styling
+        card: 'bg-card border border-border rounded-lg shadow-lg p-8'  // Card styling
+      },
       size: {
         sm: 'max-w-md',
-        md: 'max-w-2xl',
-        lg: 'max-w-4xl',
-        xl: 'max-w-5xl',
+        md: 'max-w-lg',
+        lg: 'max-w-2xl',
+        xl: 'max-w-4xl',
         full: 'max-w-6xl'
-      },
-      scheme: {
-        default: '',
-        centered: '',
-        error: 'max-w-2xl',
-        maintenance: 'max-w-3xl'
       }
     },
     defaultVariants: {
-      size: 'lg',
-      scheme: 'default'
+      scheme: 'simple',
+      size: 'lg'
     }
   }
 );
 
 /**
- * Icon variant styles based on scheme
- */
-const iconVariants = cva(
-  'flex justify-center',
-  {
-    variants: {
-      scheme: {
-        default: '',
-        centered: '',
-        error: 'text-destructive',
-        maintenance: 'text-primary animate-pulse'
-      }
-    },
-    defaultVariants: {
-      scheme: 'default'
-    }
-  }
-);
-
-/**
- * Title variant styles based on size
+ * Title variant styles based on size and tone
  */
 const titleVariants = cva(
   'font-bold tracking-tight',
@@ -114,10 +90,10 @@ const titleVariants = cva(
 );
 
 /**
- * Subtitle variant styles
+ * Subtitle variant styles based on size and tone
  */
 const subtitleVariants = cva(
-  '',
+  'max-w-md mx-auto',
   {
     variants: {
       size: {
@@ -128,7 +104,7 @@ const subtitleVariants = cva(
         full: 'text-3xl'
       },
       tone: {
-        clean: 'text-muted-foreground max-w-md mx-auto',
+        clean: 'text-muted-foreground',
         subtle: 'text-muted-foreground',
         brand: 'text-muted-foreground',
         contrast: 'text-zinc-300'
@@ -142,18 +118,12 @@ const subtitleVariants = cva(
 );
 
 /**
- * Footer variant styles based on scheme
+ * Footer variant styles based on tone
  */
 const footerVariants = cva(
-  'text-center',
+  'text-center mt-8',
   {
     variants: {
-      scheme: {
-        default: '',
-        centered: '',
-        error: 'text-sm',
-        maintenance: 'text-sm'
-      },
       tone: {
         clean: 'text-muted-foreground',
         subtle: 'text-muted-foreground',
@@ -162,119 +132,42 @@ const footerVariants = cva(
       }
     },
     defaultVariants: {
-      scheme: 'default',
       tone: 'clean'
     }
   }
 );
 
 /**
- * Blank Layout props with standardized system
+ * Blank Layout props - minimal but essential
  */
 export interface BlankLayoutProps {
-  /** Layout structure/arrangement */
+  /** RECOMMENDED: Layout scheme - simple or card */
   scheme?: BlankLayoutScheme;
-  /** Visual styling tone */
+  /** RECOMMENDED: Visual styling tone */
   tone?: Tone;
-  /** Content container size */
+  /** OPTIONAL: Content container size */
   size?: Size;
-  /** Page title */
-  title?: string;
-  /** Page subtitle */
-  subtitle?: string;
-  /** Logo component */
-  logo?: React.ReactNode;
-  /** Icon component (e.g., error icon) */
-  icon?: React.ReactNode;
-  /** Action buttons */
-  actions?: React.ReactNode;
-  /** Footer content */
-  footer?: React.ReactNode;
-  /** Additional CSS classes */
+  /** OPTIONAL: Additional CSS classes */
   className?: string;
-  /** Container props for customization */
-  containerProps?: React.HTMLAttributes<HTMLDivElement>;
-  /** Main content */
-  children?: React.ReactNode;
+  /** REQUIRED: All content goes here */
+  children: React.ReactNode;
 }
 
 /**
- * BlankLayout - Unified blank page layout with standardized scheme + tone system
+ * BlankLayout - Minimal but essential layout
  */
 const BlankLayoutComponent = forwardRef<HTMLDivElement, BlankLayoutProps>(({
-  scheme = 'default',
+  scheme = 'simple',
   tone = 'clean',
   size = 'lg',
-  title,
-  subtitle,
-  logo,
-  icon,
-  actions,
-  footer,
   className,
-  containerProps,
   children,
 }, ref) => {
 
   return (
     <div ref={ref} className={cn(blankVariants({ scheme, tone }), className)}>
-      <div
-        {...containerProps}
-        className={cn(
-          contentVariants({ size, scheme }),
-          containerProps?.className
-        )}
-      >
-        {/* Logo Section */}
-        {logo && (
-          <div className="flex justify-center">
-            {logo}
-          </div>
-        )}
-
-        {/* Icon Section */}
-        {icon && (
-          <div className={cn(iconVariants({ scheme }))}>
-            {icon}
-          </div>
-        )}
-
-        {/* Title and Subtitle */}
-        {(title || subtitle) && (
-          <div className="space-y-4">
-            {title && (
-              <h1 className={cn(titleVariants({ size, tone }))}>
-                {title}
-              </h1>
-            )}
-            {subtitle && (
-              <p className={cn(subtitleVariants({ size, tone }))}>
-                {subtitle}
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* Main Content */}
-        {children && (
-          <div className="space-y-6">
-            {children}
-          </div>
-        )}
-
-        {/* Action Buttons */}
-        {actions && (
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {actions}
-          </div>
-        )}
-
-        {/* Footer */}
-        {footer && (
-          <div className={cn(footerVariants({ scheme, tone }))}>
-            {footer}
-          </div>
-        )}
+      <div className={cn(contentVariants({ scheme, size }))}>
+        {children}
       </div>
     </div>
   );
@@ -283,8 +176,36 @@ const BlankLayoutComponent = forwardRef<HTMLDivElement, BlankLayoutProps>(({
 BlankLayoutComponent.displayName = 'BlankLayout';
 
 /**
- * BlankLayout with standardized props
+ * BlankLayout - Minimal and essential
  */
 const BlankLayout = BlankLayoutComponent;
 
 export { BlankLayout };
+
+/**
+ * @llm-rule BlankLayout Usage - Minimal but essential
+ * 
+ * Simple error page:
+ * <BlankLayout scheme="simple" tone="clean">
+ *   <h1 className="text-4xl font-bold text-foreground mb-4">404 Not Found</h1>
+ *   <p className="text-muted-foreground mb-6">The page you're looking for doesn't exist.</p>
+ *   <Button>Go Home</Button>
+ * </BlankLayout>
+ * 
+ * Card-based maintenance page:
+ * <BlankLayout scheme="card" tone="subtle" size="md">
+ *   <WrenchIcon className="h-16 w-16 mx-auto mb-4 text-primary" />
+ *   <h1 className="text-3xl font-bold mb-2">Under Maintenance</h1>
+ *   <p className="text-muted-foreground mb-6">We'll be back soon!</p>
+ *   <Button>Notify Me</Button>
+ * </BlankLayout>
+ * 
+ * About page:
+ * <BlankLayout scheme="simple" size="xl">
+ *   <Logo className="mb-6" />
+ *   <h1 className="text-5xl font-bold mb-4">About Us</h1>
+ *   <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+ *     Company description and mission statement goes here.
+ *   </p>
+ * </BlankLayout>
+ */

@@ -1,48 +1,113 @@
 /**
- * Admin Layout with standardized scheme + tone system - FIXED PROPS ALIGNMENT
+ * Admin Layout - FIXED with proper flex layout
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */
 import * as React from 'react';
-import type { NavigationItem, Size, AdminLayoutScheme, Tone } from '@/types';
+import type { NavigationItem, Size, Tone } from '@/types';
 /**
- * Admin Layout props with standardized system - ALIGNED WITH TYPES
+ * AdminLayout schemes - meaningful admin variations
+ * sidebar: Full navigation with icons + labels (classic)
+ * compact: Icon-only navigation with click-to-expand (mobile-first)
+ */
+export type AdminLayoutScheme = 'sidebar' | 'compact';
+/**
+ * AdminLayout Root - Container with context
  */
 export interface AdminLayoutProps {
-    /** Layout structure/arrangement */
+    /** RECOMMENDED: Layout scheme (default: "sidebar") */
     scheme?: AdminLayoutScheme;
-    /** Visual styling tone */
+    /** RECOMMENDED: Visual styling tone (default: "subtle") */
     tone?: Tone;
-    /** Layout size */
+    /** OPTIONAL: Layout size (default: "lg") */
     size?: Size;
-    /** Navigation items - USES STANDARD NavigationItem INTERFACE */
-    navigation?: NavigationItem[];
-    /** Current path for active states */
-    currentPath?: string;
-    /** Navigation handler - FIXED PARAMETER NAME */
-    onNavigate?: (href: string, item: NavigationItem) => void;
-    /** Dashboard title */
-    title?: string;
-    /** Logo component */
-    logo?: React.ReactNode;
-    /** Header actions (buttons, theme toggle, etc.) */
-    headerActions?: React.ReactNode;
-    /** Custom sidebar content (overrides navigation) */
-    sidebarContent?: React.ReactNode;
-    /** Sidebar footer content */
-    sidebarFooter?: React.ReactNode;
-    /** Whether sidebar is collapsible */
-    collapsible?: boolean;
-    /** Default sidebar open state */
+    /** OPTIONAL: Sidebar positioning */
+    position?: 'relative' | 'sticky' | 'fixed';
+    /** OPTIONAL: Default sidebar state (default: true) */
     defaultSidebarOpen?: boolean;
-    /** Additional CSS classes */
+    /** OPTIONAL: Additional CSS classes */
     className?: string;
-    /** Main content */
+    /** REQUIRED: Admin structure (Header, Sidebar, Content) */
     children: React.ReactNode;
 }
 /**
- * AdminLayout with standardized props - FULLY ALIGNED
+ * AdminLayout.Sidebar - Navigation sidebar with FIXED layout
  */
-declare const AdminLayout: React.ForwardRefExoticComponent<AdminLayoutProps & React.RefAttributes<HTMLDivElement>>;
-export { AdminLayout };
+export interface AdminSidebarProps {
+    /** OPTIONAL: Sidebar tone (inherits from AdminLayout if not set) */
+    tone?: Tone;
+    /** OPTIONAL: Navigation items */
+    navigation?: NavigationItem[];
+    /** OPTIONAL: Current path for active states */
+    currentPath?: string;
+    /** OPTIONAL: Navigation handler */
+    onNavigate?: (href: string, item: NavigationItem) => void;
+    /** OPTIONAL: Logo component */
+    logo?: React.ReactNode;
+    /** OPTIONAL: Sidebar positioning */
+    position?: 'relative' | 'sticky' | 'fixed';
+    /** OPTIONAL: Sidebar footer content */
+    footer?: React.ReactNode;
+    /** OPTIONAL: Additional CSS classes */
+    className?: string;
+}
+declare const AdminSidebar: React.ForwardRefExoticComponent<AdminSidebarProps & React.RefAttributes<HTMLElement>>;
+/**
+ * AdminLayout.Header - Top header with breadcrumbs and actions
+ */
+export interface AdminHeaderProps {
+    /** OPTIONAL: Header tone (inherits from AdminLayout if not set) */
+    tone?: Tone;
+    /** OPTIONAL: Header size (inherits from AdminLayout if not set) */
+    size?: Size;
+    /** OPTIONAL: Page title */
+    title?: string;
+    /** OPTIONAL: Breadcrumb items */
+    breadcrumbs?: {
+        label: string;
+        href?: string;
+    }[];
+    /** OPTIONAL: Header actions (buttons, user menu, etc.) */
+    actions?: React.ReactNode;
+    /** OPTIONAL: Additional CSS classes */
+    className?: string;
+}
+declare const AdminHeader: React.ForwardRefExoticComponent<AdminHeaderProps & React.RefAttributes<HTMLElement>>;
+/**
+ * AdminLayout.Content - Main content area with PROPER flex layout
+ */
+export interface AdminContentProps {
+    /** OPTIONAL: Content tone (inherits from AdminLayout if not set) */
+    tone?: Tone;
+    /** OPTIONAL: Content size (inherits from AdminLayout if not set) */
+    size?: Size;
+    /** OPTIONAL: Additional CSS classes */
+    className?: string;
+    /** REQUIRED: Admin content */
+    children: React.ReactNode;
+}
+declare const AdminContent: React.ForwardRefExoticComponent<AdminContentProps & React.RefAttributes<HTMLElement>>;
+/**
+ * Hook to access admin configuration
+ */
+declare const useAdmin: () => {
+    scheme: AdminLayoutScheme;
+    tone: Tone;
+    size: Size;
+    sidebarExpanded: boolean;
+    setSidebarExpanded: (expanded: boolean) => void;
+    isMobile: boolean;
+};
+/**
+ * AdminLayout - COMPOUND-ONLY Component
+ */
+declare const AdminLayout: React.ForwardRefExoticComponent<AdminLayoutProps & React.RefAttributes<HTMLDivElement>> & {
+    Sidebar: React.ForwardRefExoticComponent<AdminSidebarProps & React.RefAttributes<HTMLElement>>;
+    Header: React.ForwardRefExoticComponent<AdminHeaderProps & React.RefAttributes<HTMLElement>>;
+    Content: React.ForwardRefExoticComponent<AdminContentProps & React.RefAttributes<HTMLElement>>;
+};
+/**
+ * Export FIXED AdminLayout
+ */
+export { AdminLayout, AdminSidebar, AdminHeader, AdminContent, useAdmin };
 //# sourceMappingURL=admin.d.ts.map

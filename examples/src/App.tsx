@@ -14,6 +14,7 @@ import ContainerDemo from './pages/sections/ContainerDemo';
 import PageDemo from './pages/layouts/PageDemo';
 import AdminDemo from './pages/layouts/AdminDemo';
 import AuthDemo from './pages/layouts/AuthDemo';
+import BlankDemo from './pages/layouts/BlankDemo';
 
 function App() {
   const [currentRoute, setCurrentRoute] = useState('/');
@@ -54,6 +55,8 @@ function App() {
         return <AdminDemo />;
       case '/auth':
         return <AuthDemo />;
+      case '/blank':
+        return <BlankDemo />;
       case '/':
       default:
         return <HomePage navigate={navigate} />;

@@ -1,5 +1,5 @@
 /**
- * LLM-optimized type definitions for @voilajsx/uikit
+ * LLM-optimized type definitions for @voilajsx/uikit - COMPLETE & CONSISTENT
  * @module @voilajsx/uikit
  * @file src/types/index.ts
  */
@@ -14,13 +14,35 @@ import type {
 } from 'react';
 
 /**
+ * @llm-rule Component Categories for Clear Selection:
+ * 
+ * COMPOUND-ONLY LAYOUTS (require child components):
+ * - AdminLayout: Dashboard/admin interfaces → AdminLayout.Header + AdminLayout.Sidebar + AdminLayout.Content
+ * - PageLayout: Public websites → PageLayout.Header + PageLayout.Content + PageLayout.Footer
+ * 
+ * SINGLE-USE LAYOUTS (accept direct content as children):
+ * - AuthLayout: Login/signup pages → Pass form content directly
+ * - BlankLayout: Error/simple pages → Pass page content directly
+ * - PopupLayout: Extensions/modals → Pass popup content directly
+ * 
+ * SECTION COMPONENTS (page building blocks):
+ * - Header: Navigation headers with responsive behavior
+ * - Footer: Page footers with navigation and branding
+ * - Container: Content areas with optional sidebars
+ * 
+ * UI COMPONENTS (interactive elements):
+ * - All shadcn/ui components with semantic color system
+ */
+
+/**
  * @llm-decision-tree Component Selection Rules
  * 
- * Dashboard/admin interface → AdminLayout
- * Public website → PageLayout
- * Chrome extension/popup → PopupLayout
- * Login/signup pages → AuthLayout
- * Error/simple pages → BlankLayout
+ * What are you building?
+ * ├── Admin dashboard/CRM/analytics → AdminLayout scheme="sidebar|compact"
+ * ├── Company website/blog/docs → PageLayout scheme="default|sidebar"
+ * ├── Login/signup/onboarding → AuthLayout scheme="simple|card|split|hero"
+ * ├── Error page/maintenance/about → BlankLayout scheme="simple|card"
+ * └── Chrome extension/popup/overlay → PopupLayout scheme="modal|drawer|floating"
  */
 
 /**
@@ -36,12 +58,18 @@ export type Size = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export type Mode = 'light' | 'dark';
 
 /**
+ * Pre-bundled theme options
+ * @llm-rule theme: Pre-bundled CSS themes included in package
+ */
+export type Theme = 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+
+/**
  * Semantic tone system for component emphasis
  * @llm-rule tone: Component-level visual emphasis
- * clean → Pure, minimal, white/light backgrounds
- * subtle → Muted, supporting, gray areas
- * brand → Primary colored, branded elements
- * contrast → High emphasis, dark/bold areas
+ * clean → Pure, minimal, white/light backgrounds (most websites)
+ * subtle → Muted, supporting, gray areas (admin panels)
+ * brand → Primary colored, branded elements (headers, CTAs)
+ * contrast → High emphasis, dark/bold areas (footers, emphasis)
  */
 export type Tone = 'clean' | 'subtle' | 'brand' | 'contrast';
 
@@ -57,22 +85,59 @@ export type Tone = 'clean' | 'subtle' | 'brand' | 'contrast';
  */
 
 /**
- * Layout scheme types - structural arrangements for each component
+ * Layout scheme types - BEHAVIORAL descriptions for clear LLM understanding
+ * @llm-rule All layouts use scheme for structural consistency
  */
-export type AdminLayoutScheme = 'sidebar' | 'topbar' | 'hybrid';
-export type PageLayoutScheme = 'default' | 'blog' | 'docs' | 'marketing';
+
+/**
+ * AdminLayout schemes - Dashboard/admin interface variations
+ * sidebar: Persistent left sidebar with full navigation (classic admin dashboard)
+ * compact: Icon-only sidebar that expands on hover/click (space-saving modern)
+ */
+export type AdminLayoutScheme = 'sidebar' | 'compact';
+
+/**
+ * PageLayout schemes - Public website variations
+ * default: Simple header + content + footer (standard website)
+ * sidebar: Header + content with sidebar + footer (documentation site)
+ */
+export type PageLayoutScheme = 'default' | 'sidebar';
+
+/**
+ * AuthLayout schemes - Authentication page variations
+ * simple: Centered form without card styling (minimal login)
+ * card: Elevated card container with shadow (standard login)
+ * split: Left image/content + right form (modern split-screen)
+ * hero: Form overlay on background image (dramatic marketing)
+ */
 export type AuthLayoutScheme = 'simple' | 'card' | 'split' | 'hero';
-export type BlankLayoutScheme = 'default' | 'centered' | 'error' | 'maintenance';
+
+/**
+ * BlankLayout schemes - Simple page variations
+ * simple: Plain centered content (error pages)
+ * card: Content in elevated card (maintenance pages)
+ */
+export type BlankLayoutScheme = 'simple' | 'card';
+
+/**
+ * PopupLayout schemes - Extension/modal variations
+ * modal: Standard popup window (Chrome extensions)
+ * drawer: Slide-out panel (mobile-first)
+ * floating: Detached overlay (tooltips, menus)
+ */
 export type PopupLayoutScheme = 'modal' | 'drawer' | 'floating';
 
 /**
  * Standardized navigation interface - SINGLE structure for ALL components
  * @llm-rules Navigation Usage:
- * - href: Use for page navigation (links)
- * - onClick: Use for app functions (modals, actions)
- * - items: Use for submenus (max 2 levels deep)
- * - badge: Use for notifications/counts
- * - isActive: Use for current page highlighting
+ * - key: REQUIRED unique identifier
+ * - label: REQUIRED display text
+ * - href: USE for page navigation (routing)
+ * - onClick: USE for app functions (modals, actions)
+ * - items: USE for submenus (max 2 levels deep)
+ * - badge: USE for notifications/counts
+ * - isActive: USE for current page highlighting
+ * - icon: USE lucide-react icons
  */
 export interface NavigationItem {
   /** REQUIRED: Unique identifier */
@@ -94,6 +159,20 @@ export interface NavigationItem {
   /** OPTIONAL: Additional CSS classes */
   className?: string;
 }
+
+/**
+ * @llm-rule Navigation Props Hierarchy - CLEAR priority order
+ * 
+ * Priority Order:
+ * 1. navigation?: NavigationItem[] - PRIMARY navigation items
+ * 2. sidebarContent?: React.ReactNode - OVERRIDES navigation with custom JSX
+ * 3. If both provided: sidebarContent takes precedence
+ * 
+ * Usage Examples:
+ * ✅ <Sidebar navigation={navItems} />                    // Use navigation array
+ * ✅ <Sidebar sidebarContent={<CustomSidebar />} />       // Use custom content
+ * ❌ <Sidebar navigation={navItems} sidebarContent={jsx} /> // Confusing - avoid both
+ */
 
 /**
  * Base props that ALL components should extend
@@ -138,92 +217,139 @@ export interface SizeProps {
 }
 
 /**
- * Standard layout component props - ALL layouts extend this
- * @llm-props Layout components base
- * REQUIRED: children
- * RECOMMENDED: tone
- * OPTIONAL: size, className, style
+ * Standard layout scheme props - ALL layouts with schemes extend this
+ * @llm-props Layout scheme base
  */
-export interface LayoutProps extends BaseComponentProps, ToneProps, SizeProps {
-  /** REQUIRED: Layout content */
-  children: ReactNode;
+interface LayoutSchemeProps<TScheme> extends BaseComponentProps {
+  /** RECOMMENDED: Layout structural arrangement */
+  scheme?: TScheme;
+  /** RECOMMENDED: Visual styling tone */
+  tone?: Tone;
+  /** OPTIONAL: Layout size */
+  size?: Size;
 }
 
 /**
- * Admin layout props
- * @llm-props AdminLayout
- * REQUIRED: children
- * RECOMMENDED: scheme="sidebar", tone="subtle", navigation
- * OPTIONAL: size, className
+ * @llm-usage AdminLayout - COMPOUND-ONLY
+ * <AdminLayout scheme="sidebar" tone="subtle" size="lg">
+ *   <AdminLayout.Header title="Dashboard" actions={<UserMenu />} />
+ *   <AdminLayout.Sidebar navigation={adminNav} logo={<Logo />} />
+ *   <AdminLayout.Content>
+ *     <DashboardContent />
+ *   </AdminLayout.Content>
+ * </AdminLayout>
+ * 
  * @llm-defaults scheme="sidebar", tone="subtle", size="lg"
  */
-export interface AdminLayoutProps extends LayoutProps, NavigationProps {
-  /** REQUIRED: Main content */
+export interface AdminLayoutProps extends LayoutSchemeProps<AdminLayoutScheme> {
+  /** REQUIRED: Compound components only (Header, Sidebar, Content) */
   children: ReactNode;
-  /** RECOMMENDED: Layout structure (default: "sidebar") */
-  scheme?: AdminLayoutScheme;
-  /** RECOMMENDED: Layout tone (default: "subtle") */
-  tone?: Tone;
-  /** RECOMMENDED: Sidebar navigation items */
-  navigation?: NavigationItem[];
-  /** OPTIONAL: Layout size (default: "lg") */
-  size?: Size;
-  /** OPTIONAL: Page title */
-  title?: string;
-  /** OPTIONAL: Logo component */
-  logo?: ReactNode;
-  /** OPTIONAL: Header actions */
-  headerActions?: ReactNode;
+  /** OPTIONAL: Default sidebar expanded state (default: true) */
+  defaultSidebarOpen?: boolean;
+  /** OPTIONAL: Sidebar positioning behavior (default: "relative") */
+  position?: 'relative' | 'sticky' | 'fixed';
 }
 
 /**
- * Page layout props  
- * @llm-props PageLayout
- * REQUIRED: children
- * RECOMMENDED: scheme="default", tone="clean"
- * OPTIONAL: navigation, size, className
+ * AdminLayout.Header props
+ */
+export interface AdminHeaderProps extends BaseComponentProps, ToneProps, SizeProps {
+  /** OPTIONAL: Page title */
+  title?: string;
+  /** OPTIONAL: Breadcrumb items */
+  breadcrumbs?: { label: string; href?: string }[];
+  /** OPTIONAL: Header actions (buttons, user menu, etc.) */
+  actions?: ReactNode;
+}
+
+/**
+ * AdminLayout.Sidebar props
+ */
+export interface AdminSidebarProps extends BaseComponentProps, ToneProps, NavigationProps {
+  /** OPTIONAL: Logo component */
+  logo?: ReactNode;
+  /** OPTIONAL: Sidebar footer content */
+  footer?: ReactNode;
+  /** OPTIONAL: Sidebar positioning */
+  position?: 'relative' | 'sticky' | 'fixed';
+}
+
+/**
+ * AdminLayout.Content props
+ */
+export interface AdminContentProps extends BaseComponentProps, ToneProps, SizeProps {
+  /** REQUIRED: Admin content */
+  children: ReactNode;
+}
+
+/**
+ * @llm-usage PageLayout - COMPOUND-ONLY
+ * <PageLayout scheme="default" tone="clean" size="xl">
+ *   <PageLayout.Header navigation={mainNav} logo={<Logo />} />
+ *   <PageLayout.Content>
+ *     <WebsiteContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer copyright="© 2024 Company" />
+ * </PageLayout>
+ * 
  * @llm-defaults scheme="default", tone="clean", size="xl"
  */
-export interface PageLayoutProps extends LayoutProps, NavigationProps {
-  /** REQUIRED: Main content */
+export interface PageLayoutProps extends LayoutSchemeProps<PageLayoutScheme> {
+  /** REQUIRED: Compound components only (Header, Content, Footer) */
   children: ReactNode;
-  /** RECOMMENDED: Layout structure (default: "default") */
-  scheme?: PageLayoutScheme;
-  /** RECOMMENDED: Layout tone (default: "clean") */
-  tone?: Tone;
-  /** OPTIONAL: Header navigation items */
-  navigation?: NavigationItem[];
-  /** OPTIONAL: Layout size (default: "xl") */
-  size?: Size;
-  /** OPTIONAL: Page title */
-  title?: string;
+}
+
+/**
+ * PageLayout.Header props
+ */
+export interface PageHeaderProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
+  /** OPTIONAL: Header positioning (default: "sticky") */
+  position?: 'sticky' | 'fixed' | 'relative';
   /** OPTIONAL: Logo component */
   logo?: ReactNode;
-  /** OPTIONAL: Header actions */
-  headerActions?: ReactNode;
-  /** OPTIONAL: Footer navigation */
-  footerNavigation?: NavigationItem[];
+  /** OPTIONAL: Page title (used if no logo) */
+  title?: string;
+  /** OPTIONAL: Header actions (buttons, theme toggle, etc.) */
+  actions?: ReactNode;
+}
+
+/**
+ * PageLayout.Content props
+ */
+export interface PageContentProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
+  /** OPTIONAL: Sidebar position (default: "none") - overrides scheme */
+  sidebar?: 'none' | 'left' | 'right';
+  /** OPTIONAL: Custom sidebar content (overrides navigation) */
+  sidebarContent?: ReactNode;
+  /** OPTIONAL: Whether sidebar should be sticky */
+  sidebarPosition?: 'sticky' | 'fixed' | 'relative';
+  /** REQUIRED: Page content */
+  children: ReactNode;
+}
+
+/**
+ * PageLayout.Footer props
+ */
+export interface PageFooterProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
+  /** OPTIONAL: Footer positioning (default: "relative") */
+  position?: 'sticky' | 'fixed' | 'relative';
   /** OPTIONAL: Copyright text */
   copyright?: ReactNode;
+  /** OPTIONAL: Custom footer content */
+  children?: ReactNode;
 }
 
 /**
- * Auth layout props
- * @llm-props AuthLayout  
- * REQUIRED: children
- * RECOMMENDED: scheme="card", tone="clean"
- * OPTIONAL: title, size, className
+ * @llm-usage AuthLayout - SINGLE component with props
+ * <AuthLayout scheme="card" tone="clean" size="md" title="Sign In" logo={<Logo />}>
+ *   <LoginForm />
+ * </AuthLayout>
+ * 
  * @llm-defaults scheme="card", tone="clean", size="md"
  */
-export interface AuthLayoutProps extends LayoutProps {
+export interface AuthLayoutProps extends LayoutSchemeProps<AuthLayoutScheme> {
   /** REQUIRED: Form content */
   children: ReactNode;
-  /** RECOMMENDED: Layout structure (default: "card") */
-  scheme?: AuthLayoutScheme;
-  /** RECOMMENDED: Layout tone (default: "clean") */
-  tone?: Tone;
-  /** OPTIONAL: Layout size (default: "md") */
-  size?: Size;
   /** OPTIONAL: Page title */
   title?: string;
   /** OPTIONAL: Page subtitle */
@@ -232,81 +358,95 @@ export interface AuthLayoutProps extends LayoutProps {
   logo?: ReactNode;
   /** OPTIONAL: Footer content */
   footer?: ReactNode;
-  /** OPTIONAL: Split content (for split scheme) */
+  /** OPTIONAL: Container props for customization */
+  containerProps?: HTMLAttributes<HTMLDivElement>;
+  
+  // Split scheme props
+  /** OPTIONAL: Left side content for split scheme */
   splitContent?: ReactNode;
-  /** OPTIONAL: Background image URL (for hero scheme) */
+  
+  // Hero scheme props  
+  /** OPTIONAL: Background image URL for hero scheme */
   imageUrl?: string;
+  /** OPTIONAL: Image alt text */
+  imageAlt?: string;
+  /** OPTIONAL: Image overlay */
+  imageOverlay?: 'light' | 'dark' | 'none';
+  
+  // Card scheme props
+  /** OPTIONAL: Additional card content for card scheme */
+  cardContent?: ReactNode;
 }
 
 /**
- * Blank layout props
- * @llm-props BlankLayout
- * REQUIRED: children
- * RECOMMENDED: scheme="default", tone="clean"  
- * OPTIONAL: title, size, className
- * @llm-defaults scheme="default", tone="clean", size="lg"
+ * @llm-usage BlankLayout - SINGLE component
+ * <BlankLayout scheme="simple" tone="clean" size="lg">
+ *   <h1 className="text-4xl font-bold mb-4">404 Not Found</h1>
+ *   <p className="text-muted-foreground mb-6">Page not found.</p>
+ *   <Button>Go Home</Button>
+ * </BlankLayout>
+ * 
+ * @llm-defaults scheme="simple", tone="clean", size="lg"
  */
-export interface BlankLayoutProps extends LayoutProps {
-  /** REQUIRED: Main content */
+export interface BlankLayoutProps extends LayoutSchemeProps<BlankLayoutScheme> {
+  /** REQUIRED: Page content */
   children: ReactNode;
-  /** RECOMMENDED: Layout structure (default: "default") */
-  scheme?: BlankLayoutScheme;
-  /** RECOMMENDED: Layout tone (default: "clean") */
-  tone?: Tone;
-  /** OPTIONAL: Layout size (default: "lg") */
-  size?: Size;
-  /** OPTIONAL: Page title */
-  title?: string;
-  /** OPTIONAL: Page subtitle */
-  subtitle?: string;
-  /** OPTIONAL: Logo component */
-  logo?: ReactNode;
-  /** OPTIONAL: Footer content */
-  footer?: ReactNode;
 }
 
 /**
- * Popup layout props
- * @llm-props PopupLayout
- * REQUIRED: children  
- * RECOMMENDED: scheme="modal", tone="clean"
- * OPTIONAL: title, size, className
+ * @llm-usage PopupLayout - SINGLE component
+ * <PopupLayout scheme="modal" tone="clean" size="md" title="Extension" showClose onClose={close}>
+ *   <ExtensionContent />
+ * </PopupLayout>
+ * 
  * @llm-defaults scheme="modal", tone="clean", size="md"
  */
-export interface PopupLayoutProps extends LayoutProps {
-  /** REQUIRED: Main content */
+export interface PopupLayoutProps extends LayoutSchemeProps<PopupLayoutScheme> {
+  /** REQUIRED: Popup content */
   children: ReactNode;
-  /** RECOMMENDED: Layout structure (default: "modal") */
-  scheme?: PopupLayoutScheme;
-  /** RECOMMENDED: Layout tone (default: "clean") */
-  tone?: Tone;
-  /** OPTIONAL: Layout size (default: "md") */
-  size?: Size;
   /** OPTIONAL: Popup title */
   title?: string;
   /** OPTIONAL: Popup subtitle */
   subtitle?: string;
+  /** OPTIONAL: Logo/icon component */
+  logo?: ReactNode;
+  /** OPTIONAL: Status badge */
+  badge?: ReactNode;
+  /** OPTIONAL: Header action buttons */
+  headerActions?: ReactNode;
+  /** OPTIONAL: Show back button */
+  showBack?: boolean;
   /** OPTIONAL: Show close button */
   showClose?: boolean;
-  /** OPTIONAL: Close handler */
+  /** OPTIONAL: Show header divider */
+  showDivider?: boolean;
+  /** OPTIONAL: Back button handler */
+  onBack?: () => void;
+  /** OPTIONAL: Close button handler */
   onClose?: () => void;
+  /** OPTIONAL: Footer content */
+  footer?: ReactNode;
+  /** OPTIONAL: Enable content scrolling */
+  scrollable?: boolean;
+  /** OPTIONAL: Popup positioning */
+  position?: 'sticky' | 'fixed' | 'relative';
 }
+
+/**
+ * Section component props - Header, Footer, Container
+ */
 
 /**
  * Header component props (Section component - no scheme)
  * @llm-props Header
  * REQUIRED: children
  * RECOMMENDED: tone="clean"
- * OPTIONAL: size, className
+ * OPTIONAL: size, navigation, position
  */
 export interface HeaderProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
   /** REQUIRED: Header content */
   children: ReactNode;
-  /** RECOMMENDED: Header tone (default: "clean") */
-  tone?: Tone;
-  /** OPTIONAL: Header size */
-  size?: Size;
-  /** OPTIONAL: Header positioning */
+  /** OPTIONAL: Header positioning (default: "sticky") */
   position?: 'sticky' | 'fixed' | 'relative';
 }
 
@@ -315,18 +455,12 @@ export interface HeaderProps extends BaseComponentProps, ToneProps, SizeProps, N
  * @llm-props Footer
  * REQUIRED: children
  * RECOMMENDED: tone="contrast"
- * OPTIONAL: size, className
+ * OPTIONAL: size, navigation, position
  */
 export interface FooterProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
   /** REQUIRED: Footer content */
   children: ReactNode;
-  /** RECOMMENDED: Footer tone (default: "contrast") */
-  tone?: Tone;
-  /** OPTIONAL: Footer navigation */
-  navigation?: NavigationItem[];
-  /** OPTIONAL: Footer size */
-  size?: Size;
-  /** OPTIONAL: Footer positioning */
+  /** OPTIONAL: Footer positioning (default: "relative") */
   position?: 'sticky' | 'fixed' | 'relative';
 }
 
@@ -335,27 +469,80 @@ export interface FooterProps extends BaseComponentProps, ToneProps, SizeProps, N
  * @llm-props Container
  * REQUIRED: children
  * RECOMMENDED: tone="clean"
- * OPTIONAL: size, className
+ * OPTIONAL: size, sidebar, navigation
  */
 export interface ContainerProps extends BaseComponentProps, ToneProps, SizeProps, NavigationProps {
   /** REQUIRED: Container content */
   children: ReactNode;
-  /** RECOMMENDED: Container tone (default: "clean") */
-  tone?: Tone;
-  /** OPTIONAL: Container size */
-  size?: Size;
+  /** OPTIONAL: Container positioning */
+  position?: 'sticky' | 'fixed' | 'relative';
   /** OPTIONAL: Sidebar position */
   sidebar?: 'none' | 'left' | 'right';
-  /** OPTIONAL: Sidebar sticky behavior */
-  sticky?: boolean;
+  /** OPTIONAL: Custom sidebar content (overrides navigation) */
+  sidebarContent?: ReactNode;
+  /** OPTIONAL: Whether sidebar should be sticky */
+  sidebarPosition?: 'sticky' | 'fixed' | 'relative';
 }
 
 /**
- * Legacy types for backward compatibility
+ * @llm-pattern COMPOUND-ONLY Layout Usage
+ * 
+ * AdminLayout (dashboard/admin):
+ * <AdminLayout scheme="sidebar" tone="subtle">
+ *   <AdminLayout.Header title="Dashboard" />
+ *   <AdminLayout.Sidebar navigation={nav} />
+ *   <AdminLayout.Content>...</AdminLayout.Content>
+ * </AdminLayout>
+ * 
+ * PageLayout (websites):
+ * <PageLayout scheme="default" tone="clean">
+ *   <PageLayout.Header navigation={nav} />
+ *   <PageLayout.Content>...</PageLayout.Content>
+ *   <PageLayout.Footer />
+ * </PageLayout>
+ * 
+ * AuthLayout (login/signup):
+ * <AuthLayout scheme="card" tone="clean" title="Sign In">
+ *   <LoginForm />
+ * </AuthLayout>
+ * 
+ * BlankLayout (error/simple pages):
+ * <BlankLayout scheme="simple" tone="clean">
+ *   <ErrorContent />
+ * </BlankLayout>
+ * 
+ * PopupLayout (extensions/modals):
+ * <PopupLayout scheme="modal" tone="clean" title="Extension">
+ *   <ExtensionContent />
+ * </PopupLayout>
  */
-export type Theme = 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
-export type ThemeVariant = Mode;
 
+/**
+ * @llm-decision-tree Layout Selection Guide
+ * 
+ * What are you building?
+ * ├── Admin dashboard/CRM/analytics → AdminLayout scheme="sidebar|compact"
+ * ├── Company website/blog/docs → PageLayout scheme="default|sidebar"
+ * ├── Login/signup/onboarding → AuthLayout scheme="simple|card|split|hero"
+ * ├── Error page/maintenance/about → BlankLayout scheme="simple|card"
+ * └── Chrome extension/popup/overlay → PopupLayout scheme="modal|drawer|floating"
+ * 
+ * All layouts follow consistent patterns:
+ * 1. scheme prop for structural variation
+ * 2. tone prop for visual emphasis  
+ * 3. size prop for responsive sizing
+ * 4. Compound components for flexibility (AdminLayout, PageLayout)
+ * 5. Single components for simplicity (AuthLayout, BlankLayout, PopupLayout)
+ */
+
+/**
+ * Platform detection types
+ */
+export type Platform = 'web' | 'native' | 'tauri' | 'unknown';
+
+/**
+ * Legacy theme config interface for backward compatibility
+ */
 export interface ThemeConfig {
   id: Theme;
   name: string;
@@ -365,11 +552,6 @@ export interface ThemeConfig {
     dark: Record<string, string>;
   };
 }
-
-/**
- * Platform detection types
- */
-export type Platform = 'web' | 'native' | 'tauri' | 'unknown';
 
 /**
  * Re-export commonly used React types for convenience

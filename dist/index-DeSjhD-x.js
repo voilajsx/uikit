@@ -1,5 +1,5 @@
 import * as i from "react";
-import { P as o } from "./index-CP7NBbfF.js";
+import { P as o } from "./index-D5Ppf2aB.js";
 import { jsx as t } from "react/jsx-runtime";
 var d = Object.freeze({
   // See: https://github.com/twbs/bootstrap/blob/main/scss/mixins/_visually-hidden.scss
@@ -29,4 +29,4 @@ export {
   n as R,
   d as V
 };
-//# sourceMappingURL=index-ClHfXshV.js.map
+//# sourceMappingURL=index-DeSjhD-x.js.map

@@ -1,5 +1,5 @@
 /**
- * Auth Layout with standardized prop naming and scheme system - FIXED TYPES
+ * Auth Layout with standardized prop naming and scheme system - FIXED & READY
  * @module @voilajsx/uikit
  * @file src/components/layouts/auth.tsx
  */
@@ -8,7 +8,7 @@ import * as React from 'react';
 import { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
-import type { Size, AuthLayoutScheme, Tone } from '@/types';
+import type { AuthLayoutProps, AuthLayoutScheme, Tone, Size } from '@/types';
 
 /**
  * Auth layout scheme variants - structural arrangements
@@ -66,50 +66,11 @@ const contentVariants = cva(
 );
 
 /**
- * Auth Layout props with standardized system - USING TYPES
- */
-export interface AuthLayoutProps {
-  /** Layout structure/arrangement - USING TYPE */
-  scheme?: AuthLayoutScheme;
-  /** Visual styling tone - USING TYPE */
-  tone?: Tone;
-  /** Content container size - USING TYPE */
-  size?: Size;
-  /** Page title */
-  title?: string;
-  /** Page subtitle */
-  subtitle?: string;
-  /** Logo component */
-  logo?: React.ReactNode;
-  /** Footer content */
-  footer?: React.ReactNode;
-  /** Additional CSS classes */
-  className?: string;
-  /** Container props for customization */
-  containerProps?: React.HTMLAttributes<HTMLDivElement>;
-  
-  // Split scheme props
-  /** Left side content for split scheme */
-  splitContent?: React.ReactNode;
-  
-  // Hero scheme props  
-  /** Background image URL for hero scheme */
-  imageUrl?: string;
-  /** Image alt text */
-  imageAlt?: string;
-  /** Image overlay */
-  imageOverlay?: 'light' | 'dark' | 'none';
-  
-  // Card scheme props
-  /** Additional card content for card scheme */
-  cardContent?: React.ReactNode;
-  
-  /** Form content */
-  children: React.ReactNode;
-}
-
-/**
  * AuthLayout - Unified authentication layout with standardized props
+ * @llm-usage
+ * <AuthLayout scheme="card" tone="clean" title="Sign In" logo={<Logo />}>
+ *   <LoginForm />
+ * </AuthLayout>
  */
 const AuthLayoutComponent = forwardRef<HTMLDivElement, AuthLayoutProps>(({
   scheme = 'card',
@@ -126,7 +87,7 @@ const AuthLayoutComponent = forwardRef<HTMLDivElement, AuthLayoutProps>(({
   splitContent,
   
   // Hero scheme props
-  imageUrl = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+  imageUrl,
   imageAlt = "Authentication background",
   imageOverlay = 'dark',
   
@@ -135,6 +96,9 @@ const AuthLayoutComponent = forwardRef<HTMLDivElement, AuthLayoutProps>(({
   
   children,
 }, ref) => {
+  
+  // Default fallback image (self-hosted or data URL to avoid external dependencies)
+  const defaultImageUrl = imageUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjA3MCIgaGVpZ2h0PSIxMzgwIiB2aWV3Qm94PSIwIDAgMjA3MCAxMzgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMjA3MCIgaGVpZ2h0PSIxMzgwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGC5bmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjM2Y4MWJhIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkNmM5YyIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=';
   
   const overlayClasses = {
     light: 'bg-gradient-to-br from-white/50 via-white/25 to-white/50',
@@ -314,8 +278,10 @@ const AuthLayoutComponent = forwardRef<HTMLDivElement, AuthLayoutProps>(({
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('${imageUrl}')`
+            backgroundImage: `url('${defaultImageUrl}')`
           }}
+          role="img"
+          aria-label={imageAlt}
         >
           {/* Overlay for better text readability */}
           {imageOverlay !== 'none' && (
@@ -398,7 +364,7 @@ const AuthLayoutComponent = forwardRef<HTMLDivElement, AuthLayoutProps>(({
 AuthLayoutComponent.displayName = 'AuthLayout';
 
 /**
- * AuthLayout with standardized props - FULLY CONSISTENT
+ * AuthLayout with standardized props - READY TO SHIP
  */
 const AuthLayout = AuthLayoutComponent;
 

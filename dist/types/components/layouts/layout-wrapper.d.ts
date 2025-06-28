@@ -1,5 +1,5 @@
 /**
- * @fileoverview Ultra-simple layout wrapper with standardized scheme + tone system
+ * @fileoverview Updated layout wrapper with proper type safety and consistency
  * @description Uses VITE__ environment variables with zero ambiguity
  * @package @voilajsx/uikit
  * @file /src/components/layouts/layout-wrapper.tsx
@@ -21,8 +21,8 @@ interface LayoutConfig {
         scheme: AdminLayoutScheme;
         tone: Tone;
         size: Size;
-        collapsible: boolean;
         defaultSidebarOpen: boolean;
+        position: 'relative' | 'sticky' | 'fixed';
     };
     pageLayout: {
         scheme: PageLayoutScheme;
@@ -47,6 +47,7 @@ interface LayoutConfig {
         tone: Tone;
         size: Size;
         position: 'sticky' | 'fixed' | 'relative';
+        showClose: boolean;
     };
 }
 /**
@@ -71,4 +72,59 @@ export declare function LayoutWrapper({ children, layout, navigation, overrides 
  */
 export declare function useLayoutConfig(): LayoutConfig;
 export {};
+/**
+ * @llm-usage Environment Variable Configuration
+ *
+ * Basic setup in .env:
+ * VITE__LAYOUT__TYPE=admin
+ * VITE__LAYOUT__THEME=default
+ * VITE__LAYOUT__MODE=light
+ * VITE__LAYOUT__TITLE="My App"
+ *
+ * Admin layout config:
+ * VITE__LAYOUT__ADMIN__SCHEME=sidebar
+ * VITE__LAYOUT__ADMIN__TONE=subtle
+ * VITE__LAYOUT__ADMIN__SIZE=lg
+ * VITE__LAYOUT__ADMIN__SIDEBAR_OPEN=true
+ *
+ * Page layout config:
+ * VITE__LAYOUT__PAGE__SCHEME=default
+ * VITE__LAYOUT__PAGE__TONE=clean
+ * VITE__LAYOUT__PAGE__SIZE=xl
+ *
+ * Auth layout config:
+ * VITE__LAYOUT__AUTH__SCHEME=card
+ * VITE__LAYOUT__AUTH__TONE=clean
+ * VITE__LAYOUT__AUTH__SIZE=md
+ *
+ * Navigation (JSON string):
+ * VITE__LAYOUT__NAVIGATION='[{"key":"home","label":"Home","href":"/","icon":"Home"},{"key":"about","label":"About","href":"/about"}]'
+ */
+/**
+ * @llm-pattern Usage Examples
+ *
+ * Basic usage with env vars:
+ * <LayoutWrapper>
+ *   <YourAppContent />
+ * </LayoutWrapper>
+ *
+ * Override layout type:
+ * <LayoutWrapper layout="page">
+ *   <YourPageContent />
+ * </LayoutWrapper>
+ *
+ * Override navigation:
+ * <LayoutWrapper navigation={customNav}>
+ *   <YourContent />
+ * </LayoutWrapper>
+ *
+ * Manual config override:
+ * <LayoutWrapper
+ *   overrides={{
+ *     adminLayout: { tone: 'brand', size: 'xl' }
+ *   }}
+ * >
+ *   <YourContent />
+ * </LayoutWrapper>
+ */ 
 //# sourceMappingURL=layout-wrapper.d.ts.map

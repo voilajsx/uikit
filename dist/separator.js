@@ -1,6 +1,6 @@
 import { jsx as e } from "react/jsx-runtime";
 import * as p from "react";
-import { P as d } from "./index-CP7NBbfF.js";
+import { P as d } from "./index-D5Ppf2aB.js";
 import { c as m } from "./utils-qaFjX9_3.js";
 var v = "Separator", n = "horizontal", f = ["horizontal", "vertical"], l = p.forwardRef((r, o) => {
   const { decorative: t, orientation: a = n, ...s } = r, i = u(a) ? a : n, c = t ? { role: "none" } : { "aria-orientation": i === "vertical" ? i : void 0, role: "separator" };

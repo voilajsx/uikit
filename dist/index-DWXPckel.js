@@ -1,7 +1,7 @@
 import * as A from "react";
 import r from "react";
 import { c as D } from "./index-UFb2E87s.js";
-import { u as S, a as M } from "./index-B1fTi8J3.js";
+import { u as S, c as M } from "./index-B5MIi2tR.js";
 import { jsx as d } from "react/jsx-runtime";
 function b(l) {
   const i = l + "CollectionProvider", [N, _] = D(i), [v, f] = N(
@@ -52,4 +52,4 @@ export {
   b as c,
   j as u
 };
-//# sourceMappingURL=index-DphuwxkL.js.map
+//# sourceMappingURL=index-DWXPckel.js.map

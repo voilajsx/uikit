@@ -1,5 +1,5 @@
 /**
- * Page Layout with standardized scheme + tone system
+ * Page Layout - COMPOUND-ONLY with scheme for consistency
  * @module @voilajsx/uikit
  * @file src/components/layouts/page.tsx
  */
@@ -10,10 +10,18 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Header, HeaderLogo, HeaderNav } from '@/components/sections/header';
 import { Footer } from '@/components/sections/footer';
-import type { NavigationItem, Size, PageLayoutScheme, Tone } from '@/types';
+import { Container } from '@/components/sections/container';
+import type { NavigationItem, Size, Tone } from '@/types';
 
 /**
- * Page context for sharing configuration
+ * PageLayout schemes - consistent with other layouts
+ * default: Simple header + content + footer
+ * sidebar: Header + content with sidebar + footer
+ */
+export type PageLayoutScheme = 'default' | 'sidebar';
+
+/**
+ * Page context for sharing configuration across compound components
  */
 const PageContext = createContext<{
   scheme: PageLayoutScheme;
@@ -21,23 +29,17 @@ const PageContext = createContext<{
   size: Size;
 }>({
   scheme: 'default',
-  tone: 'clean',
+  tone: 'brand',
   size: 'xl',
 });
 
 /**
- * Page layout scheme variants - structural arrangements
+ * Page layout container variants
  */
 const pageVariants = cva(
   'min-h-screen flex flex-col',
   {
     variants: {
-      scheme: {
-        default: '',
-        blog: 'lg:grid lg:grid-cols-[1fr_300px] lg:gap-8',
-        docs: 'lg:grid lg:grid-cols-[250px_1fr] lg:gap-6',
-        marketing: 'space-y-0'
-      },
       tone: {
         clean: 'bg-background text-foreground',
         subtle: 'bg-muted/20 text-foreground',
@@ -46,236 +48,266 @@ const pageVariants = cva(
       }
     },
     defaultVariants: {
-      scheme: 'default',
       tone: 'clean'
     }
   }
 );
 
 /**
- * Page content variants based on scheme
- */
-const pageContentVariants = cva(
-  'flex-1 w-full',
-  {
-    variants: {
-      scheme: {
-        default: '',
-        blog: 'lg:order-1',
-        docs: 'lg:order-2',
-        marketing: ''
-      }
-    },
-    defaultVariants: {
-      scheme: 'default'
-    }
-  }
-);
-
-/**
- * Page content inner variants
- */
-const pageContentInnerVariants = cva(
-  'mx-auto',
-  {
-    variants: {
-      size: {
-        sm: 'max-w-2xl px-4 py-6',
-        md: 'max-w-4xl px-4 sm:px-6 py-8',
-        lg: 'max-w-6xl px-4 sm:px-6 lg:px-8 py-8',
-        xl: 'max-w-7xl px-4 sm:px-6 lg:px-8 py-8',
-        full: 'max-w-full px-4 sm:px-6 lg:px-8 py-8',
-      },
-      scheme: {
-        default: '',
-        blog: 'lg:max-w-none lg:px-0',
-        docs: 'lg:max-w-none lg:px-0',
-        marketing: ''
-      }
-    },
-    defaultVariants: {
-      size: 'xl',
-      scheme: 'default'
-    },
-  }
-);
-
-/**
- * Page sidebar variants
- */
-const sidebarVariants = cva(
-  'hidden lg:block',
-  {
-    variants: {
-      scheme: {
-        default: 'hidden',
-        blog: 'lg:order-2 bg-muted/30 p-6',
-        docs: 'lg:order-1 bg-muted/30 p-4 border-r border-border',
-        marketing: 'hidden'
-      }
-    },
-    defaultVariants: {
-      scheme: 'default'
-    }
-  }
-);
-
-/**
- * Page Layout props with standardized system
+ * PageLayout Root - Just a container with context
  */
 export interface PageLayoutProps {
-  /** Layout structure/arrangement */
+  /** RECOMMENDED: Layout scheme for consistency (default: "default") */
   scheme?: PageLayoutScheme;
-  /** Visual styling tone */
+  /** RECOMMENDED: Visual styling tone (default: "clean") */
   tone?: Tone;
-  /** Page size (width and spacing) */
+  /** OPTIONAL: Page size for child components (default: "xl") */
   size?: Size;
-  /** Header positioning */
-  position?: 'sticky' | 'fixed' | 'relative';
-  /** Navigation items for header */
-  navigation?: NavigationItem[];
-  /** Current path for active states */
-  currentPath?: string;
-  /** Navigation handler */
-  onNavigate?: (href: string, item: NavigationItem) => void;
-  /** Page title */
-  title?: string;
-  /** Logo component */
-  logo?: React.ReactNode;
-  /** Header actions (buttons, theme toggle, etc.) */
-  headerActions?: React.ReactNode;
-  /** Sidebar content for blog/docs schemes */
-  sidebarContent?: React.ReactNode;
-  /** Footer navigation items */
-  footerNavigation?: NavigationItem[];
-  /** Footer content (if not using footerNavigation) */
-  footerContent?: React.ReactNode;
-  /** Copyright text for footer */
-  copyright?: React.ReactNode;
-  /** Additional CSS classes */
+  /** OPTIONAL: Additional CSS classes */
   className?: string;
-  /** Page content */
+  /** REQUIRED: Page structure (Header, Content, Footer) */
   children: React.ReactNode;
 }
 
 /**
- * Main PageLayout component with scheme + tone system
+ * PageLayout Root Component - COMPOUND-ONLY with scheme
  */
-const PageLayoutComponent = forwardRef<HTMLDivElement, PageLayoutProps>(({
-  className,
+const PageLayoutRoot = forwardRef<HTMLDivElement, PageLayoutProps>(({
   scheme = 'default',
   tone = 'clean',
   size = 'xl',
-  position = 'sticky',
-  navigation = [],
-  currentPath = '',
-  onNavigate,
-  title,
-  logo,
-  headerActions,
-  sidebarContent,
-  footerNavigation = [],
-  footerContent,
-  copyright,
+  className,
   children,
 }, ref) => {
-  
-  // Use navigation or footerNavigation for footer
-  const finalFooterNavigation = footerNavigation.length > 0 ? footerNavigation : navigation;
-
-  // Determine footer tone based on page tone
-  const footerTone = tone === 'clean' ? 'contrast' : tone;
-
   return (
     <PageContext.Provider value={{ scheme, tone, size }}>
       <div
         ref={ref}
-        className={cn(pageVariants({ scheme, tone }), className)}
+        className={cn(pageVariants({ tone }), className)}
       >
-        {/* Header */}
-        <Header 
-          tone={tone}
-          size={size}
-          position={position}
-        >
-          {/* Logo */}
-          <HeaderLogo>
-            {logo || (title && (
-              <span className="text-xl font-bold">{title}</span>
-            ))}
-          </HeaderLogo>
+        {children}
+      </div>
+    </PageContext.Provider>
+  );
+});
 
-          {/* Navigation */}
-          {navigation.length > 0 && (
-            <HeaderNav
-              navigation={navigation}
-              currentPath={currentPath}
-              onNavigate={onNavigate}
-            />
-          )}
+PageLayoutRoot.displayName = 'PageLayout';
 
-          {/* Header Actions */}
-          {headerActions && (
-            <div className="ml-auto flex items-center gap-2">
-              {headerActions}
-            </div>
-          )}
-        </Header>
+/**
+ * PageLayout.Header - Header with page context
+ */
+export interface PageHeaderProps {
+  /** OPTIONAL: Header tone (inherits from PageLayout if not set) */
+  tone?: Tone;
+  /** OPTIONAL: Header size (inherits from PageLayout if not set) */
+  size?: Size;
+  /** OPTIONAL: Header positioning (default: "sticky") */
+  position?: 'sticky' | 'fixed' | 'relative';
+  /** OPTIONAL: Navigation items */
+  navigation?: NavigationItem[];
+  /** OPTIONAL: Current path for active states */
+  currentPath?: string;
+  /** OPTIONAL: Navigation handler */
+  onNavigate?: (href: string, item: NavigationItem) => void;
+  /** OPTIONAL: Logo component */
+  logo?: React.ReactNode;
+  /** OPTIONAL: Page title (used if no logo) */
+  title?: string;
+  /** OPTIONAL: Header actions (buttons, theme toggle, etc.) */
+  actions?: React.ReactNode;
+  /** OPTIONAL: Additional CSS classes */
+  className?: string;
+}
 
-        {/* Main Content Area with Scheme-based Layout */}
-        <div className={cn('flex-1', scheme !== 'default' && 'lg:grid')}>
-          {/* Sidebar for docs/blog schemes */}
-          {(scheme === 'blog' || scheme === 'docs') && (
-            <aside className={cn(sidebarVariants({ scheme }))}>
-              {sidebarContent || (
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">
-                    {scheme === 'blog' ? 'Recent Posts' : 'Navigation'}
-                  </h3>
-                  {scheme === 'docs' && navigation.length > 0 && (
-                    <nav className="space-y-2">
-                      {navigation.map((item) => (
-                        <button
-                          key={item.key}
-                          onClick={() => {
-                            if (item.href && onNavigate) {
-                              onNavigate(item.href, item);
-                            } else if (item.onClick) {
-                              item.onClick();
-                            }
-                          }}
-                          className={cn(
-                            'block w-full text-left px-3 py-2 rounded-md text-sm transition-colors',
-                            item.href && currentPath === item.href
-                              ? 'bg-primary text-primary-foreground'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                          )}
-                        >
-                          {item.label}
-                        </button>
-                      ))}
-                    </nav>
-                  )}
-                </div>
-              )}
-            </aside>
-          )}
+const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(({
+  tone,
+  size,
+  position = 'sticky',
+  navigation = [],
+  currentPath = '',
+  onNavigate,
+  logo,
+  title,
+  actions,
+  className,
+}, ref) => {
+  const { tone: pageTone, size: pageSize } = usePage();
+  
+  return (
+    <Header
+      ref={ref}
+      tone={tone || pageTone}
+      size={size || pageSize}
+      position={position}
+      className={className}
+    >
+      {/* Logo */}
+      <HeaderLogo>
+        {logo || (title && (
+          <span className="text-xl font-bold">{title}</span>
+        ))}
+      </HeaderLogo>
 
-          {/* Main Content */}
-          <PageContent scheme={scheme} size={size}>
-            {children}
-          </PageContent>
+      {/* Navigation */}
+      {navigation.length > 0 && (
+        <HeaderNav
+          navigation={navigation}
+          currentPath={currentPath}
+          onNavigate={onNavigate}
+        />
+      )}
+
+      {/* Actions */}
+      {actions && (
+        <div className="ml-auto flex items-center gap-2">
+          {actions}
         </div>
+      )}
+    </Header>
+  );
+});
 
-        {/* Footer */}
-        <Footer 
-          tone={footerTone}
-          size={size}
-        >
+PageHeader.displayName = 'PageHeader';
+
+/**
+ * PageLayout.Content - Content area with optional sidebar
+ */
+export interface PageContentProps {
+  /** OPTIONAL: Content tone (inherits from PageLayout if not set) */
+  tone?: Tone;
+  /** OPTIONAL: Content size (inherits from PageLayout if not set) */
+  size?: Size;
+  /** OPTIONAL: Sidebar position (default: "none") */
+  sidebar?: 'none' | 'left' | 'right';
+  /** OPTIONAL: Sidebar navigation items */
+  navigation?: NavigationItem[];
+  /** OPTIONAL: Custom sidebar content (overrides navigation) */
+  sidebarContent?: React.ReactNode;
+  /** OPTIONAL: Current path for active states */
+  currentPath?: string;
+  /** OPTIONAL: Navigation handler */
+  onNavigate?: (href: string, item: NavigationItem) => void;
+  /** OPTIONAL: Whether sidebar should be sticky */
+  sidebarPosition?: 'sticky' | 'fixed' | 'relative';
+  /** OPTIONAL: Additional CSS classes */
+  className?: string;
+  /** REQUIRED: Page content */
+  children: React.ReactNode;
+}
+
+const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
+  tone,
+  size,
+  sidebar = 'none',
+  navigation = [],
+  sidebarContent,
+  currentPath = '',
+  onNavigate,
+  sidebarPosition = 'relative',
+  className,
+  children,
+}, ref) => {
+  const { scheme, tone: pageTone, size: pageSize } = usePage();
+  
+  // Auto-detect sidebar from scheme if not explicitly set
+  const finalSidebar = sidebar !== 'none' ? sidebar : (scheme === 'sidebar' ? 'left' : 'none');
+  
+  if (finalSidebar === 'none') {
+    // Simple content without sidebar
+    return (
+      <main 
+        ref={ref}
+        className={cn('flex-1', className)}
+      >
+        <div className={cn(
+          'mx-auto',
+          (size || pageSize) === 'sm' && 'max-w-2xl px-4 py-6',
+          (size || pageSize) === 'md' && 'max-w-4xl px-4 sm:px-6 py-8',
+          (size || pageSize) === 'lg' && 'max-w-6xl px-4 sm:px-6 lg:px-8 py-8',
+          (size || pageSize) === 'xl' && 'max-w-7xl px-4 sm:px-6 lg:px-8 py-8',
+          (size || pageSize) === 'full' && 'max-w-full px-4 sm:px-6 lg:px-8 py-8'
+        )}>
+          {children}
+        </div>
+      </main>
+    );
+  }
+
+  // Content with sidebar - use Container
+  return (
+    <div ref={ref} className={cn('flex-1', className)}>
+      <Container
+        sidebar={finalSidebar}
+        navigation={navigation}
+        sidebarContent={sidebarContent}
+        currentPath={currentPath}
+        onNavigate={onNavigate}
+        sidebarPosition={sidebarPosition}
+        tone={tone || pageTone}
+        size={size || pageSize}
+      >
+        {children}
+      </Container>
+    </div>
+  );
+});
+
+PageContent.displayName = 'PageContent';
+
+/**
+ * PageLayout.Footer - Footer with page context
+ */
+export interface PageFooterProps {
+  /** OPTIONAL: Footer tone (default: "contrast") */
+  tone?: Tone;
+  /** OPTIONAL: Footer size (inherits from PageLayout if not set) */
+  size?: Size;
+  /** OPTIONAL: Footer positioning (default: "relative") */
+  position?: 'sticky' | 'fixed' | 'relative';
+  /** OPTIONAL: Footer navigation items */
+  navigation?: NavigationItem[];
+  /** OPTIONAL: Current path for active states */
+  currentPath?: string;
+  /** OPTIONAL: Navigation handler */
+  onNavigate?: (href: string, item: NavigationItem) => void;
+  /** OPTIONAL: Copyright text */
+  copyright?: React.ReactNode;
+  /** OPTIONAL: Additional CSS classes */
+  className?: string;
+  /** OPTIONAL: Custom footer content */
+  children?: React.ReactNode;
+}
+
+const PageFooter = forwardRef<HTMLElement, PageFooterProps>(({
+  tone,
+  size,
+  position = 'relative',
+  navigation = [],
+  currentPath = '',
+  onNavigate,
+  copyright,
+  className,
+  children,
+}, ref) => {
+  const { tone: pageTone, size: pageSize } = usePage();
+  
+  // Default footer tone is contrast for better visual separation
+  const footerTone = tone || (pageTone === 'brand' ? 'subtle' : pageTone);
+  
+  return (
+    <Footer
+      ref={ref}
+      tone={footerTone}
+      size={size || pageSize}
+      position={position}
+      className={className}
+    >
+      {children || (
+        <>
           {/* Footer Navigation */}
-          {finalFooterNavigation.length > 0 && (
+          {navigation.length > 0 && (
             <div className="flex flex-wrap justify-center gap-6 py-4">
-              {finalFooterNavigation.map((item) => (
+              {navigation.map((item) => (
                 <button
                   key={item.key}
                   onClick={() => {
@@ -293,9 +325,6 @@ const PageLayoutComponent = forwardRef<HTMLDivElement, PageLayoutProps>(({
             </div>
           )}
 
-          {/* Custom Footer Content */}
-          {footerContent}
-
           {/* Copyright */}
           {copyright && (
             <div className="text-center py-4 border-t border-border">
@@ -304,175 +333,8 @@ const PageLayoutComponent = forwardRef<HTMLDivElement, PageLayoutProps>(({
               </p>
             </div>
           )}
-        </Footer>
-      </div>
-    </PageContext.Provider>
-  );
-});
-
-PageLayoutComponent.displayName = 'PageLayout';
-
-/**
- * Page Header props with standardized system
- */
-export interface PageHeaderProps {
-  /** Header tone (inherits from PageLayout if not specified) */
-  tone?: Tone;
-  /** Header size (inherits from PageLayout if not specified) */
-  size?: Size;
-  /** Header positioning */
-  position?: 'sticky' | 'fixed' | 'relative';
-  /** Navigation items */
-  navigation?: NavigationItem[];
-  /** Current path for active states */
-  currentPath?: string;
-  /** Navigation handler */
-  onNavigate?: (href: string, item: NavigationItem) => void;
-  /** Additional CSS classes */
-  className?: string;
-  /** Header content */
-  children: React.ReactNode;
-}
-
-/**
- * Page Header component
- */
-const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(({
-  tone,
-  size,
-  position = 'sticky',
-  navigation = [],
-  currentPath = '',
-  onNavigate,
-  className,
-  children,
-}, ref) => {
-  const { tone: pageTone, size: pageSize } = usePage();
-  
-  return (
-    <Header
-      tone={tone || pageTone}
-      size={size || pageSize}
-      position={position}
-      className={className}
-    >
-      {children}
-      {navigation.length > 0 && (
-        <HeaderNav
-          navigation={navigation}
-          currentPath={currentPath}
-          onNavigate={onNavigate}
-        />
+        </>
       )}
-    </Header>
-  );
-});
-
-PageHeader.displayName = 'PageHeader';
-
-/**
- * Page Content props
- */
-export interface PageContentProps {
-  /** Content scheme (inherits from PageLayout if not specified) */
-  scheme?: PageLayoutScheme;
-  /** Content size (inherits from PageLayout if not specified) */
-  size?: Size;
-  /** Additional CSS classes */
-  className?: string;
-  /** Content */
-  children: React.ReactNode;
-}
-
-/**
- * Page Content component - Main content area
- */
-const PageContent = forwardRef<HTMLElement, PageContentProps>(({ 
-  scheme,
-  size,
-  className, 
-  children,
-}, ref) => {
-  const { scheme: pageScheme, size: pageSize } = usePage();
-  const contentScheme = scheme || pageScheme;
-  const contentSize = size || pageSize;
-  
-  return (
-    <main 
-      ref={ref} 
-      className={cn(pageContentVariants({ scheme: contentScheme }), className)}
-    >
-      <div className={cn(pageContentInnerVariants({ size: contentSize, scheme: contentScheme }))}>
-        {children}
-      </div>
-    </main>
-  );
-});
-
-PageContent.displayName = 'PageContent';
-
-/**
- * Page Footer props with standardized system
- */
-export interface PageFooterProps {
-  /** Footer tone (inherits from PageLayout if not specified) */
-  tone?: Tone;
-  /** Footer size (inherits from PageLayout if not specified) */
-  size?: Size;
-  /** Footer navigation items */
-  navigation?: NavigationItem[];
-  /** Current path for active states */
-  currentPath?: string;
-  /** Navigation handler */
-  onNavigate?: (href: string, item: NavigationItem) => void;
-  /** Additional CSS classes */
-  className?: string;
-  /** Footer content */
-  children: React.ReactNode;
-}
-
-/**
- * Page Footer component
- */
-const PageFooter = forwardRef<HTMLElement, PageFooterProps>(({ 
-  tone,
-  size,
-  navigation = [],
-  currentPath = '',
-  onNavigate,
-  className,
-  children,
-}, ref) => {
-  const { tone: pageTone, size: pageSize } = usePage();
-  const footerTone = tone || (pageTone === 'clean' ? 'contrast' : pageTone);
-  
-  return (
-    <Footer 
-      tone={footerTone}
-      size={size || pageSize}
-      className={className}
-    >
-      {/* Navigation */}
-      {navigation.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-6 py-4">
-          {navigation.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => {
-                if (item.href && onNavigate) {
-                  onNavigate(item.href, item);
-                } else if (item.onClick) {
-                  item.onClick();
-                }
-              }}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      )}
-      {children}
     </Footer>
   );
 });
@@ -491,18 +353,16 @@ const usePage = () => {
 };
 
 /**
- * PageLayout with compound components
+ * PageLayout - COMPOUND-ONLY Component
  */
-const PageLayout = Object.assign(PageLayoutComponent, {
+const PageLayout = Object.assign(PageLayoutRoot, {
   Header: PageHeader,
   Content: PageContent,
   Footer: PageFooter,
-  Logo: HeaderLogo,
-  Nav: HeaderNav,
 });
 
 /**
- * Export PageLayout with compound components and individual components
+ * Export COMPOUND-ONLY PageLayout
  */
 export { 
   PageLayout,
@@ -511,3 +371,34 @@ export {
   PageFooter,
   usePage
 };
+
+/**
+ * @llm-rule PageLayout Usage - COMPOUND-ONLY with scheme
+ * 
+ * Basic website:
+ * <PageLayout scheme="default" tone="clean" size="xl">
+ *   <PageLayout.Header navigation={nav} logo={<Logo />} />
+ *   <PageLayout.Content>
+ *     <YourContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer copyright="© 2024" />
+ * </PageLayout>
+ * 
+ * Website with sidebar:
+ * <PageLayout scheme="sidebar">
+ *   <PageLayout.Header navigation={nav} title="My Site" />
+ *   <PageLayout.Content navigation={docsNav}>
+ *     <YourContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer navigation={footerNav} />
+ * </PageLayout>
+ * 
+ * Custom layout (override scheme):
+ * <PageLayout scheme="default" tone="brand">
+ *   <PageLayout.Header tone="brand" navigation={nav} actions={<ThemeToggle />} />
+ *   <PageLayout.Content sidebar="right" sidebarContent={<CustomSidebar />}>
+ *     <YourContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer tone="contrast" navigation={legalNav} />
+ * </PageLayout>
+ */

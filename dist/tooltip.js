@@ -1,14 +1,14 @@
 import { jsx as u, jsxs as H } from "react/jsx-runtime";
 import * as s from "react";
 import { u as K, c as C } from "./index-CPxmoWFw.js";
-import { u as S, c as W } from "./index-B1fTi8J3.js";
+import { u as S, b as W } from "./index-B5MIi2tR.js";
 import { c as J } from "./index-UFb2E87s.js";
-import { P as Q, D as Z } from "./index-DBSLDOnW.js";
+import { P as Q, D as Z } from "./index-DQ8UKqpy.js";
 import { u as ee } from "./index-B_PLZIoC.js";
-import { c as G, R as te, A as oe, a as re, C as ne } from "./index-ZLovmeI2.js";
-import { P as j } from "./index-C7MCwCUs.js";
-import { P as se } from "./index-CP7NBbfF.js";
-import { R as ae } from "./index-ClHfXshV.js";
+import { c as G, R as te, A as oe, a as re, C as ne } from "./index-f0dRS7uo.js";
+import { P as j } from "./index-BS6MejTA.js";
+import { P as se } from "./index-D5Ppf2aB.js";
+import { R as ae } from "./index-DeSjhD-x.js";
 import { c as ie } from "./utils-qaFjX9_3.js";
 var [D, ze] = J("Tooltip", [
   G
@@ -101,7 +101,7 @@ $.displayName = R;
 var L = "TooltipTrigger", B = s.forwardRef(
   (e, o) => {
     const { __scopeTooltip: t, ...r } = e, n = _(L, t), i = k(L, t), l = A(t), v = s.useRef(null), a = S(o, v, n.onTriggerChange), d = s.useRef(!1), c = s.useRef(!1), f = s.useCallback(() => d.current = !1, []);
-    return s.useEffect(() => () => document.removeEventListener("pointerup", f), [f]), /* @__PURE__ */ u(re, { asChild: !0, ...l, children: /* @__PURE__ */ u(
+    return s.useEffect(() => () => document.removeEventListener("pointerup", f), [f]), /* @__PURE__ */ u(oe, { asChild: !0, ...l, children: /* @__PURE__ */ u(
       se.button,
       {
         "aria-describedby": n.open ? n.contentId : void 0,
@@ -224,7 +224,7 @@ var q = "TooltipArrow", X = s.forwardRef(
     return me(
       q,
       t
-    ).isInside ? null : /* @__PURE__ */ u(oe, { ...n, ...r, ref: o });
+    ).isInside ? null : /* @__PURE__ */ u(re, { ...n, ...r, ref: o });
   }
 );
 X.displayName = q;

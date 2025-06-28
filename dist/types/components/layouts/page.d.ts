@@ -1,111 +1,106 @@
 /**
- * Page Layout with standardized scheme + tone system
+ * Page Layout - COMPOUND-ONLY with scheme for consistency
  * @module @voilajsx/uikit
  * @file src/components/layouts/page.tsx
  */
 import * as React from 'react';
-import type { NavigationItem, Size, PageLayoutScheme, Tone } from '@/types';
+import type { NavigationItem, Size, Tone } from '@/types';
 /**
- * Page Layout props with standardized system
+ * PageLayout schemes - consistent with other layouts
+ * default: Simple header + content + footer
+ * sidebar: Header + content with sidebar + footer
+ */
+export type PageLayoutScheme = 'default' | 'sidebar';
+/**
+ * PageLayout Root - Just a container with context
  */
 export interface PageLayoutProps {
-    /** Layout structure/arrangement */
+    /** RECOMMENDED: Layout scheme for consistency (default: "default") */
     scheme?: PageLayoutScheme;
-    /** Visual styling tone */
+    /** RECOMMENDED: Visual styling tone (default: "clean") */
     tone?: Tone;
-    /** Page size (width and spacing) */
+    /** OPTIONAL: Page size for child components (default: "xl") */
     size?: Size;
-    /** Header positioning */
-    position?: 'sticky' | 'fixed' | 'relative';
-    /** Navigation items for header */
-    navigation?: NavigationItem[];
-    /** Current path for active states */
-    currentPath?: string;
-    /** Navigation handler */
-    onNavigate?: (href: string, item: NavigationItem) => void;
-    /** Page title */
-    title?: string;
-    /** Logo component */
-    logo?: React.ReactNode;
-    /** Header actions (buttons, theme toggle, etc.) */
-    headerActions?: React.ReactNode;
-    /** Sidebar content for blog/docs schemes */
-    sidebarContent?: React.ReactNode;
-    /** Footer navigation items */
-    footerNavigation?: NavigationItem[];
-    /** Footer content (if not using footerNavigation) */
-    footerContent?: React.ReactNode;
-    /** Copyright text for footer */
-    copyright?: React.ReactNode;
-    /** Additional CSS classes */
+    /** OPTIONAL: Additional CSS classes */
     className?: string;
-    /** Page content */
+    /** REQUIRED: Page structure (Header, Content, Footer) */
     children: React.ReactNode;
 }
 /**
- * Page Header props with standardized system
+ * PageLayout.Header - Header with page context
  */
 export interface PageHeaderProps {
-    /** Header tone (inherits from PageLayout if not specified) */
+    /** OPTIONAL: Header tone (inherits from PageLayout if not set) */
     tone?: Tone;
-    /** Header size (inherits from PageLayout if not specified) */
+    /** OPTIONAL: Header size (inherits from PageLayout if not set) */
     size?: Size;
-    /** Header positioning */
+    /** OPTIONAL: Header positioning (default: "sticky") */
     position?: 'sticky' | 'fixed' | 'relative';
-    /** Navigation items */
+    /** OPTIONAL: Navigation items */
     navigation?: NavigationItem[];
-    /** Current path for active states */
+    /** OPTIONAL: Current path for active states */
     currentPath?: string;
-    /** Navigation handler */
+    /** OPTIONAL: Navigation handler */
     onNavigate?: (href: string, item: NavigationItem) => void;
-    /** Additional CSS classes */
+    /** OPTIONAL: Logo component */
+    logo?: React.ReactNode;
+    /** OPTIONAL: Page title (used if no logo) */
+    title?: string;
+    /** OPTIONAL: Header actions (buttons, theme toggle, etc.) */
+    actions?: React.ReactNode;
+    /** OPTIONAL: Additional CSS classes */
     className?: string;
-    /** Header content */
-    children: React.ReactNode;
 }
-/**
- * Page Header component
- */
 declare const PageHeader: React.ForwardRefExoticComponent<PageHeaderProps & React.RefAttributes<HTMLElement>>;
 /**
- * Page Content props
+ * PageLayout.Content - Content area with optional sidebar
  */
 export interface PageContentProps {
-    /** Content scheme (inherits from PageLayout if not specified) */
-    scheme?: PageLayoutScheme;
-    /** Content size (inherits from PageLayout if not specified) */
+    /** OPTIONAL: Content tone (inherits from PageLayout if not set) */
+    tone?: Tone;
+    /** OPTIONAL: Content size (inherits from PageLayout if not set) */
     size?: Size;
-    /** Additional CSS classes */
+    /** OPTIONAL: Sidebar position (default: "none") */
+    sidebar?: 'none' | 'left' | 'right';
+    /** OPTIONAL: Sidebar navigation items */
+    navigation?: NavigationItem[];
+    /** OPTIONAL: Custom sidebar content (overrides navigation) */
+    sidebarContent?: React.ReactNode;
+    /** OPTIONAL: Current path for active states */
+    currentPath?: string;
+    /** OPTIONAL: Navigation handler */
+    onNavigate?: (href: string, item: NavigationItem) => void;
+    /** OPTIONAL: Whether sidebar should be sticky */
+    sidebarPosition?: 'sticky' | 'fixed' | 'relative';
+    /** OPTIONAL: Additional CSS classes */
     className?: string;
-    /** Content */
+    /** REQUIRED: Page content */
     children: React.ReactNode;
 }
+declare const PageContent: React.ForwardRefExoticComponent<PageContentProps & React.RefAttributes<HTMLDivElement>>;
 /**
- * Page Content component - Main content area
- */
-declare const PageContent: React.ForwardRefExoticComponent<PageContentProps & React.RefAttributes<HTMLElement>>;
-/**
- * Page Footer props with standardized system
+ * PageLayout.Footer - Footer with page context
  */
 export interface PageFooterProps {
-    /** Footer tone (inherits from PageLayout if not specified) */
+    /** OPTIONAL: Footer tone (default: "contrast") */
     tone?: Tone;
-    /** Footer size (inherits from PageLayout if not specified) */
+    /** OPTIONAL: Footer size (inherits from PageLayout if not set) */
     size?: Size;
-    /** Footer navigation items */
+    /** OPTIONAL: Footer positioning (default: "relative") */
+    position?: 'sticky' | 'fixed' | 'relative';
+    /** OPTIONAL: Footer navigation items */
     navigation?: NavigationItem[];
-    /** Current path for active states */
+    /** OPTIONAL: Current path for active states */
     currentPath?: string;
-    /** Navigation handler */
+    /** OPTIONAL: Navigation handler */
     onNavigate?: (href: string, item: NavigationItem) => void;
-    /** Additional CSS classes */
+    /** OPTIONAL: Copyright text */
+    copyright?: React.ReactNode;
+    /** OPTIONAL: Additional CSS classes */
     className?: string;
-    /** Footer content */
-    children: React.ReactNode;
+    /** OPTIONAL: Custom footer content */
+    children?: React.ReactNode;
 }
-/**
- * Page Footer component
- */
 declare const PageFooter: React.ForwardRefExoticComponent<PageFooterProps & React.RefAttributes<HTMLElement>>;
 /**
  * Hook to access page configuration
@@ -116,17 +111,45 @@ declare const usePage: () => {
     size: Size;
 };
 /**
- * PageLayout with compound components
+ * PageLayout - COMPOUND-ONLY Component
  */
 declare const PageLayout: React.ForwardRefExoticComponent<PageLayoutProps & React.RefAttributes<HTMLDivElement>> & {
     Header: React.ForwardRefExoticComponent<PageHeaderProps & React.RefAttributes<HTMLElement>>;
-    Content: React.ForwardRefExoticComponent<PageContentProps & React.RefAttributes<HTMLElement>>;
+    Content: React.ForwardRefExoticComponent<PageContentProps & React.RefAttributes<HTMLDivElement>>;
     Footer: React.ForwardRefExoticComponent<PageFooterProps & React.RefAttributes<HTMLElement>>;
-    Logo: React.ForwardRefExoticComponent<import("@/components/sections/header").HeaderLogoProps & React.RefAttributes<HTMLDivElement>>;
-    Nav: React.ForwardRefExoticComponent<import("@/components/sections/header").HeaderNavProps & React.RefAttributes<HTMLDivElement>>;
 };
 /**
- * Export PageLayout with compound components and individual components
+ * Export COMPOUND-ONLY PageLayout
  */
 export { PageLayout, PageHeader, PageContent, PageFooter, usePage };
+/**
+ * @llm-rule PageLayout Usage - COMPOUND-ONLY with scheme
+ *
+ * Basic website:
+ * <PageLayout scheme="default" tone="clean" size="xl">
+ *   <PageLayout.Header navigation={nav} logo={<Logo />} />
+ *   <PageLayout.Content>
+ *     <YourContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer copyright="© 2024" />
+ * </PageLayout>
+ *
+ * Website with sidebar:
+ * <PageLayout scheme="sidebar">
+ *   <PageLayout.Header navigation={nav} title="My Site" />
+ *   <PageLayout.Content navigation={docsNav}>
+ *     <YourContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer navigation={footerNav} />
+ * </PageLayout>
+ *
+ * Custom layout (override scheme):
+ * <PageLayout scheme="default" tone="brand">
+ *   <PageLayout.Header tone="brand" navigation={nav} actions={<ThemeToggle />} />
+ *   <PageLayout.Content sidebar="right" sidebarContent={<CustomSidebar />}>
+ *     <YourContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer tone="contrast" navigation={legalNav} />
+ * </PageLayout>
+ */ 
 //# sourceMappingURL=page.d.ts.map

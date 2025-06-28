@@ -27,7 +27,7 @@
   --color-secondary: oklch(0.88 0.03 220);
   --color-secondary-foreground: oklch(0.25 0.05 220);
   
-  --color-muted: oklch(0.95 0.01 240);
+  --color-muted: oklch(0.93 0.01 240);
   --color-muted-foreground: oklch(0.38 0.04 240);
   
   /* Accent: Sea green tinted blue - blue with green undertones */
@@ -73,7 +73,7 @@
     --color-secondary: oklch(0.25 0.03 220);
     --color-secondary-foreground: oklch(0.82 0.02 220);
     
-    --color-muted: oklch(0.18 0.02 240);
+    --color-muted: oklch(0.30 0.02 240);
     --color-muted-foreground: oklch(0.68 0.025 240);
     
     /* Accent: Soft golden yellow for dark mode */

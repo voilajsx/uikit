@@ -1,5 +1,5 @@
 /**
- * @fileoverview Ultra-simple layout wrapper with standardized scheme + tone system
+ * @fileoverview Updated layout wrapper with proper type safety and consistency
  * @description Uses VITE__ environment variables with zero ambiguity
  * @package @voilajsx/uikit
  * @file /src/components/layouts/layout-wrapper.tsx
@@ -61,8 +61,8 @@ interface LayoutConfig {
     scheme: AdminLayoutScheme;
     tone: Tone;
     size: Size;
-    collapsible: boolean;
     defaultSidebarOpen: boolean;
+    position: 'relative' | 'sticky' | 'fixed';
   };
   
   // Page layout
@@ -95,6 +95,7 @@ interface LayoutConfig {
     tone: Tone;
     size: Size;
     position: 'sticky' | 'fixed' | 'relative';
+    showClose: boolean;
   };
 }
 
@@ -121,8 +122,8 @@ function getLayoutConfig(): LayoutConfig {
       scheme: (env.VITE__LAYOUT__ADMIN__SCHEME as AdminLayoutScheme) || 'sidebar',
       tone: (env.VITE__LAYOUT__ADMIN__TONE as Tone) || 'subtle',
       size: (env.VITE__LAYOUT__ADMIN__SIZE as Size) || 'lg',
-      collapsible: env.VITE__LAYOUT__ADMIN__COLLAPSIBLE !== 'false',
       defaultSidebarOpen: env.VITE__LAYOUT__ADMIN__SIDEBAR_OPEN !== 'false',
+      position: (env.VITE__LAYOUT__ADMIN__POSITION as 'relative' | 'sticky' | 'fixed') || 'relative',
     },
     
     // Page layout
@@ -144,7 +145,7 @@ function getLayoutConfig(): LayoutConfig {
     
     // Blank layout
     blankLayout: {
-      scheme: (env.VITE__LAYOUT__BLANK__SCHEME as BlankLayoutScheme) || 'default',
+      scheme: (env.VITE__LAYOUT__BLANK__SCHEME as BlankLayoutScheme) || 'simple',
       tone: (env.VITE__LAYOUT__BLANK__TONE as Tone) || 'clean',
       size: (env.VITE__LAYOUT__BLANK__SIZE as Size) || 'lg',
     },
@@ -155,6 +156,7 @@ function getLayoutConfig(): LayoutConfig {
       tone: (env.VITE__LAYOUT__POPUP__TONE as Tone) || 'clean',
       size: (env.VITE__LAYOUT__POPUP__SIZE as Size) || 'md',
       position: (env.VITE__LAYOUT__POPUP__POSITION as 'sticky' | 'fixed' | 'relative') || 'relative',
+      showClose: env.VITE__LAYOUT__POPUP__SHOW_CLOSE !== 'false',
     },
   };
 }
@@ -200,7 +202,7 @@ export function LayoutWrapper({
 }
 
 /**
- * Render layout based on type - ultra-simple switch
+ * Render layout based on type - UPDATED for compound components
  */
 function renderLayout(
   children: React.ReactNode, 
@@ -219,15 +221,21 @@ function renderLayout(
           scheme={config.adminLayout.scheme}
           tone={config.adminLayout.tone}
           size={config.adminLayout.size}
-          title={config.title}
-          logo={logoComponent}
-          navigation={navigation}
-          currentPath={currentPath}
-          onNavigate={handleNavigation}
-          collapsible={config.adminLayout.collapsible}
           defaultSidebarOpen={config.adminLayout.defaultSidebarOpen}
+          position={config.adminLayout.position}
         >
-          {children}
+          <AdminLayout.Header 
+            title={config.title}
+          />
+          <AdminLayout.Sidebar 
+            navigation={navigation}
+            currentPath={currentPath}
+            onNavigate={handleNavigation}
+            logo={logoComponent}
+          />
+          <AdminLayout.Content>
+            {children}
+          </AdminLayout.Content>
         </AdminLayout>
       );
       
@@ -237,15 +245,21 @@ function renderLayout(
           scheme={config.pageLayout.scheme}
           tone={config.pageLayout.tone}
           size={config.pageLayout.size}
-          position={config.pageLayout.position}
-          navigation={navigation}
-          currentPath={currentPath}
-          onNavigate={handleNavigation}
-          title={config.title}
-          logo={logoComponent}
-          copyright={`© ${new Date().getFullYear()} ${config.title}. All rights reserved.`}
         >
-          {children}
+          <PageLayout.Header 
+            navigation={navigation}
+            currentPath={currentPath}
+            onNavigate={handleNavigation}
+            logo={logoComponent}
+            title={config.title}
+            position={config.pageLayout.position}
+          />
+          <PageLayout.Content>
+            {children}
+          </PageLayout.Content>
+          <PageLayout.Footer 
+            copyright={`© ${new Date().getFullYear()} ${config.title}. All rights reserved.`}
+          />
         </PageLayout>
       );
       
@@ -256,7 +270,7 @@ function renderLayout(
           tone={config.authLayout.tone}
           size={config.authLayout.size}
           title={config.title}
-          logo={config.logo ? <img src={config.logo} alt="Logo" className="h-16 w-auto" /> : undefined}
+          logo={logoComponent}
           imageUrl={config.authLayout.imageUrl}
           imageOverlay={config.authLayout.imageOverlay}
         >
@@ -270,9 +284,12 @@ function renderLayout(
           scheme={config.blankLayout.scheme}
           tone={config.blankLayout.tone}
           size={config.blankLayout.size}
-          title={config.title}
-          logo={config.logo ? <img src={config.logo} alt="Logo" className="h-12 w-auto" /> : undefined}
         >
+          {logoComponent && (
+            <div className="flex justify-center mb-6">
+              {logoComponent}
+            </div>
+          )}
           {children}
         </BlankLayout>
       );
@@ -285,6 +302,8 @@ function renderLayout(
           size={config.popupLayout.size}
           position={config.popupLayout.position}
           title={config.title}
+          showClose={config.popupLayout.showClose}
+          onClose={() => typeof window !== 'undefined' && window.close?.()}
         >
           {children}
         </PopupLayout>
@@ -325,3 +344,60 @@ function handleNavigation(href: string, item: NavigationItem): void {
 export function useLayoutConfig(): LayoutConfig {
   return getLayoutConfig();
 }
+
+/**
+ * @llm-usage Environment Variable Configuration
+ * 
+ * Basic setup in .env:
+ * VITE__LAYOUT__TYPE=admin
+ * VITE__LAYOUT__THEME=default
+ * VITE__LAYOUT__MODE=light
+ * VITE__LAYOUT__TITLE="My App"
+ * 
+ * Admin layout config:
+ * VITE__LAYOUT__ADMIN__SCHEME=sidebar
+ * VITE__LAYOUT__ADMIN__TONE=subtle
+ * VITE__LAYOUT__ADMIN__SIZE=lg
+ * VITE__LAYOUT__ADMIN__SIDEBAR_OPEN=true
+ * 
+ * Page layout config:
+ * VITE__LAYOUT__PAGE__SCHEME=default
+ * VITE__LAYOUT__PAGE__TONE=clean
+ * VITE__LAYOUT__PAGE__SIZE=xl
+ * 
+ * Auth layout config:
+ * VITE__LAYOUT__AUTH__SCHEME=card
+ * VITE__LAYOUT__AUTH__TONE=clean
+ * VITE__LAYOUT__AUTH__SIZE=md
+ * 
+ * Navigation (JSON string):
+ * VITE__LAYOUT__NAVIGATION='[{"key":"home","label":"Home","href":"/","icon":"Home"},{"key":"about","label":"About","href":"/about"}]'
+ */
+
+/**
+ * @llm-pattern Usage Examples
+ * 
+ * Basic usage with env vars:
+ * <LayoutWrapper>
+ *   <YourAppContent />
+ * </LayoutWrapper>
+ * 
+ * Override layout type:
+ * <LayoutWrapper layout="page">
+ *   <YourPageContent />
+ * </LayoutWrapper>
+ * 
+ * Override navigation:
+ * <LayoutWrapper navigation={customNav}>
+ *   <YourContent />
+ * </LayoutWrapper>
+ * 
+ * Manual config override:
+ * <LayoutWrapper 
+ *   overrides={{
+ *     adminLayout: { tone: 'brand', size: 'xl' }
+ *   }}
+ * >
+ *   <YourContent />
+ * </LayoutWrapper>
+ */

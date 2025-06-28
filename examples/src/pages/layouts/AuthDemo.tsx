@@ -1,8 +1,3 @@
-/**
- * LayoutWrapper Basic Demo - Swap between Auth and Page layouts
- * @module @voilajsx/uikit
- * @file examples/src/pages/wrapper/LayoutWrapperBasicDemo.tsx
- */
 
 
 /**

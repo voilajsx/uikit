@@ -1,42 +1,55 @@
 /**
- * Blank Layout with standardized scheme + tone system
+ * Blank Layout with simplified scheme system - simple and card only
  * @module @voilajsx/uikit
  * @file src/components/layouts/blank.tsx
  */
 import * as React from 'react';
 import type { Size, BlankLayoutScheme, Tone } from '@/types';
 /**
- * Blank Layout props with standardized system
+ * Blank Layout props - minimal but essential
  */
 export interface BlankLayoutProps {
-    /** Layout structure/arrangement */
+    /** RECOMMENDED: Layout scheme - simple or card */
     scheme?: BlankLayoutScheme;
-    /** Visual styling tone */
+    /** RECOMMENDED: Visual styling tone */
     tone?: Tone;
-    /** Content container size */
+    /** OPTIONAL: Content container size */
     size?: Size;
-    /** Page title */
-    title?: string;
-    /** Page subtitle */
-    subtitle?: string;
-    /** Logo component */
-    logo?: React.ReactNode;
-    /** Icon component (e.g., error icon) */
-    icon?: React.ReactNode;
-    /** Action buttons */
-    actions?: React.ReactNode;
-    /** Footer content */
-    footer?: React.ReactNode;
-    /** Additional CSS classes */
+    /** OPTIONAL: Additional CSS classes */
     className?: string;
-    /** Container props for customization */
-    containerProps?: React.HTMLAttributes<HTMLDivElement>;
-    /** Main content */
-    children?: React.ReactNode;
+    /** REQUIRED: All content goes here */
+    children: React.ReactNode;
 }
 /**
- * BlankLayout with standardized props
+ * BlankLayout - Minimal and essential
  */
 declare const BlankLayout: React.ForwardRefExoticComponent<BlankLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export { BlankLayout };
+/**
+ * @llm-rule BlankLayout Usage - Minimal but essential
+ *
+ * Simple error page:
+ * <BlankLayout scheme="simple" tone="clean">
+ *   <h1 className="text-4xl font-bold text-foreground mb-4">404 Not Found</h1>
+ *   <p className="text-muted-foreground mb-6">The page you're looking for doesn't exist.</p>
+ *   <Button>Go Home</Button>
+ * </BlankLayout>
+ *
+ * Card-based maintenance page:
+ * <BlankLayout scheme="card" tone="subtle" size="md">
+ *   <WrenchIcon className="h-16 w-16 mx-auto mb-4 text-primary" />
+ *   <h1 className="text-3xl font-bold mb-2">Under Maintenance</h1>
+ *   <p className="text-muted-foreground mb-6">We'll be back soon!</p>
+ *   <Button>Notify Me</Button>
+ * </BlankLayout>
+ *
+ * About page:
+ * <BlankLayout scheme="simple" size="xl">
+ *   <Logo className="mb-6" />
+ *   <h1 className="text-5xl font-bold mb-4">About Us</h1>
+ *   <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+ *     Company description and mission statement goes here.
+ *   </p>
+ * </BlankLayout>
+ */ 
 //# sourceMappingURL=blank.d.ts.map

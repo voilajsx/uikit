@@ -1,5 +1,5 @@
 /**
- * Container component with standardized prop naming and tone system
+ * Container component with FIXED sidebar layout - properly side-by-side
  * @module @voilajsx/uikit
  * @file src/components/sections/container.tsx
  */

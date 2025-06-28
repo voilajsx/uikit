@@ -19,7 +19,9 @@ import {
   Package,
   BarChart3,
   FileText,
-  HelpCircle
+  HelpCircle,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -38,9 +40,10 @@ interface NavigationItem {
 function HeaderDemo() {
   const [currentPath, setCurrentPath] = useState('/');
   const [currentTone, setCurrentTone] = useState<'clean' | 'subtle' | 'brand' | 'contrast'>('clean');
-  const [currentSize, setCurrentSize] = useState<'sm' | 'md' | 'lg' | 'xl' | 'full'>('lg');
+  const [currentSize, setCurrentSize] = useState<'sm' | 'md' | 'lg' | 'xl' | 'full'>('xl');
   const [currentPosition, setCurrentPosition] = useState<'sticky' | 'fixed' | 'relative'>('sticky');
   const [currentTheme, setCurrentTheme] = useState('default');
+  const [currentMode, setCurrentMode] = useState<'light' | 'dark'>('light');
 
   // Available themes
   const themes = ['default', 'aurora', 'metro', 'neon', 'ruby', 'studio'];
@@ -121,11 +124,11 @@ function HeaderDemo() {
       <Header tone={currentTone} size={currentSize} position={currentPosition}>
         <HeaderLogo>
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 bg-primary text-primary-foreground rounded-lg flex items-center justify-center">
-              <Package className="h-5 w-5" />
-            </div>
+            <div className="h-8 w-8 bg-accent text-accent-foreground rounded-lg flex items-center justify-center">
+            <Package className="h-5 w-5" />
+          </div>
             <div className="hidden sm:block">
-              <div className="font-bold text-foreground">UIKit Demo</div>
+              <div className="font-bold text-current">UIKit Demo</div>
             </div>
           </div>
         </HeaderLogo>
@@ -229,27 +232,73 @@ function HeaderDemo() {
           </TabsList>
           
           <TabsContent value="controls" className="space-y-6">
-            {/* Theme Selection */}
+           
+            {/* Theme and Mode Selection */}
             <Card className="bg-card text-card-foreground border-border">
               <CardHeader>
-                <CardTitle className="text-foreground">Theme Selection</CardTitle>
+                <CardTitle className="text-foreground">Theme & Mode Selection</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                  {themes.map((theme) => (
-                    <Button
-                      key={theme}
-                      variant={currentTheme === theme ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setCurrentTheme(theme)}
-                      className="capitalize"
-                    >
-                      {theme}
-                    </Button>
-                  ))}
+              <CardContent className="space-y-6">
+                {/* Theme Selection */}
+                <div>
+                  <h4 className="text-sm font-medium text-foreground mb-3">Theme</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    {themes.map((theme) => (
+                      <Button
+                        key={theme}
+                        variant={currentTheme === theme ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setCurrentTheme(theme)}
+                        className="capitalize"
+                      >
+                        {theme}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
-                <div className="mt-4 text-sm text-muted-foreground">
-                  <strong className="text-foreground">Current theme:</strong> {currentTheme} theme with automatic light/dark mode support
+
+                {/* Dark/Light Mode Toggle */}
+                <div>
+                  <h4 className="text-sm font-medium text-foreground mb-3">Color Mode</h4>
+                  <div className="flex gap-3">
+                    <Button
+                      variant={!document.documentElement.classList.contains('dark') ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => {
+                        document.documentElement.classList.remove('dark');
+                        setCurrentMode('light');
+                      }}
+                      className="flex items-center gap-2"
+                    >
+                      <Sun className="h-4 w-4" />
+                      Light
+                    </Button>
+                    <Button
+                      variant={document.documentElement.classList.contains('dark') ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => {
+                        document.documentElement.classList.add('dark');
+                        setCurrentMode('dark');
+                      }}
+                      className="flex items-center gap-2"
+                    >
+                      <Moon className="h-4 w-4" />
+                      Dark
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Status Display */}
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <div>
+                    <strong className="text-foreground">Current theme:</strong> {currentTheme} 
+                  </div>
+                  <div>
+                    <strong className="text-foreground">Current mode:</strong> {document.documentElement.classList.contains('dark') ? 'dark' : 'light'}
+                  </div>
+                  <div className="text-xs">
+                    Themes automatically adapt to light/dark mode with semantic color variables
+                  </div>
                 </div>
               </CardContent>
             </Card>

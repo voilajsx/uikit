@@ -1,5 +1,5 @@
 /**
- * Container component with standardized prop naming and tone system
+ * Container component with FIXED sidebar layout - properly side-by-side
  * @module @voilajsx/uikit
  * @file src/components/sections/container.tsx
  */
@@ -10,31 +10,32 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ChevronRight } from 'lucide-react';
 import type { NavigationItem, Size } from '@/types';
 
 /**
- * Container variants - only layout and size, no tone styling
+ * Container variants - FIXED layout for proper side-by-side positioning
  */
 const containerVariants = cva(
   'w-full mx-auto bg-background text-foreground',
   {
     variants: {
       layout: {
-        none: 'block p-1',
-        'sidebar-left': 'flex flex-col md:flex-row min-h-screen overflow-visible gap-3 md:gap-4 p-1',
-        'sidebar-right': 'flex flex-col md:flex-row min-h-screen overflow-visible gap-3 md:gap-4 p-1',
+        none: 'block',
+        'sidebar-left': 'block md:flex', // ✅ FIXED: Always flex for side-by-side
+        'sidebar-right': 'block md:flex', // ✅ FIXED: Always flex for side-by-side
       },
       size: {
         sm: 'max-w-2xl',
-        md: 'max-w-4xl',
+        md: 'max-w-4xl', 
         lg: 'max-w-6xl',
         xl: 'max-w-7xl',
         full: 'max-w-full',
       },
       position: {
-        sticky: 'sticky top-0 z-20',
-        fixed: 'fixed top-0 left-0 right-0 z-20',
+        sticky: 'relative',
+        fixed: 'relative',
         relative: 'relative'
       }
     },
@@ -47,10 +48,10 @@ const containerVariants = cva(
 );
 
 /**
- * Sidebar variants with tone-based styling and rounded edges
+ * Sidebar variants - OPTIMIZED spacing and alignment
  */
 const sidebarVariants = cva(
-  'flex-shrink-0 rounded-lg', // Added rounded-lg for rounded edges
+  'flex-shrink-0 rounded-lg m-4 max-md:hidden', // ✅ OPTIMIZED: Added m-4 for consistent outer margin
   {
     variants: {
       position: {
@@ -58,22 +59,22 @@ const sidebarVariants = cva(
         right: 'order-last',
       },
       size: {
-        sm: 'md:w-48 lg:w-52 xl:w-56',
-        md: 'md:w-56 lg:w-64 xl:w-72',
-        lg: 'md:w-64 lg:w-72 xl:w-80', // Same size for lg, xl, full
-        xl: 'md:w-64 lg:w-72 xl:w-80', // Same size for lg, xl, full
-        full: 'md:w-64 lg:w-72 xl:w-80', // Same size for lg, xl, full
+        sm: 'w-48', // ✅ FIXED: Removed responsive prefixes for consistent width
+        md: 'w-56',
+        lg: 'w-64', 
+        xl: 'w-64',
+        full: 'w-64',
       },
       sidebarPosition: {
-        sticky: 'md:sticky md:top-0 md:h-screen md:overflow-y-auto',
-        fixed: 'md:fixed md:top-0 md:h-screen md:overflow-y-auto',
-        relative: 'md:h-full',
+        sticky: 'sticky top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto', // ✅ FIXED: Added self-start
+        fixed: 'sticky top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto', // ✅ FIXED: Added self-start  
+        relative: 'self-start', // ✅ FIXED: Added self-start
       },
       tone: {
-        clean: '', // No background or border for clean
-        subtle: 'bg-muted/30 border border-border/50',
-        brand: 'bg-primary/10 border border-primary/20',
-        contrast: 'bg-muted border border-border'
+        clean: 'bg-muted/10 border border-border/60 dark:bg-muted/20 dark:border-border/50',
+        subtle: 'bg-muted/50 border border-border/20 dark:bg-muted/60 dark:border-border/30',
+        brand: 'bg-primary/10 border border-primary/15 dark:bg-primary/15 dark:border-primary/20',
+        contrast: 'bg-muted/70 border border-border/50 dark:bg-muted/80 dark:border-border/60'
       }
     },
     defaultVariants: {
@@ -86,22 +87,27 @@ const sidebarVariants = cva(
 );
 
 /**
- * Main content variants
+ * Main content variants - OPTIMIZED for consistent padding and reduced gap
  */
 const mainVariants = cva(
-  'flex-1 min-w-0',
+  'flex-1 min-w-0 p-4', // ✅ OPTIMIZED: Constant p-4 padding, removed min-w-0 conflict
   {
     variants: {
       size: {
-        sm: 'p-2',
-        md: 'p-3',
-        lg: 'p-4',
-        xl: 'p-4',
-        full: 'p-4',
+        sm: '', // ✅ OPTIMIZED: Removed size-based padding, using constant p-4
+        md: '',
+        lg: '',
+        xl: '',
+        full: '',
       },
+      hasGap: {
+        true: '', // ✅ OPTIMIZED: Removed ml-6, using sidebar m-4 instead
+        false: ''
+      }
     },
     defaultVariants: {
       size: 'md',
+      hasGap: false
     },
   }
 );
@@ -152,6 +158,7 @@ const getSizeConfig = (size: Size = 'md') => {
 interface NavigationRendererProps {
   navigation: NavigationItem[];
   size: Size;
+  tone: 'clean' | 'subtle' | 'brand' | 'contrast';
   currentPath?: string;
   onNavigate?: (href: string, item: NavigationItem) => void;
 }
@@ -162,6 +169,7 @@ interface NavigationRendererProps {
 function NavigationRenderer({ 
   navigation, 
   size = 'md',
+  tone,
   currentPath = '',
   onNavigate 
 }: NavigationRendererProps) {
@@ -213,11 +221,24 @@ function NavigationRenderer({
     return (
       <div key={item.key} className="w-full">
         <Button
-          variant={isActive ? 'secondary' : 'ghost'}
+          variant="ghost"
           className={cn(
-            'w-full justify-start transition-all items-center',
+            'w-full justify-start transition-all items-center cursor-pointer',
             config.button,
             depth > 0 && 'ml-4 w-[calc(100%-1rem)]',
+            // Tone-aware styling
+            tone === 'clean' && (isActive 
+              ? 'bg-muted text-foreground shadow-sm' 
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'),
+            tone === 'subtle' && (isActive 
+              ? 'bg-background text-foreground shadow-sm' 
+              : 'text-muted-foreground hover:text-foreground hover:bg-background/60'),
+            tone === 'brand' && (isActive 
+              ? 'bg-primary/10 text-foreground shadow-sm' 
+              : 'text-muted-foreground hover:text-foreground hover:bg-primary/5'),
+            tone === 'contrast' && (isActive 
+              ? 'bg-muted text-foreground shadow-sm' 
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'),
             item.className
           )}
           onClick={() => handleItemClick(item)}
@@ -291,22 +312,6 @@ const ContainerSidebar = forwardRef<HTMLDivElement, ContainerSidebarProps>(({
   
   if (!content) return null;
 
-  const [headerHeight, setHeaderHeight] = useState(0);
-
-  // Header height detection for sticky positioning
-  useEffect(() => {
-    if (sidebarPosition === 'relative') return;
-
-    const updateHeight = () => {
-      const header = document.querySelector('header');
-      setHeaderHeight(header ? header.offsetHeight : 0);
-    };
-
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
-    return () => window.removeEventListener('resize', updateHeight);
-  }, [sidebarPosition]);
-
   // Render content based on type
   const renderContent = () => {
     if (Array.isArray(content)) {
@@ -314,6 +319,7 @@ const ContainerSidebar = forwardRef<HTMLDivElement, ContainerSidebarProps>(({
         <NavigationRenderer 
           navigation={content} 
           size={size}
+          tone={tone}
           currentPath={currentPath}
           onNavigate={onNavigate}
         />
@@ -329,7 +335,7 @@ const ContainerSidebar = forwardRef<HTMLDivElement, ContainerSidebarProps>(({
         sidebarVariants({ position, size, sidebarPosition, tone }),
         className
       )}
-      style={sidebarPosition !== 'relative' ? { ...style, top: `${headerHeight + 10}px` } : style}
+      style={style}
     >
       {renderContent()}
     </aside>
@@ -399,7 +405,7 @@ export interface ContainerProps {
 }
 
 /**
- * Main Container component with standardized props
+ * Main Container component with FIXED layout
  */
 const ContainerComponent = forwardRef<HTMLDivElement, ContainerProps>(({ 
   className,
@@ -425,6 +431,41 @@ const ContainerComponent = forwardRef<HTMLDivElement, ContainerProps>(({
   // Determine sidebar content: navigation takes priority
   const finalSidebarContent = navigation.length > 0 ? navigation : sidebarContent;
 
+  // ✅ ADD: Flatten navigation for mobile dropdown
+  const flattenNavigation = (navItems: NavigationItem[], prefix = ''): Array<{key: string, label: string, item: NavigationItem}> => {
+    const flattened: Array<{key: string, label: string, item: NavigationItem}> = [];
+    
+    navItems.forEach((item) => {
+      const label = prefix ? `${prefix} > ${item.label}` : item.label;
+      
+      if (item.href || item.onClick) {
+        flattened.push({ key: item.key, label, item });
+      }
+      
+      if (item.items && item.items.length > 0) {
+        flattened.push(...flattenNavigation(item.items, label));
+      }
+    });
+    
+    return flattened;
+  };
+
+  // ✅ ADD: Mobile dropdown handler
+  const handleMobileNavigation = (key: string) => {
+    if (!Array.isArray(finalSidebarContent)) return;
+    
+    const flattenedNav = flattenNavigation(finalSidebarContent);
+    const selectedItem = flattenedNav.find(item => item.key === key);
+    
+    if (selectedItem && onNavigate) {
+      if (selectedItem.item.href) {
+        onNavigate(selectedItem.item.href, selectedItem.item);
+      } else if (selectedItem.item.onClick) {
+        selectedItem.item.onClick();
+      }
+    }
+  };
+
   return (
     <div 
       ref={ref}
@@ -444,8 +485,36 @@ const ContainerComponent = forwardRef<HTMLDivElement, ContainerProps>(({
         />
       )}
       
-      {/* Main Content */}
+      {/* Main Content with Mobile Dropdown */}
       <ContainerMain size={size}>
+        {/* ✅ ADD: Mobile Navigation Dropdown */}
+        {hasSidebar && Array.isArray(finalSidebarContent) && (
+          <div className="md:hidden mb-4">
+            <Select value={flattenNavigation(finalSidebarContent).find(item => item.item.href === currentPath)?.key} onValueChange={handleMobileNavigation}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Navigate to..." />
+              </SelectTrigger>
+              <SelectContent>
+                {flattenNavigation(finalSidebarContent).map(({ key, label, item }) => (
+                  <SelectItem key={key} value={key}>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2">
+                        {item.icon && <item.icon className="h-4 w-4" />}
+                        <span>{label}</span>
+                      </div>
+                      {item.badge && (
+                        <Badge variant="secondary" className="text-xs">
+                          {item.badge}
+                        </Badge>
+                      )}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        
         {children}
       </ContainerMain>
       

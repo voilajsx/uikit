@@ -31,11 +31,11 @@ const footerVariants = cva(
   {
     variants: {
       tone: {
-        clean: 'bg-background border-border text-foreground',
-        subtle: 'bg-muted/30 border-border/50 text-foreground',
-        brand: 'bg-primary border-primary-foreground/20 text-primary-foreground',
-        contrast: 'bg-zinc-900 border-zinc-700/40 text-zinc-100'
-      },
+      clean: 'bg-background/80 backdrop-blur-sm border-border/40 text-foreground',
+      subtle: 'bg-muted/50 backdrop-blur-sm border-border/30 text-foreground', 
+      brand: 'bg-primary border-primary-foreground/20 text-primary-foreground',
+      contrast: 'bg-zinc-900 border-zinc-700/40 text-zinc-100'
+    },
       position: {
         sticky: 'sticky bottom-0 z-30',
         fixed: 'fixed bottom-0 left-0 right-0 z-30',
@@ -232,17 +232,20 @@ const FooterBasic = forwardRef<HTMLDivElement, FooterBasicProps>(({
       {/* Copyright */}
       {copyright && (
         <>
-          <Separator />
+          <Separator className={cn(
+            tone === 'brand' && 'bg-primary-foreground/20',
+            tone === 'contrast' && 'bg-zinc-700'
+          )} />
           <div className="text-center">
-            <p className={cn(
-              'text-sm',
-              tone === 'contrast' 
-                ? 'text-zinc-400' 
-                : 'text-muted-foreground'
-            )}>
-              {copyright}
-            </p>
-          </div>
+          <p className={cn(
+            'text-sm',
+            tone === 'contrast' && 'text-zinc-400',
+            tone === 'brand' && 'text-primary-foreground/80',
+            (tone === 'clean' || tone === 'subtle') && 'text-muted-foreground'
+          )}>
+            {copyright}
+          </p>
+        </div>
         </>
       )}
     </div>
@@ -287,6 +290,10 @@ export interface FooterAdvancedProps extends React.HTMLAttributes<HTMLDivElement
 
 /**
  * Advanced Footer - Multi-column layout with organized sections
+ */
+/**
+ * Advanced Footer - Multi-column layout with organized sections
+ * Two-level grid: Brand (30%) + Menu Container (70%) with intelligent 0-4 columns
  */
 const FooterAdvanced = forwardRef<HTMLDivElement, FooterAdvancedProps>(({
   className,
@@ -349,48 +356,72 @@ const FooterAdvanced = forwardRef<HTMLDivElement, FooterAdvancedProps>(({
       className={cn('space-y-8', className)}
       {...props}
     >
-      {/* Main Content Grid */}
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
-        {/* Brand Section */}
+      {/* LEVEL 1: Brand (30%) + Menu Container (70%) Grid */}
+      <div className="grid gap-8 grid-cols-1 md:grid-cols-6 lg:grid-cols-6">
+        
+        {/* Brand Section - 30% width on md+ */}
         {brand && (
-          <div className="lg:col-span-2 space-y-4">
-            {brand}
-          </div>
+           <div className="col-span-2"> {brand}</div>
         )}
 
-        {/* Navigation Columns */}
-        {columns.slice(0, 3).map((column) => (
-          <div key={column.key} className="space-y-3">
-            <h4 className={cn('text-sm font-semibold', styles.heading)}>
-              {column.title}
-            </h4>
-            <ul className="space-y-2">
-              {column.items?.map((item) => {
-                const isActive = item.href ? currentPath === item.href : item.isActive;
-                
-                return (
-                  <li key={item.key}>
-                    <button
-                      onClick={() => handleItemClick(item)}
-                      className={cn(
-                        'text-sm transition-colors cursor-pointer block',
-                        isActive ? styles.heading : styles.link,
-                        item.className
-                      )}
-                    >
-                      {item.label}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+        {/* Menu Container - 70% width on md+ */}
+          <div className="col-span-4">
+            {/* LEVEL 2: Intelligent Menu Columns Grid (0-4 columns) */}
+          {columns.length > 0 && (
+            <div className={cn(
+              "grid gap-6",
+              // No columns: hidden
+              columns.length === 0 && "hidden",
+              // 1 column: single column
+              columns.length === 1 && "grid-cols-1",
+              // 2 columns: responsive 1→2
+              columns.length === 2 && "grid-cols-2 sm:grid-cols-2 md:grid-cols-3",
+              // 3 columns: responsive 1→2→3
+              columns.length === 3 && "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3",
+              // 4+ columns: responsive 1→2→4
+              columns.length >= 4 && "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+            )}>
+              {columns.slice(0, 4).map((column) => (
+                <div key={column.key} className="space-y-3">
+                  <h4 className={cn('text-sm font-semibold', styles.heading)}>
+                    {column.title}
+                  </h4>
+                  <ul className="space-y-2">
+                    {column.items?.map((item) => {
+                      const isActive = item.href ? currentPath === item.href : item.isActive;
+                      
+                      return (
+                        <li key={item.key}>
+                          <button
+                            onClick={() => handleItemClick(item)}
+                            className={cn(
+                              'text-sm transition-colors cursor-pointer block',
+                              isActive ? styles.heading : styles.link,
+                              item.className
+                            )}
+                          >
+                            {item.label}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
           </div>
-        ))}
-      </div>
+          
 
-      {/* Bottom Section */}
+         
+        </div>
+
+      {/* Bottom Section - Legal + Copyright + Social */}
       <div className="space-y-4">
-        <Separator />
+        <Separator className={cn(
+          tone === 'brand' && 'bg-primary-foreground/20',
+          tone === 'contrast' && 'bg-zinc-700'
+        )} />
         
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Copyright */}
@@ -495,7 +526,7 @@ const FooterSocial = forwardRef<HTMLDivElement, FooterSocialProps>(({
           key={link.key}
           variant="ghost"
           size="icon"
-          className={cn('h-8 w-8', getButtonStyles(), link.className)}
+          className={cn('h-8 w-8 cursor-pointer', getButtonStyles(), link.className)}
           onClick={link.onClick}
           title={link.label}
         >

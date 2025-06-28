@@ -1,21 +1,21 @@
-import { jsx as _, Fragment as r } from "react/jsx-runtime";
-import { ThemeProvider as L } from "./theme-provider.js";
-import { AdminLayout as n } from "./admin.js";
-import { PageLayout as m } from "./page.js";
-import { AuthLayout as E } from "./auth.js";
-import { BlankLayout as p } from "./blank.js";
+import { jsx as _, Fragment as E, jsxs as T } from "react/jsx-runtime";
+import { ThemeProvider as m } from "./theme-provider.js";
+import { AdminLayout as s } from "./admin.js";
+import { PageLayout as r } from "./page.js";
+import { AuthLayout as p } from "./auth.js";
+import { BlankLayout as O } from "./blank.js";
 import { PopupLayout as A } from "./popup.js";
-const O = {};
-function I(e, a = []) {
-  if (!e) return a;
+const d = {};
+function y(e, o = []) {
+  if (!e) return o;
   try {
     return JSON.parse(e);
   } catch {
-    return console.warn("Failed to parse JSON:", e), a;
+    return console.warn("Failed to parse JSON:", e), o;
   }
 }
-function s() {
-  const e = O;
+function L() {
+  const e = d;
   return {
     // Theme system
     theme: e.VITE__LAYOUT__THEME || "default",
@@ -25,14 +25,14 @@ function s() {
     layout: e.VITE__LAYOUT__TYPE || "admin",
     title: e.VITE__LAYOUT__TITLE || e.VITE__APP__NAME || "Platform",
     logo: e.VITE__LAYOUT__LOGO,
-    navigation: I(e.VITE__LAYOUT__NAVIGATION, []),
+    navigation: y(e.VITE__LAYOUT__NAVIGATION, []),
     // Admin layout
     adminLayout: {
       scheme: e.VITE__LAYOUT__ADMIN__SCHEME || "sidebar",
       tone: e.VITE__LAYOUT__ADMIN__TONE || "subtle",
       size: e.VITE__LAYOUT__ADMIN__SIZE || "lg",
-      collapsible: e.VITE__LAYOUT__ADMIN__COLLAPSIBLE !== "false",
-      defaultSidebarOpen: e.VITE__LAYOUT__ADMIN__SIDEBAR_OPEN !== "false"
+      defaultSidebarOpen: e.VITE__LAYOUT__ADMIN__SIDEBAR_OPEN !== "false",
+      position: e.VITE__LAYOUT__ADMIN__POSITION || "relative"
     },
     // Page layout
     pageLayout: {
@@ -51,7 +51,7 @@ function s() {
     },
     // Blank layout
     blankLayout: {
-      scheme: e.VITE__LAYOUT__BLANK__SCHEME || "default",
+      scheme: e.VITE__LAYOUT__BLANK__SCHEME || "simple",
       tone: e.VITE__LAYOUT__BLANK__TONE || "clean",
       size: e.VITE__LAYOUT__BLANK__SIZE || "lg"
     },
@@ -60,88 +60,114 @@ function s() {
       scheme: e.VITE__LAYOUT__POPUP__SCHEME || "modal",
       tone: e.VITE__LAYOUT__POPUP__TONE || "clean",
       size: e.VITE__LAYOUT__POPUP__SIZE || "md",
-      position: e.VITE__LAYOUT__POPUP__POSITION || "relative"
+      position: e.VITE__LAYOUT__POPUP__POSITION || "relative",
+      showClose: e.VITE__LAYOUT__POPUP__SHOW_CLOSE !== "false"
     }
   };
 }
-function c({
+function S({
   children: e,
-  layout: a,
-  navigation: u,
+  layout: o,
+  navigation: i,
   overrides: t = {}
 }) {
-  const o = { ...s(), ...t }, l = a || o.layout, T = u || o.navigation;
+  const a = { ...L(), ...t }, n = o || a.layout, u = i || a.navigation;
   return /* @__PURE__ */ _(
-    L,
+    m,
     {
-      theme: o.theme,
-      mode: o.mode,
-      detectSystem: o.detectSystem,
-      children: y(e, l, T, o)
+      theme: a.theme,
+      mode: a.mode,
+      detectSystem: a.detectSystem,
+      children: I(e, n, u, a)
     }
   );
 }
-function y(e, a, u, t) {
-  const o = typeof window < "u" ? window.location.pathname : "/", l = t.logo ? /* @__PURE__ */ _("img", { src: t.logo, alt: "Logo", className: "h-8 w-auto" }) : void 0;
-  switch (a) {
+function I(e, o, i, t) {
+  const a = typeof window < "u" ? window.location.pathname : "/", n = t.logo ? /* @__PURE__ */ _("img", { src: t.logo, alt: "Logo", className: "h-8 w-auto" }) : void 0;
+  switch (o) {
     case "admin":
-      return /* @__PURE__ */ _(
-        n,
+      return /* @__PURE__ */ T(
+        s,
         {
           scheme: t.adminLayout.scheme,
           tone: t.adminLayout.tone,
           size: t.adminLayout.size,
-          title: t.title,
-          logo: l,
-          navigation: u,
-          currentPath: o,
-          onNavigate: i,
-          collapsible: t.adminLayout.collapsible,
           defaultSidebarOpen: t.adminLayout.defaultSidebarOpen,
-          children: e
+          position: t.adminLayout.position,
+          children: [
+            /* @__PURE__ */ _(
+              s.Header,
+              {
+                title: t.title
+              }
+            ),
+            /* @__PURE__ */ _(
+              s.Sidebar,
+              {
+                navigation: i,
+                currentPath: a,
+                onNavigate: l,
+                logo: n
+              }
+            ),
+            /* @__PURE__ */ _(s.Content, { children: e })
+          ]
         }
       );
     case "page":
-      return /* @__PURE__ */ _(
-        m,
+      return /* @__PURE__ */ T(
+        r,
         {
           scheme: t.pageLayout.scheme,
           tone: t.pageLayout.tone,
           size: t.pageLayout.size,
-          position: t.pageLayout.position,
-          navigation: u,
-          currentPath: o,
-          onNavigate: i,
-          title: t.title,
-          logo: l,
-          copyright: `© ${(/* @__PURE__ */ new Date()).getFullYear()} ${t.title}. All rights reserved.`,
-          children: e
+          children: [
+            /* @__PURE__ */ _(
+              r.Header,
+              {
+                navigation: i,
+                currentPath: a,
+                onNavigate: l,
+                logo: n,
+                title: t.title,
+                position: t.pageLayout.position
+              }
+            ),
+            /* @__PURE__ */ _(r.Content, { children: e }),
+            /* @__PURE__ */ _(
+              r.Footer,
+              {
+                copyright: `© ${(/* @__PURE__ */ new Date()).getFullYear()} ${t.title}. All rights reserved.`
+              }
+            )
+          ]
         }
       );
     case "auth":
       return /* @__PURE__ */ _(
-        E,
+        p,
         {
           scheme: t.authLayout.scheme,
           tone: t.authLayout.tone,
           size: t.authLayout.size,
           title: t.title,
-          logo: t.logo ? /* @__PURE__ */ _("img", { src: t.logo, alt: "Logo", className: "h-16 w-auto" }) : void 0,
+          logo: n,
           imageUrl: t.authLayout.imageUrl,
           imageOverlay: t.authLayout.imageOverlay,
           children: e
         }
       );
     case "blank":
-      return /* @__PURE__ */ _(
-        p,
+      return /* @__PURE__ */ T(
+        O,
         {
           scheme: t.blankLayout.scheme,
           tone: t.blankLayout.tone,
           size: t.blankLayout.size,
-          title: t.title,
-          logo: t.logo ? /* @__PURE__ */ _("img", { src: t.logo, alt: "Logo", className: "h-12 w-auto" }) : void 0,
-          children: e
+          children: [
+            n && /* @__PURE__ */ _("div", { className: "flex justify-center mb-6", children: n }),
+            e
+          ]
         }
       );
     case "popup":
@@ -153,28 +179,33 @@ function y(e, a, u, t) {
           size: t.popupLayout.size,
           position: t.popupLayout.position,
           title: t.title,
+          showClose: t.popupLayout.showClose,
+          onClose: () => {
+            var u;
+            return typeof window < "u" && ((u = window.close) == null ? void 0 : u.call(window));
+          },
           children: e
         }
       );
     case "none":
     default:
-      return /* @__PURE__ */ _(r, { children: e });
+      return /* @__PURE__ */ _(E, { children: e });
   }
 }
-function i(e, a) {
+function l(e, o) {
   if (!(typeof window > "u")) {
-    if (a.onClick) {
-      a.onClick();
+    if (o.onClick) {
+      o.onClick();
       return;
     }
     e && (e.startsWith("http") || e.startsWith("//") ? window.open(e, "_blank") : window.location.href = e);
   }
 }
-function S() {
-  return s();
+function w() {
+  return L();
 }
 export {
-  c as LayoutWrapper,
-  S as useLayoutConfig
+  S as LayoutWrapper,
+  w as useLayoutConfig
 };
 //# sourceMappingURL=layout-wrapper.js.map

@@ -80,6 +80,10 @@ export interface FooterAdvancedProps extends React.HTMLAttributes<HTMLDivElement
 /**
  * Advanced Footer - Multi-column layout with organized sections
  */
+/**
+ * Advanced Footer - Multi-column layout with organized sections
+ * Two-level grid: Brand (30%) + Menu Container (70%) with intelligent 0-4 columns
+ */
 declare const FooterAdvanced: React.ForwardRefExoticComponent<FooterAdvancedProps & React.RefAttributes<HTMLDivElement>>;
 /**
  * Social link interface
