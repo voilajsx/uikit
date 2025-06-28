@@ -1,7 +1,7 @@
 /**
  * Enhanced DataTable - Professional grade with virtual scrolling, advanced filtering
  * @module @voilajsx/uikit
- * @file src/components/ui/data-table-enhanced.tsx
+ * @file src/components/ui/data-table.tsx
  */
 import * as React from 'react';
 /**

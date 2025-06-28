@@ -12,6 +12,14 @@ import type {
   ForwardRefExoticComponent,
   RefAttributes,
 } from 'react';
+import type {
+  FieldValues,
+  FieldPath,
+  UseFormReturn,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
+import type { ZodSchema } from 'zod';
 
 /**
  * @llm-rule Component Categories for Clear Selection:
@@ -32,6 +40,9 @@ import type {
  * 
  * UI COMPONENTS (interactive elements):
  * - All shadcn/ui components with semantic color system
+ * - Enhanced DataTable: Professional data tables with sorting/filtering
+ * - Motion: Animation components with presets and gestures
+ * - EnhancedForm: React Hook Form + Zod validation system
  */
 
 /**
@@ -491,6 +502,278 @@ export interface ContainerProps extends BaseComponentProps, ToneProps, SizeProps
 }
 
 /**
+ * Enhanced DataTable Types
+ * @llm-usage Professional data tables with sorting, filtering, pagination
+ */
+
+/**
+ * DataTable column definition
+ */
+export interface DataTableColumn<T = any> {
+  /** REQUIRED: Unique column identifier */
+  id: string;
+  /** REQUIRED: Column header text */
+  header: string;
+  /** OPTIONAL: Data accessor key or function */
+  accessorKey?: keyof T | string;
+  accessor?: (row: T) => any;
+  /** OPTIONAL: Cell renderer function */
+  cell?: (value: any, row: T, index: number) => React.ReactNode;
+  /** OPTIONAL: Column width */
+  width?: string | number;
+  minWidth?: number;
+  maxWidth?: number;
+  /** OPTIONAL: Enable sorting */
+  sortable?: boolean;
+  /** OPTIONAL: Enable filtering */
+  filterable?: boolean;
+  filterType?: 'text' | 'select' | 'date' | 'number' | 'boolean';
+  filterOptions?: Array<{ label: string; value: any }>;
+  /** OPTIONAL: Enable column resizing */
+  resizable?: boolean;
+  /** OPTIONAL: Hide column by default */
+  hidden?: boolean;
+  /** OPTIONAL: Pin column to left or right */
+  pinned?: 'left' | 'right';
+  /** OPTIONAL: Data type for sorting */
+  dataType?: 'string' | 'number' | 'date' | 'boolean';
+  /** OPTIONAL: Custom sort function */
+  sortFn?: (a: any, b: any) => number;
+  /** OPTIONAL: Column group */
+  group?: string;
+  /** OPTIONAL: Additional CSS classes */
+  className?: string;
+}
+
+/**
+ * Sort configuration
+ */
+export interface SortConfig {
+  key: string;
+  direction: 'asc' | 'desc';
+}
+
+/**
+ * Filter configuration
+ */
+export type FilterOperator = 'equals' | 'contains' | 'startsWith' | 'endsWith' | 'gt' | 'lt' | 'gte' | 'lte';
+
+export interface FilterConfig {
+  [key: string]: {
+    type: 'text' | 'select' | 'date' | 'number' | 'boolean';
+    value: any;
+    operator?: FilterOperator;
+  };
+}
+
+/**
+ * Row action definition
+ */
+export interface RowAction<T = any> {
+  /** REQUIRED: Action identifier */
+  id: string;
+  /** REQUIRED: Action label */
+  label: string;
+  /** OPTIONAL: Action icon */
+  icon?: React.ComponentType<{ className?: string }>;
+  /** REQUIRED: Action handler */
+  onClick: (row: T, index: number) => void;
+  /** OPTIONAL: Conditional visibility */
+  visible?: (row: T, index: number) => boolean;
+  /** OPTIONAL: Action variant */
+  variant?: 'default' | 'destructive' | 'secondary';
+  /** OPTIONAL: Confirmation required */
+  confirmation?: {
+    title: string;
+    description: string;
+  };
+}
+
+/**
+ * Motion Animation Types
+ * @llm-usage CSS-based animations with presets and gestures
+ */
+
+/**
+ * Animation transition configuration
+ */
+export interface AnimationTransition {
+  type?: 'spring' | 'tween';
+  duration?: number;
+  delay?: number;
+  ease?: string | number[];
+  damping?: number;
+  stiffness?: number;
+  mass?: number;
+  repeat?: number;
+  repeatType?: 'loop' | 'reverse' | 'mirror';
+}
+
+/**
+ * Animation state configuration
+ */
+export interface AnimationState {
+  opacity?: number;
+  x?: number | string | number[];
+  y?: number | string | number[];
+  scale?: number | number[];
+  rotate?: number | number[];
+  transformOrigin?: string;
+  transition?: AnimationTransition;
+}
+
+/**
+ * Available animation presets
+ */
+export type AnimationPreset = 
+  | 'fadeIn' | 'fadeInUp' | 'fadeInDown' | 'fadeInLeft' | 'fadeInRight' | 'fadeOut'
+  | 'scaleIn' | 'scaleInCenter'
+  | 'slideInUp' | 'slideInDown' | 'slideInLeft' | 'slideInRight'
+  | 'bounce' | 'elastic' | 'rubberBand' | 'pulse' | 'wobble' | 'shake';
+
+/**
+ * Motion component props
+ */
+export interface MotionProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onAnimationStart'> {
+  /** OPTIONAL: HTML element to render */
+  as?: keyof React.JSX.IntrinsicElements;
+  /** OPTIONAL: Animation preset */
+  preset?: AnimationPreset;
+  /** OPTIONAL: Custom initial state */
+  initial?: AnimationState;
+  /** OPTIONAL: Custom animate state */
+  animate?: AnimationState;
+  /** OPTIONAL: Custom exit state */
+  exit?: AnimationState;
+  /** OPTIONAL: Animation duration */
+  duration?: 'fast' | 'normal' | 'slow' | 'slower' | 'slowest' | number;
+  /** OPTIONAL: Animation delay */
+  delay?: number;
+  /** OPTIONAL: Animation easing */
+  easing?: 'easeInOut' | 'easeOut' | 'easeIn' | 'easeOutBack' | 'easeInBack' | 'easeOutBounce' | 'linear';
+  /** OPTIONAL: Trigger animation when in view */
+  triggerInView?: boolean;
+  /** OPTIONAL: Animation repeat count */
+  repeat?: number | 'infinite';
+  /** OPTIONAL: Repeat type */
+  repeatType?: 'loop' | 'reverse' | 'mirror';
+  /** OPTIONAL: Spring physics */
+  spring?: {
+    damping?: number;
+    stiffness?: number;
+    mass?: number;
+  };
+  /** OPTIONAL: Gesture animations */
+  whileHover?: AnimationState;
+  whileTap?: AnimationState;
+  whileFocus?: AnimationState;
+  /** OPTIONAL: Animation callbacks */
+  onAnimationStart?: () => void;
+  onAnimationComplete?: () => void;
+  /** REQUIRED: Children */
+  children: React.ReactNode;
+}
+
+/**
+ * Enhanced Form Types
+ * @llm-usage React Hook Form + Zod validation system
+ */
+
+/**
+ * Enhanced Form props with Zod validation
+ */
+export interface EnhancedFormProps<T extends FieldValues = FieldValues> {
+  /** REQUIRED: Zod schema for validation */
+  schema: ZodSchema<T>;
+  /** OPTIONAL: Default values */
+  defaultValues?: Partial<T>;
+  /** REQUIRED: Form submission handler */
+  onSubmit: (data: T) => void | Promise<void>;
+  /** OPTIONAL: Error handler */
+  onError?: (errors: any) => void;
+  /** OPTIONAL: Loading state */
+  loading?: boolean;
+  /** OPTIONAL: Form mode */
+  mode?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  /** OPTIONAL: Revalidate mode */
+  reValidateMode?: 'onChange' | 'onBlur' | 'onSubmit';
+  /** OPTIONAL: Auto-save functionality */
+  autoSave?: {
+    enabled: boolean;
+    debounceMs?: number;
+    onSave?: (data: Partial<T>) => void;
+  };
+  /** OPTIONAL: Form layout */
+  layout?: 'vertical' | 'horizontal' | 'inline';
+  /** OPTIONAL: Form size */
+  size?: 'sm' | 'md' | 'lg';
+  /** OPTIONAL: Additional CSS classes */
+  className?: string;
+  /** REQUIRED: Form content */
+  children: React.ReactNode;
+}
+
+/**
+ * Form field props
+ */
+export interface FormFieldProps<T extends FieldValues = FieldValues> {
+  /** REQUIRED: Field name */
+  name: FieldPath<T>;
+  /** OPTIONAL: Field label */
+  label?: string;
+  /** OPTIONAL: Field description */
+  description?: string;
+  /** OPTIONAL: Field is required */
+  required?: boolean;
+  /** OPTIONAL: Field variant */
+  variant?: 'default' | 'inline' | 'stacked';
+  /** OPTIONAL: Additional CSS classes */
+  className?: string;
+  /** REQUIRED: Field content */
+  children: React.ReactNode;
+}
+
+/**
+ * Input field props
+ */
+export interface InputFieldProps<T extends FieldValues = FieldValues> {
+  /** REQUIRED: Field name */
+  name: FieldPath<T>;
+  /** OPTIONAL: Input type */
+  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
+  /** OPTIONAL: Placeholder text */
+  placeholder?: string;
+  /** OPTIONAL: Input is disabled */
+  disabled?: boolean;
+  /** OPTIONAL: Input is readonly */
+  readOnly?: boolean;
+  /** OPTIONAL: Show password toggle (for password type) */
+  showPasswordToggle?: boolean;
+  /** OPTIONAL: Input prefix icon */
+  prefixIcon?: React.ComponentType<{ className?: string }>;
+  /** OPTIONAL: Input suffix icon */
+  suffixIcon?: React.ComponentType<{ className?: string }>;
+  /** OPTIONAL: Additional props */
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+}
+
+/**
+ * Select field props
+ */
+export interface SelectFieldProps<T extends FieldValues = FieldValues> {
+  /** REQUIRED: Field name */
+  name: FieldPath<T>;
+  /** OPTIONAL: Placeholder text */
+  placeholder?: string;
+  /** REQUIRED: Select options */
+  options: Array<{ label: string; value: string | number; disabled?: boolean }>;
+  /** OPTIONAL: Select is disabled */
+  disabled?: boolean;
+  /** OPTIONAL: Allow clearing selection */
+  clearable?: boolean;
+}
+
+/**
  * @llm-pattern COMPOUND-ONLY Layout Usage
  * 
  * AdminLayout (dashboard/admin):
@@ -560,7 +843,7 @@ export interface ThemeConfig {
 }
 
 /**
- * Re-export commonly used React types for convenience
+ * Re-export commonly used types for convenience
  */
 export type {
   ComponentType,
@@ -569,4 +852,14 @@ export type {
   HTMLAttributes,
   ForwardRefExoticComponent,
   RefAttributes,
-};
+} from 'react';
+
+export type {
+  FieldValues,
+  FieldPath,
+  UseFormReturn,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from 'react-hook-form';
+
+export type { ZodSchema } from 'zod';
