@@ -127,6 +127,10 @@
       "import": "./dist/menubar.js",
       "types": "./dist/types/components/ui/menubar.d.ts"
     },
+    "./motion": {
+      "import": "./dist/motion.js",
+      "types": "./dist/types/components/ui/motion.d.ts"
+    },
     "./pagination": {
       "import": "./dist/pagination.js",
       "types": "./dist/types/components/ui/pagination.d.ts"
