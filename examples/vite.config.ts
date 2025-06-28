@@ -38,6 +38,7 @@ export default defineConfig({
       '@voilajsx/uikit/switch': resolve(__dirname, '../src/components/ui/switch'),
       '@voilajsx/uikit/utils': resolve(__dirname, '../src/lib/utils'),
       '@voilajsx/uikit/styles': resolve(__dirname, '../src/styles/globals.css'),
+      '@voilajsx/uikit/motion' : resolve(__dirname,'../src/components/ui/motion'),
       
       // Internal aliases for UIKit components to resolve @/* paths
       '@/lib/utils': resolve(__dirname, '../src/lib/utils'),

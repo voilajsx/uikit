@@ -4,7 +4,7 @@ import { u as D, c as w } from "./index-CPxmoWFw.js";
 import { a as j } from "./index-B5MIi2tR.js";
 import { c as B } from "./index-UFb2E87s.js";
 import { P as F } from "./index-D5Ppf2aB.js";
-import { c as b, R as H, P as W, C as X, I as q, L as J, S as Q, A as V, G as Y, f as Z, g as ee, h as oe, d as ne, e as re, b as te, a as ae, i as de } from "./index-Df_Qqddt.js";
+import { c as b, R as H, A as W, P as X, C as q, I as J, L as Q, S as V, G as Y, f as Z, g as ee, h as oe, d as ne, e as re, b as te, a as ae, i as de } from "./index-C_v-uiao.js";
 import { u as h } from "./index-B_PLZIoC.js";
 import { c as l } from "./utils-qaFjX9_3.js";
 import { C as se } from "./chevron-right-pz9eCjj-.js";
@@ -47,7 +47,7 @@ _.displayName = g;
 var N = "DropdownMenuTrigger", R = i.forwardRef(
   (e, o) => {
     const { __scopeDropdownMenu: n, disabled: r = !1, ...a } = e, s = x(N, n), c = p(n);
-    return /* @__PURE__ */ t(V, { asChild: !0, ...c, children: /* @__PURE__ */ t(
+    return /* @__PURE__ */ t(W, { asChild: !0, ...c, children: /* @__PURE__ */ t(
       F.button,
       {
         type: "button",
@@ -73,14 +73,14 @@ var N = "DropdownMenuTrigger", R = i.forwardRef(
 R.displayName = N;
 var le = "DropdownMenuPortal", C = (e) => {
   const { __scopeDropdownMenu: o, ...n } = e, r = p(o);
-  return /* @__PURE__ */ t(W, { ...r, ...n });
+  return /* @__PURE__ */ t(X, { ...r, ...n });
 };
 C.displayName = le;
 var I = "DropdownMenuContent", S = i.forwardRef(
   (e, o) => {
     const { __scopeDropdownMenu: n, ...r } = e, a = x(I, n), s = p(n), c = i.useRef(!1);
     return /* @__PURE__ */ t(
-      X,
+      q,
       {
         id: a.contentId,
         "aria-labelledby": a.triggerId,
@@ -118,14 +118,14 @@ y.displayName = me;
 var fe = "DropdownMenuLabel", P = i.forwardRef(
   (e, o) => {
     const { __scopeDropdownMenu: n, ...r } = e, a = p(n);
-    return /* @__PURE__ */ t(J, { ...a, ...r, ref: o });
+    return /* @__PURE__ */ t(Q, { ...a, ...r, ref: o });
   }
 );
 P.displayName = fe;
 var we = "DropdownMenuItem", A = i.forwardRef(
   (e, o) => {
     const { __scopeDropdownMenu: n, ...r } = e, a = p(n);
-    return /* @__PURE__ */ t(q, { ...a, ...r, ref: o });
+    return /* @__PURE__ */ t(J, { ...a, ...r, ref: o });
   }
 );
 A.displayName = we;
@@ -151,7 +151,7 @@ var he = "DropdownMenuItemIndicator", k = i.forwardRef((e, o) => {
 k.displayName = he;
 var De = "DropdownMenuSeparator", G = i.forwardRef((e, o) => {
   const { __scopeDropdownMenu: n, ...r } = e, a = p(n);
-  return /* @__PURE__ */ t(Q, { ...a, ...r, ref: o });
+  return /* @__PURE__ */ t(V, { ...a, ...r, ref: o });
 });
 G.displayName = De;
 var be = "DropdownMenuArrow", xe = i.forwardRef(

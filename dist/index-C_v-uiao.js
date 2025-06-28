@@ -1,7 +1,7 @@
 import * as r from "react";
 import { c as M } from "./index-CPxmoWFw.js";
-import { c as $e, u as qe } from "./index-DWXPckel.js";
-import { u as N, a as Je, c as Qe } from "./index-B5MIi2tR.js";
+import { u as $e, c as qe } from "./index-DWXPckel.js";
+import { u as N, c as Je, a as Qe } from "./index-B5MIi2tR.js";
 import { c as et } from "./index-UFb2E87s.js";
 import { P as tt, D as nt } from "./index-DQ8UKqpy.js";
 import { h as ot, u as rt, R as ct, F as at } from "./Combination-CecJSrLC.js";
@@ -18,12 +18,12 @@ var Q = ["Enter", " "], mt = ["ArrowDown", "PageUp", "Home"], _e = ["ArrowUp", "
 }, Mt = {
   ltr: ["ArrowLeft"],
   rtl: ["ArrowRight"]
-}, L = "Menu", [D, vt, Ct] = $e(L), [w, Qt] = et(L, [
+}, L = "Menu", [D, vt, Ct] = qe(L), [w, Qt] = et(L, [
   Ct,
   ve,
   ge
 ]), K = ve(), Re = ge(), [Pe, E] = w(L), [gt, G] = w(L), Se = (e) => {
-  const { __scopeMenu: n, open: t = !1, children: o, dir: s, onOpenChange: a, modal: l = !0 } = e, p = K(n), [h, m] = r.useState(null), f = r.useRef(!1), c = ee(a), d = qe(s);
+  const { __scopeMenu: n, open: t = !1, children: o, dir: s, onOpenChange: a, modal: l = !0 } = e, p = K(n), [h, m] = r.useState(null), f = r.useRef(!1), c = ee(a), d = $e(s);
   return r.useEffect(() => {
     const C = () => {
       f.current = !0, document.addEventListener("pointerdown", v, { capture: !0, once: !0 }), document.addEventListener("pointermove", v, { capture: !0, once: !0 });
@@ -109,7 +109,7 @@ var _ = "MenuContent", [Pt, oe] = w(_), we = r.forwardRef(
       onDismiss: () => t.onOpenChange(!1)
     }
   );
-}), It = Qe("MenuContent.ScrollLock"), re = r.forwardRef(
+}), It = Je("MenuContent.ScrollLock"), re = r.forwardRef(
   (e, n) => {
     const {
       __scopeMenu: t,
@@ -477,7 +477,7 @@ var O = "MenuSubTrigger", Ue = r.forwardRef(
         "aria-controls": s.contentId,
         "data-state": Ye(t.open),
         ...e,
-        ref: Je(n, s.onTriggerChange),
+        ref: Qe(n, s.onTriggerChange),
         onClick: (c) => {
           var d;
           (d = e.onClick) == null || d.call(e, c), !(e.disabled || c.defaultPrevented) && (c.currentTarget.focus(), t.open || t.onOpenChange(!0));
@@ -628,4 +628,4 @@ export {
   hn as h,
   mn as i
 };
-//# sourceMappingURL=index-Df_Qqddt.js.map
+//# sourceMappingURL=index-C_v-uiao.js.map
