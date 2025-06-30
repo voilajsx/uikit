@@ -470,7 +470,7 @@ function PageDemo() {
           onNavigate={handleNavigate}
         />
         
-        <PageLayout.Content 
+        <PageLayout.Content  
           navigation={currentScheme === 'sidebar' ? sidebarNavigation : undefined}
           sidebarContent={currentScheme === 'sidebar' ? customSidebarContent : undefined}
           currentPath={currentPath}

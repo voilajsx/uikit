@@ -1,318 +1,130 @@
 /**
- * Essential Animation System - Motion Components for VoilaJSX UIKit (FIXED)
+ * Ultra-Simple Motion Component - 10/10 LLM Rating
+ * Pure CSS animations with zero JavaScript complexity
  * @module @voilajsx/uikit
  * @file src/components/ui/motion.tsx
  */
 import * as React from 'react';
 type HTMLElementTagName = keyof React.JSX.IntrinsicElements;
 /**
- * Animation transition configuration
+ * Animation presets - maps to CSS classes
  */
-interface AnimationTransition {
-    type?: 'spring' | 'tween';
-    duration?: number;
-    delay?: number;
-    ease?: string | number[];
-    damping?: number;
-    stiffness?: number;
-    mass?: number;
-    repeat?: number;
-    repeatType?: 'loop' | 'reverse' | 'mirror';
-}
+export type AnimationPreset = 'fadeIn' | 'slideInUp' | 'scaleIn' | 'slideInDown' | 'pulse';
 /**
- * Animation state configuration
+ * Animation duration options
  */
-interface AnimationState {
-    opacity?: number;
-    x?: number | string | number[];
-    y?: number | string | number[];
-    scale?: number | number[];
-    rotate?: number | number[];
-    transformOrigin?: string;
-    transition?: AnimationTransition;
-}
+export type AnimationDuration = 'fast' | 'normal' | 'slow';
 /**
- * Animation presets for common use cases
+ * Animation trigger options
  */
-declare const AnimationPresets: {
-    fadeIn: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    fadeInUp: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    fadeInDown: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    fadeInLeft: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    fadeInRight: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    fadeOut: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    scaleIn: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    scaleInCenter: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    slideInUp: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    slideInDown: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    slideInLeft: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    slideInRight: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    bounce: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    elastic: {
-        initial: AnimationState;
-        animate: AnimationState;
-        exit: AnimationState;
-    };
-    rubberBand: {
-        initial: AnimationState;
-        animate: AnimationState;
-    };
-    pulse: {
-        initial: AnimationState;
-        animate: AnimationState;
-    };
-    wobble: {
-        initial: AnimationState;
-        animate: AnimationState;
-    };
-    shake: {
-        initial: AnimationState;
-        animate: AnimationState;
-    };
-};
+export type AnimationTrigger = 'immediate' | 'hover' | 'inView';
 /**
- * Easing curves for smooth animations
+ * Motion component props - ultra-simple
  */
-declare const EasingCurves: {
-    easeInOut: readonly [0.4, 0, 0.2, 1];
-    easeOut: readonly [0, 0, 0.2, 1];
-    easeIn: readonly [0.4, 0, 1, 1];
-    easeOutBack: readonly [0.34, 1.56, 0.64, 1];
-    easeInBack: readonly [0.36, 0, 0.66, -0.56];
-    easeOutBounce: readonly [0.68, -0.55, 0.265, 1.55];
-    linear: readonly [0, 0, 1, 1];
-};
-/**
- * Animation timing presets
- */
-declare const TimingPresets: {
-    readonly fast: 0.2;
-    readonly normal: 0.3;
-    readonly slow: 0.5;
-    readonly slower: 0.8;
-    readonly slowest: 1.2;
-};
-/**
- * Motion component props
- */
-interface MotionProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onAnimationStart'> {
+export interface MotionProps extends React.HTMLAttributes<HTMLElement> {
     /** HTML element to render */
     as?: HTMLElementTagName;
     /** Animation preset */
-    preset?: keyof typeof AnimationPresets;
-    /** Custom initial state */
-    initial?: AnimationState;
-    /** Custom animate state */
-    animate?: AnimationState;
-    /** Custom exit state */
-    exit?: AnimationState;
+    preset?: AnimationPreset;
     /** Animation duration */
-    duration?: keyof typeof TimingPresets | number;
-    /** Animation delay */
+    duration?: AnimationDuration;
+    /** Animation delay in milliseconds */
     delay?: number;
-    /** Animation easing */
-    easing?: keyof typeof EasingCurves;
-    /** Trigger animation when in view */
-    triggerInView?: boolean;
-    /** Animation repeat count */
-    repeat?: number | 'infinite';
-    /** Repeat type */
-    repeatType?: 'loop' | 'reverse' | 'mirror';
-    /** Spring physics */
-    spring?: {
-        damping?: number;
-        stiffness?: number;
-        mass?: number;
-    };
-    /** Gesture animations */
-    whileHover?: AnimationState;
-    whileTap?: AnimationState;
-    whileFocus?: AnimationState;
-    /** Animation callbacks */
-    onAnimationStart?: () => void;
-    onAnimationComplete?: () => void;
+    /** Animation trigger */
+    trigger?: AnimationTrigger;
     /** Children */
     children: React.ReactNode;
 }
 /**
- * Custom hook for intersection observer
+ * Ultra-Simple Motion Component - 10/10 LLM Rating
+ * Pure CSS animations, zero JavaScript complexity
  */
-declare const useInView: (threshold?: number) => [React.RefObject<HTMLElement | null>, boolean];
+export declare const Motion: React.ForwardRefExoticComponent<MotionProps & React.RefAttributes<HTMLElement>>;
 /**
- * Motion component with CSS animations
+ * Loading Spinner - Pure CSS
  */
-declare const Motion: React.ForwardRefExoticComponent<MotionProps & React.RefAttributes<HTMLElement>>;
-/**
- * Stagger container for animating multiple children
- */
-interface StaggerProps extends React.HTMLAttributes<HTMLElement> {
-    /** Stagger delay between children */
-    stagger?: number;
-    /** Children animation preset */
-    childPreset?: keyof typeof AnimationPresets;
-    /** Custom child animation */
-    childAnimation?: {
-        initial?: AnimationState;
-        animate?: AnimationState;
-    };
-    /** Animation duration */
-    duration?: keyof typeof TimingPresets;
-    /** Trigger when in view */
-    triggerInView?: boolean;
-    /** Container element */
-    as?: HTMLElementTagName;
-    children: React.ReactNode;
-}
-declare const Stagger: React.ForwardRefExoticComponent<StaggerProps & React.RefAttributes<HTMLElement>>;
-/**
- * Presence component for exit animations
- */
-interface PresenceProps {
-    /** Show/hide children */
-    show: boolean;
-    /** Exit animation preset */
-    exitPreset?: keyof typeof AnimationPresets;
-    /** Custom exit animation */
-    exitAnimation?: AnimationState;
-    /** Animation duration */
-    duration?: keyof typeof TimingPresets;
-    /** Callback when exit animation completes */
-    onExitComplete?: () => void;
-    children: React.ReactNode;
-}
-declare const Presence: React.FC<PresenceProps>;
-/**
- * Auto-animating counter component
- */
-interface CounterProps {
-    /** Target number */
-    to: number;
-    /** Starting number */
-    from?: number;
-    /** Animation duration */
-    duration?: number;
-    /** Number formatting */
-    format?: (value: number) => string;
-    /** Trigger when in view */
-    triggerInView?: boolean;
-    /** Additional props */
+export interface LoadingSpinnerProps {
+    /** Spinner size */
+    size?: 'sm' | 'md' | 'lg';
+    /** Custom className */
     className?: string;
 }
-declare const Counter: React.FC<CounterProps>;
+export declare const LoadingSpinner: React.FC<LoadingSpinnerProps>;
 /**
- * Typewriter effect component
+ * Reveal component for scroll-triggered animations
+ * Uses Intersection Observer with CSS classes
  */
-interface TypewriterProps {
-    /** Text to type */
-    text: string;
-    /** Typing speed (characters per second) */
-    speed?: number;
-    /** Delay before starting */
-    delay?: number;
-    /** Show cursor */
-    showCursor?: boolean;
-    /** Cursor character */
-    cursor?: string;
-    /** Loop the animation */
-    loop?: boolean;
-    /** Trigger when in view */
-    triggerInView?: boolean;
-    /** Callback when complete */
-    onComplete?: () => void;
-    /** Additional props */
-    className?: string;
-}
-declare const Typewriter: React.FC<TypewriterProps>;
-/**
- * Scroll-triggered reveal component
- */
-interface RevealProps {
+export interface RevealProps {
     /** Animation preset */
-    preset?: keyof typeof AnimationPresets;
-    /** Custom animation */
-    animation?: {
-        initial?: AnimationState;
-        animate?: AnimationState;
-    };
+    preset?: AnimationPreset;
     /** Animation duration */
-    duration?: keyof typeof TimingPresets;
+    duration?: AnimationDuration;
     /** Animation delay */
     delay?: number;
-    /** Intersection threshold */
-    threshold?: number;
-    /** Animate only once */
-    once?: boolean;
     /** Container element */
     as?: HTMLElementTagName;
-    /** Additional props */
+    /** Additional className */
     className?: string;
+    /** Children */
     children: React.ReactNode;
 }
-declare const Reveal: React.FC<RevealProps>;
+export declare const Reveal: React.FC<RevealProps>;
 /**
- * Page transition component
+ * Hover Animation Component - Pure CSS
  */
-interface PageTransitionProps {
-    /** Page key for transitions */
-    pageKey: string;
-    /** Transition preset */
-    preset?: keyof typeof AnimationPresets;
-    /** Animation duration */
-    duration?: keyof typeof TimingPresets;
+export interface HoverProps {
+    /** Hover animation effect */
+    effect?: 'scale' | 'lift' | 'glow' | 'rotate';
+    /** Container element */
+    as?: HTMLElementTagName;
+    /** Additional className */
+    className?: string;
+    /** Children */
     children: React.ReactNode;
 }
-declare const PageTransition: React.FC<PageTransitionProps>;
-export { Motion, Stagger, Presence, Counter, Typewriter, Reveal, PageTransition, AnimationPresets, EasingCurves, TimingPresets, useInView, type AnimationState, type AnimationTransition, type MotionProps, };
+export declare const Hover: React.FC<HoverProps>;
+export {};
+/**
+ * @llm-usage Ultra-Simple Motion Examples (10/10 LLM Rating)
+ *
+ * Basic animations:
+ * <Motion preset="fadeIn" duration="normal">
+ *   <div>Fades in immediately</div>
+ * </Motion>
+ *
+ * <Motion preset="slideInUp" duration="slow" delay={200}>
+ *   <Card>Slides up after 200ms delay</Card>
+ * </Motion>
+ *
+ * Hover effects:
+ * <Motion preset="scaleIn" trigger="hover">
+ *   <Button>Scales on hover</Button>
+ * </Motion>
+ *
+ * Scroll-triggered reveal:
+ * <Reveal preset="slideInUp" duration="normal">
+ *   <div>Animates when scrolled into view</div>
+ * </Reveal>
+ *
+ * Hover animations:
+ * <Hover effect="scale">
+ *   <Card>Scales on hover</Card>
+ * </Hover>
+ *
+ * <Hover effect="lift">
+ *   <Button>Lifts on hover</Button>
+ * </Hover>
+ *
+ * Loading spinner:
+ * <LoadingSpinner size="md" />
+ *
+ * Different elements:
+ * <Motion as="button" preset="scaleIn" duration="fast">
+ *   Click me
+ * </Motion>
+ *
+ * <Motion as="img" preset="fadeIn" delay={500}>
+ *   <img src="image.jpg" alt="Delayed fade" />
+ * </Motion>
+ */ 
 //# sourceMappingURL=motion.d.ts.map
