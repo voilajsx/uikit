@@ -42,8 +42,8 @@ const pageVariants = cva(
     variants: {
       tone: {
         clean: 'bg-background text-foreground',
-        subtle: 'bg-white text-foreground',
-        brand: 'bg-white text-foreground',
+        subtle: 'bg-background text-foreground',
+        brand: 'bg-background text-foreground',
         contrast: 'bg-zinc-900 text-zinc-100'
       }
     },
