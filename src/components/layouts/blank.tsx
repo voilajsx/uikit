@@ -1,5 +1,5 @@
 /**
- * Blank Layout with simplified scheme system - simple and card only
+ * Blank Layout with simplified scheme system - simple, card, and empty
  * @module @voilajsx/uikit
  * @file src/components/layouts/blank.tsx
  */
@@ -11,15 +11,16 @@ import { cn } from '@/lib/utils';
 import type { Size, BlankLayoutScheme, Tone } from '@/types';
 
 /**
- * Blank layout scheme variants - simplified to 2 meaningful schemes
+ * Blank layout scheme variants - with empty scheme for no layout
  */
 const blankVariants = cva(
-  'min-h-screen flex items-center justify-center p-4',
+  '',
   {
     variants: {
       scheme: {
-        simple: 'flex-col',     // Simple centered layout
-        card: 'flex-col'        // Card-based layout
+        simple: 'min-h-screen flex items-center justify-center p-4 flex-col',     // Simple centered layout
+        card: 'min-h-screen flex items-center justify-center p-4 flex-col',       // Card-based layout
+        empty: ''  // No layout styling at all - complete freedom
       },
       tone: {
         clean: 'bg-background',
@@ -31,7 +32,13 @@ const blankVariants = cva(
     defaultVariants: {
       scheme: 'simple',
       tone: 'clean'
-    }
+    },
+    compoundVariants: [
+      {
+        scheme: 'empty',
+        class: '' // Override any tone styles for empty scheme
+      }
+    ]
   }
 );
 
@@ -39,12 +46,13 @@ const blankVariants = cva(
  * Content container variants based on scheme and size
  */
 const contentVariants = cva(
-  'w-full space-y-6 text-center',
+  '',
   {
     variants: {
       scheme: {
-        simple: '',                    // No container styling
-        card: 'bg-card border border-border rounded-lg shadow-lg p-8'  // Card styling
+        simple: 'w-full space-y-6 text-center',                    // No container styling
+        card: 'w-full space-y-6 text-center bg-card border border-border rounded-lg shadow-lg p-8',  // Card styling
+        empty: ''  // No content container styling
       },
       size: {
         sm: 'max-w-md',
@@ -57,7 +65,13 @@ const contentVariants = cva(
     defaultVariants: {
       scheme: 'simple',
       size: 'lg'
-    }
+    },
+    compoundVariants: [
+      {
+        scheme: 'empty',
+        class: '' // Override any size styles for empty scheme
+      }
+    ]
   }
 );
 
@@ -141,8 +155,8 @@ const footerVariants = cva(
  * Blank Layout props - minimal but essential
  */
 export interface BlankLayoutProps {
-  /** RECOMMENDED: Layout scheme - simple or card */
-  scheme?: BlankLayoutScheme;
+  /** RECOMMENDED: Layout scheme - simple, card, or empty */
+  scheme?: 'simple' | 'card' | 'empty';
   /** RECOMMENDED: Visual styling tone */
   tone?: Tone;
   /** OPTIONAL: Content container size */
@@ -164,6 +178,16 @@ const BlankLayoutComponent = forwardRef<HTMLDivElement, BlankLayoutProps>(({
   children,
 }, ref) => {
 
+  // For empty scheme, return children with minimal wrapper
+  if (scheme === 'empty') {
+    return (
+      <div ref={ref} className={cn(className)}>
+        {children}
+      </div>
+    );
+  }
+
+  // For simple and card schemes, use the layout system
   return (
     <div ref={ref} className={cn(blankVariants({ scheme, tone }), className)}>
       <div className={cn(contentVariants({ scheme, size }))}>
@@ -198,6 +222,14 @@ export { BlankLayout };
  *   <h1 className="text-3xl font-bold mb-2">Under Maintenance</h1>
  *   <p className="text-muted-foreground mb-6">We'll be back soon!</p>
  *   <Button>Notify Me</Button>
+ * </BlankLayout>
+ * 
+ * Empty scheme for complete custom control:
+ * <BlankLayout scheme="empty">
+ *   <div className="min-h-screen flex">
+ *     <div className="w-1/2 bg-blue-600">Custom left side</div>
+ *     <div className="w-1/2 bg-white">Custom right side</div>
+ *   </div>
  * </BlankLayout>
  * 
  * About page:
