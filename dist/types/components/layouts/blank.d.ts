@@ -1,16 +1,16 @@
 /**
- * Blank Layout with simplified scheme system - simple and card only
+ * Blank Layout with simplified scheme system - simple, card, and empty
  * @module @voilajsx/uikit
  * @file src/components/layouts/blank.tsx
  */
 import * as React from 'react';
-import type { Size, BlankLayoutScheme, Tone } from '@/types';
+import type { Size, Tone } from '@/types';
 /**
  * Blank Layout props - minimal but essential
  */
 export interface BlankLayoutProps {
-    /** RECOMMENDED: Layout scheme - simple or card */
-    scheme?: BlankLayoutScheme;
+    /** RECOMMENDED: Layout scheme - simple, card, or empty */
+    scheme?: 'simple' | 'card' | 'empty';
     /** RECOMMENDED: Visual styling tone */
     tone?: Tone;
     /** OPTIONAL: Content container size */
@@ -41,6 +41,14 @@ export { BlankLayout };
  *   <h1 className="text-3xl font-bold mb-2">Under Maintenance</h1>
  *   <p className="text-muted-foreground mb-6">We'll be back soon!</p>
  *   <Button>Notify Me</Button>
+ * </BlankLayout>
+ *
+ * Empty scheme for complete custom control:
+ * <BlankLayout scheme="empty">
+ *   <div className="min-h-screen flex">
+ *     <div className="w-1/2 bg-blue-600">Custom left side</div>
+ *     <div className="w-1/2 bg-white">Custom right side</div>
+ *   </div>
  * </BlankLayout>
  *
  * About page:
