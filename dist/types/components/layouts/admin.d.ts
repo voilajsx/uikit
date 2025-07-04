@@ -1,5 +1,5 @@
 /**
- * Admin Layout - FIXED with proper mobile z-index layering
+ * Admin Layout - FIXED with FOUC prevention (no sidebar flash on reload)
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */
@@ -31,7 +31,7 @@ export interface AdminLayoutProps {
     children: React.ReactNode;
 }
 /**
- * AdminLayout.Sidebar - Navigation sidebar with FIXED z-index layering
+ * AdminLayout.Sidebar - Navigation sidebar with FOUC prevention
  */
 export interface AdminSidebarProps {
     /** OPTIONAL: Sidebar tone (inherits from AdminLayout if not set) */
@@ -99,6 +99,7 @@ declare const useAdmin: () => {
     sidebarExpanded: boolean;
     setSidebarExpanded: (expanded: boolean) => void;
     isMobile: boolean;
+    isHydrated: boolean;
 };
 /**
  * AdminLayout - COMPOUND-ONLY Component
