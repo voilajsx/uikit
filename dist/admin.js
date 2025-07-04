@@ -81,7 +81,7 @@ const X = Y({
       className: i(ce({ tone: y }), v),
       children: [
         /* @__PURE__ */ e("div", { className: i(
-          "flex-shrink-0 transition-all duration-500 ease-out overflow-hidden",
+          "flex-shrink-0 transition-all duration-200 ease-out overflow-hidden",
           // Desktop: smooth width transition
           !s && m && (x === "sm" ? "w-48" : x === "md" ? "w-56" : x === "lg" ? "w-64" : x === "xl" ? "w-72" : "w-80"),
           !s && !m && "w-0",
@@ -90,7 +90,7 @@ const X = Y({
           h === "sticky" && s && "top-0 max-h-screen",
           h === "sticky" && !s && "sticky top-0 max-h-screen"
         ), children: N }),
-        /* @__PURE__ */ c("div", { className: "flex-1 flex flex-col min-w-0 transition-all duration-500 ease-out", children: [
+        /* @__PURE__ */ c("div", { className: "flex-1 flex flex-col min-w-0 transition-all duration-200 ease-out", children: [
           g,
           T
         ] })
@@ -217,7 +217,7 @@ const D = B(({
         className: i(
           "border-r flex flex-col bg-background overflow-hidden",
           // Smooth transitions with better easing
-          "transition-all duration-500 ease-out",
+          "transition-all duration-200 ease-out",
           // ✅ FIXED: Proper z-index layering for mobile
           // Mobile: Higher z-index than header (z-[70] > z-[50])
           g ? "fixed left-0 top-0 z-[70] h-full" : "relative h-screen",
@@ -332,7 +332,7 @@ const H = B(({
       ref: M,
       className: i(
         "w-full shadow-sm bg-background/95 backdrop-blur-md text-foreground flex-shrink-0 border-b border-border/50",
-        "transition-all duration-500 ease-out",
+        "transition-all duration-200 ease-out",
         // ✅ FIXED: Sticky on desktop, lower z-index for mobile sidebar layering
         h === "sticky" && "sticky top-0",
         h === "fixed" && "fixed top-0 left-0 right-0",

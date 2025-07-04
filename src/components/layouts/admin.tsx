@@ -180,7 +180,7 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
         className={cn(adminVariants({ tone }), className)}
       >
         <div className={cn(
-          'flex-shrink-0 transition-all duration-500 ease-out overflow-hidden',
+          'flex-shrink-0 transition-all duration-200 ease-out overflow-hidden',
           // Desktop: smooth width transition
           !isMobile && sidebarExpanded && (
             size === 'sm' ? 'w-48' :
@@ -199,7 +199,7 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
         </div>
         
         {/* Main Area (Header + Content) - smooth expansion with coordinated timing */}
-        <div className="flex-1 flex flex-col min-w-0 transition-all duration-500 ease-out">
+        <div className="flex-1 flex flex-col min-w-0 transition-all duration-200 ease-out">
           {header}
           {content}
         </div>
@@ -450,7 +450,7 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
         className={cn(
           'border-r flex flex-col bg-background overflow-hidden',
           // Smooth transitions with better easing
-          'transition-all duration-500 ease-out',
+          'transition-all duration-200 ease-out',
           // ✅ FIXED: Proper z-index layering for mobile
           // Mobile: Higher z-index than header (z-[70] > z-[50])
           isMobile ? 'fixed left-0 top-0 z-[70] h-full' : 'relative h-screen',
@@ -614,7 +614,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
       ref={ref}
       className={cn(
         'w-full shadow-sm bg-background/95 backdrop-blur-md text-foreground flex-shrink-0 border-b border-border/50',
-        'transition-all duration-500 ease-out',
+        'transition-all duration-200 ease-out',
         // ✅ FIXED: Sticky on desktop, lower z-index for mobile sidebar layering
         position === 'sticky' && 'sticky top-0',
         position === 'fixed' && 'fixed top-0 left-0 right-0',
