@@ -1,5 +1,5 @@
 /**
- * Admin Layout - FIXED with proper mobile detection and no flash
+ * Admin Layout - FIXED with proper mobile z-index layering
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */
@@ -31,7 +31,7 @@ export interface AdminLayoutProps {
     children: React.ReactNode;
 }
 /**
- * AdminLayout.Sidebar - Navigation sidebar with FIXED layout
+ * AdminLayout.Sidebar - Navigation sidebar with FIXED z-index layering
  */
 export interface AdminSidebarProps {
     /** OPTIONAL: Sidebar tone (inherits from AdminLayout if not set) */
@@ -53,7 +53,7 @@ export interface AdminSidebarProps {
 }
 declare const AdminSidebar: React.ForwardRefExoticComponent<AdminSidebarProps & React.RefAttributes<HTMLElement>>;
 /**
- * AdminLayout.Header - Top header with breadcrumbs and actions
+ * AdminLayout.Header - Top header with proper z-index for mobile
  */
 export interface AdminHeaderProps {
     /** OPTIONAL: Header tone (inherits from AdminLayout if not set) */

@@ -1,5 +1,5 @@
 /**
- * Admin Layout - FIXED with proper mobile detection and no flash
+ * Admin Layout - FIXED with proper mobile z-index layering
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */
@@ -99,7 +99,7 @@ export interface AdminLayoutProps {
 }
 
 /**
- * AdminLayout Root Component - FIXED with no mobile flash
+ * AdminLayout Root Component - FIXED with proper mobile z-index
  */
 const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
   scheme = 'sidebar',
@@ -179,7 +179,6 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
         ref={ref}
         className={cn(adminVariants({ tone }), className)}
       >
-        {/* Sidebar Container - with smooth width transition */}
         <div className={cn(
           'flex-shrink-0 transition-all duration-500 ease-out overflow-hidden',
           // Desktop: smooth width transition
@@ -193,7 +192,8 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
           !isMobile && !sidebarExpanded && 'w-0',
           // Mobile: don't affect layout
           isMobile && 'w-0',
-          position === 'sticky' && 'sticky top-0 max-h-screen'
+          position === 'sticky' && isMobile && 'top-0 max-h-screen',
+          position === 'sticky' && !isMobile && 'sticky top-0 max-h-screen'
         )}>
           {sidebar}
         </div>
@@ -211,7 +211,7 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
 AdminLayoutRoot.displayName = 'AdminLayout';
 
 /**
- * AdminLayout.Sidebar - Navigation sidebar with FIXED layout
+ * AdminLayout.Sidebar - Navigation sidebar with FIXED z-index layering
  */
 export interface AdminSidebarProps {
   /** OPTIONAL: Sidebar tone (inherits from AdminLayout if not set) */
@@ -269,7 +269,7 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
   };
 
   // Get menu item styles
-      const getMenuItemStyles = (isActive: boolean, isSubmenu = false) => {
+  const getMenuItemStyles = (isActive: boolean, isSubmenu = false) => {
     const baseStyles = isSubmenu 
       ? 'w-[92%] flex items-center group text-left font-medium rounded-lg cursor-pointer transition-all duration-300 ease-out transform hover:scale-[1.02]'
       : 'w-full flex items-center group text-left font-medium rounded-lg cursor-pointer transition-all duration-300 ease-out transform hover:scale-[1.02]';
@@ -435,24 +435,25 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
 
   return (
     <>
-      {/* Mobile Overlay - only show when sidebar is expanded on mobile */}
+      {/* ✅ FIXED: Mobile Overlay with higher z-index */}
       {isMobile && sidebarExpanded && (
         <div 
-          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm lg:hidden"
           onClick={() => setSidebarExpanded(false)}
           aria-hidden="true"
         />
       )}
   
-      {/* Sidebar */}
+      {/* ✅ FIXED: Sidebar with proper z-index hierarchy */}
       <aside 
         ref={ref}
         className={cn(
           'border-r flex flex-col bg-background overflow-hidden',
           // Smooth transitions with better easing
           'transition-all duration-500 ease-out',
-          // Positioning: fixed on mobile, relative on desktop
-          isMobile ? 'fixed left-0 top-0 z-50 h-full' : 'relative h-screen',
+          // ✅ FIXED: Proper z-index layering for mobile
+          // Mobile: Higher z-index than header (z-[70] > z-[50])
+          isMobile ? 'fixed left-0 top-0 z-[70] h-full' : 'relative h-screen',
           // Mobile: slide animation
           isMobile && (sidebarExpanded ? 'translate-x-0' : '-translate-x-full'),
           // Desktop: always visible but container controls width
@@ -578,7 +579,7 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
 AdminSidebar.displayName = 'AdminSidebar';
 
 /**
- * AdminLayout.Header - Top header with breadcrumbs and actions
+ * AdminLayout.Header - Top header with proper z-index for mobile
  */
 export interface AdminHeaderProps {
   /** OPTIONAL: Header tone (inherits from AdminLayout if not set) */
@@ -612,10 +613,13 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
     <header 
       ref={ref}
       className={cn(
-        'w-full shadow-sm bg-background/95 backdrop-blur-md text-foreground flex-shrink-0 z-30 border-b border-border/50',
+        'w-full shadow-sm bg-background/95 backdrop-blur-md text-foreground flex-shrink-0 border-b border-border/50',
         'transition-all duration-500 ease-out',
+        // ✅ FIXED: Sticky on desktop, lower z-index for mobile sidebar layering
         position === 'sticky' && 'sticky top-0',
         position === 'fixed' && 'fixed top-0 left-0 right-0',
+        // Always use lower z-index so mobile sidebar appears above
+        'z-[10]',
         position === 'relative' && 'relative',
         className
       )}

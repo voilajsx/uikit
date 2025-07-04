@@ -234,7 +234,7 @@ function AdminDemo() {
       </div>
 
       {/* COMPOUND-ONLY AdminLayout Demo */}
-      <AdminLayout scheme={currentScheme} tone={currentTone} size={currentSize}>
+      <AdminLayout scheme={currentScheme} tone={currentTone} size={currentSize} position='sticky'>
         <AdminLayout.Sidebar 
           navigation={navigation}
           logo={logo}

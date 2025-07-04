@@ -2,7 +2,7 @@ import { jsx as e, jsxs as c, Fragment as j } from "react/jsx-runtime";
 import * as L from "react";
 import { createContext as Y, forwardRef as B, useState as V, useLayoutEffect as Z, useEffect as O, useContext as K } from "react";
 import { c as ee } from "./index-DACAHwoB.js";
-import { c as s } from "./utils-qaFjX9_3.js";
+import { c as i } from "./utils-qaFjX9_3.js";
 import { Button as W } from "./button.js";
 import { Badge as re } from "./badge.js";
 import { Separator as te } from "./separator.js";
@@ -42,24 +42,24 @@ const X = Y({
 ), q = B(({
   scheme: b = "sidebar",
   tone: y = "subtle",
-  size: p = "lg",
-  position: x = "relative",
-  defaultSidebarOpen: h = !0,
+  size: x = "lg",
+  position: h = "relative",
+  defaultSidebarOpen: p = !0,
   className: v,
   children: k
 }, M) => {
-  const [i, n] = V($), [m, t] = V(
-    () => le(h)
+  const [s, n] = V($), [m, t] = V(
+    () => le(p)
   );
   Z(() => {
     const d = () => {
-      const a = window.innerWidth < 1024, C = i;
-      n(a), a && !C && m ? t(!1) : !a && C && t(h);
+      const a = window.innerWidth < 1024, C = s;
+      n(a), a && !C && m ? t(!1) : !a && C && t(p);
     };
     return d(), window.addEventListener("resize", d), () => window.removeEventListener("resize", d);
-  }, [i, m, h]), O(() => (i && m ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
+  }, [s, m, p]), O(() => (s && m ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
     document.body.style.overflow = "unset";
-  }), [i, m]);
+  }), [s, m]);
   const w = L.Children.toArray(k), N = w.find(
     (d) => L.isValidElement(d) && d.type === D
   ), g = w.find(
@@ -70,24 +70,25 @@ const X = Y({
   return /* @__PURE__ */ e(X.Provider, { value: {
     scheme: b,
     tone: y,
-    size: p,
+    size: x,
     sidebarExpanded: m,
     setSidebarExpanded: t,
-    isMobile: i
+    isMobile: s
   }, children: /* @__PURE__ */ c(
     "div",
     {
       ref: M,
-      className: s(ce({ tone: y }), v),
+      className: i(ce({ tone: y }), v),
       children: [
-        /* @__PURE__ */ e("div", { className: s(
+        /* @__PURE__ */ e("div", { className: i(
           "flex-shrink-0 transition-all duration-500 ease-out overflow-hidden",
           // Desktop: smooth width transition
-          !i && m && (p === "sm" ? "w-48" : p === "md" ? "w-56" : p === "lg" ? "w-64" : p === "xl" ? "w-72" : "w-80"),
-          !i && !m && "w-0",
+          !s && m && (x === "sm" ? "w-48" : x === "md" ? "w-56" : x === "lg" ? "w-64" : x === "xl" ? "w-72" : "w-80"),
+          !s && !m && "w-0",
           // Mobile: don't affect layout
-          i && "w-0",
-          x === "sticky" && "sticky top-0 max-h-screen"
+          s && "w-0",
+          h === "sticky" && s && "top-0 max-h-screen",
+          h === "sticky" && !s && "sticky top-0 max-h-screen"
         ), children: N }),
         /* @__PURE__ */ c("div", { className: "flex-1 flex flex-col min-w-0 transition-all duration-500 ease-out", children: [
           g,
@@ -101,13 +102,13 @@ q.displayName = "AdminLayout";
 const D = B(({
   tone: b,
   navigation: y = [],
-  currentPath: p = "",
-  onNavigate: x,
-  logo: h,
+  currentPath: x = "",
+  onNavigate: h,
+  logo: p,
   position: v,
   footer: k,
   className: M
-}, i) => {
+}, s) => {
   const { scheme: n, tone: m, size: t, sidebarExpanded: w, setSidebarExpanded: N, isMobile: g } = F(), [T, d] = V(/* @__PURE__ */ new Set()), [a, C] = V(!1), o = b || m, E = n === "compact", f = !E || a, G = () => {
     E && C(!a);
   }, J = (r) => {
@@ -132,9 +133,9 @@ const D = B(({
       default:
         u = r ? "bg-muted/10 text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-muted/50";
     }
-    return s(z, S, u);
+    return i(z, S, u);
   }, R = ({ item: r, isSubmenu: l = !1 }) => {
-    const z = !l && r.items && r.items.length > 0, S = T.has(r.key), u = r.href ? p === r.href : !!r.isActive, P = /* @__PURE__ */ c(
+    const z = !l && r.items && r.items.length > 0, S = T.has(r.key), u = r.href ? x === r.href : !!r.isActive, P = /* @__PURE__ */ c(
       "button",
       {
         onClick: () => {
@@ -142,11 +143,11 @@ const D = B(({
             C(!0);
             return;
           }
-          z ? J(r.key) : r.href && x ? (x(r.href, r), g && N(!1)) : r.onClick && (r.onClick(), g && N(!1));
+          z ? J(r.key) : r.href && h ? (h(r.href, r), g && N(!1)) : r.onClick && (r.onClick(), g && N(!1));
         },
         className: Q(u, l),
         children: [
-          !l && r.icon && /* @__PURE__ */ e(r.icon, { className: s(
+          !l && r.icon && /* @__PURE__ */ e(r.icon, { className: i(
             "flex-shrink-0",
             f ? "h-4 w-4 mr-3" : "h-5 w-5"
           ) }),
@@ -156,7 +157,7 @@ const D = B(({
               re,
               {
                 variant: u ? "secondary" : "outline",
-                className: s(
+                className: i(
                   "text-xs h-4 px-1 ml-1 flex-shrink-0",
                   o === "brand" && !u && "bg-primary-foreground/10 text-primary-foreground border-primary-foreground/20",
                   o === "brand" && u && "bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30",
@@ -166,7 +167,7 @@ const D = B(({
                 children: r.badge
               }
             ),
-            z && /* @__PURE__ */ e(de, { className: s(
+            z && /* @__PURE__ */ e(de, { className: i(
               "h-4 w-4 flex-shrink-0 transition-transform duration-200",
               S && "rotate-90"
             ) })
@@ -204,7 +205,7 @@ const D = B(({
     g && w && /* @__PURE__ */ e(
       "div",
       {
-        className: "fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden",
+        className: "fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm lg:hidden",
         onClick: () => N(!1),
         "aria-hidden": "true"
       }
@@ -212,13 +213,14 @@ const D = B(({
     /* @__PURE__ */ e(
       "aside",
       {
-        ref: i,
-        className: s(
+        ref: s,
+        className: i(
           "border-r flex flex-col bg-background overflow-hidden",
           // Smooth transitions with better easing
           "transition-all duration-500 ease-out",
-          // Positioning: fixed on mobile, relative on desktop
-          g ? "fixed left-0 top-0 z-50 h-full" : "relative h-screen",
+          // ✅ FIXED: Proper z-index layering for mobile
+          // Mobile: Higher z-index than header (z-[70] > z-[50])
+          g ? "fixed left-0 top-0 z-[70] h-full" : "relative h-screen",
           // Mobile: slide animation
           g && (w ? "translate-x-0" : "-translate-x-full"),
           // Desktop: always visible but container controls width
@@ -247,7 +249,7 @@ const D = B(({
           M
         ),
         children: /* @__PURE__ */ c("div", { className: "flex flex-col h-full", children: [
-          /* @__PURE__ */ e("div", { className: s(
+          /* @__PURE__ */ e("div", { className: i(
             "flex items-center shadow-sm flex-shrink-0 border-b transition-all duration-300 ease-out",
             o === "clean" && "border-border/40",
             o === "subtle" && "border-border/30",
@@ -255,11 +257,11 @@ const D = B(({
             o === "contrast" && "border-zinc-700/40",
             f ? "justify-between h-16 px-4" : "justify-center h-16 px-2"
           ), children: f ? /* @__PURE__ */ c(j, { children: [
-            h && /* @__PURE__ */ e("div", { className: s(
+            p && /* @__PURE__ */ e("div", { className: i(
               "flex-shrink-0",
               o === "brand" && "[&_*]:text-primary-foreground",
               o === "contrast" && "[&_*]:text-zinc-100"
-            ), children: h }),
+            ), children: p }),
             (g || E && a) && /* @__PURE__ */ e(
               W,
               {
@@ -282,13 +284,13 @@ const D = B(({
               children: /* @__PURE__ */ e(_, { className: "h-4 w-4" })
             }
           ) }),
-          /* @__PURE__ */ e("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e("nav", { className: s(
+          /* @__PURE__ */ e("div", { className: "flex-1 overflow-y-auto", children: /* @__PURE__ */ e("nav", { className: i(
             "space-y-1 transition-all duration-300 ease-out",
             f ? "p-4" : "p-2"
           ), children: y.map((r, l) => /* @__PURE__ */ e(
             "div",
             {
-              className: s(
+              className: i(
                 "transition-all duration-300 ease-out",
                 f ? "opacity-100 translate-x-0" : "opacity-100"
               ),
@@ -300,7 +302,7 @@ const D = B(({
             r.key
           )) }) }),
           k && f && /* @__PURE__ */ c(j, { children: [
-            /* @__PURE__ */ e(te, { className: s(
+            /* @__PURE__ */ e(te, { className: i(
               o === "clean" && "bg-border/40",
               o === "subtle" && "bg-border/30",
               o === "brand" && "bg-primary-foreground/20",
@@ -317,23 +319,26 @@ D.displayName = "AdminSidebar";
 const H = B(({
   tone: b,
   size: y,
-  title: p,
-  position: x = "sticky",
-  breadcrumbs: h = [],
+  title: x,
+  position: h = "sticky",
+  breadcrumbs: p = [],
   actions: v,
   className: k
 }, M) => {
-  const { sidebarExpanded: i, setSidebarExpanded: n, isMobile: m } = F();
+  const { sidebarExpanded: s, setSidebarExpanded: n, isMobile: m } = F();
   return /* @__PURE__ */ e(
     "header",
     {
       ref: M,
-      className: s(
-        "w-full shadow-sm bg-background/95 backdrop-blur-md text-foreground flex-shrink-0 z-30 border-b border-border/50",
+      className: i(
+        "w-full shadow-sm bg-background/95 backdrop-blur-md text-foreground flex-shrink-0 border-b border-border/50",
         "transition-all duration-500 ease-out",
-        x === "sticky" && "sticky top-0",
-        x === "fixed" && "fixed top-0 left-0 right-0",
-        x === "relative" && "relative",
+        // ✅ FIXED: Sticky on desktop, lower z-index for mobile sidebar layering
+        h === "sticky" && "sticky top-0",
+        h === "fixed" && "fixed top-0 left-0 right-0",
+        // Always use lower z-index so mobile sidebar appears above
+        "z-[10]",
+        h === "relative" && "relative",
         k
       ),
       children: /* @__PURE__ */ c("div", { className: "flex items-center justify-between px-4 lg:px-6 h-16", children: [
@@ -341,7 +346,7 @@ const H = B(({
           /* @__PURE__ */ e(
             "button",
             {
-              className: s(
+              className: i(
                 "p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all duration-300 ease-out",
                 "transform hover:scale-105 active:scale-95",
                 // Always show on mobile
@@ -349,15 +354,15 @@ const H = B(({
                 // Show on desktop for toggle functionality  
                 !m && "block"
               ),
-              onClick: () => n(!i),
-              "aria-label": i ? "Close sidebar" : "Open sidebar",
-              children: /* @__PURE__ */ e(_, { className: s(
+              onClick: () => n(!s),
+              "aria-label": s ? "Close sidebar" : "Open sidebar",
+              children: /* @__PURE__ */ e(_, { className: i(
                 "h-5 w-5 transition-transform duration-300 ease-out",
-                i && !m && "rotate-180"
+                s && !m && "rotate-180"
               ) })
             }
           ),
-          /* @__PURE__ */ e("div", { className: "min-w-0", children: h.length > 0 && /* @__PURE__ */ e("nav", { className: "flex items-center gap-2 text-muted-foreground", children: h.map((t, w) => /* @__PURE__ */ c(L.Fragment, { children: [
+          /* @__PURE__ */ e("div", { className: "min-w-0", children: p.length > 0 && /* @__PURE__ */ e("nav", { className: "flex items-center gap-2 text-muted-foreground", children: p.map((t, w) => /* @__PURE__ */ c(L.Fragment, { children: [
             w > 0 && /* @__PURE__ */ e("span", { children: "/" }),
             t.href ? /* @__PURE__ */ e("button", { className: "hover:text-foreground transition-colors", children: t.label }) : /* @__PURE__ */ e("span", { children: t.label })
           ] }, w)) }) })
@@ -371,19 +376,19 @@ H.displayName = "AdminHeader";
 const I = B(({
   tone: b,
   size: y,
-  className: p,
-  children: x
-}, h) => {
+  className: x,
+  children: h
+}, p) => {
   const { isMobile: v } = F();
   return /* @__PURE__ */ e(
     "main",
     {
-      ref: h,
-      className: s(
+      ref: p,
+      className: i(
         "flex-1 min-w-0 overflow-auto",
-        p
+        x
       ),
-      children: /* @__PURE__ */ e("div", { className: "p-4 lg:p-6 w-full", children: /* @__PURE__ */ e("div", { className: "w-full mx-auto", children: x }) })
+      children: /* @__PURE__ */ e("div", { className: "p-4 lg:p-6 w-full", children: /* @__PURE__ */ e("div", { className: "w-full mx-auto", children: h }) })
     }
   );
 });
