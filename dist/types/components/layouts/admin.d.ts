@@ -1,5 +1,5 @@
 /**
- * Admin Layout - FIXED with FOUC prevention (no sidebar flash on reload)
+ * Admin Layout - FIXED sidebar flash with minimal FOUC prevention
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */
@@ -99,7 +99,6 @@ declare const useAdmin: () => {
     sidebarExpanded: boolean;
     setSidebarExpanded: (expanded: boolean) => void;
     isMobile: boolean;
-    isHydrated: boolean;
 };
 /**
  * AdminLayout - COMPOUND-ONLY Component

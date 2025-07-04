@@ -1,5 +1,5 @@
 /**
- * Admin Layout - FIXED with FOUC prevention (no sidebar flash on reload)
+ * Admin Layout - FIXED sidebar flash with minimal FOUC prevention
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */
@@ -21,73 +21,6 @@ import type { NavigationItem, Size, Tone } from '@/types';
  * compact: Icon-only navigation with click-to-expand (mobile-first)
  */
 export type AdminLayoutScheme = 'sidebar' | 'compact';
-
-/**
- * ✅ FOUC FIX: Inject critical CSS immediately to prevent sidebar flash
- */
-function injectCriticalCSS() {
-  if (typeof document === 'undefined') return;
-  
-  const styleId = 'admin-layout-fouc-fix';
-  if (document.getElementById(styleId)) return; // Already injected
-  
-  const criticalCSS = `
-    /* FOUC Prevention: Hide sidebar until React hydrates */
-    .admin-layout-loading {
-      overflow: hidden;
-    }
-    
-    .admin-layout-loading .admin-sidebar-mobile {
-      transform: translateX(-100%) !important;
-      transition: none !important;
-    }
-    
-    /* Ensure mobile sidebar starts hidden */
-    @media (max-width: 1023px) {
-      .admin-sidebar-mobile {
-        transform: translateX(-100%);
-      }
-    }
-    
-    /* Desktop: Prevent width flash */
-    @media (min-width: 1024px) {
-      .admin-layout-loading .admin-sidebar-container {
-        width: 0 !important;
-        transition: none !important;
-      }
-    }
-  `;
-  
-  const style = document.createElement('style');
-  style.id = styleId;
-  style.textContent = criticalCSS;
-  document.head.appendChild(style);
-}
-
-/**
- * ✅ FOUC FIX: Initialize loading class on document
- */
-function initializeFOUCPrevention() {
-  if (typeof document === 'undefined') return;
-  
-  // Add loading class immediately
-  document.documentElement.classList.add('admin-layout-loading');
-  
-  // Inject critical CSS
-  injectCriticalCSS();
-}
-
-/**
- * ✅ FOUC FIX: Remove loading class when React is ready
- */
-function removeFOUCPrevention() {
-  if (typeof document === 'undefined') return;
-  
-  // Remove loading class with slight delay to ensure smooth transition
-  setTimeout(() => {
-    document.documentElement.classList.remove('admin-layout-loading');
-  }, 50);
-}
 
 /**
  * Detect if we're on mobile - synchronous detection to prevent flash
@@ -116,7 +49,6 @@ const AdminContext = createContext<{
   sidebarExpanded: boolean;
   setSidebarExpanded: (expanded: boolean) => void;
   isMobile: boolean;
-  isHydrated: boolean;
 }>({
   scheme: 'sidebar',
   tone: 'subtle',
@@ -124,7 +56,6 @@ const AdminContext = createContext<{
   sidebarExpanded: true,
   setSidebarExpanded: () => {},
   isMobile: false,
-  isHydrated: false,
 });
 
 /**
@@ -168,7 +99,7 @@ export interface AdminLayoutProps {
 }
 
 /**
- * AdminLayout Root Component - FIXED with FOUC prevention
+ * AdminLayout Root Component - BACK TO ORIGINAL WORKING VERSION
  */
 const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
   scheme = 'sidebar',
@@ -179,27 +110,13 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
   className,
   children,
 }, ref) => {
-  // ✅ FOUC FIX: Initialize FOUC prevention immediately
-  React.useMemo(() => {
-    initializeFOUCPrevention();
-  }, []);
-
-  // ✅ FOUC FIX: Track hydration state
-  const [isHydrated, setIsHydrated] = useState(false);
-  
-  // ✅ FIX: Initialize with proper mobile-aware state
+  // ✅ RESTORED: Original working state management
   const [isMobile, setIsMobile] = useState(getInitialMobileState);
   const [sidebarExpanded, setSidebarExpanded] = useState(() => 
     getInitialSidebarState(defaultSidebarOpen)
   );
 
-  // ✅ FOUC FIX: Mark as hydrated and remove loading state
-  useLayoutEffect(() => {
-    setIsHydrated(true);
-    removeFOUCPrevention();
-  }, []);
-
-  // ✅ FIX: Use useLayoutEffect for synchronous mobile detection
+  // ✅ RESTORED: Original mobile detection logic
   useLayoutEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 1024;
@@ -256,18 +173,15 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
       size, 
       sidebarExpanded, 
       setSidebarExpanded,
-      isMobile,
-      isHydrated
+      isMobile
     }}>
       <div
         ref={ref}
         className={cn(adminVariants({ tone }), className)}
       >
-        {/* ✅ FOUC FIX: Sidebar container with loading protection */}
+        {/* ✅ RESTORED: Original sidebar container */}
         <div className={cn(
-          'admin-sidebar-container flex-shrink-0 overflow-hidden',
-          // ✅ FOUC FIX: Only apply transitions after hydration
-          isHydrated ? 'transition-all duration-200 ease-out' : '',
+          'flex-shrink-0 transition-all duration-200 ease-out overflow-hidden',
           // Desktop: smooth width transition
           !isMobile && sidebarExpanded && (
             size === 'sm' ? 'w-48' :
@@ -285,12 +199,8 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
           {sidebar}
         </div>
         
-        {/* Main Area (Header + Content) - smooth expansion with coordinated timing */}
-        <div className={cn(
-          'flex-1 flex flex-col min-w-0',
-          // ✅ FOUC FIX: Only apply transitions after hydration
-          isHydrated ? 'transition-all duration-200 ease-out' : ''
-        )}>
+        {/* ✅ RESTORED: Original main area */}
+        <div className="flex-1 flex flex-col min-w-0 transition-all duration-200 ease-out">
           {header}
           {content}
         </div>
@@ -333,7 +243,7 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
   footer,
   className,
 }, ref) => {
-  const { scheme, tone: adminTone, size, sidebarExpanded, setSidebarExpanded, isMobile, isHydrated } = useAdmin();
+  const { scheme, tone: adminTone, size, sidebarExpanded, setSidebarExpanded, isMobile } = useAdmin();
   const [expandedMenus, setExpandedMenus] = useState(new Set<string>());
   const [compactExpanded, setCompactExpanded] = useState(false);
 
@@ -535,17 +445,17 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
         />
       )}
   
-      {/* ✅ FOUC FIX: Sidebar with loading protection */}
+      {/* ✅ RESTORED: Original sidebar with working mobile behavior */}
       <aside 
         ref={ref}
         className={cn(
-          'admin-sidebar-mobile border-r flex flex-col bg-background overflow-hidden',
-          // ✅ FOUC FIX: Only apply smooth transitions after hydration
-          isHydrated ? 'transition-all duration-200 ease-out' : '',
+          'border-r flex flex-col bg-background overflow-hidden',
+          // ✅ RESTORED: Original smooth transitions
+          'transition-all duration-200 ease-out',
           // ✅ FIXED: Proper z-index layering for mobile
           // Mobile: Higher z-index than header (z-[70] > z-[10])
           isMobile ? 'fixed left-0 top-0 z-[70] h-full' : 'relative h-screen',
-          // Mobile: slide animation (only when hydrated to prevent flash)
+          // Mobile: slide animation
           isMobile && (sidebarExpanded ? 'translate-x-0' : '-translate-x-full'),
           // Desktop: always visible but container controls width
           !isMobile && 'translate-x-0',
