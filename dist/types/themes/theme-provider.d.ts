@@ -1,5 +1,5 @@
 /**
- * Ultra-simple theme provider with pre-bundled themes - NO FLASH VERSION
+ * Ultra-simple theme provider with pre-bundled themes - CONFIG PRIORITY VERSION
  * @module @voilajsx/uikit
  * @file src/themes/theme-provider.tsx
  */
@@ -48,11 +48,11 @@ export interface ThemeContextValue {
     getDefaultTone: (component: string) => Tone;
 }
 /**
- * @llm-props ThemeProvider props
+ * @llm-props ThemeProvider props - ENHANCED WITH CONFIG PRIORITY
  * REQUIRED: children
  * RECOMMENDED: theme="default", mode="light"
- * OPTIONAL: detectSystem
- * @llm-defaults theme="default", mode="light", detectSystem=true
+ * OPTIONAL: detectSystem, forceConfig, storageKey
+ * @llm-defaults theme="default", mode="light", detectSystem=true, forceConfig=false
  */
 export interface ThemeProviderProps {
     /** REQUIRED: Child components */
@@ -63,6 +63,10 @@ export interface ThemeProviderProps {
     mode?: Mode;
     /** OPTIONAL: Auto-detect system preference (default: true) */
     detectSystem?: boolean;
+    /** NEW: Force configuration over storage (default: false) */
+    forceConfig?: boolean;
+    /** NEW: Storage key to use (default: "uikit-theme", set to null to disable storage) */
+    storageKey?: string | null;
 }
 /**
  * @llm-rule Available pre-bundled themes
@@ -70,18 +74,29 @@ export interface ThemeProviderProps {
  */
 export declare const AVAILABLE_THEMES: Theme[];
 /**
- * Ultra-simple theme provider with pre-bundled themes - NO FLASH VERSION
- * @llm-pattern Basic usage (recommended)
+ * 🔧 ENHANCED: Ultra-simple theme provider with configuration priority
+ * @llm-pattern Basic usage (default behavior - storage first)
  * <ThemeProvider theme="aurora" mode="dark">
  *   <App />
  * </ThemeProvider>
  *
- * @llm-pattern Auto-detect system preference
- * <ThemeProvider theme="default" detectSystem>
+ * @llm-pattern Force configuration (ignore storage completely)
+ * <ThemeProvider theme="aurora" mode="dark" forceConfig={true}>
+ *   <App />
+ * </ThemeProvider>
+ *
+ * @llm-pattern Disable storage entirely
+ * <ThemeProvider theme="aurora" mode="dark" storageKey={null}>
+ *   <App />
+ * </ThemeProvider>
+ *
+ * @llm-pattern Custom storage key
+ * <ThemeProvider theme="aurora" mode="dark" storageKey="my-app-theme">
  *   <App />
  * </ThemeProvider>
  */
-export declare function ThemeProvider({ children, theme, mode, detectSystem }: ThemeProviderProps): React.JSX.Element;
+export declare function ThemeProvider({ children, theme, mode, detectSystem, forceConfig, // 🔧 NEW: Force config over storage
+storageKey }: ThemeProviderProps): React.JSX.Element;
 /**
  * Hook to access theme context
  * @llm-pattern Basic theme usage

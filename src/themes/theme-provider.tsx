@@ -1,5 +1,5 @@
 /**
- * Ultra-simple theme provider with pre-bundled themes - NO FLASH VERSION
+ * Ultra-simple theme provider with pre-bundled themes - CONFIG PRIORITY VERSION
  * @module @voilajsx/uikit
  * @file src/themes/theme-provider.tsx
  */
@@ -56,11 +56,11 @@ export interface ThemeContextValue {
 }
 
 /**
- * @llm-props ThemeProvider props
+ * @llm-props ThemeProvider props - ENHANCED WITH CONFIG PRIORITY
  * REQUIRED: children
  * RECOMMENDED: theme="default", mode="light"
- * OPTIONAL: detectSystem
- * @llm-defaults theme="default", mode="light", detectSystem=true
+ * OPTIONAL: detectSystem, forceConfig, storageKey
+ * @llm-defaults theme="default", mode="light", detectSystem=true, forceConfig=false
  */
 export interface ThemeProviderProps {
   /** REQUIRED: Child components */
@@ -71,6 +71,10 @@ export interface ThemeProviderProps {
   mode?: Mode;
   /** OPTIONAL: Auto-detect system preference (default: true) */
   detectSystem?: boolean;
+  /** NEW: Force configuration over storage (default: false) */
+  forceConfig?: boolean;
+  /** NEW: Storage key to use (default: "uikit-theme", set to null to disable storage) */
+  storageKey?: string | null;
 }
 
 /**
@@ -118,28 +122,48 @@ export const AVAILABLE_THEMES: Theme[] = [
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 /**
- * ✅ FIX: Get initial theme state synchronously (no flash)
+ * ✅ ENHANCED: Get initial theme state with configuration priority
  */
 function getInitialThemeState(
   defaultTheme: Theme, 
   defaultMode: Mode, 
-  detectSystem: boolean
+  detectSystem: boolean,
+  forceConfig: boolean = false,
+  storageKey: string | null = 'uikit-theme'
 ): { theme: Theme; mode: Mode } {
   // Server-side rendering - use props
   if (typeof window === 'undefined') {
     return { theme: defaultTheme, mode: defaultMode };
   }
 
+  // 🔧 NEW: If forceConfig is true, ignore storage and use props
+  if (forceConfig) {
+    console.log(`🎨 Config priority: ${defaultTheme} (${defaultMode} mode)`);
+    return { theme: defaultTheme, mode: defaultMode };
+  }
+
+  // 🔧 NEW: If storageKey is null, skip storage entirely
+  if (storageKey === null) {
+    if (detectSystem) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const systemMode = prefersDark ? 'dark' : 'light';
+      console.log(`🎨 System preference (no storage): ${defaultTheme} (${systemMode} mode)`);
+      return { theme: defaultTheme, mode: systemMode };
+    }
+    console.log(`🎨 Props only (no storage): ${defaultTheme} (${defaultMode} mode)`);
+    return { theme: defaultTheme, mode: defaultMode };
+  }
+
   try {
-    // Try to load saved preferences first
-    const saved = localStorage.getItem('uikit-theme');
+    // Try to load saved preferences from storage
+    const saved = localStorage.getItem(storageKey);
     if (saved) {
       const parsed = JSON.parse(saved);
       
       // Validate saved theme is still available
       if (AVAILABLE_THEMES.includes(parsed.theme) && 
           ['light', 'dark'].includes(parsed.mode)) {
-        console.log(`🎨 Restored theme: ${parsed.theme} (${parsed.mode} mode)`);
+        console.log(`🎨 Restored from storage: ${parsed.theme} (${parsed.mode} mode)`);
         return parsed;
       }
     }
@@ -148,12 +172,12 @@ function getInitialThemeState(
     if (detectSystem) {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const systemMode = prefersDark ? 'dark' : 'light';
-      console.log(`🎨 Using system preference: ${defaultTheme} (${systemMode} mode)`);
+      console.log(`🎨 System preference: ${defaultTheme} (${systemMode} mode)`);
       return { theme: defaultTheme, mode: systemMode };
     }
     
     // Use props as fallback
-    console.log(`🎨 Using default: ${defaultTheme} (${defaultMode} mode)`);
+    console.log(`🎨 Props fallback: ${defaultTheme} (${defaultMode} mode)`);
     return { theme: defaultTheme, mode: defaultMode };
     
   } catch (e) {
@@ -184,14 +208,24 @@ function applyThemeImmediately(theme: Theme, mode: Mode) {
 }
 
 /**
- * Ultra-simple theme provider with pre-bundled themes - NO FLASH VERSION
- * @llm-pattern Basic usage (recommended)
+ * 🔧 ENHANCED: Ultra-simple theme provider with configuration priority
+ * @llm-pattern Basic usage (default behavior - storage first)
  * <ThemeProvider theme="aurora" mode="dark">
  *   <App />
  * </ThemeProvider>
  * 
- * @llm-pattern Auto-detect system preference
- * <ThemeProvider theme="default" detectSystem>
+ * @llm-pattern Force configuration (ignore storage completely)
+ * <ThemeProvider theme="aurora" mode="dark" forceConfig={true}>
+ *   <App />
+ * </ThemeProvider>
+ * 
+ * @llm-pattern Disable storage entirely
+ * <ThemeProvider theme="aurora" mode="dark" storageKey={null}>
+ *   <App />
+ * </ThemeProvider>
+ * 
+ * @llm-pattern Custom storage key
+ * <ThemeProvider theme="aurora" mode="dark" storageKey="my-app-theme">
  *   <App />
  * </ThemeProvider>
  */
@@ -199,12 +233,14 @@ export function ThemeProvider({
   children,
   theme = 'default',
   mode = 'light',
-  detectSystem = true
+  detectSystem = true,
+  forceConfig = false,        // 🔧 NEW: Force config over storage
+  storageKey = 'uikit-theme'  // 🔧 NEW: Configurable storage key
 }: ThemeProviderProps): React.JSX.Element {
   
-  // ✅ FIX: Initialize with correct theme from the start (no flash)
+  // ✅ ENHANCED: Initialize with configuration priority logic
   const [themeState, setThemeState] = useState(() => {
-    const initialState = getInitialThemeState(theme, mode, detectSystem);
+    const initialState = getInitialThemeState(theme, mode, detectSystem, forceConfig, storageKey);
     
     // ✅ CRITICAL: Apply theme immediately before React renders
     applyThemeImmediately(initialState.theme, initialState.mode);
@@ -212,7 +248,7 @@ export function ThemeProvider({
     return initialState;
   });
 
-  // ✅ FIX: Apply theme classes when state changes (but not on initial mount)
+  // ✅ ENHANCED: Apply theme classes when state changes
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
@@ -221,26 +257,30 @@ export function ThemeProvider({
     // Apply theme classes
     applyThemeImmediately(currentTheme, currentMode);
     
-    // Save preferences
-    try {
-      localStorage.setItem('uikit-theme', JSON.stringify({ theme: currentTheme, mode: currentMode }));
-    } catch (e) {
-      console.warn('Failed to save theme preferences:', e);
+    // 🔧 NEW: Save preferences only if storage is enabled and not forcing config
+    if (storageKey && !forceConfig) {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify({ theme: currentTheme, mode: currentMode }));
+      } catch (e) {
+        console.warn('Failed to save theme preferences:', e);
+      }
     }
     
     console.log(`🎨 Applied theme: ${currentTheme} (${currentMode} mode)`);
-  }, [themeState]);
+  }, [themeState, storageKey, forceConfig]);
   
-  // ✅ FIX: Listen for system preference changes (but don't override saved preferences)
+  // ✅ ENHANCED: Listen for system preference changes (respects forceConfig)
   useEffect(() => {
     if (!detectSystem || typeof window === 'undefined') return;
     
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
     const handleChange = (e: MediaQueryListEvent) => {
-      // Only auto-switch if no manual preference was saved
+      // 🔧 NEW: Don't auto-switch if forcing config or manual preference was saved
+      if (forceConfig) return;
+      
       try {
-        const saved = localStorage.getItem('uikit-theme');
+        const saved = storageKey ? localStorage.getItem(storageKey) : null;
         if (!saved) {
           setThemeState(prev => ({
             ...prev,
@@ -254,7 +294,7 @@ export function ThemeProvider({
     
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [detectSystem]);
+  }, [detectSystem, forceConfig, storageKey]);
 
   /**
    * @llm-rule Set theme from pre-bundled options
