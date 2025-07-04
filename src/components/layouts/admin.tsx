@@ -1,18 +1,18 @@
 /**
- * Admin Layout - FIXED with proper flex layout
+ * Admin Layout - FIXED with proper mobile detection and no flash
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */
 
 import * as React from 'react';
-import { forwardRef, createContext, useContext, useState, useEffect } from 'react';
+import { forwardRef, createContext, useContext, useState, useEffect, useLayoutEffect } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Tooltip, TooltipContent, TooltipProvider,  TooltipTrigger } from '@/components/ui/tooltip';
-import { Menu, X, ChevronRight, ChevronDown } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Menu, X, ChevronRight } from 'lucide-react';
 import type { NavigationItem, Size, Tone } from '@/types';
 
 /**
@@ -21,6 +21,23 @@ import type { NavigationItem, Size, Tone } from '@/types';
  * compact: Icon-only navigation with click-to-expand (mobile-first)
  */
 export type AdminLayoutScheme = 'sidebar' | 'compact';
+
+/**
+ * Detect if we're on mobile - synchronous detection to prevent flash
+ */
+function getInitialMobileState(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth < 1024;
+}
+
+/**
+ * Get initial sidebar state based on mobile detection
+ */
+function getInitialSidebarState(defaultOpen: boolean): boolean {
+  if (typeof window === 'undefined') return defaultOpen;
+  const isMobile = getInitialMobileState();
+  return isMobile ? false : defaultOpen;
+}
 
 /**
  * Admin context for sharing configuration across compound components
@@ -62,113 +79,6 @@ const adminVariants = cva(
 );
 
 /**
- * Sidebar variants - FIXED POSITIONING FOR MOBILE, FLEX FOR DESKTOP
- */
-const sidebarVariants = cva(
-  'border-r transition-all duration-300 ease-in-out flex flex-col',
-  {
-    variants: {
-      scheme: {
-        sidebar: '',           // Width set by size variant
-        compact: ''            // Width set by size variant  
-      },
-      size: {
-        sm: 'w-48',           // 192px - Small sidebar
-        md: 'w-56',           // 224px - Medium sidebar  
-        lg: 'w-64',           // 256px - Large sidebar (default)
-        xl: 'w-72',           // 288px - Extra large sidebar
-        full: 'w-80'          // 320px - Full width sidebar
-      },
-      compactSize: {
-        sm: 'w-12',           // 48px - Small compact
-        md: 'w-14',           // 56px - Medium compact
-        lg: 'w-16',           // 64px - Large compact (default)
-        xl: 'w-18',           // 72px - Extra large compact
-        full: 'w-20'          // 80px - Full compact
-      },
-      mobile: {
-        true: 'fixed left-0 top-0 z-50 h-full',  // Mobile: fixed positioning
-        false: 'relative'                         // Desktop: normal flex
-      },
-      expanded: {
-        true: 'translate-x-0',
-        false: '-translate-x-full lg:translate-x-0'  // Only hide on mobile
-      },
-      compactExpanded: {
-        true: '',              // Expand to full size when compact is opened
-        false: ''
-      },
-      tone: {
-        clean: 'bg-white border-border text-foreground',
-        subtle: 'bg-muted border-border text-foreground', 
-        brand: 'bg-primary/10 border-primary/20 text-foreground',
-        contrast: 'bg-zinc-900 border-border text-zinc-100'
-      }
-    },
-    compoundVariants: [
-      // Compact expanded takes the same size as the current size setting
-      {
-        scheme: 'compact',
-        compactExpanded: true,
-        size: 'sm',
-        class: 'w-48'  // Match sm size
-      },
-      {
-        scheme: 'compact',
-        compactExpanded: true,
-        size: 'md',
-        class: 'w-56'  // Match md size
-      },
-      {
-        scheme: 'compact',
-        compactExpanded: true,
-        size: 'lg',
-        class: 'w-64'  // Match lg size
-      },
-      {
-        scheme: 'compact',
-        compactExpanded: true,
-        size: 'xl',
-        class: 'w-72'  // Match xl size
-      },
-      {
-        scheme: 'compact',
-        compactExpanded: true,
-        size: 'full',
-        class: 'w-80'  // Match full size
-      }
-    ],
-    defaultVariants: {
-      scheme: 'sidebar',
-      size: 'lg',
-      compactSize: 'lg',
-      mobile: false,
-      expanded: true,
-      compactExpanded: false,
-      tone: 'subtle'
-    }
-  }
-);
-
-/**
- * Main content area - FLEX LAYOUT
- */
-const mainContentVariants = cva(
-  'flex-1 flex flex-col min-w-0',
-  {
-    variants: {
-      mobile: {
-        true: 'w-full',      // Mobile: full width
-        false: 'flex-1'      // Desktop: flex remaining space
-      }
-    },
-    defaultVariants: {
-      mobile: false
-    }
-  }
-);
-
-/**
  * AdminLayout Root - Container with context
  */
 export interface AdminLayoutProps {
@@ -178,7 +88,6 @@ export interface AdminLayoutProps {
   tone?: Tone;
   /** OPTIONAL: Layout size (default: "lg") */
   size?: Size;
-
   /** OPTIONAL: Sidebar positioning */
   position?: 'relative' | 'sticky' | 'fixed';
   /** OPTIONAL: Default sidebar state (default: true) */
@@ -190,36 +99,47 @@ export interface AdminLayoutProps {
 }
 
 /**
- * AdminLayout Root Component - FIXED LAYOUT with auto-wrapping
+ * AdminLayout Root Component - FIXED with no mobile flash
  */
 const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
   scheme = 'sidebar',
   tone = 'subtle',
   size = 'lg',
-  position = 'relative', // Add this line
+  position = 'relative',
   defaultSidebarOpen = true,
   className,
   children,
 }, ref) => {
-  const [sidebarExpanded, setSidebarExpanded] = useState(defaultSidebarOpen);
-  const [isMobile, setIsMobile] = useState(false);
+  // ✅ FIX: Initialize with proper mobile-aware state
+  const [isMobile, setIsMobile] = useState(getInitialMobileState);
+  const [sidebarExpanded, setSidebarExpanded] = useState(() => 
+    getInitialSidebarState(defaultSidebarOpen)
+  );
 
-  // Check if we're on mobile
-  useEffect(() => {
+  // ✅ FIX: Use useLayoutEffect for synchronous mobile detection
+  useLayoutEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 1024;
+      const wasMobile = isMobile;
+      
       setIsMobile(mobile);
-      if (mobile) {
+      
+      // Only auto-close sidebar when transitioning TO mobile
+      if (mobile && !wasMobile && sidebarExpanded) {
         setSidebarExpanded(false);
-      } else {
+      }
+      // When transitioning FROM mobile to desktop, respect defaultSidebarOpen
+      else if (!mobile && wasMobile) {
         setSidebarExpanded(defaultSidebarOpen);
       }
     };
 
+    // Check immediately in case window size changed
     checkMobile();
+    
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, [defaultSidebarOpen]);
+  }, [isMobile, sidebarExpanded, defaultSidebarOpen]);
 
   // Prevent body scroll when mobile sidebar is open
   useEffect(() => {
@@ -259,17 +179,27 @@ const AdminLayoutRoot = forwardRef<HTMLDivElement, AdminLayoutProps>(({
         ref={ref}
         className={cn(adminVariants({ tone }), className)}
       >
-        {/* Sidebar Container - sticky positioning here */}
-      {/* Sidebar Container - sticky positioning here */}
-      <div className={cn(
-        'flex-shrink-0',
-        position === 'sticky' && 'sticky top-0 max-h-screen overflow-y-auto'
-      )}>
-        {sidebar}
-      </div>
+        {/* Sidebar Container - with smooth width transition */}
+        <div className={cn(
+          'flex-shrink-0 transition-all duration-500 ease-out overflow-hidden',
+          // Desktop: smooth width transition
+          !isMobile && sidebarExpanded && (
+            size === 'sm' ? 'w-48' :
+            size === 'md' ? 'w-56' :
+            size === 'lg' ? 'w-64' :
+            size === 'xl' ? 'w-72' :
+            'w-80'
+          ),
+          !isMobile && !sidebarExpanded && 'w-0',
+          // Mobile: don't affect layout
+          isMobile && 'w-0',
+          position === 'sticky' && 'sticky top-0 max-h-screen'
+        )}>
+          {sidebar}
+        </div>
         
-        {/* Main Area (Header + Content) */}
-        <div className="flex-1 flex flex-col min-w-0">
+        {/* Main Area (Header + Content) - smooth expansion with coordinated timing */}
+        <div className="flex-1 flex flex-col min-w-0 transition-all duration-500 ease-out">
           {header}
           {content}
         </div>
@@ -308,7 +238,7 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
   currentPath = '',
   onNavigate,
   logo,
-  position, // Add this line
+  position,
   footer,
   className,
 }, ref) => {
@@ -339,10 +269,10 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
   };
 
   // Get menu item styles
-  const getMenuItemStyles = (isActive: boolean, isSubmenu = false) => {
+      const getMenuItemStyles = (isActive: boolean, isSubmenu = false) => {
     const baseStyles = isSubmenu 
-  ? 'w-[92%] flex items-center transition-all duration-200 group text-left font-medium rounded-lg cursor-pointer'
-  : 'w-full flex items-center transition-all duration-200 group text-left font-medium rounded-lg cursor-pointer';
+      ? 'w-[92%] flex items-center group text-left font-medium rounded-lg cursor-pointer transition-all duration-300 ease-out transform hover:scale-[1.02]'
+      : 'w-full flex items-center group text-left font-medium rounded-lg cursor-pointer transition-all duration-300 ease-out transform hover:scale-[1.02]';
     const padding = isSubmenu 
       ? (showLabels ? 'ml-4 px-3 py-2' : 'px-2 py-2') 
       : (showLabels ? 'px-3 py-2.5' : 'px-2 py-2.5 justify-center');
@@ -366,12 +296,12 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
         break;
       case 'contrast':
         toneStyles = isActive 
-           ? 'bg-muted/20 dark:bg-muted/20 text-white shadow-sm' 
-          : ' text-white  hover:bg-muted/20';
+          ? 'bg-muted/20 dark:bg-muted/20 text-white shadow-sm' 
+          : 'text-white hover:bg-muted/20';
         break;
       default:
         toneStyles = isActive 
-          ? 'bg-muted/10 text-foreground   shadow-sm' 
+          ? 'bg-muted/10 text-foreground shadow-sm' 
           : 'text-muted-foreground hover:text-foreground hover:bg-muted/50';
     }
     
@@ -394,8 +324,16 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
         toggleMenu(item.key);
       } else if (item.href && onNavigate) {
         onNavigate(item.href, item);
+        // Close mobile sidebar after navigation
+        if (isMobile) {
+          setSidebarExpanded(false);
+        }
       } else if (item.onClick) {
         item.onClick();
+        // Close mobile sidebar after action
+        if (isMobile) {
+          setSidebarExpanded(false);
+        }
       }
     };
 
@@ -420,7 +358,6 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
                 variant={isActive ? 'secondary' : 'outline'} 
                 className={cn(
                   "text-xs h-4 px-1 ml-1 flex-shrink-0",
-                  // Badge colors based on tone
                   finalTone === 'brand' && !isActive && 'bg-primary-foreground/10 text-primary-foreground border-primary-foreground/20',
                   finalTone === 'brand' && isActive && 'bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30',
                   finalTone === 'contrast' && !isActive && 'bg-zinc-700 text-zinc-300 border-zinc-600',
@@ -453,7 +390,7 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
               </TooltipTrigger>
               <TooltipContent 
                 side="right" 
-                className="bg-white text-black border border-gray-200 shadow-md [&>*[data-side]]:hidden"
+                className="bg-white text-black border border-gray-200 shadow-md"
               >
                 <p>{item.label}</p>
               </TooltipContent>
@@ -478,10 +415,16 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
         {menuButton}
         
         {hasSubmenu && isExpanded && showLabels && item.items && (
-          <div className="overflow-hidden transition-all duration-300 mt-1">
-            <div className="space-y-1 pb-2">
-              {item.items.map((subItem) => (
-                <MenuItem key={subItem.key} item={subItem} isSubmenu={true} />
+          <div className="overflow-hidden transition-all duration-400 ease-out mt-1">
+            <div className="space-y-1 pb-2 animate-in slide-in-from-top-2">
+              {item.items.map((subItem, subIndex) => (
+                <div
+                  key={subItem.key}
+                  className="transition-all duration-300 ease-out"
+                  style={{ transitionDelay: `${subIndex * 75}ms` }}
+                >
+                  <MenuItem item={subItem} isSubmenu={true} />
+                </div>
               ))}
             </div>
           </div>
@@ -489,10 +432,10 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
       </div>
     );
   };
-  console.log('Scheme:', scheme, 'Size:', size, 'IsCompact:', );
+
   return (
     <>
-      {/* Mobile Overlay */}
+      {/* Mobile Overlay - only show when sidebar is expanded on mobile */}
       {isMobile && sidebarExpanded && (
         <div 
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
@@ -502,43 +445,50 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
       )}
   
       {/* Sidebar */}
-     <aside 
-      ref={ref}
-      className={cn(
-        'border-r transition-all duration-300 ease-in-out flex flex-col',
-        // Mobile positioning
-        // Positioning based on prop and mobile state
-        isMobile ? 'fixed left-0 top-0 z-50 h-full' : 'sticky top-0 h-screen',
-        // Expansion state
-        sidebarExpanded ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
-        // Width based on scheme and size
-        scheme === 'sidebar' && size === 'sm' && 'w-48',
-        scheme === 'sidebar' && size === 'md' && 'w-56',
-        scheme === 'sidebar' && size === 'lg' && 'w-64',
-        scheme === 'sidebar' && size === 'xl' && 'w-72',
-        scheme === 'sidebar' && size === 'full' && 'w-80',
-        scheme === 'compact' && !compactExpanded && size === 'sm' && 'w-12',
-        scheme === 'compact' && !compactExpanded && size === 'md' && 'w-14',
-        scheme === 'compact' && !compactExpanded && size === 'lg' && 'w-16',
-        scheme === 'compact' && !compactExpanded && size === 'xl' && 'w-18',
-        scheme === 'compact' && !compactExpanded && size === 'full' && 'w-20',
-        scheme === 'compact' && compactExpanded && size === 'sm' && 'w-48',
-        scheme === 'compact' && compactExpanded && size === 'md' && 'w-56',
-        scheme === 'compact' && compactExpanded && size === 'lg' && 'w-64',
-        scheme === 'compact' && compactExpanded && size === 'xl' && 'w-72',
-        scheme === 'compact' && compactExpanded && size === 'full' && 'w-80',
-        // Tone colors - both sidebar and compact use header tone variants
-        (scheme === 'sidebar' || scheme === 'compact') && finalTone === 'clean' && 'bg-background/90 backdrop-blur-sm border-border/40 text-foreground',
-        (scheme === 'sidebar' || scheme === 'compact') && finalTone === 'subtle' && 'bg-muted/90 backdrop-blur-sm border-border/30 text-foreground',
-        (scheme === 'sidebar' || scheme === 'compact') && finalTone === 'brand' && 'bg-primary border-primary-foreground/20 text-primary-foreground',
-        (scheme === 'sidebar' || scheme === 'compact') && finalTone === 'contrast' && 'bg-zinc-900 border-zinc-700/40 text-zinc-100',
-        className
-      )}
-    >
+      <aside 
+        ref={ref}
+        className={cn(
+          'border-r flex flex-col bg-background overflow-hidden',
+          // Smooth transitions with better easing
+          'transition-all duration-500 ease-out',
+          // Positioning: fixed on mobile, relative on desktop
+          isMobile ? 'fixed left-0 top-0 z-50 h-full' : 'relative h-screen',
+          // Mobile: slide animation
+          isMobile && (sidebarExpanded ? 'translate-x-0' : '-translate-x-full'),
+          // Desktop: always visible but container controls width
+          !isMobile && 'translate-x-0',
+          // Fixed widths for consistent animation
+          scheme === 'sidebar' && size === 'sm' && 'w-48',
+          scheme === 'sidebar' && size === 'md' && 'w-56', 
+          scheme === 'sidebar' && size === 'lg' && 'w-64',
+          scheme === 'sidebar' && size === 'xl' && 'w-72',
+          scheme === 'sidebar' && size === 'full' && 'w-80',
+          scheme === 'compact' && !compactExpanded && size === 'sm' && 'w-12',
+          scheme === 'compact' && !compactExpanded && size === 'md' && 'w-14',
+          scheme === 'compact' && !compactExpanded && size === 'lg' && 'w-16',
+          scheme === 'compact' && !compactExpanded && size === 'xl' && 'w-18',
+          scheme === 'compact' && !compactExpanded && size === 'full' && 'w-20',
+          scheme === 'compact' && compactExpanded && size === 'sm' && 'w-48',
+          scheme === 'compact' && compactExpanded && size === 'md' && 'w-56',
+          scheme === 'compact' && compactExpanded && size === 'lg' && 'w-64',
+          scheme === 'compact' && compactExpanded && size === 'xl' && 'w-72',
+          scheme === 'compact' && compactExpanded && size === 'full' && 'w-80',
+          // Tone colors
+          finalTone === 'clean' && 'bg-background/90 backdrop-blur-sm border-border/40 text-foreground',
+          finalTone === 'subtle' && 'bg-muted/90 backdrop-blur-sm border-border/30 text-foreground',
+          finalTone === 'brand' && 'bg-primary border-primary-foreground/20 text-primary-foreground',
+          finalTone === 'contrast' && 'bg-zinc-900 border-zinc-700/40 text-zinc-100',
+          className
+        )}
+      >
         <div className="flex flex-col h-full">
-          {/* Sidebar Header */}
+          {/* Sidebar Header with smooth transitions */}
           <div className={cn(
-            'flex items-center shadow-sm  flex-shrink-0',
+            'flex items-center shadow-sm flex-shrink-0 border-b transition-all duration-300 ease-out',
+            finalTone === 'clean' && 'border-border/40',
+            finalTone === 'subtle' && 'border-border/30', 
+            finalTone === 'brand' && 'border-primary-foreground/20',
+            finalTone === 'contrast' && 'border-zinc-700/40',
             showLabels ? 'justify-between h-16 px-4' : 'justify-center h-16 px-2'
           )}>
             {showLabels ? (
@@ -546,7 +496,6 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
                 {logo && (
                   <div className={cn(
                     "flex-shrink-0",
-                    // Logo colors based on tone
                     finalTone === 'brand' && '[&_*]:text-primary-foreground',
                     finalTone === 'contrast' && '[&_*]:text-zinc-100'
                   )}>
@@ -583,11 +532,25 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
             )}
           </div>
 
-          {/* Navigation */}
+          {/* Navigation with staggered animations */}
           <div className="flex-1 overflow-y-auto">
-            <nav className={cn('space-y-1', showLabels ? 'p-4' : 'p-2')}>
-              {navigation.map((item) => (
-                <MenuItem key={item.key} item={item} />
+            <nav className={cn(
+              'space-y-1 transition-all duration-300 ease-out', 
+              showLabels ? 'p-4' : 'p-2'
+            )}>
+              {navigation.map((item, index) => (
+                <div 
+                  key={item.key}
+                  className={cn(
+                    "transition-all duration-300 ease-out",
+                    showLabels ? "opacity-100 translate-x-0" : "opacity-100"
+                  )}
+                  style={{ 
+                    transitionDelay: showLabels ? `${index * 50}ms` : '0ms' 
+                  }}
+                >
+                  <MenuItem item={item} />
+                </div>
               ))}
             </nav>
           </div>
@@ -595,13 +558,12 @@ const AdminSidebar = forwardRef<HTMLElement, AdminSidebarProps>(({
           {/* Sidebar Footer */}
           {footer && showLabels && (
             <>
-               <Separator className={cn(
-                  // Separator colors based on tone
-                  finalTone === 'clean' && 'bg-border/40',
-                  finalTone === 'subtle' && 'bg-border/30', 
-                  finalTone === 'brand' && 'bg-primary-foreground/20',
-                  finalTone === 'contrast' && 'bg-zinc-700/40'
-                )} />
+              <Separator className={cn(
+                finalTone === 'clean' && 'bg-border/40',
+                finalTone === 'subtle' && 'bg-border/30', 
+                finalTone === 'brand' && 'bg-primary-foreground/20',
+                finalTone === 'contrast' && 'bg-zinc-700/40'
+              )} />
               <div className="flex-shrink-0 p-4">
                 {footer}
               </div>
@@ -639,7 +601,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
   tone,
   size,
   title,
-  position = 'sticky', // Changed default to sticky
+  position = 'sticky',
   breadcrumbs = [],
   actions,
   className,
@@ -647,11 +609,11 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
   const { sidebarExpanded, setSidebarExpanded, isMobile } = useAdmin();
 
   return (
-      <header 
+    <header 
       ref={ref}
       className={cn(
-        'w-full shadow-sm bg-background/80 backdrop-blur-sm text-foreground flex-shrink-0 z-30', // Light transparency with backdrop blur
-        // Add positioning classes based on position prop
+        'w-full shadow-sm bg-background/95 backdrop-blur-md text-foreground flex-shrink-0 z-30 border-b border-border/50',
+        'transition-all duration-500 ease-out',
         position === 'sticky' && 'sticky top-0',
         position === 'fixed' && 'fixed top-0 left-0 right-0',
         position === 'relative' && 'relative',
@@ -660,22 +622,29 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
     >
       <div className="flex items-center justify-between px-4 lg:px-6 h-16">
         <div className="flex items-center gap-4 min-w-0">
-         {/* Mobile hamburger toggle */}
-        {isMobile && (
+          {/* Toggle button with smooth icon transition */}
           <button
-            className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            className={cn(
+              "p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all duration-300 ease-out",
+              "transform hover:scale-105 active:scale-95",
+              // Always show on mobile
+              isMobile && "block",
+              // Show on desktop for toggle functionality  
+              !isMobile && "block"
+            )}
             onClick={() => setSidebarExpanded(!sidebarExpanded)}
             aria-label={sidebarExpanded ? 'Close sidebar' : 'Open sidebar'}
           >
-            <Menu className="h-5 w-5" />
+            <Menu className={cn(
+              "h-5 w-5 transition-transform duration-300 ease-out",
+              sidebarExpanded && !isMobile && "rotate-180"
+            )} />
           </button>
-        )}
           
           {/* Title and Breadcrumbs */}
           <div className="min-w-0">
-            
             {breadcrumbs.length > 0 && (
-              <nav className="flex items-center gap-2  text-muted-foreground">
+              <nav className="flex items-center gap-2 text-muted-foreground">
                 {breadcrumbs.map((crumb, index) => (
                   <React.Fragment key={index}>
                     {index > 0 && <span>/</span>}
@@ -729,18 +698,19 @@ const AdminContent = forwardRef<HTMLElement, AdminContentProps>(({
   const { isMobile } = useAdmin();
 
   return (
-    <div className={cn(mainContentVariants({ mobile: isMobile }))}>
-      <main 
-        ref={ref}
-        className={cn('flex-1 min-w-0 overflow-auto', className)}
-      >
-        <div className="p-4 lg:p-6 w-full">
-          <div className="w-full  mx-auto">
-            {children}
-          </div>
+    <main 
+      ref={ref}
+      className={cn(
+        'flex-1 min-w-0 overflow-auto',
+        className
+      )}
+    >
+      <div className="p-4 lg:p-6 w-full">
+        <div className="w-full mx-auto">
+          {children}
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 });
 

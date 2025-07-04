@@ -1,5 +1,5 @@
 /**
- * Ultra-simple theme provider with pre-bundled themes
+ * Ultra-simple theme provider with pre-bundled themes - NO FLASH VERSION
  * @module @voilajsx/uikit
  * @file src/themes/theme-provider.tsx
  */
@@ -70,7 +70,7 @@ export interface ThemeProviderProps {
  */
 export declare const AVAILABLE_THEMES: Theme[];
 /**
- * Ultra-simple theme provider with pre-bundled themes
+ * Ultra-simple theme provider with pre-bundled themes - NO FLASH VERSION
  * @llm-pattern Basic usage (recommended)
  * <ThemeProvider theme="aurora" mode="dark">
  *   <App />

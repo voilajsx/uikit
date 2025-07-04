@@ -42,7 +42,7 @@ function HeaderDemo() {
   const [currentTone, setCurrentTone] = useState<'clean' | 'subtle' | 'brand' | 'contrast'>('clean');
   const [currentSize, setCurrentSize] = useState<'sm' | 'md' | 'lg' | 'xl' | 'full'>('xl');
   const [currentPosition, setCurrentPosition] = useState<'sticky' | 'fixed' | 'relative'>('sticky');
-  const [currentTheme, setCurrentTheme] = useState('default');
+  const [currentTheme, setCurrentTheme] = useState('studio');
   const [currentMode, setCurrentMode] = useState<'light' | 'dark'>('light');
 
   // Available themes

@@ -1,5 +1,5 @@
 /**
- * Admin Layout - FIXED with proper flex layout
+ * Admin Layout - FIXED with proper mobile detection and no flash
  * @module @voilajsx/uikit
  * @file src/components/layouts/admin.tsx
  */

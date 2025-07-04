@@ -1,5 +1,5 @@
 /**
- * Admin Layout demo - COMPOUND-ONLY with controls in main content
+ * Admin Layout demo - FIXED NO FLASH VERSION
  * @module @voilajsx/uikit
  * @file examples/src/pages/layouts/AdminDemo.tsx
  */
@@ -26,7 +26,7 @@ import {
   Palette,
   Layout
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 // Type definition
 interface NavigationItem {
@@ -40,11 +40,42 @@ interface NavigationItem {
   onClick?: () => void;
 }
 
+/**
+ * ✅ FIX: Apply theme immediately to prevent flash
+ */
+function applyThemeImmediately(theme: string, mode: 'light' | 'dark') {
+  const root = document.documentElement;
+  const themes = ['default', 'aurora', 'metro', 'neon', 'ruby', 'studio'];
+  
+  // Remove all existing themes and modes
+  themes.forEach(t => {
+    if (t !== 'default') {
+      root.classList.remove(`theme-${t}`);
+    }
+  });
+  root.classList.remove('light', 'dark');
+  
+  // Apply new theme and mode immediately
+  if (theme !== 'default') {
+    root.classList.add(`theme-${theme}`);
+  }
+  root.classList.add(mode);
+  
+  console.log(`🎨 Applied theme immediately: ${theme} (${mode})`);
+}
+
 function AdminDemo() {
+  // ✅ FIX: Initialize with immediate theme application
   const [currentPath, setCurrentPath] = useState('/admin/dashboard');
-  const [currentTone, setCurrentTone] = useState<'clean' | 'subtle' | 'brand' | 'contrast'>('subtle');
+  const [currentTone, setCurrentTone] = useState<'clean' | 'subtle' | 'brand' | 'contrast'>('brand');
   const [currentScheme, setCurrentScheme] = useState<'sidebar' | 'compact'>('sidebar');
-  const [currentTheme, setCurrentTheme] = useState('default');
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    // Apply metro theme immediately on initialization
+    const initialTheme = 'metro';
+    const initialMode = 'light';
+    applyThemeImmediately(initialTheme, initialMode);
+    return initialTheme;
+  });
   const [currentMode, setCurrentMode] = useState<'light' | 'dark'>('light');
   const [currentSize, setCurrentSize] = useState<'sm' | 'md' | 'lg' | 'xl' | 'full'>('lg');
 
@@ -53,28 +84,24 @@ function AdminDemo() {
   const modes = ['light', 'dark'] as const;
   const sizes = ['sm', 'md', 'lg', 'xl', 'full'] as const;
 
-  // Apply theme and mode to document root
-  React.useEffect(() => {
-    const root = document.documentElement;
-    
-    // Remove existing themes
-    themes.forEach(theme => {
-      if (theme !== 'default') {
-        root.classList.remove(`theme-${theme}`);
-      }
-    });
-    
-    // Remove existing modes
-    root.classList.remove('light', 'dark');
-    
-    // Apply current theme
-    if (currentTheme !== 'default') {
-      root.classList.add(`theme-${currentTheme}`);
-    }
-    
-    // Apply current mode
-    root.classList.add(currentMode);
+  // ✅ FIX: Use useLayoutEffect for synchronous theme application
+  useLayoutEffect(() => {
+    applyThemeImmediately(currentTheme, currentMode);
   }, [currentTheme, currentMode]);
+
+  // ✅ FIX: Updated theme setter with immediate application
+  const handleThemeChange = (newTheme: string) => {
+    // Apply immediately, then update state
+    applyThemeImmediately(newTheme, currentMode);
+    setCurrentTheme(newTheme);
+  };
+
+  // ✅ FIX: Updated mode setter with immediate application  
+  const handleModeChange = (newMode: 'light' | 'dark') => {
+    // Apply immediately, then update state
+    applyThemeImmediately(currentTheme, newMode);
+    setCurrentMode(newMode);
+  };
 
   // Simple navigation
   const navigation: NavigationItem[] = [
@@ -193,14 +220,14 @@ function AdminDemo() {
   ];
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       {/* Simple Header */}
       <div className="border-b border-border bg-muted/20">
         <div className="container mx-auto p-6">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-foreground">Admin Layout Demo</h1>
             <p className="text-lg text-muted-foreground">
-              Interactive demonstration of AdminLayout with compound components.
+              Interactive demonstration of AdminLayout with compound components - NO FLASH VERSION.
             </p>
           </div>
         </div>
@@ -338,13 +365,16 @@ function AdminDemo() {
                           key={theme}
                           variant={currentTheme === theme ? 'default' : 'outline'}
                           size="sm"
-                          onClick={() => setCurrentTheme(theme)}
+                          onClick={() => handleThemeChange(theme)}
                           className="capitalize"
                         >
                           {theme}
                         </Button>
                       ))}
                     </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Now switches instantly with no flash!
+                    </p>
                   </div>
 
                   {/* Mode Selection */}
@@ -358,7 +388,7 @@ function AdminDemo() {
                           key={mode}
                           variant={currentMode === mode ? 'default' : 'outline'}
                           size="sm"
-                          onClick={() => setCurrentMode(mode as 'light' | 'dark')}
+                          onClick={() => handleModeChange(mode as 'light' | 'dark')}
                           className="capitalize"
                         >
                           {mode}
@@ -390,7 +420,7 @@ function AdminDemo() {
                   </div>
                   
                   <div className="text-xs text-muted-foreground">
-                    <p><strong>Tip:</strong> Try different combinations to see how they work together!</p>
+                    <p><strong>✅ Fixed:</strong> No more theme flash when switching!</p>
                   </div>
                 </CardContent>
               </Card>

@@ -1,5 +1,5 @@
 /**
- * Ultra-simple theme provider with pre-bundled themes
+ * Ultra-simple theme provider with pre-bundled themes - NO FLASH VERSION
  * @module @voilajsx/uikit
  * @file src/themes/theme-provider.tsx
  */
@@ -105,7 +105,7 @@ const TONE_CLASSES: Record<Tone, string> = {
  * @llm-rule Available pre-bundled themes
  * All themes ship as CSS with the package
  */
-export const AVAILABLE_THEMES:Theme[] = [
+export const AVAILABLE_THEMES: Theme[] = [
   'default',   // Professional blue - business apps
   'aurora',    // Purple/green - creative apps  
   'metro',     // Transit blue - admin dashboards
@@ -118,7 +118,73 @@ export const AVAILABLE_THEMES:Theme[] = [
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 /**
- * Ultra-simple theme provider with pre-bundled themes
+ * ✅ FIX: Get initial theme state synchronously (no flash)
+ */
+function getInitialThemeState(
+  defaultTheme: Theme, 
+  defaultMode: Mode, 
+  detectSystem: boolean
+): { theme: Theme; mode: Mode } {
+  // Server-side rendering - use props
+  if (typeof window === 'undefined') {
+    return { theme: defaultTheme, mode: defaultMode };
+  }
+
+  try {
+    // Try to load saved preferences first
+    const saved = localStorage.getItem('uikit-theme');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      
+      // Validate saved theme is still available
+      if (AVAILABLE_THEMES.includes(parsed.theme) && 
+          ['light', 'dark'].includes(parsed.mode)) {
+        console.log(`🎨 Restored theme: ${parsed.theme} (${parsed.mode} mode)`);
+        return parsed;
+      }
+    }
+    
+    // No saved preference - check system preference if enabled
+    if (detectSystem) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const systemMode = prefersDark ? 'dark' : 'light';
+      console.log(`🎨 Using system preference: ${defaultTheme} (${systemMode} mode)`);
+      return { theme: defaultTheme, mode: systemMode };
+    }
+    
+    // Use props as fallback
+    console.log(`🎨 Using default: ${defaultTheme} (${defaultMode} mode)`);
+    return { theme: defaultTheme, mode: defaultMode };
+    
+  } catch (e) {
+    console.warn('Failed to load theme preferences, using defaults:', e);
+    return { theme: defaultTheme, mode: defaultMode };
+  }
+}
+
+/**
+ * ✅ FIX: Apply theme immediately on document (before React renders)
+ */
+function applyThemeImmediately(theme: Theme, mode: Mode) {
+  if (typeof window === 'undefined') return;
+  
+  const root = document.documentElement;
+  
+  // Remove existing theme and mode classes
+  root.classList.remove('light', 'dark');
+  AVAILABLE_THEMES.forEach(t => {
+    root.classList.remove(`theme-${t}`);
+  });
+  
+  // Add new classes immediately
+  root.classList.add(mode);
+  if (theme !== 'default') {
+    root.classList.add(`theme-${theme}`);
+  }
+}
+
+/**
+ * Ultra-simple theme provider with pre-bundled themes - NO FLASH VERSION
  * @llm-pattern Basic usage (recommended)
  * <ThemeProvider theme="aurora" mode="dark">
  *   <App />
@@ -135,75 +201,37 @@ export function ThemeProvider({
   mode = 'light',
   detectSystem = true
 }: ThemeProviderProps): React.JSX.Element {
-  const [themeState, setThemeState] = useState<{
-    theme: Theme;
-    mode: Mode;
-  }>({
-    theme,
-    mode
+  
+  // ✅ FIX: Initialize with correct theme from the start (no flash)
+  const [themeState, setThemeState] = useState(() => {
+    const initialState = getInitialThemeState(theme, mode, detectSystem);
+    
+    // ✅ CRITICAL: Apply theme immediately before React renders
+    applyThemeImmediately(initialState.theme, initialState.mode);
+    
+    return initialState;
   });
 
-  // Initialize from localStorage or system preference
+  // ✅ FIX: Apply theme classes when state changes (but not on initial mount)
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
-    try {
-      // Try to load saved preferences
-      const saved = localStorage.getItem('uikit-theme');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        
-        // Validate saved theme is still available
-        if (AVAILABLE_THEMES.includes(parsed.theme) && 
-            ['light', 'dark'].includes(parsed.mode)) {
-          setThemeState(parsed);
-          return;
-        }
-      }
-      
-      // No saved preference - check system preference
-      if (detectSystem) {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        setThemeState(prev => ({
-          ...prev,
-          mode: prefersDark ? 'dark' : 'light'
-        }));
-      }
-    } catch (e) {
-      console.warn('Failed to load theme preferences:', e);
-    }
-  }, [detectSystem]);
-  
-  // Apply theme classes when state changes
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
+    const { theme: currentTheme, mode: currentMode } = themeState;
     
-    const { theme, mode } = themeState;
-    const root = document.documentElement;
-    
-    // Remove existing theme and mode classes
-    root.classList.remove('light', 'dark');
-    AVAILABLE_THEMES.forEach(t => {
-      root.classList.remove(`theme-${t}`);
-    });
-    
-    // Add new classes
-    root.classList.add(mode);
-    if (theme !== 'default') {
-      root.classList.add(`theme-${theme}`);
-    }
+    // Apply theme classes
+    applyThemeImmediately(currentTheme, currentMode);
     
     // Save preferences
     try {
-      localStorage.setItem('uikit-theme', JSON.stringify({ theme, mode }));
+      localStorage.setItem('uikit-theme', JSON.stringify({ theme: currentTheme, mode: currentMode }));
     } catch (e) {
       console.warn('Failed to save theme preferences:', e);
     }
     
-    console.log(`🎨 Applied theme: ${theme} (${mode} mode)`);
+    console.log(`🎨 Applied theme: ${currentTheme} (${currentMode} mode)`);
   }, [themeState]);
   
-  // Listen for system preference changes
+  // ✅ FIX: Listen for system preference changes (but don't override saved preferences)
   useEffect(() => {
     if (!detectSystem || typeof window === 'undefined') return;
     
