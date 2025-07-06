@@ -22,7 +22,7 @@ import { useState } from 'react';
 
 function BlankDemo() {
   const [currentExample, setCurrentExample] = useState('404');
-  const [currentScheme, setCurrentScheme] = useState<'simple' | 'card'>('simple');
+  const [currentScheme, setCurrentScheme] = useState<'simple' | 'card' | 'empty'>('empty');
   const [currentTone, setCurrentTone] = useState<'clean' | 'subtle' | 'brand' | 'contrast'>('clean');
   const [currentSize, setCurrentSize] = useState<'sm' | 'md' | 'lg' | 'xl' | 'full'>('lg');
   const [currentTheme, setCurrentTheme] = useState('default');
@@ -60,8 +60,9 @@ function BlankDemo() {
       case '404':
         return (
           <>
-            <AlertTriangle className="h-16 w-16 mx-auto mb-6 text-destructive" />
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">404</h1>
+          <section class="bg-amber-100">
+ <AlertTriangle className="h-16 w-16 mx-auto mb-6 text-destructive" />
+            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 text-center">404</h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-md mx-auto">
               The page you're looking for doesn't exist.
             </p>
@@ -75,6 +76,8 @@ function BlankDemo() {
                 Go Back
               </Button>
             </div>
+          </section>
+           
           </>
         );
       
