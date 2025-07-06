@@ -277,6 +277,11 @@ const ValidatedInput = forwardRef<HTMLInputElement, ValidatedInputProps>(({
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   
+  // ✅ Sync internal state with external value changes
+  React.useEffect(() => {
+    setInputValue(value || '');
+  }, [value]);
+  
   const debouncedValue = useDebounce(inputValue, 300);
 
   const validateValue = useCallback((val: string): { isValid: boolean; message: string } => {
@@ -447,7 +452,7 @@ export interface ValidatedTextareaProps extends Omit<React.TextareaHTMLAttribute
   showCharCount?: boolean;
 }
 
-export const ValidatedTextarea = forwardRef<HTMLTextAreaElement, ValidatedTextareaProps>(({
+const ValidatedTextarea = forwardRef<HTMLTextAreaElement, ValidatedTextareaProps>(({
   value = '',
   onChange,
   onFocus,
@@ -467,6 +472,11 @@ export const ValidatedTextarea = forwardRef<HTMLTextAreaElement, ValidatedTextar
   const [touched, setTouched] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // ✅ Sync internal state with external value changes
+  React.useEffect(() => {
+    setInputValue(value || '');
+  }, [value]);
 
   const debouncedValue = useDebounce(inputValue, 300);
 
@@ -589,9 +599,15 @@ const ValidatedSelect = forwardRef<HTMLDivElement, ValidatedSelectProps>(({
   clearable = false,
   className,
 }, ref) => {
+  const [selectValue, setSelectValue] = useState(value);
   const [touched, setTouched] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // ✅ Sync internal state with external value changes
+  React.useEffect(() => {
+    setSelectValue(value || '');
+  }, [value]);
 
   const validateValue = useCallback((val: string): { isValid: boolean; message: string } => {
     if (required && !val) {
@@ -602,6 +618,7 @@ const ValidatedSelect = forwardRef<HTMLDivElement, ValidatedSelectProps>(({
 
   const handleValueChange = (newValue: string) => {
     setTouched(true);
+    setSelectValue(newValue);
     const result = validateValue(newValue);
     setIsValid(result.isValid);
     setErrorMessage(result.message);
@@ -624,7 +641,7 @@ const ValidatedSelect = forwardRef<HTMLDivElement, ValidatedSelectProps>(({
       )}
 
       <Select
-        value={value}
+        value={selectValue}
         onValueChange={handleValueChange}
         disabled={disabled}
       >
@@ -638,7 +655,7 @@ const ValidatedSelect = forwardRef<HTMLDivElement, ValidatedSelectProps>(({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className="bg-popover border-border">
-          {clearable && value && (
+          {clearable && selectValue && (
             <SelectItem value="" className="text-muted-foreground">
               Clear selection
             </SelectItem>
@@ -690,9 +707,15 @@ const ValidatedCheckbox = forwardRef<HTMLDivElement, ValidatedCheckboxProps>(({
   description,
   className,
 }, ref) => {
+  const [checkedValue, setCheckedValue] = useState(checked);
   const [touched, setTouched] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // ✅ Sync internal state with external value changes
+  React.useEffect(() => {
+    setCheckedValue(checked || false);
+  }, [checked]);
 
   const validateValue = useCallback((val: boolean): { isValid: boolean; message: string } => {
     if (required && !val) {
@@ -703,6 +726,7 @@ const ValidatedCheckbox = forwardRef<HTMLDivElement, ValidatedCheckboxProps>(({
 
   const handleChange = (newChecked: boolean) => {
     setTouched(true);
+    setCheckedValue(newChecked);
     const result = validateValue(newChecked);
     setIsValid(result.isValid);
     setErrorMessage(result.message);
@@ -715,7 +739,7 @@ const ValidatedCheckbox = forwardRef<HTMLDivElement, ValidatedCheckboxProps>(({
     <div className={cn('space-y-2', className)} ref={ref}>
       <div className="flex items-start space-x-2">
         <Checkbox
-          checked={checked}
+          checked={checkedValue}
           onCheckedChange={handleChange}
           disabled={disabled}
           className="mt-0.5"
@@ -833,6 +857,7 @@ export {
   
   // Simple Form Components (Recommended for 90% of use cases)
   ValidatedInput,
+  ValidatedTextarea,
   ValidatedSelect,
   ValidatedCheckbox,
   FormActions,
