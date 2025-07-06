@@ -63,7 +63,7 @@ export interface ValidatedTextareaProps extends Omit<React.TextareaHTMLAttribute
     rows?: number;
     showCharCount?: boolean;
 }
-export declare const ValidatedTextarea: React.ForwardRefExoticComponent<ValidatedTextareaProps & React.RefAttributes<HTMLTextAreaElement>>;
+declare const ValidatedTextarea: React.ForwardRefExoticComponent<ValidatedTextareaProps & React.RefAttributes<HTMLTextAreaElement>>;
 /**
  * Validated Select - Form select with built-in validation
  */
@@ -110,7 +110,7 @@ export interface FormActionsProps {
     className?: string;
 }
 declare const FormActions: React.ForwardRefExoticComponent<FormActionsProps & React.RefAttributes<HTMLDivElement>>;
-export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField, ValidatedInput, ValidatedSelect, ValidatedCheckbox, FormActions, };
+export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField, ValidatedInput, ValidatedTextarea, ValidatedSelect, ValidatedCheckbox, FormActions, };
 /**
  * @llm-usage Validated Form Examples (Recommended for 90% of cases)
  *
