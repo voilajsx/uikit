@@ -6,8 +6,8 @@ import { Badge as F } from "./badge.js";
 import { Alert as Y, AlertDescription as K } from "./alert.js";
 import { Dialog as Q, DialogContent as R, DialogHeader as W, DialogTitle as X, DialogDescription as Z, DialogFooter as _ } from "./dialog.js";
 import { TooltipProvider as ee, Tooltip as y, TooltipTrigger as v, TooltipContent as w } from "./tooltip.js";
-import { ValidatedInput as x, FormActions as re, ValidatedSelect as te, ValidatedTextarea as ae } from "./form.js";
-import { c as b } from "./createLucideIcon-B45kRl5r.js";
+import { ValidatedInput as x, FormActions as ae, ValidatedSelect as te, ValidatedTextarea as re } from "./form.js";
+import { c as N } from "./createLucideIcon-B45kRl5r.js";
 import { E as ne } from "./ellipsis-BhAoKPVk.js";
 /**
  * @license lucide-react v0.468.0 - ISC
@@ -15,7 +15,7 @@ import { E as ne } from "./ellipsis-BhAoKPVk.js";
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const ie = b("ArrowLeft", [
+const se = N("ArrowLeft", [
   ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
   ["path", { d: "M19 12H5", key: "x3x0zl" }]
 ]);
@@ -25,7 +25,7 @@ const ie = b("ArrowLeft", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const se = b("CircleCheckBig", [
+const ie = N("CircleCheckBig", [
   ["path", { d: "M21.801 10A10 10 0 1 1 17 3.335", key: "yps3ct" }],
   ["path", { d: "m9 11 3 3L22 4", key: "1pflzl" }]
 ]);
@@ -35,7 +35,7 @@ const se = b("CircleCheckBig", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const le = b("Copy", [
+const le = N("Copy", [
   ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
   ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
 ]);
@@ -45,7 +45,7 @@ const le = b("Copy", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const ce = b("Trash2", [
+const ce = N("Trash2", [
   ["path", { d: "M3 6h18", key: "d0wm0j" }],
   ["path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6", key: "4alrt4" }],
   ["path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2", key: "v07s0e" }],
@@ -58,7 +58,7 @@ const ce = b("Trash2", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const I = b("TriangleAlert", [
+const I = N("TriangleAlert", [
   [
     "path",
     {
@@ -68,33 +68,33 @@ const I = b("TriangleAlert", [
   ],
   ["path", { d: "M12 9v4", key: "juzpu7" }],
   ["path", { d: "M12 17h.01", key: "p32p05" }]
-]), B = (r, a) => {
-  if (a.formatter)
-    return a.formatter(r);
-  switch (a.type) {
+]), B = (a, r) => {
+  if (r.formatter)
+    return r.formatter(a);
+  switch (r.type) {
     case "date":
-      return new Date(r).toLocaleDateString();
+      return new Date(a).toLocaleDateString();
     case "datetime":
-      return new Date(r).toLocaleString();
+      return new Date(a).toLocaleString();
     case "boolean":
-      return r ? "✅ Yes" : "❌ No";
+      return a ? "✅ Yes" : "❌ No";
     case "number":
-      return typeof r == "number" ? r.toLocaleString() : r;
+      return typeof a == "number" ? a.toLocaleString() : a;
     case "json":
-      return /* @__PURE__ */ e("pre", { className: "text-xs bg-muted p-2 rounded overflow-auto max-h-32", children: JSON.stringify(r, null, 2) });
+      return /* @__PURE__ */ e("pre", { className: "text-xs bg-muted p-2 rounded overflow-auto max-h-32", children: JSON.stringify(a, null, 2) });
     case "badge":
-      return /* @__PURE__ */ e(F, { variant: a.badgeVariant || "default", children: String(r) });
+      return /* @__PURE__ */ e(F, { variant: r.badgeVariant || "default", children: String(a) });
     default:
-      return String(r);
+      return String(a);
   }
-}, de = (r) => {
-  navigator.clipboard.writeText(r);
+}, de = (a) => {
+  navigator.clipboard.writeText(a);
 };
 function Le({
-  title: r,
-  subtitle: a,
+  title: a,
+  subtitle: r,
   icon: n,
-  onBack: s,
+  onBack: i,
   status: l,
   actions: c = [],
   formSections: m = [],
@@ -104,7 +104,7 @@ function Le({
   onFormChange: f,
   onSave: g,
   onCancel: u,
-  saveText: N = "Save Changes",
+  saveText: b = "Save Changes",
   cancelText: O = "Cancel",
   saving: k = !1,
   formValid: $ = !0,
@@ -114,18 +114,18 @@ function Le({
   children: E,
   className: G = ""
 }) {
-  const j = c.find((i) => i.variant === "destructive"), z = c.find((i) => i.id === "edit"), M = c.filter((i) => i.variant !== "destructive" && i.id !== "edit"), V = [
+  const j = c.find((s) => s.variant === "destructive"), z = c.find((s) => s.id === "edit"), M = c.filter((s) => s.variant !== "destructive" && s.id !== "edit"), V = [
     ...j ? [j] : [],
     ...z && !o ? [z] : [],
-    ...M.filter((i) => i.position !== "secondary")
-  ], J = M.filter((i) => i.position === "secondary");
+    ...M.filter((s) => s.position !== "secondary")
+  ], J = M.filter((s) => s.position === "secondary");
   return /* @__PURE__ */ e(ee, { children: /* @__PURE__ */ e("div", { className: C("min-h-screen p-6", G), children: /* @__PURE__ */ t("div", { className: "max-w-7xl mx-auto space-y-8", children: [
     /* @__PURE__ */ e("div", { children: /* @__PURE__ */ t("div", { className: "flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6", children: [
       /* @__PURE__ */ t("div", { className: "flex items-center gap-3 min-w-0 flex-1", children: [
         n && /* @__PURE__ */ e("div", { className: "w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ e(n, { className: "w-6 h-6 text-primary" }) }),
         /* @__PURE__ */ t("div", { className: "min-w-0 flex-1", children: [
-          /* @__PURE__ */ e("h1", { className: "text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-tight", children: T ? "Loading..." : r }),
-          a && /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground mt-0.5 leading-relaxed", children: a })
+          /* @__PURE__ */ e("h1", { className: "text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-tight", children: T ? "Loading..." : a }),
+          r && /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground mt-0.5 leading-relaxed", children: r })
         ] })
       ] }),
       /* @__PURE__ */ t("div", { className: "flex items-center gap-2 shrink-0 lg:ml-4", children: [
@@ -135,18 +135,18 @@ function Le({
             {
               variant: "outline",
               size: "sm",
-              onClick: s,
+              onClick: i,
               className: "flex items-center gap-1.5",
               children: [
-                /* @__PURE__ */ e(ie, { className: "w-4 h-4" }),
+                /* @__PURE__ */ e(se, { className: "w-4 h-4" }),
                 /* @__PURE__ */ e("span", { className: "hidden sm:inline", children: "Back" })
               ]
             }
           ) }),
           /* @__PURE__ */ e(w, { side: "bottom", children: "Go back" })
         ] }),
-        o && g && u ? /* @__PURE__ */ t("form", { onSubmit: (i) => {
-          i.preventDefault(), g();
+        o && g && u ? /* @__PURE__ */ t("form", { onSubmit: (s) => {
+          s.preventDefault(), g();
         }, className: "flex items-center gap-2", children: [
           /* @__PURE__ */ e(
             h,
@@ -169,27 +169,27 @@ function Le({
               children: k ? /* @__PURE__ */ t("div", { className: "flex items-center gap-1", children: [
                 /* @__PURE__ */ e("div", { className: "w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" }),
                 /* @__PURE__ */ e("span", { className: "hidden sm:inline", children: "Saving..." })
-              ] }) : N
+              ] }) : b
             }
           )
         ] }) : /* @__PURE__ */ t(P, { children: [
-          V.slice(0, 2).map((i) => /* @__PURE__ */ t(y, { children: [
+          V.slice(0, 2).map((s) => /* @__PURE__ */ t(y, { children: [
             /* @__PURE__ */ e(v, { asChild: !0, children: /* @__PURE__ */ t(
               h,
               {
-                variant: i.variant || "default",
+                variant: s.variant || "default",
                 size: "sm",
-                onClick: i.onClick,
-                disabled: i.disabled || T,
+                onClick: s.onClick,
+                disabled: s.disabled || T,
                 className: "flex items-center gap-1.5",
                 children: [
-                  /* @__PURE__ */ e(i.icon, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ e("span", { className: "hidden sm:inline", children: i.loading ? "Loading..." : i.label })
+                  /* @__PURE__ */ e(s.icon, { className: "w-4 h-4" }),
+                  /* @__PURE__ */ e("span", { className: "hidden sm:inline", children: s.loading ? "Loading..." : s.label })
                 ]
               }
             ) }),
-            /* @__PURE__ */ e(w, { side: "bottom", children: i.label })
-          ] }, i.id)),
+            /* @__PURE__ */ e(w, { side: "bottom", children: s.label })
+          ] }, s.id)),
           (V.length > 2 || J.length > 0) && /* @__PURE__ */ t(y, { children: [
             /* @__PURE__ */ e(v, { asChild: !0, children: /* @__PURE__ */ e(h, { variant: "outline", size: "sm", className: "px-2", children: /* @__PURE__ */ e(ne, { className: "w-4 h-4" }) }) }),
             /* @__PURE__ */ e(w, { side: "bottom", children: "More actions" })
@@ -207,10 +207,10 @@ function Le({
     l && /* @__PURE__ */ e(oe, { ...l }),
     /* @__PURE__ */ t("div", { className: "grid grid-cols-1 xl:grid-cols-3 gap-8", children: [
       /* @__PURE__ */ t("div", { className: "xl:col-span-2 space-y-6", children: [
-        m.map((i, U) => /* @__PURE__ */ e(
+        m.map((s, U) => /* @__PURE__ */ e(
           he,
           {
-            section: i,
+            section: s,
             isEditing: o,
             onFieldChange: f
           },
@@ -226,43 +226,43 @@ function Le({
   ] }) }) });
 }
 function oe({
-  active: r,
-  activeLabel: a = "Active",
+  active: a,
+  activeLabel: r = "Active",
   inactiveLabel: n = "Inactive",
-  activeText: s = "Entity is operational and accessible",
+  activeText: i = "Entity is operational and accessible",
   inactiveText: l = "Entity is inactive and cannot access services",
   customBadge: c
 }) {
-  return /* @__PURE__ */ e(L, { className: "border-b border-border-50order/50", children: /* @__PURE__ */ e(D, { className: "p-4", children: /* @__PURE__ */ t("div", { className: "flex items-center justify-between", children: [
+  return /* @__PURE__ */ e(L, { className: "border-0 shadow-lg", children: /* @__PURE__ */ e(D, { className: "p-4", children: /* @__PURE__ */ t("div", { className: "flex items-center justify-between", children: [
     /* @__PURE__ */ t("div", { className: "flex items-center gap-4", children: [
       /* @__PURE__ */ e("div", { className: C(
         "w-10 h-10 rounded-full flex items-center justify-center",
-        r ? "bg-green-100 text-green-600" : "bg-orange-100 text-orange-600"
-      ), children: r ? /* @__PURE__ */ e(se, { className: "w-5 h-5" }) : /* @__PURE__ */ e(I, { className: "w-5 h-5" }) }),
+        a ? "bg-green-100 text-green-600" : "bg-orange-100 text-orange-600"
+      ), children: a ? /* @__PURE__ */ e(ie, { className: "w-5 h-5" }) : /* @__PURE__ */ e(I, { className: "w-5 h-5" }) }),
       /* @__PURE__ */ t("div", { children: [
         /* @__PURE__ */ t("h3", { className: "font-semibold text-foreground", children: [
           "Status: ",
-          r ? a : n
+          a ? r : n
         ] }),
-        /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground", children: r ? s : l })
+        /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground", children: a ? i : l })
       ] })
     ] }),
-    c || /* @__PURE__ */ t(F, { variant: r ? "default" : "secondary", className: "flex items-center gap-2", children: [
+    c || /* @__PURE__ */ t(F, { variant: a ? "default" : "secondary", className: "flex items-center gap-2", children: [
       /* @__PURE__ */ e("div", { className: C(
         "w-2 h-2 rounded-full",
-        r ? "bg-green-500" : "bg-orange-500"
+        a ? "bg-green-500" : "bg-orange-500"
       ) }),
-      r ? a : n
+      a ? r : n
     ] })
   ] }) }) });
 }
 function me({
-  data: r,
-  title: a = "Metadata"
+  data: a,
+  title: r = "Metadata"
 }) {
-  return /* @__PURE__ */ t(L, { children: [
-    /* @__PURE__ */ e(q, { className: "border-b border-border-50", children: /* @__PURE__ */ e(H, { className: "text-lg", children: a }) }),
-    /* @__PURE__ */ e(D, { className: "p-4 md:p-6 space-y-4", children: /* @__PURE__ */ e("div", { className: "space-y-3", children: r.map((n, s) => /* @__PURE__ */ t("div", { children: [
+  return /* @__PURE__ */ t(L, { className: "border-0 shadow-lg", children: [
+    /* @__PURE__ */ e(q, { className: "border-0", children: /* @__PURE__ */ e(H, { className: "text-lg", children: r }) }),
+    /* @__PURE__ */ e(D, { className: "p-4 md:p-6 space-y-4", children: /* @__PURE__ */ e("div", { className: "space-y-3", children: a.map((n, i) => /* @__PURE__ */ t("div", { children: [
       /* @__PURE__ */ t("label", { className: "text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1", children: [
         n.icon && /* @__PURE__ */ e(n.icon, { className: "w-3 h-3" }),
         n.label
@@ -286,84 +286,84 @@ function me({
           ] })
         ] })
       ] }) : /* @__PURE__ */ e("div", { className: "text-sm break-words", children: B(n.value, n) }) })
-    ] }, s)) }) })
+    ] }, i)) }) })
   ] });
 }
 function he({
-  section: r,
-  isEditing: a,
+  section: a,
+  isEditing: r,
   onFieldChange: n
 }) {
-  return /* @__PURE__ */ t(L, { children: [
-    /* @__PURE__ */ t(q, { className: "border-b border-border-50", children: [
+  return /* @__PURE__ */ t(L, { className: "border-0 shadow-lg", children: [
+    /* @__PURE__ */ t(q, { className: "border-0", children: [
       /* @__PURE__ */ t(H, { className: "flex items-center gap-3", children: [
-        r.icon && /* @__PURE__ */ e("div", { className: "w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center", children: /* @__PURE__ */ e(r.icon, { className: "w-4 h-4 text-primary" }) }),
-        /* @__PURE__ */ e("span", { className: "bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent", children: r.title })
+        a.icon && /* @__PURE__ */ e("div", { className: "w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center", children: /* @__PURE__ */ e(a.icon, { className: "w-4 h-4 text-primary" }) }),
+        /* @__PURE__ */ e("span", { className: "bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent", children: a.title })
       ] }),
-      r.description && /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground", children: r.description })
+      a.description && /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground", children: a.description })
     ] }),
-    /* @__PURE__ */ e(D, { className: "p-4 md:p-6", children: /* @__PURE__ */ e("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6", children: r.fields.map((s) => /* @__PURE__ */ e("div", { className: s.type === "textarea" ? "md:col-span-2" : "", children: /* @__PURE__ */ e(
+    /* @__PURE__ */ e(D, { className: "p-4 md:p-6", children: /* @__PURE__ */ e("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6", children: a.fields.map((i) => /* @__PURE__ */ e("div", { className: i.type === "textarea" ? "md:col-span-2" : "", children: /* @__PURE__ */ e(
       pe,
       {
-        field: s,
-        isEditing: a,
-        onChange: (l) => n == null ? void 0 : n(s.key, l)
+        field: i,
+        isEditing: r,
+        onChange: (l) => n == null ? void 0 : n(i.key, l)
       }
-    ) }, s.key)) }) })
+    ) }, i.key)) }) })
   ] });
 }
 function pe({
-  field: r,
-  isEditing: a,
+  field: a,
+  isEditing: r,
   onChange: n
 }) {
-  var l, c, m, d, p, o, f, g, u, N;
-  const s = {
-    label: r.label,
-    value: String(r.value || ""),
+  var l, c, m, d, p, o, f, g, u, b;
+  const i = {
+    label: a.label,
+    value: String(a.value || ""),
     onChange: n,
-    disabled: !a || r.disabled,
-    required: r.required,
-    placeholder: r.placeholder
+    disabled: !r || a.disabled,
+    required: a.required,
+    placeholder: a.placeholder
   };
-  switch (r.type) {
+  switch (a.type) {
     case "textarea":
       return /* @__PURE__ */ e(
-        ae,
+        re,
         {
-          ...s,
-          rows: r.rows || 3,
-          minLength: (l = r.validation) == null ? void 0 : l.minLength,
-          maxLength: (c = r.validation) == null ? void 0 : c.maxLength
+          ...i,
+          rows: a.rows || 3,
+          minLength: (l = a.validation) == null ? void 0 : l.minLength,
+          maxLength: (c = a.validation) == null ? void 0 : c.maxLength
         }
       );
     case "select":
       return /* @__PURE__ */ e(
         te,
         {
-          ...s,
-          options: r.options || []
+          ...i,
+          options: a.options || []
         }
       );
     case "email":
       return /* @__PURE__ */ e(
         x,
         {
-          ...s,
+          ...i,
           type: "email",
-          minLength: (m = r.validation) == null ? void 0 : m.minLength,
-          maxLength: (d = r.validation) == null ? void 0 : d.maxLength,
-          pattern: (p = r.validation) == null ? void 0 : p.pattern
+          minLength: (m = a.validation) == null ? void 0 : m.minLength,
+          maxLength: (d = a.validation) == null ? void 0 : d.maxLength,
+          pattern: (p = a.validation) == null ? void 0 : p.pattern
         }
       );
     case "password":
       return /* @__PURE__ */ e(
         x,
         {
-          ...s,
+          ...i,
           type: "password",
-          minLength: (o = r.validation) == null ? void 0 : o.minLength,
-          maxLength: (f = r.validation) == null ? void 0 : f.maxLength,
+          minLength: (o = a.validation) == null ? void 0 : o.minLength,
+          maxLength: (f = a.validation) == null ? void 0 : f.maxLength,
           showPasswordStrength: !0,
           showPasswordToggle: !0
         }
@@ -372,7 +372,7 @@ function pe({
       return /* @__PURE__ */ e(
         x,
         {
-          ...s,
+          ...i,
           type: "number"
         }
       );
@@ -380,64 +380,64 @@ function pe({
       return /* @__PURE__ */ e(
         x,
         {
-          ...s,
+          ...i,
           type: "text",
-          minLength: (g = r.validation) == null ? void 0 : g.minLength,
-          maxLength: (u = r.validation) == null ? void 0 : u.maxLength,
-          pattern: (N = r.validation) == null ? void 0 : N.pattern
+          minLength: (g = a.validation) == null ? void 0 : g.minLength,
+          maxLength: (u = a.validation) == null ? void 0 : u.maxLength,
+          pattern: (b = a.validation) == null ? void 0 : b.pattern
         }
       );
   }
 }
 function De({
-  open: r,
-  entity: a,
+  open: a,
+  entity: r,
   confirmationValue: n,
-  onConfirmationChange: s,
+  onConfirmationChange: i,
   onConfirm: l,
   onCancel: c,
   loading: m = !1
 }) {
-  const d = n === a.name, p = (o) => {
+  const d = n === r.name, p = (o) => {
     o.preventDefault(), d && !m && l();
   };
-  return /* @__PURE__ */ e(Q, { open: r, onOpenChange: c, children: /* @__PURE__ */ t(R, { className: "max-w-md", children: [
+  return /* @__PURE__ */ e(Q, { open: a, onOpenChange: c, children: /* @__PURE__ */ t(R, { className: "max-w-md", children: [
     /* @__PURE__ */ t(W, { children: [
       /* @__PURE__ */ t(X, { className: "flex items-center gap-3 text-destructive", children: [
         /* @__PURE__ */ e("div", { className: "w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center", children: /* @__PURE__ */ e(ce, { className: "w-5 h-5 text-destructive" }) }),
         "Delete ",
-        a.type
+        r.type
       ] }),
       /* @__PURE__ */ t(Z, { children: [
         "This action cannot be undone. This will permanently delete the ",
-        a.type.toLowerCase(),
+        r.type.toLowerCase(),
         "."
       ] })
     ] }),
     /* @__PURE__ */ t("form", { onSubmit: p, children: [
       /* @__PURE__ */ t("div", { className: "space-y-4", children: [
         /* @__PURE__ */ e("div", { className: "p-4 bg-destructive/5 border border-destructive/20 rounded-lg", children: /* @__PURE__ */ t("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ e("div", { className: "w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center", children: a.icon ? /* @__PURE__ */ e(a.icon, { className: "w-4 h-4 text-primary" }) : /* @__PURE__ */ e("span", { className: "text-primary font-bold text-sm", children: a.name.charAt(0).toUpperCase() }) }),
+          /* @__PURE__ */ e("div", { className: "w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center", children: r.icon ? /* @__PURE__ */ e(r.icon, { className: "w-4 h-4 text-primary" }) : /* @__PURE__ */ e("span", { className: "text-primary font-bold text-sm", children: r.name.charAt(0).toUpperCase() }) }),
           /* @__PURE__ */ t("div", { children: [
-            /* @__PURE__ */ e("p", { className: "font-semibold text-foreground", children: a.name }),
-            /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground", children: a.type })
+            /* @__PURE__ */ e("p", { className: "font-semibold text-foreground", children: r.name }),
+            /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground", children: r.type })
           ] })
         ] }) }),
         /* @__PURE__ */ e(
           x,
           {
             required: !0,
-            label: `Type "${a.name}" to confirm:`,
-            placeholder: a.name,
+            label: `Type "${r.name}" to confirm:`,
+            placeholder: r.name,
             value: n,
-            onChange: s
+            onChange: i
           }
         )
       ] }),
       /* @__PURE__ */ e(_, { className: "mt-6", children: /* @__PURE__ */ e(
-        re,
+        ae,
         {
-          submitText: `Delete ${a.type}`,
+          submitText: `Delete ${r.type}`,
           cancelText: "Cancel",
           showCancel: !0,
           loading: m,

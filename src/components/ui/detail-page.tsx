@@ -398,7 +398,7 @@ function StatusBanner({
   customBadge
 }: StatusConfig) {
   return (
-    <Card className="border-b border-border-50order/50">
+    <Card className="border-0 shadow-lg">
       <CardContent className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -447,8 +447,8 @@ function MetadataCard({
   title?: string;
 }) {
   return (
-    <Card>
-      <CardHeader className="border-b border-border-50">
+    <Card className="border-0 shadow-lg">
+      <CardHeader className="border-0">
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
       <CardContent className="p-4 md:p-6 space-y-4">
@@ -504,8 +504,8 @@ function FormSectionCard({
   onFieldChange?: (key: string, value: any) => void;
 }) {
   return (
-    <Card>
-      <CardHeader className="border-b border-border-50">
+    <Card className="border-0 shadow-lg">
+      <CardHeader className="border-0">
         <CardTitle className="flex items-center gap-3">
           {section.icon && (
             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
