@@ -195,6 +195,10 @@
       "import": "./dist/tooltip.js",
       "types": "./dist/types/components/ui/tooltip.d.ts"
     },
+    "./detail-page": {
+      "import": "./dist/detail-page.js",
+      "types": "./dist/types/components/ui/detail-page.d.ts"
+    },
     "./admin": {
       "import": "./dist/admin.js",
       "types": "./dist/types/components/layouts/admin.d.ts"
