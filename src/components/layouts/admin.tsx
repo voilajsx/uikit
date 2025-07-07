@@ -750,7 +750,7 @@ const AdminContent = forwardRef<HTMLElement, AdminContentProps>(({
         className
       )}
     >
-      <div className="p-4 lg:p-6 w-full">
+      <div className="">
         <div className="w-full mx-auto">
           {children}
         </div>
