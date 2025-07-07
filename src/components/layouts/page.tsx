@@ -11,6 +11,14 @@ import { cn } from '@/lib/utils';
 import { Header, HeaderLogo, HeaderNav } from '@/components/sections/header';
 import { Footer } from '@/components/sections/footer';
 import { Container } from '@/components/sections/container';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import type { NavigationItem, Size, Tone } from '@/types';
 
 /**
@@ -191,6 +199,8 @@ export interface PageContentProps {
   sidebarPosition?: 'sticky' | 'fixed' | 'relative';
   /** OPTIONAL: Breadcrumb items */
   breadcrumbs?: { label: string; href?: string }[];
+  /** OPTIONAL: Breadcrumb navigation handler */
+  onBreadcrumbNavigate?: (href: string) => void;
   /** OPTIONAL: Page title (shown above breadcrumbs) */
   title?: string;
   /** OPTIONAL: Additional CSS classes */
@@ -198,7 +208,6 @@ export interface PageContentProps {
   /** REQUIRED: Page content */
   children: React.ReactNode;
 }
-
 
 const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
   tone,
@@ -210,6 +219,7 @@ const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
   onNavigate,
   sidebarPosition = 'relative',
   breadcrumbs = [],
+  onBreadcrumbNavigate,
   title,
   className,
   children,
@@ -220,42 +230,62 @@ const PageContent = forwardRef<HTMLDivElement, PageContentProps>(({
   const finalSidebar = sidebar !== 'none' ? sidebar : (scheme === 'sidebar' ? 'left' : 'none');
   
   // Handle breadcrumb navigation
-  const handleBreadcrumbClick = (crumb: { label: string; href?: string }) => {
-    if (crumb.href && onNavigate) {
+  const handleBreadcrumbClick = (href: string) => {
+    if (onBreadcrumbNavigate) {
+      onBreadcrumbNavigate(href);
+    } else if (onNavigate) {
       // Create a navigation item for the breadcrumb
       const navItem: NavigationItem = {
-        key: crumb.href,
-        label: crumb.label,
-        href: crumb.href
+        key: href,
+        label: href,
+        href: href
       };
-      onNavigate(crumb.href, navItem);
+      onNavigate(href, navItem);
     }
   };
 
-  // Render breadcrumbs component
+  // Render breadcrumbs component using UI breadcrumb components
   const renderBreadcrumbs = () => {
     if (breadcrumbs.length === 0) return null;
 
     return (
-      <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-        {breadcrumbs.map((crumb, index) => (
-          <React.Fragment key={index}>
-            {index > 0 && (
-              <span className="text-muted-foreground/60">/</span>
-            )}
-            {crumb.href ? (
-              <button 
-                onClick={() => handleBreadcrumbClick(crumb)}
-                className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
-              >
-                {crumb.label}
-              </button>
-            ) : (
-              <span className="text-foreground font-medium">{crumb.label}</span>
-            )}
-          </React.Fragment>
-        ))}
-      </nav>
+      <div className="mb-6">
+        <Breadcrumb>
+          <BreadcrumbList>
+            {breadcrumbs.map((crumb, index) => (
+              <React.Fragment key={index}>
+                <BreadcrumbItem>
+                  {crumb.href ? (
+                    <BreadcrumbLink
+                      asChild={!!(onBreadcrumbNavigate || onNavigate)}
+                      {...((onBreadcrumbNavigate || onNavigate) 
+                        ? {
+                            onClick: (e: React.MouseEvent) => {
+                              e.preventDefault();
+                              handleBreadcrumbClick(crumb.href!);
+                            }
+                          }
+                        : { href: crumb.href }
+                      )}
+                    >
+                      {(onBreadcrumbNavigate || onNavigate) ? (
+                        <button type="button">
+                          {crumb.label}
+                        </button>
+                      ) : (
+                        crumb.label
+                      )}
+                    </BreadcrumbLink>
+                  ) : (
+                    <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                  )}
+                </BreadcrumbItem>
+                {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+              </React.Fragment>
+            ))}
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
     );
   };
 
@@ -476,5 +506,22 @@ export {
  *     <YourContent />
  *   </PageLayout.Content>
  *   <PageLayout.Footer tone="contrast" navigation={legalNav} />
+ * </PageLayout>
+ * 
+ * With breadcrumbs and title:
+ * <PageLayout scheme="default" tone="clean">
+ *   <PageLayout.Header navigation={nav} logo={<Logo />} />
+ *   <PageLayout.Content
+ *     title="User Profile"
+ *     breadcrumbs={[
+ *       { label: 'Home', href: '/' },
+ *       { label: 'Users', href: '/users' },
+ *       { label: 'John Doe' }
+ *     ]}
+ *     onBreadcrumbNavigate={(href) => navigate(href)}
+ *   >
+ *     <UserProfileContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer copyright="© 2024" />
  * </PageLayout>
  */

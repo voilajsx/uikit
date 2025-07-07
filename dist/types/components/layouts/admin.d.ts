@@ -69,6 +69,8 @@ export interface AdminHeaderProps {
         label: string;
         href?: string;
     }[];
+    /** OPTIONAL: Breadcrumb navigation handler */
+    onBreadcrumbNavigate?: (href: string) => void;
     /** OPTIONAL: Header actions (buttons, user menu, etc.) */
     actions?: React.ReactNode;
     /** OPTIONAL: Additional CSS classes */

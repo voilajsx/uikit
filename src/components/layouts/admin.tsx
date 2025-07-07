@@ -12,6 +12,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import type { NavigationItem, Size, Tone } from '@/types';
 
@@ -593,6 +601,8 @@ export interface AdminHeaderProps {
   position?: 'sticky' | 'fixed' | 'relative';
   /** OPTIONAL: Breadcrumb items */
   breadcrumbs?: { label: string; href?: string }[];
+  /** OPTIONAL: Breadcrumb navigation handler */
+  onBreadcrumbNavigate?: (href: string) => void;
   /** OPTIONAL: Header actions (buttons, user menu, etc.) */
   actions?: React.ReactNode;
   /** OPTIONAL: Additional CSS classes */
@@ -605,6 +615,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
   title,
   position = 'sticky',
   breadcrumbs = [],
+  onBreadcrumbNavigate,
   actions,
   className,
 }, ref) => {
@@ -626,7 +637,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
       )}
     >
       <div className="flex items-center justify-between px-4 lg:px-6 h-16">
-        <div className="flex items-center gap-4 min-w-0">
+        <div className="flex items-center gap-4 min-w-0 flex-1">
           {/* Toggle button with smooth icon transition */}
           <button
             className={cn(
@@ -647,22 +658,51 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(({
           </button>
           
           {/* Title and Breadcrumbs */}
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
+            {/* Title */}
+            {title && !breadcrumbs.length && (
+              <h1 className="text-lg font-semibold text-foreground truncate">
+                {title}
+              </h1>
+            )}
+            
+            {/* Breadcrumbs */}
             {breadcrumbs.length > 0 && (
-              <nav className="flex items-center gap-2 text-muted-foreground">
-                {breadcrumbs.map((crumb, index) => (
-                  <React.Fragment key={index}>
-                    {index > 0 && <span>/</span>}
-                    {crumb.href ? (
-                      <button className="hover:text-foreground transition-colors">
-                        {crumb.label}
-                      </button>
-                    ) : (
-                      <span>{crumb.label}</span>
-                    )}
-                  </React.Fragment>
-                ))}
-              </nav>
+              <Breadcrumb>
+                <BreadcrumbList>
+                  {breadcrumbs.map((crumb, index) => (
+                    <React.Fragment key={index}>
+                      <BreadcrumbItem>
+                        {crumb.href ? (
+                          <BreadcrumbLink
+                            asChild={!!onBreadcrumbNavigate}
+                            {...(onBreadcrumbNavigate 
+                              ? {
+                                  onClick: (e: React.MouseEvent) => {
+                                    e.preventDefault();
+                                    onBreadcrumbNavigate(crumb.href!);
+                                  }
+                                }
+                              : { href: crumb.href }
+                            )}
+                          >
+                            {onBreadcrumbNavigate ? (
+                              <button type="button">
+                                {crumb.label}
+                              </button>
+                            ) : (
+                              crumb.label
+                            )}
+                          </BreadcrumbLink>
+                        ) : (
+                          <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                        )}
+                      </BreadcrumbItem>
+                      {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+                    </React.Fragment>
+                  ))}
+                </BreadcrumbList>
+              </Breadcrumb>
             )}
           </div>
         </div>
@@ -710,7 +750,7 @@ const AdminContent = forwardRef<HTMLElement, AdminContentProps>(({
         className
       )}
     >
-      <div className=" w-full">
+      <div className="p-4 lg:p-6 w-full">
         <div className="w-full mx-auto">
           {children}
         </div>

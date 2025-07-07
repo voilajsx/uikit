@@ -77,6 +77,8 @@ export interface PageContentProps {
         label: string;
         href?: string;
     }[];
+    /** OPTIONAL: Breadcrumb navigation handler */
+    onBreadcrumbNavigate?: (href: string) => void;
     /** OPTIONAL: Page title (shown above breadcrumbs) */
     title?: string;
     /** OPTIONAL: Additional CSS classes */
@@ -157,6 +159,23 @@ export { PageLayout, PageHeader, PageContent, PageFooter, usePage };
  *     <YourContent />
  *   </PageLayout.Content>
  *   <PageLayout.Footer tone="contrast" navigation={legalNav} />
+ * </PageLayout>
+ *
+ * With breadcrumbs and title:
+ * <PageLayout scheme="default" tone="clean">
+ *   <PageLayout.Header navigation={nav} logo={<Logo />} />
+ *   <PageLayout.Content
+ *     title="User Profile"
+ *     breadcrumbs={[
+ *       { label: 'Home', href: '/' },
+ *       { label: 'Users', href: '/users' },
+ *       { label: 'John Doe' }
+ *     ]}
+ *     onBreadcrumbNavigate={(href) => navigate(href)}
+ *   >
+ *     <UserProfileContent />
+ *   </PageLayout.Content>
+ *   <PageLayout.Footer copyright="© 2024" />
  * </PageLayout>
  */ 
 //# sourceMappingURL=page.d.ts.map

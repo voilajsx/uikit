@@ -1,16 +1,17 @@
-import { jsx as e, jsxs as x, Fragment as S } from "react/jsx-runtime";
+import { jsx as e, jsxs as x, Fragment as I } from "react/jsx-runtime";
 import * as R from "react";
-import { createContext as B, forwardRef as N, useContext as V } from "react";
+import { createContext as V, forwardRef as y, useContext as D } from "react";
 import { c as E } from "./index-DACAHwoB.js";
-import { c as y } from "./utils-qaFjX9_3.js";
-import { Header as I, HeaderLogo as O, HeaderNav as q } from "./header.js";
-import { Footer as A } from "./footer.js";
-import { Container as D } from "./container.js";
-const w = B({
+import { c as b } from "./utils-qaFjX9_3.js";
+import { Header as O, HeaderLogo as q, HeaderNav as A } from "./header.js";
+import { Footer as G } from "./footer.js";
+import { Container as J } from "./container.js";
+import { Breadcrumb as K, BreadcrumbList as M, BreadcrumbItem as Q, BreadcrumbLink as U, BreadcrumbPage as W, BreadcrumbSeparator as X } from "./breadcrumb.js";
+const N = V({
   scheme: "default",
   tone: "brand",
   size: "xl"
-}), G = E(
+}), Y = E(
   "min-h-screen flex flex-col",
   {
     variants: {
@@ -25,187 +26,189 @@ const w = B({
       tone: "clean"
     }
   }
-), z = N(({
-  scheme: t = "default",
+), z = y(({
+  scheme: o = "default",
   tone: n = "clean",
-  size: s = "xl",
-  className: o,
-  children: f
-}, c) => /* @__PURE__ */ e(w.Provider, { value: { scheme: t, tone: n, size: s }, children: /* @__PURE__ */ e(
+  size: i = "xl",
+  className: s,
+  children: p
+}, m) => /* @__PURE__ */ e(N.Provider, { value: { scheme: o, tone: n, size: i }, children: /* @__PURE__ */ e(
   "div",
   {
-    ref: c,
-    className: y(G({ tone: n }), o),
-    children: f
+    ref: m,
+    className: b(Y({ tone: n }), s),
+    children: p
   }
 ) }));
 z.displayName = "PageLayout";
-const F = N(({
-  tone: t,
+const L = y(({
+  tone: o,
   size: n,
-  position: s = "sticky",
-  navigation: o = [],
-  currentPath: f = "",
-  onNavigate: c,
-  logo: d,
-  title: p,
-  actions: a,
-  className: i
-}, m) => {
-  const { tone: g, size: h } = v();
+  position: i = "sticky",
+  navigation: s = [],
+  currentPath: p = "",
+  onNavigate: m,
+  logo: t,
+  title: f,
+  actions: l,
+  className: c
+}, d) => {
+  const { tone: u, size: g } = C();
   return /* @__PURE__ */ x(
-    I,
+    O,
     {
-      ref: m,
-      tone: t || g,
-      size: n || h,
-      position: s,
-      className: i,
+      ref: d,
+      tone: o || u,
+      size: n || g,
+      position: i,
+      className: c,
       children: [
-        /* @__PURE__ */ e(O, { children: d || p && /* @__PURE__ */ e("span", { className: "text-xl font-bold", children: p }) }),
-        o.length > 0 && /* @__PURE__ */ e(
-          q,
+        /* @__PURE__ */ e(q, { children: t || f && /* @__PURE__ */ e("span", { className: "text-xl font-bold", children: f }) }),
+        s.length > 0 && /* @__PURE__ */ e(
+          A,
           {
-            navigation: o,
-            currentPath: f,
-            onNavigate: c
+            navigation: s,
+            currentPath: p,
+            onNavigate: m
           }
         ),
-        a && /* @__PURE__ */ e("div", { className: "ml-auto flex items-center gap-2", children: a })
+        l && /* @__PURE__ */ e("div", { className: "ml-auto flex items-center gap-2", children: l })
       ]
     }
   );
 });
-F.displayName = "PageHeader";
-const H = N(({
-  tone: t,
+L.displayName = "PageHeader";
+const F = y(({
+  tone: o,
   size: n,
-  sidebar: s = "none",
-  navigation: o = [],
-  sidebarContent: f,
-  currentPath: c = "",
-  onNavigate: d,
-  sidebarPosition: p = "relative",
-  breadcrumbs: a = [],
-  title: i,
-  className: m,
+  sidebar: i = "none",
+  navigation: s = [],
+  sidebarContent: p,
+  currentPath: m = "",
+  onNavigate: t,
+  sidebarPosition: f = "relative",
+  breadcrumbs: l = [],
+  onBreadcrumbNavigate: c,
+  title: d,
+  className: u,
   children: g
-}, h) => {
-  const { scheme: l, tone: L, size: u } = v(), P = s !== "none" ? s : l === "sidebar" ? "left" : "none", j = (r) => {
-    if (r.href && d) {
-      const b = {
-        key: r.href,
-        label: r.label,
-        href: r.href
-      };
-      d(r.href, b);
-    }
-  }, C = () => a.length === 0 ? null : /* @__PURE__ */ e("nav", { className: "flex items-center gap-2 text-sm text-muted-foreground mb-6", children: a.map((r, b) => /* @__PURE__ */ x(R.Fragment, { children: [
-    b > 0 && /* @__PURE__ */ e("span", { className: "text-muted-foreground/60", children: "/" }),
-    r.href ? /* @__PURE__ */ e(
-      "button",
+}, a) => {
+  const { scheme: T, tone: S, size: h } = C(), k = i !== "none" ? i : T === "sidebar" ? "left" : "none", j = (r) => {
+    c ? c(r) : t && t(r, {
+      key: r,
+      label: r,
+      href: r
+    });
+  }, w = () => l.length === 0 ? null : /* @__PURE__ */ e("div", { className: "mb-6", children: /* @__PURE__ */ e(K, { children: /* @__PURE__ */ e(M, { children: l.map((r, P) => /* @__PURE__ */ x(R.Fragment, { children: [
+    /* @__PURE__ */ e(Q, { children: r.href ? /* @__PURE__ */ e(
+      U,
       {
-        onClick: () => j(r),
-        className: "hover:text-foreground transition-colors underline-offset-4 hover:underline",
-        children: r.label
+        asChild: !!(c || t),
+        ...c || t ? {
+          onClick: (B) => {
+            B.preventDefault(), j(r.href);
+          }
+        } : { href: r.href },
+        children: c || t ? /* @__PURE__ */ e("button", { type: "button", children: r.label }) : r.label
       }
-    ) : /* @__PURE__ */ e("span", { className: "text-foreground font-medium", children: r.label })
-  ] }, b)) }), k = () => i ? /* @__PURE__ */ e("h1", { className: "text-2xl sm:text-3xl font-bold text-foreground mb-4", children: i }) : null;
-  return P === "none" ? /* @__PURE__ */ e(
+    ) : /* @__PURE__ */ e(W, { children: r.label }) }),
+    P < l.length - 1 && /* @__PURE__ */ e(X, {})
+  ] }, P)) }) }) }), v = () => d ? /* @__PURE__ */ e("h1", { className: "text-2xl sm:text-3xl font-bold text-foreground mb-4", children: d }) : null;
+  return k === "none" ? /* @__PURE__ */ e(
     "main",
     {
-      ref: h,
-      className: y("flex-1", m),
-      children: /* @__PURE__ */ x("div", { className: y(
+      ref: a,
+      className: b("flex-1", u),
+      children: /* @__PURE__ */ x("div", { className: b(
         "mx-auto",
-        (n || u) === "sm" && "max-w-2xl px-4 py-6",
-        (n || u) === "md" && "max-w-4xl px-4 sm:px-6 py-8",
-        (n || u) === "lg" && "max-w-6xl px-4 sm:px-6 lg:px-8 py-8",
-        (n || u) === "xl" && "max-w-7xl px-4 sm:px-6 lg:px-8 py-8",
-        (n || u) === "full" && "max-w-full px-4 sm:px-6 lg:px-8 py-8"
+        (n || h) === "sm" && "max-w-2xl px-4 py-6",
+        (n || h) === "md" && "max-w-4xl px-4 sm:px-6 py-8",
+        (n || h) === "lg" && "max-w-6xl px-4 sm:px-6 lg:px-8 py-8",
+        (n || h) === "xl" && "max-w-7xl px-4 sm:px-6 lg:px-8 py-8",
+        (n || h) === "full" && "max-w-full px-4 sm:px-6 lg:px-8 py-8"
       ), children: [
-        (i || a.length > 0) && /* @__PURE__ */ x("div", { className: "mb-8", children: [
-          C(),
-          k()
+        (d || l.length > 0) && /* @__PURE__ */ x("div", { className: "mb-8", children: [
+          w(),
+          v()
         ] }),
         g
       ] })
     }
-  ) : /* @__PURE__ */ e("div", { ref: h, className: y("flex-1", m), children: /* @__PURE__ */ x(
-    D,
+  ) : /* @__PURE__ */ e("div", { ref: a, className: b("flex-1", u), children: /* @__PURE__ */ x(
+    J,
     {
-      sidebar: P,
-      navigation: o,
-      sidebarContent: f,
-      currentPath: c,
-      onNavigate: d,
-      sidebarPosition: p,
-      tone: t || L,
-      size: n || u,
+      sidebar: k,
+      navigation: s,
+      sidebarContent: p,
+      currentPath: m,
+      onNavigate: t,
+      sidebarPosition: f,
+      tone: o || S,
+      size: n || h,
       children: [
-        (i || a.length > 0) && /* @__PURE__ */ x("div", { className: "mb-8", children: [
-          C(),
-          k()
+        (d || l.length > 0) && /* @__PURE__ */ x("div", { className: "mb-8", children: [
+          w(),
+          v()
         ] }),
         g
       ]
     }
   ) });
 });
-H.displayName = "PageContent";
-const T = N(({
-  tone: t,
+F.displayName = "PageContent";
+const H = y(({
+  tone: o,
   size: n,
-  position: s = "relative",
-  navigation: o = [],
-  currentPath: f = "",
-  onNavigate: c,
-  copyright: d,
-  className: p,
-  children: a
-}, i) => {
-  const { tone: m, size: g } = v();
+  position: i = "relative",
+  navigation: s = [],
+  currentPath: p = "",
+  onNavigate: m,
+  copyright: t,
+  className: f,
+  children: l
+}, c) => {
+  const { tone: d, size: u } = C();
   return /* @__PURE__ */ e(
-    A,
+    G,
     {
-      ref: i,
-      tone: t || (m === "brand" ? "subtle" : m),
-      size: n || g,
-      position: s,
-      className: p,
-      children: a || /* @__PURE__ */ x(S, { children: [
-        o.length > 0 && /* @__PURE__ */ e("div", { className: "flex flex-wrap justify-center gap-6 py-4", children: o.map((l) => /* @__PURE__ */ e(
+      ref: c,
+      tone: o || (d === "brand" ? "subtle" : d),
+      size: n || u,
+      position: i,
+      className: f,
+      children: l || /* @__PURE__ */ x(I, { children: [
+        s.length > 0 && /* @__PURE__ */ e("div", { className: "flex flex-wrap justify-center gap-6 py-4", children: s.map((a) => /* @__PURE__ */ e(
           "button",
           {
             onClick: () => {
-              l.href && c ? c(l.href, l) : l.onClick && l.onClick();
+              a.href && m ? m(a.href, a) : a.onClick && a.onClick();
             },
             className: "text-sm text-muted-foreground hover:text-foreground transition-colors",
-            children: l.label
+            children: a.label
           },
-          l.key
+          a.key
         )) }),
-        d && /* @__PURE__ */ e("div", { className: "text-center py-4 border-t border-border", children: /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground", children: d }) })
+        t && /* @__PURE__ */ e("div", { className: "text-center py-4 border-t border-border", children: /* @__PURE__ */ e("p", { className: "text-sm text-muted-foreground", children: t }) })
       ] })
     }
   );
 });
-T.displayName = "PageFooter";
-const v = () => {
-  const t = V(w);
-  if (!t)
+H.displayName = "PageFooter";
+const C = () => {
+  const o = D(N);
+  if (!o)
     throw new Error("usePage must be used within a PageLayout component");
-  return t;
-}, Y = Object.assign(z, {
-  Header: F,
-  Content: H,
-  Footer: T
+  return o;
+}, le = Object.assign(z, {
+  Header: L,
+  Content: F,
+  Footer: H
 });
 export {
-  H as PageContent,
-  T as PageFooter,
-  F as PageHeader,
-  Y as PageLayout,
-  v as usePage
+  F as PageContent,
+  H as PageFooter,
+  L as PageHeader,
+  le as PageLayout,
+  C as usePage
 };
 //# sourceMappingURL=page.js.map
