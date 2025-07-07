@@ -388,7 +388,7 @@ const I = B(({
         "flex-1 min-w-0 overflow-auto",
         x
       ),
-      children: /* @__PURE__ */ e("div", { className: "p-4 lg:p-6 w-full", children: /* @__PURE__ */ e("div", { className: "w-full mx-auto", children: h }) })
+      children: /* @__PURE__ */ e("div", { className: " w-full", children: /* @__PURE__ */ e("div", { className: "w-full mx-auto", children: h }) })
     }
   );
 });
