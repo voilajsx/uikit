@@ -7,7 +7,7 @@ import { Button as W } from "./button.js";
 import { Badge as re } from "./badge.js";
 import { Separator as te } from "./separator.js";
 import { TooltipProvider as ne, Tooltip as ae, TooltipTrigger as oe, TooltipContent as se } from "./tooltip.js";
-import { Breadcrumb as ie, BreadcrumbList as le, BreadcrumbItem as de, BreadcrumbLink as ce, BreadcrumbPage as me, BreadcrumbSeparator as ue } from "./breadcrumb.js";
+import { Breadcrumb as ie, BreadcrumbList as de, BreadcrumbItem as le, BreadcrumbLink as ce, BreadcrumbPage as me, BreadcrumbSeparator as ue } from "./breadcrumb.js";
 import { X as fe } from "./x-BxwubQiM.js";
 import { M as _ } from "./menu-DBhEanGo.js";
 import { C as he } from "./chevron-right-pz9eCjj-.js";
@@ -49,24 +49,24 @@ const X = Y({
   className: v,
   children: N
 }, M) => {
-  const [l, n] = B($), [w, t] = B(
+  const [d, n] = B($), [w, t] = B(
     () => be(m)
   );
   Z(() => {
-    const d = () => {
-      const a = window.innerWidth < 1024, C = l;
+    const l = () => {
+      const a = window.innerWidth < 1024, C = d;
       n(a), a && !C && w ? t(!1) : !a && C && t(m);
     };
-    return d(), window.addEventListener("resize", d), () => window.removeEventListener("resize", d);
-  }, [l, w, m]), O(() => (l && w ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
+    return l(), window.addEventListener("resize", l), () => window.removeEventListener("resize", l);
+  }, [d, w, m]), O(() => (d && w ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
     document.body.style.overflow = "unset";
-  }), [l, w]);
+  }), [d, w]);
   const u = L.Children.toArray(N), y = u.find(
-    (d) => L.isValidElement(d) && d.type === I
+    (l) => L.isValidElement(l) && l.type === I
   ), b = u.find(
-    (d) => L.isValidElement(d) && d.type === R
+    (l) => L.isValidElement(l) && l.type === R
   ), T = u.find(
-    (d) => L.isValidElement(d) && d.type === H
+    (l) => L.isValidElement(l) && l.type === H
   );
   return /* @__PURE__ */ e(X.Provider, { value: {
     scheme: x,
@@ -74,7 +74,7 @@ const X = Y({
     size: h,
     sidebarExpanded: w,
     setSidebarExpanded: t,
-    isMobile: l
+    isMobile: d
   }, children: /* @__PURE__ */ i(
     "div",
     {
@@ -84,12 +84,12 @@ const X = Y({
         /* @__PURE__ */ e("div", { className: s(
           "flex-shrink-0 transition-all duration-200 ease-out overflow-hidden",
           // Desktop: smooth width transition
-          !l && w && (h === "sm" ? "w-48" : h === "md" ? "w-56" : h === "lg" ? "w-64" : h === "xl" ? "w-72" : "w-80"),
-          !l && !w && "w-0",
+          !d && w && (h === "sm" ? "w-48" : h === "md" ? "w-56" : h === "lg" ? "w-64" : h === "xl" ? "w-72" : "w-80"),
+          !d && !w && "w-0",
           // Mobile: don't affect layout
-          l && "w-0",
-          g === "sticky" && l && "top-0 max-h-screen",
-          g === "sticky" && !l && "sticky top-0 max-h-screen"
+          d && "w-0",
+          g === "sticky" && d && "top-0 max-h-screen",
+          g === "sticky" && !d && "sticky top-0 max-h-screen"
         ), children: y }),
         /* @__PURE__ */ i("div", { className: "flex-1 flex flex-col min-w-0 transition-all duration-200 ease-out", children: [
           b,
@@ -109,12 +109,12 @@ const I = V(({
   position: v,
   footer: N,
   className: M
-}, l) => {
-  const { scheme: n, tone: w, size: t, sidebarExpanded: u, setSidebarExpanded: y, isMobile: b } = P(), [T, d] = B(/* @__PURE__ */ new Set()), [a, C] = B(!1), o = x || w, E = n === "compact", p = !E || a, G = () => {
+}, d) => {
+  const { scheme: n, tone: w, size: t, sidebarExpanded: u, setSidebarExpanded: y, isMobile: b } = P(), [T, l] = B(/* @__PURE__ */ new Set()), [a, C] = B(!1), o = x || w, E = n === "compact", p = !E || a, G = () => {
     E && C(!a);
   }, J = (r) => {
     const c = new Set(T);
-    c.has(r) ? c.delete(r) : c.add(r), d(c);
+    c.has(r) ? c.delete(r) : c.add(r), l(c);
   }, Q = (r, c = !1) => {
     const z = c ? "w-[92%] flex items-center group text-left font-medium rounded-lg cursor-pointer transition-all duration-300 ease-out transform hover:scale-[1.02]" : "w-full flex items-center group text-left font-medium rounded-lg cursor-pointer transition-all duration-300 ease-out transform hover:scale-[1.02]", S = c ? p ? "ml-4 px-3 py-2" : "px-2 py-2" : p ? "px-3 py-2.5" : "px-2 py-2.5 justify-center";
     let f = "";
@@ -214,7 +214,7 @@ const I = V(({
     /* @__PURE__ */ e(
       "aside",
       {
-        ref: l,
+        ref: d,
         className: s(
           "border-r flex flex-col bg-background overflow-hidden",
           // ✅ RESTORED: Original smooth transitions
@@ -326,12 +326,12 @@ const R = V(({
   onBreadcrumbNavigate: v,
   actions: N,
   className: M
-}, l) => {
+}, d) => {
   const { sidebarExpanded: n, setSidebarExpanded: w, isMobile: t } = P();
   return /* @__PURE__ */ e(
     "header",
     {
-      ref: l,
+      ref: d,
       className: s(
         "w-full shadow-sm bg-background/95 backdrop-blur-md text-foreground flex-shrink-0 border-b border-border/50",
         "transition-all duration-200 ease-out",
@@ -366,8 +366,8 @@ const R = V(({
           ),
           /* @__PURE__ */ i("div", { className: "min-w-0 flex-1", children: [
             h && !m.length && /* @__PURE__ */ e("h1", { className: "text-lg font-semibold text-foreground truncate", children: h }),
-            m.length > 0 && /* @__PURE__ */ e(ie, { children: /* @__PURE__ */ e(le, { children: m.map((u, y) => /* @__PURE__ */ i(L.Fragment, { children: [
-              /* @__PURE__ */ e(de, { children: u.href ? /* @__PURE__ */ e(
+            m.length > 0 && /* @__PURE__ */ e(ie, { children: /* @__PURE__ */ e(de, { children: m.map((u, y) => /* @__PURE__ */ i(L.Fragment, { children: [
+              /* @__PURE__ */ e(le, { children: u.href ? /* @__PURE__ */ e(
                 ce,
                 {
                   asChild: !!v,
@@ -404,7 +404,7 @@ const H = V(({
         "flex-1 min-w-0 overflow-auto",
         h
       ),
-      children: /* @__PURE__ */ e("div", { className: "p-4 lg:p-6 w-full", children: /* @__PURE__ */ e("div", { className: "w-full mx-auto", children: g }) })
+      children: /* @__PURE__ */ e("div", { className: "", children: /* @__PURE__ */ e("div", { className: "w-full mx-auto", children: g }) })
     }
   );
 });
