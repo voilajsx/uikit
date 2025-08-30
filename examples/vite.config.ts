@@ -14,6 +14,7 @@ export default defineConfig({
   
   resolve: {
     alias: {
+      '@assets': resolve(__dirname, '../src/web/assets'),
       // Relative imports to parent src/ directory
       '@voilajsx/uikit/themes': resolve(__dirname, '../src/themes'),
       '@voilajsx/uikit/admin': resolve(__dirname, '../src/components/layouts/admin'),

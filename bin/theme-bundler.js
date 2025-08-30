@@ -19,20 +19,30 @@ const __dirname = path.dirname(__filename);
 const require = createRequire(import.meta.url);
 
 // Consumer project theme directories to search
-const THEME_SEARCH_PATHS = [
-  'src/themes/presets',
-  'src/themes',
-  'themes/presets',
-  'themes',
-  'src/styles/themes',
-  'styles/themes',
-];
+const webAssetsPath = path.resolve(process.cwd(), 'src/web/assets');
+const useWebAssets = fs.existsSync(webAssetsPath);
+
+const THEME_SEARCH_PATHS = useWebAssets
+  ? [
+      'src/web/assets/themes/presets',
+      'src/web/assets/themes',
+      'themes/presets',
+      'themes',
+    ]
+  : [
+      'src/themes/presets',
+      'src/themes',
+      'themes/presets',
+      'themes',
+      'src/styles/themes',
+      'styles/themes',
+    ];
 
 // CLI Arguments
 const args = process.argv.slice(2);
 const outputFile =
   args.find((arg) => arg.startsWith('--output='))?.split('=')[1] ||
-  'src/styles/globals.css';
+  (useWebAssets ? 'src/web/assets/styles/globals.css' : 'src/styles/globals.css');
 const watch = args.includes('--watch');
 const verbose = args.includes('--verbose') || args.includes('-v');
 const help = args.includes('--help') || args.includes('-h');
@@ -386,6 +396,13 @@ ${themeCSS}
 
     // Write the file
     fs.writeFileSync(outputPath, finalContent);
+
+    // Create an empty overrides.css file
+    const overridesPath = path.resolve(outputDir, 'overrides.css');
+    if (!fs.existsSync(overridesPath)) {
+      fs.writeFileSync(overridesPath, '/* Add your overrides here */');
+      log(`📄 Created overrides.css file`, true);
+    }
 
     const duration = Date.now() - startTime;
 

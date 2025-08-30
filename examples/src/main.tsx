@@ -7,7 +7,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ThemeProvider } from '../../src/themes/theme-provider';
-import '../../dist/styles.css'
+import '@assets/styles/globals.css';
+import '../../src/styles/globals.css';
 import './index.css'
 import App from './App'
 
