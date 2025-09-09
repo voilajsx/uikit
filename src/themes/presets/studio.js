@@ -14,6 +14,21 @@ const studioTheme = {
   name: 'Studio',
   description: 'Sophisticated designer grays with strategic color accents for creative professionals',
 
+  // Flat Design Tokens - no gradients
+  fontPrimary: "'Inter', system-ui, sans-serif",
+  fontDisplay: "'Inter', system-ui, sans-serif",
+  radiusEnhance: '0.5rem',        // Standard radius
+  spacingEnhance: 1,              // Default spacing
+  shadowEnhance: '0 1px 2px 0 rgb(0 0 0 / 0.05)',        // Minimal shadow
+  shadowLg: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+  shadowXl: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+
+  // No gradients - flat colors only
+  gradientPrimary: 'oklch(0.32 0.02 270)',
+  gradientSubtle: 'oklch(0.97 0.002 270)',
+  gradientHover: 'oklch(0.28 0.018 270)',
+  gradientText: 'oklch(0.32 0.02 270)',
+
   light: {
     // Base colors
     background: 'oklch(0.99 0.001 270)',

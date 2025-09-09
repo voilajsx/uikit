@@ -46,7 +46,7 @@ const outputFile =
 const watch = args.includes('--watch');
 const verbose = args.includes('--verbose') || args.includes('-v');
 const help = args.includes('--help') || args.includes('-h');
-const append = args.includes('--append') || true; // Default to append mode for globals.css
+const append = args.includes('--append'); // Only append if explicitly requested
 
 /**
  * Show CLI help
@@ -110,16 +110,210 @@ function log(message, isVerbose = false) {
 }
 
 /**
- * Generate CSS for a single theme
+ * Generate unified @theme directive for all themes
+ * Creates a single @theme block with merged color variables
  */
-function generateThemeCSS(theme) {
-  if (!theme || !theme.id || !theme.light || !theme.dark) {
-    console.warn(
-      `⚠️  Invalid theme structure for ${
-        theme?.id || 'unknown'
-      } - missing required properties`
-    );
+function generateUnifiedThemeCSS(themes) {
+  if (!themes || themes.length === 0) {
     return '';
+  }
+
+  // Collect all design tokens from all themes
+  const allDesignTokens = new Set();
+  const allColorVars = new Set();
+  
+  themes.forEach(theme => {
+    if (theme.design) {
+      Object.entries(theme.design).forEach(([key, value]) => {
+        const cssKey = `--voila-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+        allDesignTokens.add(`  ${cssKey}: ${value};`);
+      });
+    }
+    
+    // Collect all unique color variable names
+    Object.keys(theme.light || {}).forEach(key => {
+      const cssKey = `--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+      allColorVars.add(cssKey);
+    });
+  });
+
+  // Use the first theme as the base for light mode colors
+  const baseTheme = themes[0];
+  const lightVariables = Object.entries(baseTheme.light)
+    .map(([key, value]) => {
+      const cssKey = `--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+      return `  ${cssKey}: ${value};`;
+    })
+    .join('\n');
+
+  // Generate enhanced design tokens section
+  let enhancedTokens = '';
+  if (allDesignTokens.size > 0) {
+    enhancedTokens = `\n  /* 🚀 Enhanced Design Tokens from all themes */\n${Array.from(allDesignTokens).join('\n')}\n`;
+  }
+
+  return `/* Define all theme colors in @theme - this creates the Tailwind utilities */
+@theme {
+  --color-radius: 0.75rem;${enhancedTokens}
+  
+  /* Base Colors (using ${baseTheme.name} as default) */
+${lightVariables}
+}`;
+}
+
+/**
+ * Generate theme-specific dark mode overrides
+ */
+function generateThemeDarkModes(themes) {
+  return themes.map(theme => {
+    const darkVariables = Object.entries(theme.dark)
+      .map(([key, value]) => {
+        const cssKey = `--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+        return `  ${cssKey}: ${value};`;
+      })
+      .join('\n');
+
+    let customStyles = '';
+    if (theme.customStyles) {
+      const stylesWithoutImports = removeFontImports(theme.customStyles);
+      if (stylesWithoutImports) {
+        customStyles = `\n${stylesWithoutImports}`;
+      }
+    }
+
+    return `/* Dark mode overrides for ${theme.name} theme */
+.theme-${theme.id}.dark {
+${darkVariables}
+}${customStyles}`;
+  }).join('\n\n');
+}
+
+/**
+ * Extract font imports from theme customStyles
+ */
+function extractFontImports(themes) {
+  const fontImports = new Set();
+  
+  themes.forEach(theme => {
+    if (theme.customStyles) {
+      // Extract @import statements
+      const importMatches = theme.customStyles.match(/@import\s+url\([^)]+\);/g);
+      if (importMatches) {
+        importMatches.forEach(importStatement => {
+          fontImports.add(importStatement);
+        });
+      }
+    }
+  });
+  
+  return Array.from(fontImports).join('\n');
+}
+
+/**
+ * Remove font imports from customStyles to avoid duplication
+ */
+function removeFontImports(customStyles) {
+  if (!customStyles) return '';
+  return customStyles.replace(/@import\s+url\([^)]+\);\s*/g, '').trim();
+}
+
+/**
+ * Generate automatic gradient utilities that override default Tailwind classes
+ */
+function generateGradientUtilities(themes) {
+  const gradientThemes = themes.filter(theme => 
+    theme.light.primaryGradient || theme.design?.gradientPrimary
+  );
+  
+  if (gradientThemes.length === 0) {
+    return '';
+  }
+
+  return gradientThemes.map(theme => {
+    const gradientOverrides = [];
+    
+    // Use primary gradient (prefer theme-specific over design token)
+    const primaryGradient = theme.light.primaryGradient || theme.design?.gradientPrimary;
+    if (primaryGradient) {
+      const gradientVar = theme.light.primaryGradient ? 'var(--color-primary-gradient)' : 'var(--voila-gradient-primary)';
+      gradientOverrides.push(`
+  /* Override bg-primary to use gradient automatically */
+  .theme-${theme.id} .bg-primary {
+    background: ${gradientVar} !important;
+  }`);
+    }
+
+    // Add hover effects
+    if (theme.design?.gradientHover) {
+      gradientOverrides.push(`
+  .theme-${theme.id} .bg-primary:hover {
+    background: var(--voila-gradient-hover) !important;
+  }`);
+    }
+
+    // Note: bg-muted intentionally left as flat color for better readability
+
+    // Add background gradient if available (light mode only if dark mode doesn't have gradient)
+    if (theme.light.backgroundGradient) {
+      if (theme.dark?.backgroundGradient) {
+        // Both modes have gradient - apply globally
+        gradientOverrides.push(`
+  .theme-${theme.id} .bg-background {
+    background: var(--color-background-gradient) !important;
+  }`);
+      } else {
+        // Only light mode has gradient - apply only to light mode
+        gradientOverrides.push(`
+  .theme-${theme.id}:not(.dark) .bg-background {
+    background: var(--color-background-gradient) !important;
+  }`);
+      }
+    }
+
+    // Add secondary gradient if available
+    if (theme.light.secondaryGradient || theme.design?.gradientSecondary) {
+      const gradientVar = theme.light.secondaryGradient ? 'var(--color-secondary-gradient)' : 'var(--voila-gradient-secondary)';
+      gradientOverrides.push(`
+  .theme-${theme.id} .bg-secondary {
+    background: ${gradientVar} !important;
+  }`);
+    }
+
+    // Add accent gradient if available
+    if (theme.light.accentGradient || theme.design?.gradientAccent) {
+      const gradientVar = theme.light.accentGradient ? 'var(--color-accent-gradient)' : 'var(--voila-gradient-accent)';
+      gradientOverrides.push(`
+  .theme-${theme.id} .bg-accent {
+    background: ${gradientVar} !important;
+  }`);
+    }
+
+    return `/* Automatic gradient utilities for ${theme.name} theme */
+${gradientOverrides.join('')}`;
+  }).join('\n\n');
+}
+
+/**
+ * Generate legacy theme CSS for backward compatibility
+ */
+function generateLegacyThemeCSS(theme) {
+  if (!theme || !theme.id || !theme.light || !theme.dark) {
+    return '';
+  }
+
+  // Generate enhanced design tokens if available
+  let enhancedTokens = '';
+  if (theme.design) {
+    const designTokens = Object.entries(theme.design)
+      .map(([key, value]) => {
+        const cssKey = `--voila-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+        return `  ${cssKey}: ${value};`;
+      })
+      .join('\n');
+    
+    if (enhancedTokens) {
+      enhancedTokens = `\n  /* 🚀 Enhanced Design Tokens */\n${designTokens}`;
+    }
   }
 
   const lightVariables = Object.entries(theme.light)
@@ -136,14 +330,16 @@ function generateThemeCSS(theme) {
     })
     .join('\n');
 
-  return `/* ${theme.name} Theme */
-.theme-${theme.id} {
+  return `  /* ${theme.name} Theme */
+  .theme-${theme.id} {${enhancedTokens}
+    /* Color Variables */
 ${lightVariables}
-}
+  }
 
-.theme-${theme.id}.dark {
+  .theme-${theme.id}.dark {
+    /* Color Variables */
 ${darkVariables}
-}`;
+  }`;
 }
 
 /**
@@ -343,10 +539,22 @@ async function bundleThemes() {
       return false;
     }
 
-    // Generate CSS
-    const themeCSS = themes.map(generateThemeCSS).filter(Boolean).join('\n\n');
+    // Extract font imports to place at the top
+    const fontImports = extractFontImports(themes);
+    
+    // Generate unified @theme directive
+    const unifiedThemeCSS = generateUnifiedThemeCSS(themes);
+    
+    // Generate theme-specific dark mode overrides
+    const darkModeCSS = generateThemeDarkModes(themes);
+    
+    // Generate automatic gradient utilities
+    const gradientUtilities = generateGradientUtilities(themes);
+    
+    // Generate legacy CSS for backward compatibility  
+    const legacyThemeCSS = themes.map(generateLegacyThemeCSS).filter(Boolean).join('\n\n');
 
-    if (!themeCSS) {
+    if (!unifiedThemeCSS) {
       console.log('❌ No valid CSS generated from themes');
       return false;
     }
@@ -369,20 +577,34 @@ async function bundleThemes() {
 
       finalContent = `${beforeThemes}
 
-  /* 🎨 Bundled Themes for @voilajsx/uikit - Generated by voila-bundle */
-  /* Generated: ${new Date().toISOString()} */
-  /* Themes: ${themes.map((t) => t.name).join(', ')} */
-  /* DO NOT EDIT THIS SECTION MANUALLY - Run "npx voila-bundle" to regenerate */
+/* 🎨 Bundled Themes for @voilajsx/uikit - Generated by voila-bundle */
+/* Generated: ${new Date().toISOString()} */
+/* Themes: ${themes.map((t) => t.name).join(', ')} */
+/* DO NOT EDIT THIS SECTION MANUALLY - Run "npx voila-bundle" to regenerate */
 
-${themeCSS}
+${fontImports ? `/* Gaming/Theme Font Imports */
+${fontImports}
 
-  /* END_THEME_DECLARATIONS */${afterThemes}`;
+` : ''}${unifiedThemeCSS}
+
+${darkModeCSS}
+
+${gradientUtilities ? `/* Automatic Gradient Utilities - Override Tailwind defaults */
+${gradientUtilities}
+
+` : ''}/* Legacy Theme Support - for backward compatibility */
+@layer base {
+${legacyThemeCSS}
+}
+
+/* END_THEME_DECLARATIONS */
+${afterThemes}`;
     } else {
       // Create standalone theme file
       finalContent = `/*
  * 🎨 Bundled Themes for @voilajsx/uikit
  * 
- * Auto-generated by voila-bundle
+ * Auto-generated by voila-bundle  
  * Generated: ${new Date().toISOString()}
  * Themes: ${themes.length}
  * 
@@ -390,19 +612,29 @@ ${themeCSS}
  * Edit your theme source files and run "npx voila-bundle" to regenerate
  */
 
-${themeCSS}
+@import "tailwindcss";
+
+${fontImports ? `/* Gaming/Theme Font Imports */
+${fontImports}
+
+` : ''}/* Modern @theme directive for Tailwind CSS v4+ */
+${unifiedThemeCSS}
+
+${darkModeCSS}
+
+${gradientUtilities ? `/* Automatic Gradient Utilities - Override Tailwind defaults */
+${gradientUtilities}
+
+` : ''}/* Legacy Theme Support - for backward compatibility */
+@layer base {
+${legacyThemeCSS}
+}
 `;
     }
 
     // Write the file
     fs.writeFileSync(outputPath, finalContent);
 
-    // Create an empty overrides.css file
-    const overridesPath = path.resolve(outputDir, 'overrides.css');
-    if (!fs.existsSync(overridesPath)) {
-      fs.writeFileSync(overridesPath, '/* Add your overrides here */');
-      log(`📄 Created overrides.css file`, true);
-    }
 
     const duration = Date.now() - startTime;
 

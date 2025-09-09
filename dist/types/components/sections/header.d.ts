@@ -11,13 +11,13 @@ import type { NavigationItem, Size } from '@/types';
  */
 declare const headerVariants: (props?: ({
     tone?: "clean" | "subtle" | "brand" | "contrast" | null | undefined;
-    position?: "relative" | "sticky" | "fixed" | null | undefined;
+    position?: "fixed" | "sticky" | "relative" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
  * Container variants for responsive sizing
  */
 declare const containerVariants: (props?: ({
-    size?: "sm" | "md" | "lg" | "xl" | "full" | null | undefined;
+    size?: "sm" | "lg" | "md" | "xl" | "full" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
  * Header component props

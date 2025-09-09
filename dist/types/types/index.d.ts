@@ -53,7 +53,7 @@ export type Mode = 'light' | 'dark';
  * Pre-bundled theme options
  * @llm-rule theme: Pre-bundled CSS themes included in package
  */
-export type Theme = 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+export type Theme = 'sky' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
 /**
  * Semantic tone system for component emphasis
  * @llm-rule tone: Component-level visual emphasis

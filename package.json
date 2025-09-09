@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "Cross-platform React components with beautiful themes and OKLCH color science",
   "type": "module",
   "keywords": [
@@ -40,6 +40,7 @@
     "./dist/styles.css"
   ],
   "bin": {
+    "uikit": "./bin/uikit.js",
     "voila-bundle": "./bin/theme-bundler.js"
   },
   "exports": {
@@ -283,7 +284,12 @@
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",
-    "react-dom": "^18.2.0 || ^19.0.0"
+    "react-dom": "^18.2.0 || ^19.0.0",
+    "@fontsource/jetbrains-mono": "^5.2.6",
+    "@fontsource/orbitron": "^5.2.7",
+    "@fontsource/poppins": "^5.2.6",
+    "@fontsource/rajdhani": "^5.2.6",
+    "@fontsource/source-code-pro": "^5.2.6"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -291,6 +297,21 @@
     },
     "react-dom": {
       "optional": false
+    },
+    "@fontsource/jetbrains-mono": {
+      "optional": true
+    },
+    "@fontsource/orbitron": {
+      "optional": true
+    },
+    "@fontsource/poppins": {
+      "optional": true
+    },
+    "@fontsource/rajdhani": {
+      "optional": true
+    },
+    "@fontsource/source-code-pro": {
+      "optional": true
     }
   },
   "dependencies": {
@@ -319,6 +340,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "commander": "^12.1.0",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.468.0",
     "next-themes": "^0.4.6",

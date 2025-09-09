@@ -620,33 +620,98 @@ className = 'text-green-600';
 
 ---
 
-## 🎯 THEME SYSTEM (2-LEVEL SYSTEM)
+## 🎯 ENHANCED THEME SYSTEM (ZERO-TOUCH MAGIC)
+
+### 🪄 Automatic Enhancement Features
+
+**The power of @voilajsx/uikit is that standard shadcn components automatically become beautiful without changing your code:**
+
+```jsx
+// ✨ This standard code:
+<Button className="bg-primary text-primary-foreground">Click Me</Button>
+
+// 🎨 Automatically becomes (based on theme):
+// Aurora Theme: Purple-green gradient, Inter font, enhanced shadows
+// Neon Theme: Electric gradient, JetBrains Mono font, sharp edges  
+// Ruby Theme: Red-gold gradient, luxury spacing, elegant shadows
+```
+
+**What happens automatically:**
+- **Gradients**: `bg-primary` becomes theme-specific gradients
+- **Typography**: Custom fonts per theme (Inter, JetBrains Mono, etc.)
+- **Spacing**: Enhanced padding and margins based on theme personality
+- **Shadows**: Theme-appropriate shadow systems
+- **Borders**: Rounded corners adjusted per theme aesthetic
 
 ### Level 1: Global Theme (Set Once in ThemeProvider)
 
 ```jsx
 <ThemeProvider theme="aurora" mode="dark">
-  {/* Affects ALL components globally */}
-</ThemeProvider>;
+  {/* Affects ALL components globally with enhanced design tokens */}
+</ThemeProvider>
 
-// Available Themes:
-theme = 'default'; // Professional blue - business apps
-theme = 'aurora'; // Purple/green - creative apps
-theme = 'metro'; // Transit blue - admin dashboards
-theme = 'neon'; // Electric colors - gaming/tech
-theme = 'ruby'; // Red/gold - luxury brands
-theme = 'studio'; // Designer grays - creative tools
+// Available Themes with Enhanced Design Tokens:
+theme = 'default'; // Professional blue with System UI fonts
+theme = 'aurora';  // Purple/green gradients with Inter fonts
+theme = 'metro';   // Transit blue with clean typography  
+theme = 'neon';    // Electric gradients with JetBrains Mono
+theme = 'ruby';    // Red/gold luxury with enhanced spacing
+theme = 'studio';  // Designer grays with artistic fonts
 
 // Available Modes:
 mode = 'light'; // Light color scheme
-mode = 'dark'; // Dark color scheme
+mode = 'dark';  // Dark color scheme with enhanced contrast
 ```
+
+### 🎨 Theme Switching (Dynamic Changes)
+
+```jsx
+import { useTheme } from '@voilajsx/uikit';
+
+function ThemeControls() {
+  const { theme, setTheme, mode, setMode } = useTheme();
+  
+  return (
+    <div className="flex gap-2">
+      <Button onClick={() => setTheme('aurora')}>
+        Aurora Theme 
+      </Button>
+      <Button onClick={() => setTheme('neon')}>  
+        Neon Theme
+      </Button>
+      <Button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
+        Toggle {mode === 'light' ? 'Dark' : 'Light'} Mode
+      </Button>
+    </div>
+  );
+}
+```
+
+### 🚀 Theme Bundler CLI (For Custom Themes)
+
+Generate optimized CSS for custom themes:
+
+```bash
+# Bundle themes from your project directory
+npx voila-bundle
+
+# Watch mode for development  
+npx voila-bundle --watch
+
+# Custom output location
+npx voila-bundle --output=src/styles/themes.css
+```
+
+**Supported directories for custom themes:**
+- `src/themes/presets/`
+- `src/web/assets/themes/presets/`
+- `themes/presets/`
 
 ### Level 2: Component Tone (Per Component)
 
 ```jsx
 <AdminLayout tone="subtle">      // Professional gray backgrounds
-<Header tone="brand">            // Primary colored backgrounds
+<Header tone="brand">            // Primary colored backgrounds  
 <Footer tone="contrast">         // High contrast/dark backgrounds
 <AuthLayout tone="clean">        // Pure white/clean backgrounds
 

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Test - Simple HTML</title>
+    <link rel="stylesheet" href="./src/styles/globals.css">
+    <!-- Load Neon theme fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Basic test styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .theme-selector {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .theme-selector button {
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid;
+            cursor: pointer;
+        }
+        
+        .test-card {
+            border: 1px solid;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .test-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            margin: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        /* Apply theme colors using CSS variables */
+        body {
+            background-color: var(--color-background, #fff);
+            color: var(--color-foreground, #000);
+            font-family: system-ui, sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .test-card {
+            background-color: var(--color-card, #f9f9f9);
+            color: var(--color-card-foreground, #000);
+            border-color: var(--color-border, #ccc);
+        }
+        
+        .test-button.primary {
+            background-color: var(--color-primary, #0066cc);
+            color: var(--color-primary-foreground, #fff);
+        }
+        
+        .test-button.secondary {
+            background-color: var(--color-secondary, #6b7280);
+            color: var(--color-secondary-foreground, #fff);
+        }
+        
+        .test-button.accent {
+            background-color: var(--color-accent, #10b981);
+            color: var(--color-accent-foreground, #fff);
+        }
+        
+        .test-button.destructive {
+            background-color: var(--color-destructive, #ef4444);
+            color: var(--color-destructive-foreground, #fff);
+        }
+        
+        .muted-text {
+            color: var(--color-muted-foreground, #6b7280);
+        }
+        
+        .theme-selector button {
+            border-color: var(--color-border, #ccc);
+            background-color: var(--color-card, #f9f9f9);
+            color: var(--color-card-foreground, #000);
+        }
+        
+        .theme-selector button.active {
+            background-color: var(--color-primary, #0066cc);
+            color: var(--color-primary-foreground, #fff);
+        }
+        
+        /* Neon theme enhancements */
+        .theme-neon {
+            font-family: var(--voila-font-primary, 'JetBrains Mono', monospace);
+        }
+        
+        .theme-neon h1, .theme-neon h2, .theme-neon h3 {
+            font-family: var(--voila-font-display, 'Orbitron', monospace);
+            font-weight: 700;
+        }
+        
+        .theme-neon .test-card {
+            border-radius: var(--voila-radius-enhance, 1rem);
+            box-shadow: var(--voila-shadow-enhance, 0 4px 6px rgba(0, 0, 0, 0.1));
+            background: var(--voila-gradient-subtle, var(--color-card));
+        }
+        
+        .theme-neon .test-button.primary {
+            background: var(--voila-gradient-primary, var(--color-primary));
+            box-shadow: var(--voila-shadow-enhance, 0 4px 6px rgba(0, 0, 0, 0.1));
+            border-radius: var(--voila-radius-enhance, 0.375rem);
+        }
+        
+        .theme-neon .test-button.primary:hover {
+            background: var(--voila-gradient-hover, var(--color-primary));
+            box-shadow: var(--voila-shadow-lg, 0 8px 16px rgba(0, 0, 0, 0.2));
+        }
+        
+        .theme-neon body {
+            background: var(--voila-gradient-background-light, var(--color-background));
+        }
+        
+        .theme-neon.dark body {
+            background: var(--voila-gradient-background, var(--color-background));
+        }
+    </style>
+</head>
+<body class="theme-aurora">
+    <div class="container">
+        <h1>Theme Test - All 6 Themes</h1>
+        
+        <div class="theme-selector">
+            <h2>Select Theme:</h2>
+            <button onclick="setTheme('aurora')" class="active" id="aurora-btn">Aurora</button>
+            <button onclick="setTheme('metro')" id="metro-btn">Metro</button>
+            <button onclick="setTheme('studio')" id="studio-btn">Studio</button>
+            <button onclick="setTheme('neon')" id="neon-btn">Neon</button>
+            <button onclick="setTheme('ruby')" id="ruby-btn">Ruby</button>
+            <button onclick="setTheme('sky')" id="sky-btn">Sky</button>
+        </div>
+        
+        <div class="theme-selector">
+            <h3>Mode:</h3>
+            <button onclick="toggleDark()" id="mode-btn">🌙 Dark Mode</button>
+        </div>
+        
+        <div class="test-card">
+            <h3>Primary Card</h3>
+            <p>This card demonstrates the theme's card colors.</p>
+            <p class="muted-text">This is muted text to show secondary colors.</p>
+            
+            <div style="margin-top: 1rem;">
+                <button class="test-button primary">Primary Button</button>
+                <button class="test-button secondary">Secondary Button</button>
+                <button class="test-button accent">Accent Button</button>
+                <button class="test-button destructive">Destructive Button</button>
+            </div>
+        </div>
+        
+        <div class="test-card">
+            <h3>Color Swatches</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div>
+                    <div style="height: 60px; background-color: var(--color-primary); border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                    <small>Primary</small>
+                </div>
+                <div>
+                    <div style="height: 60px; background-color: var(--color-secondary); border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                    <small>Secondary</small>
+                </div>
+                <div>
+                    <div style="height: 60px; background-color: var(--color-accent); border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                    <small>Accent</small>
+                </div>
+                <div>
+                    <div style="height: 60px; background-color: var(--color-muted); border-radius: 0.25rem; margin-bottom: 0.5rem;"></div>
+                    <small>Muted</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isDark = false;
+        let currentTheme = 'aurora';
+        
+        function setTheme(theme) {
+            // Remove all theme classes
+            document.body.classList.remove('theme-aurora', 'theme-metro', 'theme-studio', 'theme-neon', 'theme-ruby', 'theme-sky');
+            
+            // Add new theme class
+            document.body.classList.add(`theme-${theme}`);
+            currentTheme = theme;
+            
+            // Update button states
+            document.querySelectorAll('.theme-selector button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`${theme}-btn`).classList.add('active');
+            
+            console.log(`Switched to theme: ${theme}`);
+        }
+        
+        function toggleDark() {
+            isDark = !isDark;
+            
+            if (isDark) {
+                document.body.classList.add('dark');
+                document.getElementById('mode-btn').textContent = '☀️ Light Mode';
+            } else {
+                document.body.classList.remove('dark');
+                document.getElementById('mode-btn').textContent = '🌙 Dark Mode';
+            }
+            
+            console.log(`Dark mode: ${isDark}`);
+        }
+        
+        // Log current CSS variables for debugging
+        function logThemeVars() {
+            const computedStyle = getComputedStyle(document.body);
+            console.log('Current theme variables:');
+            console.log('--color-background:', computedStyle.getPropertyValue('--color-background'));
+            console.log('--color-foreground:', computedStyle.getPropertyValue('--color-foreground'));
+            console.log('--color-primary:', computedStyle.getPropertyValue('--color-primary'));
+            console.log('--color-card:', computedStyle.getPropertyValue('--color-card'));
+        }
+        
+        // Log variables on load
+        setTimeout(logThemeVars, 500);
+    </script>
+</body>
+</html>

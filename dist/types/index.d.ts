@@ -41,4 +41,5 @@ export { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 export { DataTable } from './components/ui/data-table';
 export { Calendar } from './components/ui/calendar';
 export { Toaster } from './components/ui/sonner';
+export { ThemeProvider, useTheme, type Theme, type Mode } from './themes/theme-provider';
 //# sourceMappingURL=index.d.ts.map

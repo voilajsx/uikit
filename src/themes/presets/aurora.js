@@ -1,19 +1,34 @@
 /**
- * Aurora theme preset - northern lights inspiration with purple-green gradients
- * @description Magical, elegant theme perfect for creative and sophisticated applications
+ * Aurora theme preset - northern lights inspiration with purple-green colors
+ * @description Magical, elegant theme perfect for creative and sophisticated applications  
  * @package @voilajsx/uikit
  * @file /src/themes/presets/aurora.js
  */
 
 /**
- * Aurora theme preset - inspired by the northern lights with purple-green gradients
+ * Aurora theme preset - inspired by the northern lights with purple-green colors
  * Perfect for creative, elegant, and sophisticated applications
  */
 const auroraTheme = {
   id: 'aurora',
   name: 'Aurora',
   description:
-    'Magical northern lights theme with purple-green gradients for creative applications',
+    'Magical northern lights theme with purple-green colors for creative applications',
+
+  // Flat Design Tokens - no gradients
+  fontPrimary: "'Inter', system-ui, sans-serif",
+  fontDisplay: "'Inter', system-ui, sans-serif",
+  radiusEnhance: '0.5rem',        // Standard radius
+  spacingEnhance: 1,              // Default spacing
+  shadowEnhance: '0 1px 2px 0 rgb(0 0 0 / 0.05)',        // Minimal shadow
+  shadowLg: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+  shadowXl: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+
+  // No gradients - flat colors only  
+  gradientPrimary: 'oklch(0.48 0.2 290)',
+  gradientSubtle: 'oklch(0.94 0.008 300)',
+  gradientHover: 'oklch(0.44 0.18 290)',
+  gradientText: 'oklch(0.48 0.2 290)',
 
   light: {
     // Base colors

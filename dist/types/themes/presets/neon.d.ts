@@ -3,6 +3,21 @@ declare namespace neonTheme {
     let id: string;
     let name: string;
     let description: string;
+    namespace design {
+        let fontPrimary: string;
+        let fontDisplay: string;
+        let radiusEnhance: string;
+        let spacingEnhance: string;
+        let shadowEnhance: string;
+        let shadowLg: string;
+        let shadowXl: string;
+        let gradientPrimary: string;
+        let gradientSubtle: string;
+        let gradientHover: string;
+        let gradientText: string;
+        let gradientBackground: string;
+        let gradientBackgroundLight: string;
+    }
     namespace light {
         let background: string;
         let foreground: string;

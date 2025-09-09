@@ -77,7 +77,7 @@ export {};
  *
  * Basic setup in .env:
  * VITE__LAYOUT__TYPE=admin
- * VITE__LAYOUT__THEME=default
+ * VITE__LAYOUT__THEME=sky
  * VITE__LAYOUT__MODE=light
  * VITE__LAYOUT__TITLE="My App"
  *

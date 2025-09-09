@@ -3,6 +3,17 @@ declare namespace rubyTheme {
     let id: string;
     let name: string;
     let description: string;
+    let fontPrimary: string;
+    let fontDisplay: string;
+    let radiusEnhance: string;
+    let spacingEnhance: number;
+    let shadowEnhance: string;
+    let shadowLg: string;
+    let shadowXl: string;
+    let gradientPrimary: string;
+    let gradientSubtle: string;
+    let gradientHover: string;
+    let gradientText: string;
     namespace light {
         let background: string;
         let foreground: string;

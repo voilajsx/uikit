@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Gradient Test - Neon Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Import the generated theme CSS */
+        @import url('./src/styles/globals.css');
+    </style>
+</head>
+<body class="theme-neon bg-background text-foreground p-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+        <h1 class="text-3xl font-bold mb-8">Professional Gradient & Font Test - Neon Theme</h1>
+        
+        <!-- Font Test -->
+        <div class="space-y-4">
+            <h2 class="text-xl font-semibold">System Font Test</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-card p-4 rounded-lg border">
+                    <h3 class="font-bold text-lg mb-2">Display Font</h3>
+                    <p class="text-sm text-muted-foreground">Headers use system fonts for better readability</p>
+                </div>
+                <div class="bg-card p-4 rounded-lg border">
+                    <p class="mb-2">Body Text</p>
+                    <p class="text-sm text-muted-foreground">System UI fonts load instantly and look great</p>
+                </div>
+                <div class="bg-card p-4 rounded-lg border">
+                    <code class="text-sm bg-muted px-2 py-1 rounded">Code Font</code>
+                    <p class="text-sm text-muted-foreground mt-2">SF Mono, Monaco for code</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Professional Gradients -->
+        <div class="space-y-4">
+            <h2 class="text-xl font-semibold">Professional Gradient Utilities (No class changes needed)</h2>
+            
+            <div class="bg-primary text-primary-foreground p-6 rounded-lg">
+                <p class="font-semibold text-lg">bg-primary - Subtle Professional Gradient</p>
+                <p class="text-sm opacity-90 mt-1">Uses a subtle blue gradient automatically - no class changes required</p>
+            </div>
+            
+            <div class="bg-primary hover:bg-primary text-primary-foreground p-6 rounded-lg transition-all duration-300 cursor-pointer">
+                <p class="font-semibold text-lg">bg-primary with hover - Enhanced on hover</p>
+                <p class="text-sm opacity-90 mt-1">Hover to see the enhanced gradient effect with subtle lift animation</p>
+            </div>
+            
+            <div class="bg-muted text-muted-foreground p-6 rounded-lg">
+                <p class="font-semibold text-lg">bg-muted - Subtle Background Gradient</p>
+                <p class="text-sm opacity-75 mt-1">Very subtle gradient overlay for professional appearance</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button class="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary transition-all duration-300">
+                    Primary Button
+                </button>
+                <button class="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium">
+                    Secondary Button
+                </button>
+                <button class="bg-accent text-accent-foreground px-6 py-3 rounded-lg font-medium">
+                    Accent Button
+                </button>
+            </div>
+        </div>
+        
+        <!-- Comparison with other themes -->
+        <div class="space-y-4">
+            <h2 class="text-xl font-semibold">Theme Comparison</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="theme-aurora bg-background text-foreground p-4 rounded-lg border">
+                    <h3 class="font-semibold mb-2">Aurora Theme</h3>
+                    <div class="bg-primary text-primary-foreground p-3 rounded">
+                        bg-primary (solid color)
+                    </div>
+                </div>
+                <div class="theme-neon bg-background text-foreground p-4 rounded-lg border">
+                    <h3 class="font-semibold mb-2">Neon Theme</h3>
+                    <div class="bg-primary text-primary-foreground p-3 rounded">
+                        bg-primary (gradient)
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Custom gradient utilities -->
+        <div class="space-y-4">
+            <h2 class="text-xl font-semibold">Custom Gradient Utilities</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-gradient-subtle p-4 rounded-lg text-foreground">
+                    <p class="font-semibold">bg-gradient-subtle</p>
+                    <p class="text-sm opacity-75">Custom subtle gradient class</p>
+                </div>
+                <div class="bg-primary-gradient p-4 rounded-lg text-primary-foreground">
+                    <p class="font-semibold">bg-primary-gradient</p>
+                    <p class="text-sm opacity-90">Explicit gradient class</p>
+                </div>
+                <div class="text-gradient-primary text-2xl font-bold">
+                    Gradient Text
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

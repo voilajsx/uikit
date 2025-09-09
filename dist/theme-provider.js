@@ -28,8 +28,8 @@ const A = {
   contrast: "bg-foreground text-background border-foreground/20"
   // Automatically flips with mode
 }, m = [
-  "default",
-  // Professional blue - business apps
+  "sky",
+  // Minimal blue - clean & professional
   "aurora",
   // Purple/green - creative apps  
   "metro",
@@ -40,7 +40,7 @@ const A = {
   // Red/gold - luxury brands
   "studio"
   // Designer grays - creative tools
-], f = S(void 0);
+], p = S(void 0);
 function P(t, n, a, i = !1, c = "uikit-theme") {
   if (typeof window > "u")
     return { theme: t, mode: n };
@@ -74,11 +74,11 @@ function g(t, n) {
   const a = document.documentElement;
   a.classList.remove("light", "dark"), m.forEach((i) => {
     a.classList.remove(`theme-${i}`);
-  }), a.classList.add(n), t !== "default" && a.classList.add(`theme-${t}`);
+  }), a.classList.add(n), a.classList.add(`theme-${t}`);
 }
 function H({
   children: t,
-  theme: n = "default",
+  theme: n = "sky",
   mode: a = "light",
   detectSystem: i = !0,
   forceConfig: c = !1,
@@ -105,8 +105,8 @@ function H({
     const e = window.matchMedia("(prefers-color-scheme: dark)"), s = (l) => {
       if (!c)
         try {
-          (o ? localStorage.getItem(o) : null) || d((y) => ({
-            ...y,
+          (o ? localStorage.getItem(o) : null) || d((w) => ({
+            ...w,
             mode: l.matches ? "dark" : "light"
           }));
         } catch (u) {
@@ -115,7 +115,7 @@ function H({
     };
     return e.addEventListener("change", s), () => e.removeEventListener("change", s);
   }, [i, c, o]);
-  const p = (e) => {
+  const f = (e) => {
     if (!m.includes(e)) {
       console.warn(`Invalid theme: ${e}. Available themes:`, m);
       return;
@@ -132,20 +132,20 @@ function H({
       ...e,
       mode: e.mode === "light" ? "dark" : "light"
     }));
-  }, $ = (e) => I[e], v = (e) => A[e] || "clean", w = {
+  }, y = (e) => I[e], $ = (e) => A[e] || "clean", v = {
     theme: r.theme,
     mode: r.mode,
     availableThemes: m,
-    setTheme: p,
+    setTheme: f,
     setMode: b,
     toggleMode: k,
-    getToneClasses: $,
-    getDefaultTone: v
+    getToneClasses: y,
+    getDefaultTone: $
   };
-  return /* @__PURE__ */ L(f.Provider, { value: w, children: t });
+  return /* @__PURE__ */ L(p.Provider, { value: v, children: t });
 }
 function N() {
-  const t = x(f);
+  const t = x(p);
   if (!t)
     throw new Error("useTheme must be used within a ThemeProvider");
   return t;

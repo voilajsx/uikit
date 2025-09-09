@@ -8,9 +8,9 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 
 /**
  * @llm-rule Pre-bundled themes - CSS included in package
- * Simple selection from 6 built-in themes
+ * Simple selection from 8 built-in themes
  */
-export type Theme = 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+export type Theme = 'sky' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio' | 'test' | 'olive';
 
 /**
  * @llm-rule System color scheme preference
@@ -58,9 +58,9 @@ export interface ThemeContextValue {
 /**
  * @llm-props ThemeProvider props - ENHANCED WITH CONFIG PRIORITY
  * REQUIRED: children
- * RECOMMENDED: theme="default", mode="light"
+ * RECOMMENDED: theme="sky", mode="light"
  * OPTIONAL: detectSystem, forceConfig, storageKey
- * @llm-defaults theme="default", mode="light", detectSystem=true, forceConfig=false
+ * @llm-defaults theme="sky", mode="light", detectSystem=true, forceConfig=false
  */
 export interface ThemeProviderProps {
   /** REQUIRED: Child components */
@@ -110,12 +110,14 @@ const TONE_CLASSES: Record<Tone, string> = {
  * All themes ship as CSS with the package
  */
 export const AVAILABLE_THEMES: Theme[] = [
-  'default',   // Professional blue - business apps
+  'sky',       // Minimal blue - clean & professional
   'aurora',    // Purple/green - creative apps  
   'metro',     // Transit blue - admin dashboards
   'neon',      // Electric colors - gaming/tech
   'ruby',      // Red/gold - luxury brands
-  'studio'     // Designer grays - creative tools
+  'studio',    // Designer grays - creative tools
+  'test',      // Cyberpunk electric - testing theme
+  'olive'      // Natural olive green - organic/eco theme
 ];
 
 // Theme context
@@ -202,9 +204,7 @@ function applyThemeImmediately(theme: Theme, mode: Mode) {
   
   // Add new classes immediately
   root.classList.add(mode);
-  if (theme !== 'default') {
-    root.classList.add(`theme-${theme}`);
-  }
+  root.classList.add(`theme-${theme}`);
 }
 
 /**
@@ -231,7 +231,7 @@ function applyThemeImmediately(theme: Theme, mode: Mode) {
  */
 export function ThemeProvider({
   children,
-  theme = 'default',
+  theme = 'sky',
   mode = 'light',
   detectSystem = true,
   forceConfig = false,        // 🔧 NEW: Force config over storage

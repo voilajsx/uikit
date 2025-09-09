@@ -179,3 +179,6 @@ export {
 export { DataTable } from './components/ui/data-table';
 export { Calendar } from './components/ui/calendar';
 export { Toaster } from './components/ui/sonner';
+
+// Theme System
+export { ThemeProvider, useTheme, type Theme, type Mode } from './themes/theme-provider';

@@ -15,6 +15,21 @@ const metroTheme = {
   description:
     'Clean, systematic design inspired by modern transit systems for professional applications',
 
+  // Flat Design Tokens - no gradients
+  fontPrimary: "'Segoe UI', system-ui, sans-serif",
+  fontDisplay: "'Segoe UI', system-ui, sans-serif",
+  radiusEnhance: '0.5rem',        // Standard radius
+  spacingEnhance: 1,              // Default spacing  
+  shadowEnhance: '0 1px 2px 0 rgb(0 0 0 / 0.05)',        // Minimal shadow
+  shadowLg: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+  shadowXl: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+
+  // No gradients - flat colors only
+  gradientPrimary: 'oklch(0.35 0.08 240)',
+  gradientSubtle: 'oklch(0.96 0.005 240)',
+  gradientHover: 'oklch(0.31 0.07 240)',
+  gradientText: 'oklch(0.35 0.08 240)',
+
   light: {
     // Base colors
     background: 'oklch(0.99 0.002 240)',

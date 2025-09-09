@@ -1,12 +1,12 @@
 import { jsx as _, Fragment as E, jsxs as T } from "react/jsx-runtime";
 import { ThemeProvider as m } from "./theme-provider.js";
-import { AdminLayout as s } from "./admin.js";
+import { AdminLayout as u } from "./admin.js";
 import { PageLayout as r } from "./page.js";
 import { AuthLayout as p } from "./auth.js";
 import { BlankLayout as O } from "./blank.js";
 import { PopupLayout as A } from "./popup.js";
-const d = {};
-function y(e, o = []) {
+const y = {};
+function d(e, o = []) {
   if (!e) return o;
   try {
     return JSON.parse(e);
@@ -14,18 +14,18 @@ function y(e, o = []) {
     return console.warn("Failed to parse JSON:", e), o;
   }
 }
-function L() {
-  const e = d;
+function l() {
+  const e = y;
   return {
     // Theme system
-    theme: e.VITE__LAYOUT__THEME || "default",
+    theme: e.VITE__LAYOUT__THEME || "sky",
     mode: e.VITE__LAYOUT__MODE || "light",
     detectSystem: e.VITE__LAYOUT__DETECT_SYSTEM === "true",
     // Layout selection
     layout: e.VITE__LAYOUT__TYPE || "admin",
     title: e.VITE__LAYOUT__TITLE || e.VITE__APP__NAME || "Platform",
     logo: e.VITE__LAYOUT__LOGO,
-    navigation: y(e.VITE__LAYOUT__NAVIGATION, []),
+    navigation: d(e.VITE__LAYOUT__NAVIGATION, []),
     // Admin layout
     adminLayout: {
       scheme: e.VITE__LAYOUT__ADMIN__SCHEME || "sidebar",
@@ -71,14 +71,14 @@ function S({
   navigation: i,
   overrides: t = {}
 }) {
-  const a = { ...L(), ...t }, n = o || a.layout, u = i || a.navigation;
+  const a = { ...l(), ...t }, n = o || a.layout, s = i || a.navigation;
   return /* @__PURE__ */ _(
     m,
     {
       theme: a.theme,
       mode: a.mode,
       detectSystem: a.detectSystem,
-      children: I(e, n, u, a)
+      children: I(e, n, s, a)
     }
   );
 }
@@ -87,7 +87,7 @@ function I(e, o, i, t) {
   switch (o) {
     case "admin":
       return /* @__PURE__ */ T(
-        s,
+        u,
         {
           scheme: t.adminLayout.scheme,
           tone: t.adminLayout.tone,
@@ -96,21 +96,21 @@ function I(e, o, i, t) {
           position: t.adminLayout.position,
           children: [
             /* @__PURE__ */ _(
-              s.Header,
+              u.Header,
               {
                 title: t.title
               }
             ),
             /* @__PURE__ */ _(
-              s.Sidebar,
+              u.Sidebar,
               {
                 navigation: i,
                 currentPath: a,
-                onNavigate: l,
+                onNavigate: L,
                 logo: n
               }
             ),
-            /* @__PURE__ */ _(s.Content, { children: e })
+            /* @__PURE__ */ _(u.Content, { children: e })
           ]
         }
       );
@@ -127,7 +127,7 @@ function I(e, o, i, t) {
               {
                 navigation: i,
                 currentPath: a,
-                onNavigate: l,
+                onNavigate: L,
                 logo: n,
                 title: t.title,
                 position: t.pageLayout.position
@@ -181,8 +181,8 @@ function I(e, o, i, t) {
           title: t.title,
           showClose: t.popupLayout.showClose,
           onClose: () => {
-            var u;
-            return typeof window < "u" && ((u = window.close) == null ? void 0 : u.call(window));
+            var s;
+            return typeof window < "u" && ((s = window.close) == null ? void 0 : s.call(window));
           },
           children: e
         }
@@ -192,7 +192,7 @@ function I(e, o, i, t) {
       return /* @__PURE__ */ _(E, { children: e });
   }
 }
-function l(e, o) {
+function L(e, o) {
   if (!(typeof window > "u")) {
     if (o.onClick) {
       o.onClick();
@@ -202,7 +202,7 @@ function l(e, o) {
   }
 }
 function w() {
-  return L();
+  return l();
 }
 export {
   S as LayoutWrapper,

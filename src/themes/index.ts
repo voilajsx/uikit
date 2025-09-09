@@ -16,25 +16,34 @@ export {
 } from './theme-provider';
 
 // Import theme presets from JavaScript files
+import skyTheme from './presets/sky.js';
 import auroraTheme from './presets/aurora.js';
 import metroTheme from './presets/metro.js';
 import neonTheme from './presets/neon.js';
 import rubyTheme from './presets/ruby.js';
 import studioTheme from './presets/studio.js';
+import testTheme from './presets/test.js';
+import oliveTheme from './presets/olive.js';
 
 // Re-export with both default and named patterns
+export { default as skyTheme } from './presets/sky.js';
 export { default as auroraTheme } from './presets/aurora.js';
 export { default as metroTheme } from './presets/metro.js';
 export { default as neonTheme } from './presets/neon.js';
 export { default as rubyTheme } from './presets/ruby.js';
 export { default as studioTheme } from './presets/studio.js';
+export { default as testTheme } from './presets/test.js';
+export { default as oliveTheme } from './presets/olive.js';
 
 // Named aliases for convenience
+export { skyTheme as sky };
 export { auroraTheme as aurora };
 export { metroTheme as metro };
 export { neonTheme as neon };
 export { rubyTheme as ruby };
 export { studioTheme as studio };
+export { testTheme as test };
+export { oliveTheme as olive };
 
 // Type definitions for themes (inferred from JavaScript objects)
 export interface ThemeColors {
@@ -101,12 +110,14 @@ export interface ThemePreset {
  * All themes that can be used with setTheme()
  */
 export const AVAILABLE_THEMES = [
-  'default',
+  'sky',
   'aurora', 
   'metro',
   'neon',
   'ruby',
-  'studio'
+  'studio',
+  'test',
+  'olive'
 ] as const;
 
 /**
@@ -114,11 +125,14 @@ export const AVAILABLE_THEMES = [
  * Used by build scripts to generate CSS
  */
 export const ALL_THEME_PRESETS = {
+  sky: skyTheme,
   aurora: auroraTheme,
   metro: metroTheme,
   neon: neonTheme,
   ruby: rubyTheme,
   studio: studioTheme,
+  test: testTheme,
+  olive: oliveTheme,
 };
 
 /**

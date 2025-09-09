@@ -1,8 +1,112 @@
-import { ThemeProvider as n, useTheme as i } from "./theme-provider.js";
-const o = {
+import { ThemeProvider as i, useTheme as s } from "./theme-provider.js";
+const r = {
+  id: "sky",
+  name: "Sky",
+  description: "Clean, minimal blue theme with flat colors and elegant simplicity",
+  // Minimal Design Tokens - keeping defaults
+  fontPrimary: "'Inter', system-ui, sans-serif",
+  fontDisplay: "'Inter', system-ui, sans-serif",
+  radiusEnhance: "0.5rem",
+  // Standard radius
+  spacingEnhance: 1,
+  // Default spacing
+  shadowEnhance: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+  // Minimal shadow
+  shadowLg: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  shadowXl: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  // No gradients - flat colors only
+  gradientPrimary: "hsl(214, 100%, 59%)",
+  gradientSubtle: "hsl(214, 20%, 95%)",
+  gradientHover: "hsl(214, 100%, 54%)",
+  gradientText: "hsl(214, 100%, 59%)",
+  light: {
+    background: "hsl(0, 0%, 100%)",
+    foreground: "hsl(222, 84%, 5%)",
+    card: "hsl(0, 0%, 100%)",
+    cardForeground: "hsl(222, 84%, 5%)",
+    popover: "hsl(0, 0%, 100%)",
+    popoverForeground: "hsl(222, 84%, 5%)",
+    primary: "hsl(221, 83%, 53%)",
+    primaryForeground: "hsl(210, 40%, 98%)",
+    secondary: "hsl(210, 40%, 90%)",
+    secondaryForeground: "hsl(222, 47%, 11%)",
+    muted: "hsl(210, 40%, 96%)",
+    mutedForeground: "hsl(215, 16%, 47%)",
+    accent: "hsl(210, 40%, 96%)",
+    accentForeground: "hsl(222, 47%, 11%)",
+    destructive: "hsl(0, 84%, 60%)",
+    destructiveForeground: "hsl(210, 40%, 98%)",
+    border: "hsl(214, 32%, 91%)",
+    input: "hsl(214, 32%, 91%)",
+    ring: "hsl(221, 83%, 53%)",
+    chart1: "hsl(221, 83%, 53%)",
+    chart2: "hsl(212, 95%, 68%)",
+    chart3: "hsl(216, 92%, 79%)",
+    chart4: "hsl(210, 98%, 78%)",
+    chart5: "hsl(204, 94%, 94%)",
+    sidebar: "hsl(0, 0%, 98%)",
+    sidebarForeground: "hsl(222, 84%, 5%)",
+    sidebarPrimary: "hsl(221, 83%, 53%)",
+    sidebarPrimaryForeground: "hsl(210, 40%, 98%)",
+    sidebarAccent: "hsl(210, 40%, 96%)",
+    sidebarAccentForeground: "hsl(215, 16%, 47%)",
+    sidebarBorder: "hsl(214, 32%, 91%)",
+    sidebarRing: "hsl(221, 83%, 53%)"
+  },
+  dark: {
+    background: "hsl(222, 84%, 5%)",
+    foreground: "hsl(210, 40%, 98%)",
+    card: "hsl(222, 84%, 5%)",
+    cardForeground: "hsl(210, 40%, 98%)",
+    popover: "hsl(222, 84%, 5%)",
+    popoverForeground: "hsl(210, 40%, 98%)",
+    primary: "hsl(217, 91%, 60%)",
+    primaryForeground: "hsl(222, 47%, 11%)",
+    secondary: "hsl(217, 19%, 27%)",
+    secondaryForeground: "hsl(210, 40%, 98%)",
+    muted: "hsl(215, 27%, 17%)",
+    mutedForeground: "hsl(217, 10%, 65%)",
+    accent: "hsl(215, 27%, 17%)",
+    accentForeground: "hsl(210, 40%, 98%)",
+    destructive: "hsl(0, 63%, 31%)",
+    destructiveForeground: "hsl(210, 40%, 98%)",
+    border: "hsl(217, 19%, 27%)",
+    input: "hsl(217, 19%, 27%)",
+    ring: "hsl(224, 71%, 4%)",
+    chart1: "hsl(217, 91%, 60%)",
+    chart2: "hsl(212, 95%, 68%)",
+    chart3: "hsl(216, 92%, 79%)",
+    chart4: "hsl(210, 98%, 78%)",
+    chart5: "hsl(204, 94%, 94%)",
+    sidebar: "hsl(222, 84%, 5%)",
+    sidebarForeground: "hsl(210, 40%, 98%)",
+    sidebarPrimary: "hsl(217, 91%, 60%)",
+    sidebarPrimaryForeground: "hsl(222, 47%, 11%)",
+    sidebarAccent: "hsl(215, 27%, 17%)",
+    sidebarAccentForeground: "hsl(217, 10%, 65%)",
+    sidebarBorder: "hsl(217, 19%, 27%)",
+    sidebarRing: "hsl(224, 71%, 4%)"
+  }
+}, o = {
   id: "aurora",
   name: "Aurora",
-  description: "Magical northern lights theme with purple-green gradients for creative applications",
+  description: "Magical northern lights theme with purple-green colors for creative applications",
+  // Flat Design Tokens - no gradients
+  fontPrimary: "'Inter', system-ui, sans-serif",
+  fontDisplay: "'Inter', system-ui, sans-serif",
+  radiusEnhance: "0.5rem",
+  // Standard radius
+  spacingEnhance: 1,
+  // Default spacing
+  shadowEnhance: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+  // Minimal shadow
+  shadowLg: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  shadowXl: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  // No gradients - flat colors only  
+  gradientPrimary: "oklch(0.48 0.2 290)",
+  gradientSubtle: "oklch(0.94 0.008 300)",
+  gradientHover: "oklch(0.44 0.18 290)",
+  gradientText: "oklch(0.48 0.2 290)",
   light: {
     // Base colors
     background: "oklch(0.99 0.003 300)",
@@ -97,10 +201,26 @@ const o = {
     sidebarBorder: "oklch(0.2 0.02 300)",
     sidebarRing: "oklch(0.58 0.12 280)"
   }
-}, r = {
+}, c = {
   id: "metro",
   name: "Metro",
   description: "Clean, systematic design inspired by modern transit systems for professional applications",
+  // Flat Design Tokens - no gradients
+  fontPrimary: "'Segoe UI', system-ui, sans-serif",
+  fontDisplay: "'Segoe UI', system-ui, sans-serif",
+  radiusEnhance: "0.5rem",
+  // Standard radius
+  spacingEnhance: 1,
+  // Default spacing  
+  shadowEnhance: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+  // Minimal shadow
+  shadowLg: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  shadowXl: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  // No gradients - flat colors only
+  gradientPrimary: "oklch(0.35 0.08 240)",
+  gradientSubtle: "oklch(0.96 0.005 240)",
+  gradientHover: "oklch(0.31 0.07 240)",
+  gradientText: "oklch(0.35 0.08 240)",
   light: {
     // Base colors
     background: "oklch(0.99 0.002 240)",
@@ -195,15 +315,33 @@ const o = {
     sidebarBorder: "oklch(0.18 0.015 240)",
     sidebarRing: "oklch(0.55 0.12 220)"
   }
-}, c = {
+}, e = {
   id: "neon",
   name: "Neon",
   description: "Electric cyberpunk theme with glowing accents for gaming and high-tech applications",
+  // Enhanced design tokens for cyberpunk aesthetic
+  design: {
+    fontPrimary: "'JetBrains Mono', 'SF Mono', monospace",
+    fontDisplay: "'Orbitron', 'JetBrains Mono', monospace",
+    radiusEnhance: "1rem",
+    // Larger rounded corners for futuristic look
+    spacingEnhance: "1.2",
+    // More generous spacing
+    shadowEnhance: "0 0 25px rgb(320 100% 50% / 0.4), 0 8px 32px rgb(0 0 0 / 0.25), inset 0 1px 0 rgb(255 255 255 / 0.1)",
+    shadowLg: "0 0 40px rgb(320 100% 50% / 0.6), 0 20px 40px rgb(0 0 0 / 0.4)",
+    shadowXl: "0 0 60px rgb(320 100% 50% / 0.8), 0 30px 60px rgb(0 0 0 / 0.5)",
+    gradientPrimary: "linear-gradient(135deg, oklch(0.45 0.28 320) 0%, oklch(0.65 0.25 180) 50%, oklch(0.55 0.3 280) 100%)",
+    gradientSubtle: "linear-gradient(135deg, oklch(0.45 0.28 320 / 0.15) 0%, oklch(0.65 0.25 180 / 0.08) 50%, oklch(0.55 0.3 280 / 0.12) 100%)",
+    gradientHover: "linear-gradient(135deg, oklch(0.55 0.32 320) 0%, oklch(0.75 0.28 180) 50%, oklch(0.65 0.35 280) 100%)",
+    gradientText: "linear-gradient(135deg, oklch(0.45 0.28 320) 0%, oklch(0.65 0.25 180) 50%, oklch(0.55 0.3 280) 100%)",
+    gradientBackground: "linear-gradient(135deg, oklch(0.06 0.02 280) 0%, oklch(0.04 0.015 320) 25%, oklch(0.03 0.01 180) 50%, oklch(0.05 0.018 240) 75%, oklch(0.04 0.015 280) 100%)",
+    gradientBackgroundLight: "linear-gradient(135deg, oklch(0.98 0.008 280) 0%, oklch(0.99 0.005 320) 25%, oklch(0.97 0.01 180) 50%, oklch(0.98 0.006 240) 75%, oklch(0.99 0.005 280) 100%)"
+  },
   light: {
-    // Base colors
-    background: "oklch(0.99 0.005 280)",
+    // Base colors with gradients
+    background: "linear-gradient(135deg, oklch(0.98 0.008 280) 0%, oklch(0.99 0.005 320) 25%, oklch(0.97 0.01 180) 50%, oklch(0.98 0.006 240) 75%, oklch(0.99 0.005 280) 100%)",
     foreground: "oklch(0.12 0.02 280)",
-    card: "oklch(0.97 0.008 280)",
+    card: "linear-gradient(135deg, oklch(0.96 0.01 280) 0%, oklch(0.98 0.008 320) 50%, oklch(0.97 0.012 180) 100%)",
     cardForeground: "oklch(0.12 0.02 280)",
     popover: "oklch(0.97 0.008 280)",
     popoverForeground: "oklch(0.12 0.02 280)",
@@ -247,10 +385,10 @@ const o = {
     sidebarRing: "oklch(0.45 0.28 320)"
   },
   dark: {
-    // Base colors
-    background: "oklch(0.04 0.015 280)",
+    // Base colors with cyberpunk gradients
+    background: "linear-gradient(135deg, oklch(0.06 0.02 280) 0%, oklch(0.04 0.015 320) 25%, oklch(0.03 0.01 180) 50%, oklch(0.05 0.018 240) 75%, oklch(0.04 0.015 280) 100%)",
     foreground: "oklch(0.95 0.01 280)",
-    card: "oklch(0.15 0.02 280)",
+    card: "linear-gradient(135deg, oklch(0.12 0.025 280) 0%, oklch(0.16 0.022 320) 50%, oklch(0.14 0.03 180) 100%)",
     cardForeground: "oklch(0.95 0.01 280)",
     popover: "oklch(0.15 0.02 280)",
     popoverForeground: "oklch(0.95 0.01 280)",
@@ -293,10 +431,26 @@ const o = {
     sidebarBorder: "oklch(0.2 0.025 280)",
     sidebarRing: "oklch(0.55 0.18 300)"
   }
-}, e = {
+}, h = {
   id: "ruby",
   name: "Ruby",
   description: "Sophisticated red theme with golden accents for premium and luxury brand applications",
+  // Flat Design Tokens - no gradients
+  fontPrimary: "'Inter', system-ui, sans-serif",
+  fontDisplay: "'Inter', system-ui, sans-serif",
+  radiusEnhance: "0.5rem",
+  // Standard radius
+  spacingEnhance: 1,
+  // Default spacing
+  shadowEnhance: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+  // Minimal shadow
+  shadowLg: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  shadowXl: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  // No gradients - flat colors only
+  gradientPrimary: "oklch(0.48 0.18 20)",
+  gradientSubtle: "oklch(0.93 0.005 0)",
+  gradientHover: "oklch(0.44 0.16 20)",
+  gradientText: "oklch(0.48 0.18 20)",
   light: {
     // Base colors
     background: "oklch(0.98 0.005 0)",
@@ -391,10 +545,26 @@ const o = {
     sidebarBorder: "oklch(0.25 0.005 0)",
     sidebarRing: "oklch(0.58 0.15 15)"
   }
-}, h = {
+}, l = {
   id: "studio",
   name: "Studio",
   description: "Sophisticated designer grays with strategic color accents for creative professionals",
+  // Flat Design Tokens - no gradients
+  fontPrimary: "'Inter', system-ui, sans-serif",
+  fontDisplay: "'Inter', system-ui, sans-serif",
+  radiusEnhance: "0.5rem",
+  // Standard radius
+  spacingEnhance: 1,
+  // Default spacing
+  shadowEnhance: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+  // Minimal shadow
+  shadowLg: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  shadowXl: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  // No gradients - flat colors only
+  gradientPrimary: "oklch(0.32 0.02 270)",
+  gradientSubtle: "oklch(0.97 0.002 270)",
+  gradientHover: "oklch(0.28 0.018 270)",
+  gradientText: "oklch(0.32 0.02 270)",
   light: {
     // Base colors
     background: "oklch(0.99 0.001 270)",
@@ -489,34 +659,37 @@ const o = {
     sidebarBorder: "oklch(0.18 0.008 270)",
     sidebarRing: "oklch(0.60 0.08 260)"
   }
-}, l = [
-  "default",
+}, a = [
+  "sky",
   "aurora",
   "metro",
   "neon",
   "ruby",
   "studio"
-], k = {
+], d = {
+  sky: r,
   aurora: o,
-  metro: r,
-  neon: c,
-  ruby: e,
-  studio: h
+  metro: c,
+  neon: e,
+  ruby: h,
+  studio: l
 };
 export {
-  k as ALL_THEME_PRESETS,
-  l as AVAILABLE_THEMES,
-  n as ThemeProvider,
+  d as ALL_THEME_PRESETS,
+  a as AVAILABLE_THEMES,
+  i as ThemeProvider,
   o as aurora,
   o as auroraTheme,
-  r as metro,
-  r as metroTheme,
-  c as neon,
-  c as neonTheme,
-  e as ruby,
-  e as rubyTheme,
-  h as studio,
-  h as studioTheme,
-  i as useTheme
+  c as metro,
+  c as metroTheme,
+  e as neon,
+  e as neonTheme,
+  h as ruby,
+  h as rubyTheme,
+  r as sky,
+  r as skyTheme,
+  l as studio,
+  l as studioTheme,
+  s as useTheme
 };
 //# sourceMappingURL=themes.js.map

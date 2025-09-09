@@ -8,7 +8,7 @@ import React, { ReactNode } from 'react';
  * @llm-rule Pre-bundled themes - CSS included in package
  * Simple selection from 6 built-in themes
  */
-export type Theme = 'default' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+export type Theme = 'sky' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
 /**
  * @llm-rule System color scheme preference
  * light: Light system theme
@@ -50,9 +50,9 @@ export interface ThemeContextValue {
 /**
  * @llm-props ThemeProvider props - ENHANCED WITH CONFIG PRIORITY
  * REQUIRED: children
- * RECOMMENDED: theme="default", mode="light"
+ * RECOMMENDED: theme="sky", mode="light"
  * OPTIONAL: detectSystem, forceConfig, storageKey
- * @llm-defaults theme="default", mode="light", detectSystem=true, forceConfig=false
+ * @llm-defaults theme="sky", mode="light", detectSystem=true, forceConfig=false
  */
 export interface ThemeProviderProps {
     /** REQUIRED: Child components */
