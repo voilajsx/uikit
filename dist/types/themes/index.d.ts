@@ -1,27 +1,24 @@
 /**
- * Theme system exports for @voilajsx/uikit
+ * Optimized theme system exports for @voilajsx/uikit
  * @module @voilajsx/uikit
  * @file src/themes/index.ts
  */
 export { ThemeProvider, useTheme, type Theme, type Mode, type Tone, type ThemeContextValue, type ThemeProviderProps, } from './theme-provider';
-import skyTheme from './presets/sky.js';
-import auroraTheme from './presets/aurora.js';
+import baseTheme from './presets/base.js';
+import elegantTheme from './presets/elegant.js';
 import metroTheme from './presets/metro.js';
-import neonTheme from './presets/neon.js';
-import rubyTheme from './presets/ruby.js';
 import studioTheme from './presets/studio.js';
-export { default as skyTheme } from './presets/sky.js';
-export { default as auroraTheme } from './presets/aurora.js';
+import vividTheme from './presets/vivid.js';
+export { default as baseTheme } from './presets/base.js';
+export { default as elegantTheme } from './presets/elegant.js';
 export { default as metroTheme } from './presets/metro.js';
-export { default as neonTheme } from './presets/neon.js';
-export { default as rubyTheme } from './presets/ruby.js';
 export { default as studioTheme } from './presets/studio.js';
-export { skyTheme as sky };
-export { auroraTheme as aurora };
+export { default as vividTheme } from './presets/vivid.js';
+export { baseTheme as base };
+export { elegantTheme as elegant };
 export { metroTheme as metro };
-export { neonTheme as neon };
-export { rubyTheme as ruby };
 export { studioTheme as studio };
+export { vividTheme as vivid };
 export interface ThemeColors {
     background: string;
     foreground: string;
@@ -72,27 +69,18 @@ export interface ThemePreset {
  * @llm-rule Available theme presets
  * All themes that can be used with setTheme()
  */
-export declare const AVAILABLE_THEMES: readonly ["sky", "aurora", "metro", "neon", "ruby", "studio"];
+export declare const AVAILABLE_THEMES: readonly ["base", "elegant", "metro", "studio", "vivid"];
 /**
- * @llm-rule All theme presets for build tools
+ * @llm-rule All optimized theme presets for build tools
  * Used by build scripts to generate CSS
+ * Now with dramatically reduced file sizes!
  */
 export declare const ALL_THEME_PRESETS: {
-    sky: {
+    base: {
         id: string;
         name: string;
         description: string;
-        fontPrimary: string;
-        fontDisplay: string;
-        radiusEnhance: string;
-        spacingEnhance: number;
-        shadowEnhance: string;
-        shadowLg: string;
-        shadowXl: string;
-        gradientPrimary: string;
-        gradientSubtle: string;
-        gradientHover: string;
-        gradientText: string;
+        customStyles: string;
         light: {
             background: string;
             foreground: string;
@@ -162,21 +150,11 @@ export declare const ALL_THEME_PRESETS: {
             sidebarRing: string;
         };
     };
-    aurora: {
+    elegant: {
         id: string;
         name: string;
         description: string;
-        fontPrimary: string;
-        fontDisplay: string;
-        radiusEnhance: string;
-        spacingEnhance: number;
-        shadowEnhance: string;
-        shadowLg: string;
-        shadowXl: string;
-        gradientPrimary: string;
-        gradientSubtle: string;
-        gradientHover: string;
-        gradientText: string;
+        customStyles: string;
         light: {
             background: string;
             foreground: string;
@@ -250,98 +228,8 @@ export declare const ALL_THEME_PRESETS: {
         id: string;
         name: string;
         description: string;
-        fontPrimary: string;
-        fontDisplay: string;
-        radiusEnhance: string;
-        spacingEnhance: number;
-        shadowEnhance: string;
-        shadowLg: string;
-        shadowXl: string;
-        gradientPrimary: string;
-        gradientSubtle: string;
-        gradientHover: string;
-        gradientText: string;
-        light: {
-            background: string;
-            foreground: string;
-            card: string;
-            cardForeground: string;
-            popover: string;
-            popoverForeground: string;
-            primary: string;
-            primaryForeground: string;
-            secondary: string;
-            secondaryForeground: string;
-            muted: string;
-            mutedForeground: string;
-            accent: string;
-            accentForeground: string;
-            destructive: string;
-            destructiveForeground: string;
-            border: string;
-            input: string;
-            ring: string;
-            chart1: string;
-            chart2: string;
-            chart3: string;
-            chart4: string;
-            chart5: string;
-            sidebar: string;
-            sidebarForeground: string;
-            sidebarPrimary: string;
-            sidebarPrimaryForeground: string;
-            sidebarAccent: string;
-            sidebarAccentForeground: string;
-            sidebarBorder: string;
-            sidebarRing: string;
-        };
-        dark: {
-            background: string;
-            foreground: string;
-            card: string;
-            cardForeground: string;
-            popover: string;
-            popoverForeground: string;
-            primary: string;
-            primaryForeground: string;
-            secondary: string;
-            secondaryForeground: string;
-            muted: string;
-            mutedForeground: string;
-            accent: string;
-            accentForeground: string;
-            destructive: string;
-            destructiveForeground: string;
-            border: string;
-            input: string;
-            ring: string;
-            chart1: string;
-            chart2: string;
-            chart3: string;
-            chart4: string;
-            chart5: string;
-            sidebar: string;
-            sidebarForeground: string;
-            sidebarPrimary: string;
-            sidebarPrimaryForeground: string;
-            sidebarAccent: string;
-            sidebarAccentForeground: string;
-            sidebarBorder: string;
-            sidebarRing: string;
-        };
-    };
-    neon: {
-        id: string;
-        name: string;
-        description: string;
         design: {
-            fontPrimary: string;
             fontDisplay: string;
-            radiusEnhance: string;
-            spacingEnhance: string;
-            shadowEnhance: string;
-            shadowLg: string;
-            shadowXl: string;
             gradientPrimary: string;
             gradientSubtle: string;
             gradientHover: string;
@@ -349,8 +237,10 @@ export declare const ALL_THEME_PRESETS: {
             gradientBackground: string;
             gradientBackgroundLight: string;
         };
+        customStyles: string;
         light: {
             background: string;
+            backgroundGradient: string;
             foreground: string;
             card: string;
             cardForeground: string;
@@ -364,8 +254,6 @@ export declare const ALL_THEME_PRESETS: {
             mutedForeground: string;
             accent: string;
             accentForeground: string;
-            destructive: string;
-            destructiveForeground: string;
             border: string;
             input: string;
             ring: string;
@@ -385,6 +273,7 @@ export declare const ALL_THEME_PRESETS: {
         };
         dark: {
             background: string;
+            backgroundGradient: string;
             foreground: string;
             card: string;
             cardForeground: string;
@@ -398,92 +287,6 @@ export declare const ALL_THEME_PRESETS: {
             mutedForeground: string;
             accent: string;
             accentForeground: string;
-            destructive: string;
-            destructiveForeground: string;
-            border: string;
-            input: string;
-            ring: string;
-            chart1: string;
-            chart2: string;
-            chart3: string;
-            chart4: string;
-            chart5: string;
-            sidebar: string;
-            sidebarForeground: string;
-            sidebarPrimary: string;
-            sidebarPrimaryForeground: string;
-            sidebarAccent: string;
-            sidebarAccentForeground: string;
-            sidebarBorder: string;
-            sidebarRing: string;
-        };
-    };
-    ruby: {
-        id: string;
-        name: string;
-        description: string;
-        fontPrimary: string;
-        fontDisplay: string;
-        radiusEnhance: string;
-        spacingEnhance: number;
-        shadowEnhance: string;
-        shadowLg: string;
-        shadowXl: string;
-        gradientPrimary: string;
-        gradientSubtle: string;
-        gradientHover: string;
-        gradientText: string;
-        light: {
-            background: string;
-            foreground: string;
-            card: string;
-            cardForeground: string;
-            popover: string;
-            popoverForeground: string;
-            primary: string;
-            primaryForeground: string;
-            secondary: string;
-            secondaryForeground: string;
-            muted: string;
-            mutedForeground: string;
-            accent: string;
-            accentForeground: string;
-            destructive: string;
-            destructiveForeground: string;
-            border: string;
-            input: string;
-            ring: string;
-            chart1: string;
-            chart2: string;
-            chart3: string;
-            chart4: string;
-            chart5: string;
-            sidebar: string;
-            sidebarForeground: string;
-            sidebarPrimary: string;
-            sidebarPrimaryForeground: string;
-            sidebarAccent: string;
-            sidebarAccentForeground: string;
-            sidebarBorder: string;
-            sidebarRing: string;
-        };
-        dark: {
-            background: string;
-            foreground: string;
-            card: string;
-            cardForeground: string;
-            popover: string;
-            popoverForeground: string;
-            primary: string;
-            primaryForeground: string;
-            secondary: string;
-            secondaryForeground: string;
-            muted: string;
-            mutedForeground: string;
-            accent: string;
-            accentForeground: string;
-            destructive: string;
-            destructiveForeground: string;
             border: string;
             input: string;
             ring: string;
@@ -506,19 +309,20 @@ export declare const ALL_THEME_PRESETS: {
         id: string;
         name: string;
         description: string;
-        fontPrimary: string;
-        fontDisplay: string;
-        radiusEnhance: string;
-        spacingEnhance: number;
-        shadowEnhance: string;
-        shadowLg: string;
-        shadowXl: string;
-        gradientPrimary: string;
-        gradientSubtle: string;
-        gradientHover: string;
-        gradientText: string;
+        design: {
+            fontPrimary: string;
+            fontDisplay: string;
+            gradientPrimary: string;
+            gradientSubtle: string;
+            gradientHover: string;
+            gradientText: string;
+            gradientBackground: string;
+            gradientBackgroundLight: string;
+        };
+        customStyles: string;
         light: {
             background: string;
+            backgroundGradient: string;
             foreground: string;
             card: string;
             cardForeground: string;
@@ -532,8 +336,6 @@ export declare const ALL_THEME_PRESETS: {
             mutedForeground: string;
             accent: string;
             accentForeground: string;
-            destructive: string;
-            destructiveForeground: string;
             border: string;
             input: string;
             ring: string;
@@ -553,6 +355,7 @@ export declare const ALL_THEME_PRESETS: {
         };
         dark: {
             background: string;
+            backgroundGradient: string;
             foreground: string;
             card: string;
             cardForeground: string;
@@ -566,8 +369,88 @@ export declare const ALL_THEME_PRESETS: {
             mutedForeground: string;
             accent: string;
             accentForeground: string;
-            destructive: string;
-            destructiveForeground: string;
+            border: string;
+            input: string;
+            ring: string;
+            chart1: string;
+            chart2: string;
+            chart3: string;
+            chart4: string;
+            chart5: string;
+            sidebar: string;
+            sidebarForeground: string;
+            sidebarPrimary: string;
+            sidebarPrimaryForeground: string;
+            sidebarAccent: string;
+            sidebarAccentForeground: string;
+            sidebarBorder: string;
+            sidebarRing: string;
+        };
+    };
+    vivid: {
+        id: string;
+        name: string;
+        description: string;
+        design: {
+            fontPrimary: string;
+            fontDisplay: string;
+            fontScript: string;
+            radiusEnhance: string;
+            spacingEnhance: string;
+            shadowEnhance: string;
+            shadowLg: string;
+            shadowXl: string;
+        };
+        customStyles: string;
+        light: {
+            background: string;
+            backgroundGradient: string;
+            foreground: string;
+            card: string;
+            cardForeground: string;
+            popover: string;
+            popoverForeground: string;
+            primary: string;
+            primaryForeground: string;
+            secondary: string;
+            secondaryForeground: string;
+            muted: string;
+            mutedForeground: string;
+            accent: string;
+            accentForeground: string;
+            border: string;
+            input: string;
+            ring: string;
+            chart1: string;
+            chart2: string;
+            chart3: string;
+            chart4: string;
+            chart5: string;
+            sidebar: string;
+            sidebarForeground: string;
+            sidebarPrimary: string;
+            sidebarPrimaryForeground: string;
+            sidebarAccent: string;
+            sidebarAccentForeground: string;
+            sidebarBorder: string;
+            sidebarRing: string;
+        };
+        dark: {
+            background: string;
+            backgroundGradient: string;
+            foreground: string;
+            card: string;
+            cardForeground: string;
+            popover: string;
+            popoverForeground: string;
+            primary: string;
+            primaryForeground: string;
+            secondary: string;
+            secondaryForeground: string;
+            muted: string;
+            mutedForeground: string;
+            accent: string;
+            accentForeground: string;
             border: string;
             input: string;
             ring: string;
@@ -588,17 +471,17 @@ export declare const ALL_THEME_PRESETS: {
     };
 };
 /**
- * @llm-pattern Basic theme usage
+ * @llm-pattern Basic theme usage (same as before)
  * import { ThemeProvider, useTheme } from '@voilajsx/uikit/themes';
  *
- * <ThemeProvider theme="aurora" mode="dark">
+ * <ThemeProvider theme="elegant" mode="dark">
  *   <App />
  * </ThemeProvider>
  *
  * const { setTheme, setMode, getToneClasses } = useTheme();
  */
 /**
- * @llm-pattern Build tool usage
+ * @llm-pattern Build tool usage (same API, smaller files!)
  * import { ALL_THEME_PRESETS } from '@voilajsx/uikit/themes';
  *
  * // Generate CSS for all themes
@@ -607,10 +490,10 @@ export declare const ALL_THEME_PRESETS: {
  * });
  */
 /**
- * @llm-pattern Individual theme access
- * import { aurora, studioTheme } from '@voilajsx/uikit/themes';
+ * @llm-pattern Individual theme access (same as before)
+ * import { vivid, studioTheme } from '@voilajsx/uikit/themes';
  *
- * console.log(aurora.name); // "Aurora"
+ * console.log(vivid.name); // "Vivid"
  * console.log(studioTheme.light.primary); // Theme color
  */ 
 //# sourceMappingURL=index.d.ts.map

@@ -11,7 +11,7 @@ import type { NavigationItem, Size } from '@/types';
  */
 declare const headerVariants: (props?: ({
     tone?: "clean" | "subtle" | "brand" | "contrast" | null | undefined;
-    position?: "fixed" | "sticky" | "relative" | null | undefined;
+    position?: "fixed" | "relative" | "sticky" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
  * Container variants for responsive sizing

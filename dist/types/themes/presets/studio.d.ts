@@ -3,19 +3,20 @@ declare namespace studioTheme {
     let id: string;
     let name: string;
     let description: string;
-    let fontPrimary: string;
-    let fontDisplay: string;
-    let radiusEnhance: string;
-    let spacingEnhance: number;
-    let shadowEnhance: string;
-    let shadowLg: string;
-    let shadowXl: string;
-    let gradientPrimary: string;
-    let gradientSubtle: string;
-    let gradientHover: string;
-    let gradientText: string;
+    namespace design {
+        let fontPrimary: string;
+        let fontDisplay: string;
+        let gradientPrimary: string;
+        let gradientSubtle: string;
+        let gradientHover: string;
+        let gradientText: string;
+        let gradientBackground: string;
+        let gradientBackgroundLight: string;
+    }
+    let customStyles: string;
     namespace light {
         let background: string;
+        let backgroundGradient: string;
         let foreground: string;
         let card: string;
         let cardForeground: string;
@@ -29,8 +30,6 @@ declare namespace studioTheme {
         let mutedForeground: string;
         let accent: string;
         let accentForeground: string;
-        let destructive: string;
-        let destructiveForeground: string;
         let border: string;
         let input: string;
         let ring: string;
@@ -51,6 +50,8 @@ declare namespace studioTheme {
     namespace dark {
         let background_1: string;
         export { background_1 as background };
+        let backgroundGradient_1: string;
+        export { backgroundGradient_1 as backgroundGradient };
         let foreground_1: string;
         export { foreground_1 as foreground };
         let card_1: string;
@@ -77,10 +78,6 @@ declare namespace studioTheme {
         export { accent_1 as accent };
         let accentForeground_1: string;
         export { accentForeground_1 as accentForeground };
-        let destructive_1: string;
-        export { destructive_1 as destructive };
-        let destructiveForeground_1: string;
-        export { destructiveForeground_1 as destructiveForeground };
         let border_1: string;
         export { border_1 as border };
         let input_1: string;

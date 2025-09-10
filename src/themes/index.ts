@@ -1,5 +1,5 @@
 /**
- * Theme system exports for @voilajsx/uikit
+ * Optimized theme system exports for @voilajsx/uikit
  * @module @voilajsx/uikit
  * @file src/themes/index.ts
  */
@@ -15,35 +15,26 @@ export {
   type ThemeProviderProps,
 } from './theme-provider';
 
-// Import theme presets from JavaScript files
-import skyTheme from './presets/sky.js';
-import auroraTheme from './presets/aurora.js';
+// Import optimized theme presets from JavaScript files
+import baseTheme from './presets/base.js';
+import elegantTheme from './presets/elegant.js';
 import metroTheme from './presets/metro.js';
-import neonTheme from './presets/neon.js';
-import rubyTheme from './presets/ruby.js';
 import studioTheme from './presets/studio.js';
-import testTheme from './presets/test.js';
-import oliveTheme from './presets/olive.js';
+import vividTheme from './presets/vivid.js';
 
 // Re-export with both default and named patterns
-export { default as skyTheme } from './presets/sky.js';
-export { default as auroraTheme } from './presets/aurora.js';
+export { default as baseTheme } from './presets/base.js';
+export { default as elegantTheme } from './presets/elegant.js';
 export { default as metroTheme } from './presets/metro.js';
-export { default as neonTheme } from './presets/neon.js';
-export { default as rubyTheme } from './presets/ruby.js';
 export { default as studioTheme } from './presets/studio.js';
-export { default as testTheme } from './presets/test.js';
-export { default as oliveTheme } from './presets/olive.js';
+export { default as vividTheme } from './presets/vivid.js';
 
 // Named aliases for convenience
-export { skyTheme as sky };
-export { auroraTheme as aurora };
+export { baseTheme as base };
+export { elegantTheme as elegant };
 export { metroTheme as metro };
-export { neonTheme as neon };
-export { rubyTheme as ruby };
 export { studioTheme as studio };
-export { testTheme as test };
-export { oliveTheme as olive };
+export { vividTheme as vivid };
 
 // Type definitions for themes (inferred from JavaScript objects)
 export interface ThemeColors {
@@ -110,36 +101,31 @@ export interface ThemePreset {
  * All themes that can be used with setTheme()
  */
 export const AVAILABLE_THEMES = [
-  'sky',
-  'aurora', 
+  'base',
+  'elegant',
   'metro',
-  'neon',
-  'ruby',
   'studio',
-  'test',
-  'olive'
+  'vivid'
 ] as const;
 
 /**
- * @llm-rule All theme presets for build tools
+ * @llm-rule All optimized theme presets for build tools
  * Used by build scripts to generate CSS
+ * Now with dramatically reduced file sizes!
  */
 export const ALL_THEME_PRESETS = {
-  sky: skyTheme,
-  aurora: auroraTheme,
+  base: baseTheme,
+  elegant: elegantTheme,
   metro: metroTheme,
-  neon: neonTheme,
-  ruby: rubyTheme,
   studio: studioTheme,
-  test: testTheme,
-  olive: oliveTheme,
+  vivid: vividTheme,
 };
 
 /**
- * @llm-pattern Basic theme usage
+ * @llm-pattern Basic theme usage (same as before)
  * import { ThemeProvider, useTheme } from '@voilajsx/uikit/themes';
  * 
- * <ThemeProvider theme="aurora" mode="dark">
+ * <ThemeProvider theme="elegant" mode="dark">
  *   <App />
  * </ThemeProvider>
  * 
@@ -147,7 +133,7 @@ export const ALL_THEME_PRESETS = {
  */
 
 /**
- * @llm-pattern Build tool usage
+ * @llm-pattern Build tool usage (same API, smaller files!)
  * import { ALL_THEME_PRESETS } from '@voilajsx/uikit/themes';
  * 
  * // Generate CSS for all themes
@@ -157,9 +143,9 @@ export const ALL_THEME_PRESETS = {
  */
 
 /**
- * @llm-pattern Individual theme access
- * import { aurora, studioTheme } from '@voilajsx/uikit/themes';
+ * @llm-pattern Individual theme access (same as before)
+ * import { vivid, studioTheme } from '@voilajsx/uikit/themes';
  * 
- * console.log(aurora.name); // "Aurora"
+ * console.log(vivid.name); // "Vivid"
  * console.log(studioTheme.light.primary); // Theme color
  */

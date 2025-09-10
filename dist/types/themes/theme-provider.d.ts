@@ -6,9 +6,9 @@
 import React, { ReactNode } from 'react';
 /**
  * @llm-rule Pre-bundled themes - CSS included in package
- * Simple selection from 6 built-in themes
+ * Simple selection from 8 built-in themes
  */
-export type Theme = 'sky' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio';
+export type Theme = 'base' | 'elegant' | 'metro' | 'studio' | 'vivid';
 /**
  * @llm-rule System color scheme preference
  * light: Light system theme
@@ -50,9 +50,9 @@ export interface ThemeContextValue {
 /**
  * @llm-props ThemeProvider props - ENHANCED WITH CONFIG PRIORITY
  * REQUIRED: children
- * RECOMMENDED: theme="sky", mode="light"
+ * RECOMMENDED: theme="base", mode="light"
  * OPTIONAL: detectSystem, forceConfig, storageKey
- * @llm-defaults theme="sky", mode="light", detectSystem=true, forceConfig=false
+ * @llm-defaults theme="base", mode="light", detectSystem=true, forceConfig=false
  */
 export interface ThemeProviderProps {
     /** REQUIRED: Child components */
@@ -76,22 +76,22 @@ export declare const AVAILABLE_THEMES: Theme[];
 /**
  * 🔧 ENHANCED: Ultra-simple theme provider with configuration priority
  * @llm-pattern Basic usage (default behavior - storage first)
- * <ThemeProvider theme="aurora" mode="dark">
+ * <ThemeProvider theme="elegant" mode="dark">
  *   <App />
  * </ThemeProvider>
  *
  * @llm-pattern Force configuration (ignore storage completely)
- * <ThemeProvider theme="aurora" mode="dark" forceConfig={true}>
+ * <ThemeProvider theme="elegant" mode="dark" forceConfig={true}>
  *   <App />
  * </ThemeProvider>
  *
  * @llm-pattern Disable storage entirely
- * <ThemeProvider theme="aurora" mode="dark" storageKey={null}>
+ * <ThemeProvider theme="elegant" mode="dark" storageKey={null}>
  *   <App />
  * </ThemeProvider>
  *
  * @llm-pattern Custom storage key
- * <ThemeProvider theme="aurora" mode="dark" storageKey="my-app-theme">
+ * <ThemeProvider theme="elegant" mode="dark" storageKey="my-app-theme">
  *   <App />
  * </ThemeProvider>
  */

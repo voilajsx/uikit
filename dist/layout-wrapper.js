@@ -5,8 +5,8 @@ import { PageLayout as r } from "./page.js";
 import { AuthLayout as p } from "./auth.js";
 import { BlankLayout as O } from "./blank.js";
 import { PopupLayout as A } from "./popup.js";
-const y = {};
-function d(e, o = []) {
+const d = {};
+function y(e, o = []) {
   if (!e) return o;
   try {
     return JSON.parse(e);
@@ -15,17 +15,17 @@ function d(e, o = []) {
   }
 }
 function l() {
-  const e = y;
+  const e = d;
   return {
     // Theme system
-    theme: e.VITE__LAYOUT__THEME || "sky",
+    theme: e.VITE__LAYOUT__THEME || "base",
     mode: e.VITE__LAYOUT__MODE || "light",
     detectSystem: e.VITE__LAYOUT__DETECT_SYSTEM === "true",
     // Layout selection
     layout: e.VITE__LAYOUT__TYPE || "admin",
     title: e.VITE__LAYOUT__TITLE || e.VITE__APP__NAME || "Platform",
     logo: e.VITE__LAYOUT__LOGO,
-    navigation: d(e.VITE__LAYOUT__NAVIGATION, []),
+    navigation: y(e.VITE__LAYOUT__NAVIGATION, []),
     // Admin layout
     adminLayout: {
       scheme: e.VITE__LAYOUT__ADMIN__SCHEME || "sidebar",

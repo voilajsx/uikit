@@ -7,14 +7,11 @@ const UIKitShowcase: React.FC = () => {
   const { theme, mode, setTheme, setMode, availableThemes, toggleMode } = useTheme();
 
   const themeDescriptions = {
-    aurora: 'Elegant purple gradients with professional shadows',
-    metro: 'Clean corporate blue theme with sophistication',
-    neon: 'Electric green cyberpunk theme with glowing accents',
-    ruby: 'Warm ruby red theme with classic elegance',
-    sky: 'Fresh sky blue theme with clean design',
+    base: 'Clean default configuration showcasing the base system with Inter typography (default)',
+    elegant: 'Fresh sky blue theme with clean design',
+    metro: 'Dark teal theme with bright yellow accents',
     studio: 'Sophisticated neutral theme with golden accents',
-    test: 'Aurora-inspired theme with rich purple-green gradients',
-    olive: 'Natural olive green theme with earthy tones and goldenrod accents'
+    vivid: 'Premium cursive theme with sophisticated typography for luxury brands'
   };
 
   return (
@@ -27,7 +24,7 @@ const UIKitShowcase: React.FC = () => {
               UI
             </div>
             <div>
-              <h1 className="text-xl font-bold">@voilajsx/uikit</h1>
+              <h3 className="voila-brand-logo text-xl font-bold">@voilajsx/uikit</h3>
               <p className="text-xs text-muted-foreground">Professional React UI Components</p>
             </div>
           </div>
@@ -56,60 +53,23 @@ const UIKitShowcase: React.FC = () => {
         
         {/* Hero */}
         <section className="text-center py-8">
-          {theme === 'neon' ? (
-            <div className="space-y-4">
-              <h2 style={{ fontFamily: "'Dancing Script', cursive", fontSize: '3rem', fontWeight: 'bold' }} className="text-primary mb-3">
-                Beautiful UI Components
-              </h2>
-              <p style={{ fontFamily: "'Orbitron', monospace", fontSize: '1.2rem', fontWeight: '600' }} className="text-accent mb-6">
-                {availableThemes.length} themes • {mode} mode • Professional React components
-              </p>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-sm text-muted-foreground bg-muted px-4 py-2 rounded inline-block">
-                Electric gaming theme with neon pink/cyan gradients
-              </div>
+          <div className="space-y-4">
+            <h1 className="voila-heading text-gradient-primary mb-3">
+              Beautiful UI Components
+            </h1>
+            <p className="voila-subheading text-accent mb-6">
+              {availableThemes.length} themes • {mode} mode • Professional React components
+            </p>
+            <div className="text-sm text-muted-foreground bg-muted px-4 py-2 rounded inline-block">
+              {themeDescriptions[theme as keyof typeof themeDescriptions]}
             </div>
-          ) : theme === 'test' ? (
-            <div className="space-y-4">
-              <h2 style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '3rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em' }} className="text-gradient-primary mb-3">
-                CYBERPUNK UI
-              </h2>
-              <p style={{ fontFamily: "'Orbitron', monospace", fontSize: '1.2rem', fontWeight: '600', letterSpacing: '0.05em' }} className="text-accent mb-6">
-                {availableThemes.length} THEMES • {mode.toUpperCase()} MODE • ELECTRIC COMPONENTS
-              </p>
-              <div style={{ fontFamily: "'Source Code Pro', monospace" }} className="text-sm text-muted-foreground bg-muted px-4 py-2 rounded inline-block border border-accent/30">
-                &gt; Cyberpunk electric theme with vibrant blues, magentas, and cyans
-              </div>
-            </div>
-          ) : theme === 'olive' ? (
-            <div className="space-y-4">
-              <h2 style={{ fontFamily: "'Poppins', sans-serif", fontSize: '3rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }} className="text-gradient-primary mb-3">
-                NATURAL DESIGN
-              </h2>
-              <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '1.2rem', fontWeight: '600', letterSpacing: '0.05em' }} className="text-accent mb-6">
-                {availableThemes.length} THEMES • {mode.toUpperCase()} MODE • ORGANIC COMPONENTS
-              </p>
-              <div style={{ fontFamily: "'Source Code Pro', monospace" }} className="text-sm text-muted-foreground bg-muted px-4 py-2 rounded inline-block">
-                🌿 Natural olive green theme with earthy tones and goldenrod accents
-              </div>
-            </div>
-          ) : (
-            <div>
-              <h2 className="text-3xl font-bold mb-3">Beautiful UI Components</h2>
-              <p className="text-muted-foreground mb-6">
-                {availableThemes.length} themes • {mode} mode • Professional React components
-              </p>
-              <div className="text-sm text-muted-foreground mb-4">
-                {themeDescriptions[theme as keyof typeof themeDescriptions]}
-              </div>
-            </div>
-          )}
+          </div>
         </section>
 
         {/* Colors */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-primary text-primary-foreground p-4 rounded-lg text-center">
             <div className="text-sm font-medium">Primary</div>
-            {theme === 'neon' && <div className="text-xs opacity-75">✨ Gradient</div>}
           </div>
           <div className="bg-secondary text-secondary-foreground p-4 rounded-lg text-center">
             <div className="text-sm font-medium">Secondary</div>
@@ -119,7 +79,6 @@ const UIKitShowcase: React.FC = () => {
           </div>
           <div className="bg-muted text-muted-foreground p-4 rounded-lg text-center">
             <div className="text-sm font-medium">Muted</div>
-            {theme === 'neon' && <div className="text-xs opacity-75">✨ Gradient</div>}
           </div>
         </div>
 
@@ -133,11 +92,11 @@ const UIKitShowcase: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-3">
-                <Button>Primary</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="outline">Outline</Button>
-                <Button variant="ghost">Ghost</Button>
-                <Button variant="destructive" size="sm">Delete</Button>
+                <Button size="lg">Primary</Button>
+                <Button variant="secondary" size="lg">Secondary</Button>
+                <Button variant="outline" size="lg">Outline</Button>
+                <Button variant="ghost" size="lg">Ghost</Button>
+                <Button variant="destructive" size="lg">Delete</Button>
               </div>
             </CardContent>
           </Card>
@@ -160,14 +119,13 @@ const UIKitShowcase: React.FC = () => {
                 <CardDescription>With actions</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button size="sm" className="w-full">Action</Button>
+                <Button size="lg" className="w-full">Action</Button>
               </CardContent>
             </Card>
             
             <div className="bg-primary text-primary-foreground p-6 rounded-lg">
               <h4 className="font-semibold mb-2">Primary Card</h4>
               <p className="text-sm opacity-90">Custom background</p>
-              {theme === 'neon' && <p className="text-xs opacity-75 mt-1">✨ Auto gradient</p>}
             </div>
           </div>
 
@@ -205,15 +163,26 @@ const UIKitShowcase: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-5 gap-3">
-                {[1, 2, 3, 4, 5].map(num => (
-                  <div key={num} className="text-center">
-                    <div 
-                      className="w-full h-12 rounded mb-2"
-                      style={{ backgroundColor: `var(--color-chart${num})` }}
-                    />
-                    <div className="text-xs text-muted-foreground">chart{num}</div>
-                  </div>
-                ))}
+                <div className="text-center">
+                  <div className="w-full h-12 rounded mb-2 bg-chart1" />
+                  <div className="text-xs text-muted-foreground">chart1</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-full h-12 rounded mb-2 bg-chart2" />
+                  <div className="text-xs text-muted-foreground">chart2</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-full h-12 rounded mb-2 bg-chart3" />
+                  <div className="text-xs text-muted-foreground">chart3</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-full h-12 rounded mb-2 bg-chart4" />
+                  <div className="text-xs text-muted-foreground">chart4</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-full h-12 rounded mb-2 bg-chart5" />
+                  <div className="text-xs text-muted-foreground">chart5</div>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -250,7 +219,7 @@ const UIKitShowcase: React.FC = () => {
 
 function App() {
   return (
-    <ThemeProvider theme="test" mode="light" forceConfig={true}>
+    <ThemeProvider theme="base" mode="light" forceConfig={true}>
       <UIKitShowcase />
     </ThemeProvider>
   );

@@ -1,125 +1,184 @@
 /**
- * Metro theme preset - clean transit-inspired design
- * @description Modern, systematic theme inspired by transit systems for professional applications
+ * Metro theme preset - Clean, systematic design (OPTIMIZED)
+ * @description Modern, systematic theme for dashboards, admin panels, and professional applications
  * @package @voilajsx/uikit
- * @file /src/themes/presets/metro.js
+ * @file /src/themes/presets/metro-optimized.js
  */
 
+// Metro theme - self-contained
+
 /**
- * Metro theme preset - clean, systematic design inspired by modern transit systems
- * Perfect for dashboards, admin panels, and professional applications
+ * Metro theme preset - Only overrides what's different from default
+ * Uses the new modular system for dramatically reduced file size
  */
 const metroTheme = {
   id: 'metro',
   name: 'Metro',
-  description:
-    'Clean, systematic design inspired by modern transit systems for professional applications',
+  description: 'Clean, systematic design inspired by modern transit systems for professional applications',
 
-  // Flat Design Tokens - no gradients
-  fontPrimary: "'Segoe UI', system-ui, sans-serif",
-  fontDisplay: "'Segoe UI', system-ui, sans-serif",
-  radiusEnhance: '0.5rem',        // Standard radius
-  spacingEnhance: 1,              // Default spacing  
-  shadowEnhance: '0 1px 2px 0 rgb(0 0 0 / 0.05)',        // Minimal shadow
-  shadowLg: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-  shadowXl: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+  // Only override design tokens that differ from default
+  design: {
+    // Metro-specific fonts
+    fontDisplay: "'Crimson Text', serif",
+    
+    // Metro-specific gradients
+    gradientPrimary: '#0f3a36', // Flat primary color
+    gradientSubtle: 'linear-gradient(135deg, oklch(0.96 0.005 240) 0%, oklch(0.88 0.008 240) 100%)',
+    gradientHover: 'linear-gradient(135deg, oklch(0.55 0.12 220) 0%, #0f3a36 100%)',
+    gradientText: 'linear-gradient(135deg, #0f3a36 0%, oklch(0.55 0.12 200) 50%, oklch(0.96 0.005 240) 100%)',
+    gradientBackground: 'linear-gradient(135deg, oklch(0.09 0.01 240) 0%, oklch(0.15 0.015 220) 100%)',
+    gradientBackgroundLight: 'linear-gradient(135deg, oklch(0.96 0.005 240) 0%, oklch(0.99 0.002 240) 70%, oklch(0.88 0.008 240) 100%)',
+  },
 
-  // No gradients - flat colors only
-  gradientPrimary: 'oklch(0.35 0.08 240)',
-  gradientSubtle: 'oklch(0.96 0.005 240)',
-  gradientHover: 'oklch(0.31 0.07 240)',
-  gradientText: 'oklch(0.35 0.08 240)',
+  // Only metro-specific styles
+  customStyles: `
+    /* Metro theme - Only 4 unified classes */
+    .theme-metro {
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+    
+    .theme-metro .voila-heading {
+      font-family: 'Crimson Text', serif;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+    }
+    
+    .theme-metro .voila-subheading {
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+    }
+    
+    .theme-metro .voila-brand-logo {
+      font-family: 'Crimson Text', serif;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      font-size: 1.25rem;
+    }
+    
+    /* Body text enhancements */
+    .theme-metro strong, .theme-metro b {
+      font-weight: 600;
+    }
+    
+    /* Cursor styles for interactive elements */
+    .theme-metro button,
+    .theme-metro .btn,
+    .theme-metro [data-slot="button"],
+    .theme-metro input[type="button"],
+    .theme-metro input[type="submit"],
+    .theme-metro input[type="reset"],
+    .theme-metro a,
+    .theme-metro [role="button"],
+    .theme-metro [tabindex="0"]:not(input):not(textarea):not(select) {
+      cursor: pointer;
+    }
+    
+    /* Disabled buttons get not-allowed cursor */
+    .theme-metro button:disabled,
+    .theme-metro .btn:disabled,
+    .theme-metro [data-slot="button"]:disabled,
+    .theme-metro input:disabled {
+      cursor: not-allowed;
+    }
+    
+    /* Metro focus style override */
+    .theme-metro *:focus-visible {
+      outline: 2px solid #0f3a36;
+      outline-offset: 2px;
+      box-shadow: 0 0 0 4px rgb(15, 58, 54, 0.2);
+    }
+  `,
 
   light: {
-    // Base colors
+    // Only override colors that are different from default
     background: 'oklch(0.99 0.002 240)',
+    backgroundGradient: 'linear-gradient(135deg, oklch(0.96 0.005 240) 0%, oklch(0.99 0.002 240) 70%, oklch(0.88 0.008 240) 100%)',
     foreground: 'oklch(0.09 0.01 240)',
     card: 'oklch(0.98 0.003 240)',
     cardForeground: 'oklch(0.09 0.01 240)',
     popover: 'oklch(0.98 0.003 240)',
     popoverForeground: 'oklch(0.09 0.01 240)',
 
-    // Interactive colors
-    primary: 'oklch(0.35 0.08 240)', // Deep metro blue
+    // Metro color palette - 50% lighter for visibility
+    primary: '#2d7a70',
     primaryForeground: 'oklch(0.98 0.003 240)',
-    secondary: 'oklch(0.84 0.008 240)',
-    secondaryForeground: 'oklch(0.15 0.015 240)',
+    secondary: '#FAA533',
+    secondaryForeground: '#000000',
     muted: 'oklch(0.96 0.005 240)',
     mutedForeground: 'oklch(0.35 0.01 240)',
-    accent: 'oklch(0.55 0.12 200)', // Transit teal
+    accent: 'oklch(0.55 0.12 200)',
     accentForeground: 'oklch(0.98 0.003 240)',
-
-    // State colors
-    destructive: 'oklch(0.45 0.25 25)',
-    destructiveForeground: 'oklch(0.98 0.003 240)',
 
     // Border colors
     border: 'oklch(0.88 0.008 240)',
     input: 'oklch(0.88 0.008 240)',
-    ring: 'oklch(0.35 0.08 240)',
+    ring: '#0f3a36',
 
-    // Chart colors
-    chart1: 'oklch(0.35 0.08 240)', // Metro blue
-    chart2: 'oklch(0.55 0.12 200)', // Transit teal
-    chart3: 'oklch(0.5 0.1 160)', // Line green
-    chart4: 'oklch(0.6 0.15 60)', // Warning amber
-    chart5: 'oklch(0.45 0.25 25)', // Alert red
+    // Chart colors - transit-inspired
+    chart1: '#0f3a36',
+    chart2: 'oklch(0.55 0.12 200)',
+    chart3: 'oklch(0.5 0.1 160)',
+    chart4: 'oklch(0.6 0.15 60)',
+    chart5: 'oklch(0.45 0.25 25)',
 
     // Sidebar colors
     sidebar: 'oklch(0.98 0.003 240)',
     sidebarForeground: 'oklch(0.09 0.01 240)',
-    sidebarPrimary: 'oklch(0.35 0.08 240)',
+    sidebarPrimary: '#0f3a36',
     sidebarPrimaryForeground: 'oklch(0.98 0.003 240)',
-    sidebarAccent: 'oklch(0.96 0.005 240)',
+    sidebarAccent: 'oklch(0.55 0.12 200)',
     sidebarAccentForeground: 'oklch(0.35 0.01 240)',
     sidebarBorder: 'oklch(0.88 0.008 240)',
-    sidebarRing: 'oklch(0.35 0.08 240)',
+    sidebarRing: '#0f3a36',
   },
 
   dark: {
-    // Base colors
+    // Dark mode metro colors
     background: 'oklch(0.05 0.005 220)',
+    backgroundGradient: 'linear-gradient(135deg, oklch(0.05 0.005 220) 0%, oklch(0.15 0.015 220) 100%)',
     foreground: 'oklch(0.95 0.01 220)',
-    card: 'oklch(0.15 0.015 220)',
+    card: 'oklch(0.20 0.015 220)',
     cardForeground: 'oklch(0.95 0.01 220)',
-    popover: 'oklch(0.15 0.015 220)',
+    popover: 'oklch(0.20 0.015 220)',
     popoverForeground: 'oklch(0.95 0.01 220)',
 
-    // Interactive colors
-    primary: 'oklch(0.55 0.12 220)', // Professional blue
-    primaryForeground: 'oklch(0.98 0.005 220)',
-    secondary: 'oklch(0.02 0.015 240)',
-    secondaryForeground: 'oklch(0.95 0.008 240)',
+    primary: '#4fa399',
+    primaryForeground: 'oklch(0.05 0.005 220)',
+    secondary: '#FAA533',
+    secondaryForeground: '#000000',
     muted: 'oklch(0.08 0.01 240)',
     mutedForeground: 'oklch(0.75 0.01 240)',
-    accent: 'oklch(0.75 0.18 200)', // Bright transit teal
+    accent: 'oklch(0.75 0.18 200)',
     accentForeground: 'oklch(0.04 0.01 240)',
-
-    // State colors
-    destructive: 'oklch(0.65 0.25 25)',
-    destructiveForeground: 'oklch(0.04 0.01 240)',
 
     // Border colors
     border: 'oklch(0.18 0.015 240)',
     input: 'oklch(0.18 0.015 240)',
-    ring: 'oklch(0.55 0.12 220)',
+    ring: '#0f3a36',
 
-    // Chart colors
-    chart1: 'oklch(0.55 0.12 220)', // Professional blue
-    chart2: 'oklch(0.75 0.18 200)', // Bright transit teal
-    chart3: 'oklch(0.7 0.15 160)', // Bright line green
-    chart4: 'oklch(0.75 0.2 60)', // Bright warning amber
-    chart5: 'oklch(0.65 0.25 25)', // Bright alert red
+    // Chart colors - brightened for dark mode
+    chart1: '#0f3a36',
+    chart2: 'oklch(0.75 0.18 200)',
+    chart3: 'oklch(0.7 0.15 160)',
+    chart4: 'oklch(0.75 0.2 60)',
+    chart5: 'oklch(0.65 0.25 25)',
 
     // Sidebar colors
-    sidebar: 'oklch(0.15 0.015 220)',
+    sidebar: 'oklch(0.20 0.015 220)',
     sidebarForeground: 'oklch(0.95 0.01 220)',
-    sidebarPrimary: 'oklch(0.55 0.12 220)',
+    sidebarPrimary: '#0f3a36',
     sidebarPrimaryForeground: 'oklch(0.98 0.005 220)',
-    sidebarAccent: 'oklch(0.08 0.01 240)',
+    sidebarAccent: 'oklch(0.75 0.18 200)',
     sidebarAccentForeground: 'oklch(0.75 0.01 240)',
     sidebarBorder: 'oklch(0.18 0.015 240)',
-    sidebarRing: 'oklch(0.55 0.12 220)',
+    sidebarRing: '#0f3a36',
   },
 };
 

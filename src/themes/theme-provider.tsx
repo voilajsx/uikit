@@ -10,7 +10,7 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
  * @llm-rule Pre-bundled themes - CSS included in package
  * Simple selection from 8 built-in themes
  */
-export type Theme = 'sky' | 'aurora' | 'metro' | 'neon' | 'ruby' | 'studio' | 'test' | 'olive';
+export type Theme = 'base' | 'elegant' | 'metro' | 'studio' | 'vivid';
 
 /**
  * @llm-rule System color scheme preference
@@ -58,9 +58,9 @@ export interface ThemeContextValue {
 /**
  * @llm-props ThemeProvider props - ENHANCED WITH CONFIG PRIORITY
  * REQUIRED: children
- * RECOMMENDED: theme="sky", mode="light"
+ * RECOMMENDED: theme="base", mode="light"
  * OPTIONAL: detectSystem, forceConfig, storageKey
- * @llm-defaults theme="sky", mode="light", detectSystem=true, forceConfig=false
+ * @llm-defaults theme="base", mode="light", detectSystem=true, forceConfig=false
  */
 export interface ThemeProviderProps {
   /** REQUIRED: Child components */
@@ -110,14 +110,11 @@ const TONE_CLASSES: Record<Tone, string> = {
  * All themes ship as CSS with the package
  */
 export const AVAILABLE_THEMES: Theme[] = [
-  'sky',       // Minimal blue - clean & professional
-  'aurora',    // Purple/green - creative apps  
-  'metro',     // Transit blue - admin dashboards
-  'neon',      // Electric colors - gaming/tech
-  'ruby',      // Red/gold - luxury brands
+  'base',      // Clean default - showcases base system (DEFAULT)
+  'elegant',   // Minimal blue - clean & professional 
+  'metro',     // Dark teal - admin dashboards
   'studio',    // Designer grays - creative tools
-  'test',      // Cyberpunk electric - testing theme
-  'olive'      // Natural olive green - organic/eco theme
+  'vivid'      // Premium cursive - luxury/creative portfolios
 ];
 
 // Theme context
@@ -210,28 +207,28 @@ function applyThemeImmediately(theme: Theme, mode: Mode) {
 /**
  * 🔧 ENHANCED: Ultra-simple theme provider with configuration priority
  * @llm-pattern Basic usage (default behavior - storage first)
- * <ThemeProvider theme="aurora" mode="dark">
+ * <ThemeProvider theme="elegant" mode="dark">
  *   <App />
  * </ThemeProvider>
  * 
  * @llm-pattern Force configuration (ignore storage completely)
- * <ThemeProvider theme="aurora" mode="dark" forceConfig={true}>
+ * <ThemeProvider theme="elegant" mode="dark" forceConfig={true}>
  *   <App />
  * </ThemeProvider>
  * 
  * @llm-pattern Disable storage entirely
- * <ThemeProvider theme="aurora" mode="dark" storageKey={null}>
+ * <ThemeProvider theme="elegant" mode="dark" storageKey={null}>
  *   <App />
  * </ThemeProvider>
  * 
  * @llm-pattern Custom storage key
- * <ThemeProvider theme="aurora" mode="dark" storageKey="my-app-theme">
+ * <ThemeProvider theme="elegant" mode="dark" storageKey="my-app-theme">
  *   <App />
  * </ThemeProvider>
  */
 export function ThemeProvider({
   children,
-  theme = 'sky',
+  theme = 'base',
   mode = 'light',
   detectSystem = true,
   forceConfig = false,        // 🔧 NEW: Force config over storage

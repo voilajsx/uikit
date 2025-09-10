@@ -33,7 +33,7 @@ program
   .option('--spa', 'create single page application template')
   .option('--multi', 'create multi-page template with routing')
   .option('--single', 'create single-page theme showcase (default)')
-  .option('--theme <theme>', 'default theme (default|aurora|neon|ruby|studio)', 'default')
+  .option('--theme <theme>', 'default theme (base|elegant|metro|studio|vivid)', 'default')
   .action(async (name, options) => {
     const { createProject } = await import('./commands/create.js');
     await createProject(name, options);

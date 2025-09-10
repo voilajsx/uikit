@@ -1,5 +1,5 @@
 import { jsx as L } from "react/jsx-runtime";
-import { createContext as S, useState as E, useEffect as h, useContext as x } from "react";
+import { createContext as S, useState as E, useEffect as u, useContext as x } from "react";
 const A = {
   AdminLayout: "subtle",
   // Professional admin interfaces
@@ -28,18 +28,16 @@ const A = {
   contrast: "bg-foreground text-background border-foreground/20"
   // Automatically flips with mode
 }, m = [
-  "sky",
-  // Minimal blue - clean & professional
-  "aurora",
-  // Purple/green - creative apps  
+  "base",
+  // Clean default - showcases base system (DEFAULT)
+  "elegant",
+  // Minimal blue - clean & professional 
   "metro",
-  // Transit blue - admin dashboards
-  "neon",
-  // Electric colors - gaming/tech
-  "ruby",
-  // Red/gold - luxury brands
-  "studio"
+  // Dark teal - admin dashboards
+  "studio",
   // Designer grays - creative tools
+  "vivid"
+  // Premium cursive - luxury/creative portfolios
 ], p = S(void 0);
 function P(t, n, a, i = !1, c = "uikit-theme") {
   if (typeof window > "u")
@@ -48,25 +46,25 @@ function P(t, n, a, i = !1, c = "uikit-theme") {
     return console.log(`🎨 Config priority: ${t} (${n} mode)`), { theme: t, mode: n };
   if (c === null) {
     if (a) {
-      const r = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      return console.log(`🎨 System preference (no storage): ${t} (${r} mode)`), { theme: t, mode: r };
+      const o = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      return console.log(`🎨 System preference (no storage): ${t} (${o} mode)`), { theme: t, mode: o };
     }
     return console.log(`🎨 Props only (no storage): ${t} (${n} mode)`), { theme: t, mode: n };
   }
   try {
-    const o = localStorage.getItem(c);
-    if (o) {
-      const r = JSON.parse(o);
-      if (m.includes(r.theme) && ["light", "dark"].includes(r.mode))
-        return console.log(`🎨 Restored from storage: ${r.theme} (${r.mode} mode)`), r;
+    const r = localStorage.getItem(c);
+    if (r) {
+      const o = JSON.parse(r);
+      if (m.includes(o.theme) && ["light", "dark"].includes(o.mode))
+        return console.log(`🎨 Restored from storage: ${o.theme} (${o.mode} mode)`), o;
     }
     if (a) {
       const d = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       return console.log(`🎨 System preference: ${t} (${d} mode)`), { theme: t, mode: d };
     }
     return console.log(`🎨 Props fallback: ${t} (${n} mode)`), { theme: t, mode: n };
-  } catch (o) {
-    return console.warn("Failed to load theme preferences, using defaults:", o), { theme: t, mode: n };
+  } catch (r) {
+    return console.warn("Failed to load theme preferences, using defaults:", r), { theme: t, mode: n };
   }
 }
 function g(t, n) {
@@ -78,43 +76,43 @@ function g(t, n) {
 }
 function H({
   children: t,
-  theme: n = "sky",
+  theme: n = "base",
   mode: a = "light",
   detectSystem: i = !0,
   forceConfig: c = !1,
   // 🔧 NEW: Force config over storage
-  storageKey: o = "uikit-theme"
+  storageKey: r = "uikit-theme"
   // 🔧 NEW: Configurable storage key
 }) {
-  const [r, d] = E(() => {
-    const e = P(n, a, i, c, o);
+  const [o, d] = E(() => {
+    const e = P(n, a, i, c, r);
     return g(e.theme, e.mode), e;
   });
-  h(() => {
+  u(() => {
     if (typeof window > "u") return;
-    const { theme: e, mode: s } = r;
-    if (g(e, s), o && !c)
+    const { theme: e, mode: s } = o;
+    if (g(e, s), r && !c)
       try {
-        localStorage.setItem(o, JSON.stringify({ theme: e, mode: s }));
+        localStorage.setItem(r, JSON.stringify({ theme: e, mode: s }));
       } catch (l) {
         console.warn("Failed to save theme preferences:", l);
       }
     console.log(`🎨 Applied theme: ${e} (${s} mode)`);
-  }, [r, o, c]), h(() => {
+  }, [o, r, c]), u(() => {
     if (!i || typeof window > "u") return;
     const e = window.matchMedia("(prefers-color-scheme: dark)"), s = (l) => {
       if (!c)
         try {
-          (o ? localStorage.getItem(o) : null) || d((w) => ({
-            ...w,
+          (r ? localStorage.getItem(r) : null) || d((y) => ({
+            ...y,
             mode: l.matches ? "dark" : "light"
           }));
-        } catch (u) {
-          console.warn("Failed to handle system preference change:", u);
+        } catch (h) {
+          console.warn("Failed to handle system preference change:", h);
         }
     };
     return e.addEventListener("change", s), () => e.removeEventListener("change", s);
-  }, [i, c, o]);
+  }, [i, c, r]);
   const f = (e) => {
     if (!m.includes(e)) {
       console.warn(`Invalid theme: ${e}. Available themes:`, m);
@@ -132,17 +130,17 @@ function H({
       ...e,
       mode: e.mode === "light" ? "dark" : "light"
     }));
-  }, y = (e) => I[e], $ = (e) => A[e] || "clean", v = {
-    theme: r.theme,
-    mode: r.mode,
+  }, v = (e) => I[e], $ = (e) => A[e] || "clean", w = {
+    theme: o.theme,
+    mode: o.mode,
     availableThemes: m,
     setTheme: f,
     setMode: b,
     toggleMode: k,
-    getToneClasses: y,
+    getToneClasses: v,
     getDefaultTone: $
   };
-  return /* @__PURE__ */ L(p.Provider, { value: v, children: t });
+  return /* @__PURE__ */ L(p.Provider, { value: w, children: t });
 }
 function N() {
   const t = x(p);

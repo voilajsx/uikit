@@ -548,8 +548,8 @@ async function bundleThemes() {
     // Generate theme-specific dark mode overrides
     const darkModeCSS = generateThemeDarkModes(themes);
     
-    // Generate automatic gradient utilities
-    const gradientUtilities = generateGradientUtilities(themes);
+    // Generate automatic gradient utilities - DISABLED to prevent bg-primary override issues
+    const gradientUtilities = ''; // generateGradientUtilities(themes);
     
     // Generate legacy CSS for backward compatibility  
     const legacyThemeCSS = themes.map(generateLegacyThemeCSS).filter(Boolean).join('\n\n');
@@ -613,6 +613,7 @@ ${afterThemes}`;
  */
 
 @import "tailwindcss";
+@import "./fonts.css";
 
 ${fontImports ? `/* Gaming/Theme Font Imports */
 ${fontImports}

@@ -107,7 +107,7 @@ function getLayoutConfig(): LayoutConfig {
   
   return {
     // Theme system
-    theme: (env.VITE__LAYOUT__THEME as Theme) || 'sky',
+    theme: (env.VITE__LAYOUT__THEME as Theme) || 'base',
     mode: (env.VITE__LAYOUT__MODE as Mode) || 'light',
     detectSystem: env.VITE__LAYOUT__DETECT_SYSTEM === 'true',
     
@@ -350,7 +350,7 @@ export function useLayoutConfig(): LayoutConfig {
  * 
  * Basic setup in .env:
  * VITE__LAYOUT__TYPE=admin
- * VITE__LAYOUT__THEME=sky
+ * VITE__LAYOUT__THEME=base
  * VITE__LAYOUT__MODE=light
  * VITE__LAYOUT__TITLE="My App"
  * 
