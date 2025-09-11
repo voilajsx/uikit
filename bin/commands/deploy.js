@@ -342,53 +342,37 @@ async function deployToGitHubPages(distPath, options) {
       }
     };
 
-    // Check for existing CNAME in gh-pages branch
+    // Handle CNAME for custom domain (apex domain, e.g., example.com)
     let cnameContent = null;
-    try {
-      // Temporarily clone gh-pages branch to check for CNAME
-      const tempDir = path.join(process.cwd(), '.temp-gh-pages');
-      await fs.mkdir(tempDir, { recursive: true });
-      await new Promise((resolve, reject) => {
-        const gitClone = spawn('git', ['clone', '--branch', 'gh-pages', '--single-branch', '.', tempDir], {
-          stdio: 'inherit',
-          cwd: process.cwd()
-        });
-        gitClone.on('close', (code) => {
-          if (code === 0) resolve();
-          else reject(new Error('Failed to clone gh-pages branch'));
-        });
-        gitClone.on('error', reject);
-      });
-
-      // Read existing CNAME if it exists
-      const existingCnamePath = path.join(tempDir, 'CNAME');
-      try {
-        cnameContent = await fs.readFile(existingCnamePath, 'utf8');
-        console.log('✅ Found existing CNAME in gh-pages branch');
-      } catch {
-        // No existing CNAME in gh-pages
-      }
-
-      // Clean up temporary directory
-      await fs.rm(tempDir, { recursive: true, force: true });
-    } catch {
-      console.log('⚠️  Could not check for existing CNAME in gh-pages branch');
+    // 1. Check command-line --domain option
+    if (options.domain) {
+      cnameContent = options.domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      await fs.writeFile(path.join(distPath, 'CNAME'), cnameContent);
+      console.log(`✅ Created CNAME from --domain: ${cnameContent}`);
     }
-
-    // Use project root CNAME if no existing CNAME in gh-pages
-    if (!cnameContent) {
+    // 2. Check project root CNAME
+    else {
       try {
         const projectCnamePath = path.join(process.cwd(), 'CNAME');
         cnameContent = await fs.readFile(projectCnamePath, 'utf8');
-        await fs.writeFile(path.join(distPath, 'CNAME'), cnameContent);
+        await fs.writeFile(path.join(distPath, 'CNAME'), cnameContent.trim());
         console.log('✅ Copied project root CNAME to dist');
       } catch {
-        console.log('⚠️  No CNAME file found in project root');
+        // 3. Fallback to package.json homepage
+        try {
+          const packageJson = JSON.parse(await fs.readFile('package.json', 'utf8'));
+          if (packageJson.homepage) {
+            const url = new URL(packageJson.homepage);
+            cnameContent = url.hostname;
+            await fs.writeFile(path.join(distPath, 'CNAME'), cnameContent);
+            console.log(`✅ Created CNAME from package.json homepage: ${cnameContent}`);
+          } else {
+            console.log('⚠️  No CNAME file, --domain, or valid homepage in package.json; custom domain may not work');
+          }
+        } catch {
+          console.log('⚠️  No CNAME file, --domain, or valid homepage in package.json; custom domain may not work');
+        }
       }
-    } else {
-      // Write existing gh-pages CNAME to dist
-      await fs.writeFile(path.join(distPath, 'CNAME'), cnameContent);
-      console.log('✅ Preserved existing CNAME from gh-pages branch');
     }
 
     await new Promise((resolve, reject) => {
@@ -407,24 +391,28 @@ async function deployToGitHubPages(distPath, options) {
     console.log('  2. Navigate to Pages section');  
     console.log('  3. Set source to "Deploy from a branch"');
     console.log('  4. Select "gh-pages" branch and "/ (root)" folder');
-    console.log('  5. Your site will be available shortly');
+    console.log('  5. Ensure custom domain is set to:', cnameContent || 'Not set (uses default GitHub Pages URL)');
+    console.log('  6. Verify DNS A records for apex domain: 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153');
     
-    // Try to determine the GitHub Pages URL
+    // Display the site URL
     try {
-      const repoName = await getRepoName();
-      if (repoName) {
-        const packageJson = JSON.parse(await fs.readFile('package.json', 'utf8'));
-        const repoUrl = packageJson.repository?.url;
-        if (repoUrl) {
-          const match = repoUrl.match(/github\.com[/:](.*?)\.git/);
+      const packageJson = JSON.parse(await fs.readFile('package.json', 'utf8'));
+      let siteUrl = cnameContent ? `https://${cnameContent}/` : null;
+      if (!siteUrl && packageJson.repository?.url) {
+        const repoName = await getRepoName();
+        if (repoName) {
+          const match = packageJson.repository.url.match(/github\.com[/:](.*?)\.git/);
           if (match) {
             const [, repoPath] = match;
-            console.log(`\n🌐 Site URL: https://${cnameContent || `${repoPath.split('/')[0]}.github.io/${repoName}/`}`);
+            siteUrl = `https://${repoPath.split('/')[0]}.github.io/${repoName}/`;
           }
         }
       }
+      if (siteUrl) {
+        console.log(`\n🌐 Site URL: ${siteUrl}`);
+      }
     } catch {
-      // Could not determine URL
+      console.log('⚠️  Could not determine site URL');
     }
     
   } catch (error) {
