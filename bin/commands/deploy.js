@@ -105,6 +105,52 @@ async function bundleThemesForDeploy() {
 }
 
 /**
+ * Get repository name from Git remote URL
+ */
+async function getRepoName() {
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const gitRemote = spawn('git', ['remote', 'get-url', 'origin'], {
+        stdio: ['ignore', 'pipe', 'pipe'],
+        cwd: process.cwd()
+      });
+
+      let stdout = '';
+      let stderr = '';
+      
+      gitRemote.stdout?.on('data', (data) => {
+        stdout += data.toString();
+      });
+      
+      gitRemote.stderr?.on('data', (data) => {
+        stderr += data.toString();
+      });
+
+      gitRemote.on('close', (code) => {
+        if (code === 0 && stdout.trim()) {
+          resolve(stdout.trim());
+        } else {
+          reject(new Error(stderr || 'No remote origin'));
+        }
+      });
+
+      gitRemote.on('error', (error) => {
+        reject(error);
+      });
+    });
+
+    // Extract repo name from URL (e.g., https://github.com/username/vcwebsite.git → vcwebsite)
+    const match = result.match(/github\.com[/:]([^/]+)\/([^/.]+)(\.git)?$/);
+    if (match) {
+      return match[2]; // e.g., 'vcwebsite'
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Build with deployment optimizations
  */
 async function buildForDeploy(options) {
@@ -113,14 +159,31 @@ async function buildForDeploy(options) {
   // Set base path for deployment
   if (options.base && options.base !== '/') {
     viteArgs.push('--base', options.base);
-  }
-
-  // GitHub Pages specific optimizations
-  if (options.github) {
-    // GitHub Pages typically serves from repository name path
-    const packageJson = JSON.parse(await fs.readFile('package.json', 'utf8'));
-    const repoName = packageJson.name || 'uikit-site';
-    viteArgs.push('--base', `/${repoName}/`);
+  } else if (options.github) {
+    // Read base from vite.config.ts, default to '/', or use repo name
+    let viteBase = '/';
+    try {
+      const viteConfigPath = path.resolve('vite.config.ts');
+      const viteConfigContent = await fs.readFile(viteConfigPath, 'utf8');
+      const baseMatch = viteConfigContent.match(/base:\s*['"]([^'"]+)['"]/);
+      if (baseMatch && baseMatch[1]) {
+        viteBase = baseMatch[1];
+      } else {
+        // Fallback to repository name
+        const repoName = await getRepoName();
+        if (repoName) {
+          viteBase = `/${repoName}/`;
+        }
+      }
+    } catch {
+      // vite.config.ts not found or invalid, try repo name
+      const repoName = await getRepoName();
+      if (repoName) {
+        viteBase = `/${repoName}/`;
+      }
+      console.log(`⚠️  Could not read base from vite.config.ts, using "${viteBase}"`);
+    }
+    viteArgs.push('--base', viteBase);
   }
 
   return new Promise((resolve, reject) => {
@@ -253,8 +316,6 @@ async function deployToGitHubPages(distPath, options) {
     // Validate git repository setup
     await validateGitRepository();
     
-    // gh-pages is now bundled with UIKit
-    
     console.log('📤 Publishing to gh-pages branch...');
     
     // Use gh-pages to deploy
@@ -310,14 +371,16 @@ async function deployToGitHubPages(distPath, options) {
     
     // Try to determine the GitHub Pages URL
     try {
-      const packageJson = JSON.parse(await fs.readFile('package.json', 'utf8'));
-      const repoUrl = packageJson.repository?.url;
-      if (repoUrl) {
-        const match = repoUrl.match(/github\.com[/:](.*?)\.git/);
-        if (match) {
-          const [, repoPath] = match;
-          const siteName = packageJson.name || repoPath.split('/')[1];
-          console.log(`\n🌐 Site URL: https://${repoPath.split('/')[0]}.github.io/${siteName}/`);
+      const repoName = await getRepoName();
+      if (repoName) {
+        const packageJson = JSON.parse(await fs.readFile('package.json', 'utf8'));
+        const repoUrl = packageJson.repository?.url;
+        if (repoUrl) {
+          const match = repoUrl.match(/github\.com[/:](.*?)\.git/);
+          if (match) {
+            const [, repoPath] = match;
+            console.log(`\n🌐 Site URL: https://${repoPath.split('/')[0]}.github.io/${repoName}/`);
+          }
         }
       }
     } catch {
