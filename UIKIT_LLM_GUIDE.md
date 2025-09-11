@@ -103,7 +103,7 @@ tone = 'contrast'; // Dark/bold backgrounds (footers, high contrast areas)
 
 ---
 
-## 🧩 ALL UI COMPONENTS (38 TOTAL)
+## 🧩 ALL UI COMPONENTS (37 TOTAL)
 
 ### Form & Input Components
 ```jsx
@@ -688,13 +688,13 @@ function ThemeControls() {
 Generate optimized CSS for custom themes:
 ```bash
 # Bundle themes from your project directory
-npx voila-bundle
+npx uikit bundle
 
 # Watch mode for development
-npx voila-bundle --watch
+npx uikit bundle --watch
 
 # Custom output location
-npx voila-bundle --output=src/styles/themes.css
+npx uikit bundle --output=src/styles/themes.css
 ```
 
 Supported directories for custom themes:
