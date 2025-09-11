@@ -517,8 +517,20 @@ async function generatePackageJson(projectPath, name, templateType) {
 
   // Add React Router for SPA and multi-page templates
   if (templateType === 'spa' || templateType === 'multi') {
-    baseDependencies["react-router-dom"] = "^6.22.0";
-    baseDependencies["@remix-run/router"] = "^1.23.0";
+    baseDependencies["react-router-dom"] = "^7.8.2";
+  }
+
+  const baseDevDependencies = {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.2.2",
+    "vite": "^6.3.6"
+  };
+
+  // Add React Router types for SPA and multi-page templates
+  if (templateType === 'spa' || templateType === 'multi') {
+    baseDevDependencies["@types/react-router-dom"] = "^5.3.3";
   }
 
   const packageJson = {
@@ -535,13 +547,7 @@ async function generatePackageJson(projectPath, name, templateType) {
       "deploy": "npx uikit deploy"
     },
     dependencies: baseDependencies,
-    devDependencies: {
-      "@types/react": "^18.2.66",
-      "@types/react-dom": "^18.2.22",
-      "@vitejs/plugin-react": "^4.2.1",
-      "typescript": "^5.2.2",
-      "vite": "^5.2.0"
-    }
+    devDependencies: baseDevDependencies
   };
 
   await fs.writeFile(
