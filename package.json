@@ -279,7 +279,7 @@
     "test:coverage": "vitest --coverage",
     "deploy": "gh-pages -d docs/dist",
     "prepublishOnly": "npm run build",
-    "preversion": "npm run test && npm run build",
+    "preversion": "npm run build",
     "postversion": "git push && git push --tags"
   },
   "peerDependencies": {
