@@ -189,7 +189,7 @@ async function addMetaTags(distPath) {
 
     for (const tag of metaTags) {
       if (!html.includes(tag.split('"')[1])) {
-        html = html.replace('<head>', `<head>\\n    ${tag}`);
+        html = html.replace('<head>', `<head>\n    ${tag}`);
       }
     }
 
