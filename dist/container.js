@@ -1,12 +1,12 @@
 import { jsx as r, jsxs as b } from "react/jsx-runtime";
-import { forwardRef as S, useState as z, useEffect as R } from "react";
-import { c as A } from "./index-DACAHwoB.js";
-import { c as k } from "./utils-qaFjX9_3.js";
-import { Button as G } from "./button.js";
-import { Badge as V } from "./badge.js";
-import { Select as $, SelectTrigger as O, SelectValue as T, SelectContent as q, SelectItem as D } from "./select.js";
-import { C as F } from "./chevron-right-pz9eCjj-.js";
-const H = A(
+import { forwardRef as S, useState as M, useEffect as z } from "react";
+import { c as A } from "./index-Bke1qZdk.js";
+import { c as k } from "./utils-CwJPJKOE.js";
+import { Button as R } from "./button.js";
+import { Badge as I } from "./badge.js";
+import { Select as G, SelectTrigger as $, SelectValue as O, SelectContent as T, SelectItem as q } from "./select.js";
+import { C as D } from "./chevron-right-pz9eCjj-.js";
+const F = A(
   "w-full mx-auto bg-background text-foreground",
   {
     variants: {
@@ -36,7 +36,7 @@ const H = A(
       position: "relative"
     }
   }
-), J = A(
+), H = A(
   "flex-shrink-0 rounded-lg m-4 max-md:hidden",
   // ✅ OPTIMIZED: Added m-4 for consistent outer margin
   {
@@ -75,7 +75,7 @@ const H = A(
       tone: "clean"
     }
   }
-), L = A(
+), J = A(
   "flex-1 min-w-0 p-4",
   // ✅ OPTIMIZED: Constant p-4 padding, removed min-w-0 conflict
   {
@@ -99,7 +99,7 @@ const H = A(
       hasGap: !1
     }
   }
-), Q = (a = "md") => {
+), L = (a = "md") => {
   const c = {
     sm: {
       button: "text-xs py-1.5 px-2 min-h-[28px]",
@@ -134,15 +134,15 @@ const H = A(
   };
   return c[a] || c.md;
 };
-function U({
+function Q({
   navigation: a,
   size: c = "md",
   tone: s,
   currentPath: x = "",
   onNavigate: n
 }) {
-  const [h, p] = z(/* @__PURE__ */ new Set()), m = Q(c);
-  R(() => {
+  const [h, p] = M(/* @__PURE__ */ new Set()), m = L(c);
+  z(() => {
     const e = /* @__PURE__ */ new Set(), o = (w) => {
       w.forEach((d) => {
         d.items && d.items.length > 0 && (e.add(d.key), o(d.items));
@@ -159,7 +159,7 @@ function U({
     const w = e.items && e.items.length > 0, d = h.has(e.key), l = e.href ? x === e.href : e.isActive;
     return /* @__PURE__ */ b("div", { className: "w-full", children: [
       /* @__PURE__ */ b(
-        G,
+        R,
         {
           variant: "ghost",
           className: k(
@@ -177,9 +177,9 @@ function U({
           children: [
             e.icon && /* @__PURE__ */ r(e.icon, { className: m.icon }),
             /* @__PURE__ */ r("span", { className: "flex-1 text-left truncate", children: e.label }),
-            e.badge && m.showBadges && /* @__PURE__ */ r(V, { variant: "secondary", className: "text-xs ml-auto", children: e.badge }),
+            e.badge && m.showBadges && /* @__PURE__ */ r(I, { variant: "secondary", className: "text-xs ml-auto", children: e.badge }),
             w && /* @__PURE__ */ r(
-              F,
+              D,
               {
                 className: k(
                   "h-4 w-4 ml-2 transition-transform duration-200 text-muted-foreground",
@@ -210,7 +210,7 @@ const C = S(({
 }, y) => {
   if (!a) return null;
   const f = () => Array.isArray(a) ? /* @__PURE__ */ r(
-    U,
+    Q,
     {
       navigation: a,
       size: s,
@@ -224,7 +224,7 @@ const C = S(({
     {
       ref: y,
       className: k(
-        J({ position: c, size: s, sidebarPosition: x, tone: n }),
+        H({ position: c, size: s, sidebarPosition: x, tone: n }),
         m
       ),
       style: u,
@@ -242,13 +242,13 @@ const B = S(({
   "main",
   {
     ref: n,
-    className: k(L({ size: a }), s),
+    className: k(J({ size: a }), s),
     style: x,
     children: c
   }
 ));
 B.displayName = "ContainerMain";
-const j = S(({
+const V = S(({
   className: a,
   style: c,
   tone: s = "clean",
@@ -262,14 +262,13 @@ const j = S(({
   size: f = "xl",
   children: e
 }, o) => {
-  var E;
   const w = n === "left" ? "sidebar-left" : n === "right" ? "sidebar-right" : "none", d = n !== "none" && (h.length > 0 || p), l = h.length > 0 ? h : p, v = (g, N = "") => {
     const t = [];
     return g.forEach((i) => {
-      const I = N ? `${N} > ${i.label}` : i.label;
-      (i.href || i.onClick) && t.push({ key: i.key, label: I, item: i }), i.items && i.items.length > 0 && t.push(...v(i.items, I));
+      const E = N ? `${N} > ${i.label}` : i.label;
+      (i.href || i.onClick) && t.push({ key: i.key, label: E, item: i }), i.items && i.items.length > 0 && t.push(...v(i.items, E));
     }), t;
-  }, M = (g) => {
+  }, j = (g) => {
     if (!Array.isArray(l)) return;
     const t = v(l).find((i) => i.key === g);
     t && u && (t.item.href ? u(t.item.href, t.item) : t.item.onClick && t.item.onClick());
@@ -278,7 +277,7 @@ const j = S(({
     "div",
     {
       ref: o,
-      className: k(H({ layout: w, size: f, position: x }), a),
+      className: k(F({ layout: w, size: f, position: x }), a),
       style: c,
       children: [
         d && n === "left" && /* @__PURE__ */ r(
@@ -294,14 +293,14 @@ const j = S(({
           }
         ),
         /* @__PURE__ */ b(B, { size: f, children: [
-          d && Array.isArray(l) && /* @__PURE__ */ r("div", { className: "md:hidden mb-4", children: /* @__PURE__ */ b($, { value: (E = v(l).find((g) => g.item.href === m)) == null ? void 0 : E.key, onValueChange: M, children: [
-            /* @__PURE__ */ r(O, { className: "w-full", children: /* @__PURE__ */ r(T, { placeholder: "Navigate to..." }) }),
-            /* @__PURE__ */ r(q, { children: v(l).map(({ key: g, label: N, item: t }) => /* @__PURE__ */ r(D, { value: g, children: /* @__PURE__ */ b("div", { className: "flex items-center justify-between w-full", children: [
+          d && Array.isArray(l) && /* @__PURE__ */ r("div", { className: "md:hidden mb-4", children: /* @__PURE__ */ b(G, { value: v(l).find((g) => g.item.href === m)?.key, onValueChange: j, children: [
+            /* @__PURE__ */ r($, { className: "w-full", children: /* @__PURE__ */ r(O, { placeholder: "Navigate to..." }) }),
+            /* @__PURE__ */ r(T, { children: v(l).map(({ key: g, label: N, item: t }) => /* @__PURE__ */ r(q, { value: g, children: /* @__PURE__ */ b("div", { className: "flex items-center justify-between w-full", children: [
               /* @__PURE__ */ b("div", { className: "flex items-center gap-2", children: [
                 t.icon && /* @__PURE__ */ r(t.icon, { className: "h-4 w-4" }),
                 /* @__PURE__ */ r("span", { children: N })
               ] }),
-              t.badge && /* @__PURE__ */ r(V, { variant: "secondary", className: "text-xs", children: t.badge })
+              t.badge && /* @__PURE__ */ r(I, { variant: "secondary", className: "text-xs", children: t.badge })
             ] }) }, g)) })
           ] }) }),
           e
@@ -322,13 +321,13 @@ const j = S(({
     }
   );
 });
-j.displayName = "Container";
-const re = Object.assign(j, {
+V.displayName = "Container";
+const ee = Object.assign(V, {
   Sidebar: C,
   Main: B
 });
 export {
-  re as Container,
+  ee as Container,
   B as ContainerMain,
   C as ContainerSidebar
 };

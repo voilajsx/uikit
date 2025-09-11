@@ -1,67 +1,66 @@
 import { jsx as m, jsxs as j } from "react/jsx-runtime";
-import * as d from "react";
+import * as c from "react";
 import { c as X } from "./index-rKs9bXHr.js";
-import { u as de, c as C } from "./index-CPxmoWFw.js";
-import { u as A } from "./index-B5MIi2tR.js";
-import { c as ue } from "./index-UFb2E87s.js";
-import { c as fe, u as me } from "./index-DWXPckel.js";
-import { u as he } from "./index-BZPx6jYI.js";
-import { u as pe } from "./index-CHDs-SiB.js";
-import { P as T } from "./index-D5Ppf2aB.js";
-import { c as H } from "./utils-qaFjX9_3.js";
+import { u as de, c as _ } from "./index-C0UREtMP.js";
+import { u as C } from "./index-DQH6odE9.js";
+import { c as ue } from "./index-DFZozV_h.js";
+import { c as fe, u as me } from "./index-1QHKgw6D.js";
+import { u as pe } from "./index-BZPx6jYI.js";
+import { u as Se } from "./index-BGQepRFJ.js";
+import { P as B } from "./index-BVRIAMfe.js";
+import { c as H } from "./utils-CwJPJKOE.js";
 var G = ["PageUp", "PageDown"], W = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"], q = {
   "from-left": ["Home", "PageDown", "ArrowDown", "ArrowLeft"],
   "from-right": ["Home", "PageDown", "ArrowDown", "ArrowRight"],
   "from-bottom": ["Home", "PageDown", "ArrowDown", "ArrowLeft"],
   "from-top": ["Home", "PageDown", "ArrowUp", "ArrowLeft"]
-}, M = "Slider", [L, Se, ge] = fe(M), [J, $e] = ue(M, [
+}, M = "Slider", [L, he, ge] = fe(M), [J, $e] = ue(M, [
   ge
-]), [ve, k] = J(M), Q = d.forwardRef(
+]), [ve, T] = J(M), Q = c.forwardRef(
   (e, t) => {
     const {
       name: o,
       min: n = 0,
-      max: i = 100,
-      step: c = 1,
-      orientation: r = "horizontal",
-      disabled: a = !1,
-      minStepsBetweenThumbs: l = 0,
-      defaultValue: S = [n],
-      value: g,
-      onValueChange: s = () => {
+      max: r = 100,
+      step: l = 1,
+      orientation: i = "horizontal",
+      disabled: s = !1,
+      minStepsBetweenThumbs: d = 0,
+      defaultValue: w = [n],
+      value: h,
+      onValueChange: a = () => {
       },
       onValueCommit: u = () => {
       },
-      inverted: b = !1,
+      inverted: v = !1,
       form: R,
-      ...v
-    } = e, h = d.useRef(/* @__PURE__ */ new Set()), f = d.useRef(0), w = r === "horizontal" ? be : we, [p = [], I] = de({
-      prop: g,
-      defaultProp: S,
+      ...g
+    } = e, p = c.useRef(/* @__PURE__ */ new Set()), f = c.useRef(0), b = i === "horizontal" ? we : be, [S = [], A] = de({
+      prop: h,
+      defaultProp: w,
       onChange: (y) => {
-        var _;
-        (_ = [...h.current][f.current]) == null || _.focus(), s(y);
+        [...p.current][f.current]?.focus(), a(y);
       }
-    }), V = d.useRef(p);
-    function N(y) {
-      const P = De(p, y);
-      B(y, P);
+    }), k = c.useRef(S);
+    function V(y) {
+      const P = De(S, y);
+      K(y, P);
     }
-    function ce(y) {
-      B(y, f.current);
+    function le(y) {
+      K(y, f.current);
     }
-    function le() {
-      const y = V.current[f.current];
-      p[f.current] !== y && u(p);
+    function ce() {
+      const y = k.current[f.current];
+      S[f.current] !== y && u(S);
     }
-    function B(y, P, { commit: _ } = { commit: !1 }) {
-      const Y = Ae(c), z = Me(Math.round((y - n) / c) * c + n, Y), K = X(z, [n, i]);
-      I((E = []) => {
-        const x = Pe(E, K, P);
-        if (Ce(x, l * c)) {
-          f.current = x.indexOf(K);
+    function K(y, P, { commit: z } = { commit: !1 }) {
+      const Y = Me(l), N = Ae(Math.round((y - n) / l) * l + n, Y), I = X(N, [n, r]);
+      A((E = []) => {
+        const x = Pe(E, I, P);
+        if (Ce(x, d * l)) {
+          f.current = x.indexOf(I);
           const $ = String(x) !== String(E);
-          return $ && _ && u(x), $ ? x : E;
+          return $ && z && u(x), $ ? x : E;
         } else
           return E;
       });
@@ -71,36 +70,36 @@ var G = ["PageUp", "PageDown"], W = ["ArrowUp", "ArrowDown", "ArrowLeft", "Arrow
       {
         scope: e.__scopeSlider,
         name: o,
-        disabled: a,
+        disabled: s,
         min: n,
-        max: i,
+        max: r,
         valueIndexToChangeRef: f,
-        thumbs: h.current,
-        values: p,
-        orientation: r,
+        thumbs: p.current,
+        values: S,
+        orientation: i,
         form: R,
         children: /* @__PURE__ */ m(L.Provider, { scope: e.__scopeSlider, children: /* @__PURE__ */ m(L.Slot, { scope: e.__scopeSlider, children: /* @__PURE__ */ m(
-          w,
+          b,
           {
-            "aria-disabled": a,
-            "data-disabled": a ? "" : void 0,
-            ...v,
+            "aria-disabled": s,
+            "data-disabled": s ? "" : void 0,
+            ...g,
             ref: t,
-            onPointerDown: C(v.onPointerDown, () => {
-              a || (V.current = p);
+            onPointerDown: _(g.onPointerDown, () => {
+              s || (k.current = S);
             }),
             min: n,
-            max: i,
-            inverted: b,
-            onSlideStart: a ? void 0 : N,
-            onSlideMove: a ? void 0 : ce,
-            onSlideEnd: a ? void 0 : le,
-            onHomeKeyDown: () => !a && B(n, 0, { commit: !0 }),
-            onEndKeyDown: () => !a && B(i, p.length - 1, { commit: !0 }),
+            max: r,
+            inverted: v,
+            onSlideStart: s ? void 0 : V,
+            onSlideMove: s ? void 0 : le,
+            onSlideEnd: s ? void 0 : ce,
+            onHomeKeyDown: () => !s && K(n, 0, { commit: !0 }),
+            onEndKeyDown: () => !s && K(r, S.length - 1, { commit: !0 }),
             onStepKeyDown: ({ event: y, direction: P }) => {
-              if (!a) {
-                const z = G.includes(y.key) || y.shiftKey && W.includes(y.key) ? 10 : 1, K = f.current, E = p[K], x = c * z * P;
-                B(E + x, K, { commit: !0 });
+              if (!s) {
+                const N = G.includes(y.key) || y.shiftKey && W.includes(y.key) ? 10 : 1, I = f.current, E = S[I], x = l * N * P;
+                K(E + x, I, { commit: !0 });
               }
             }
           }
@@ -115,22 +114,22 @@ var [Z, ee] = J(M, {
   endEdge: "right",
   size: "width",
   direction: 1
-}), be = d.forwardRef(
+}), we = c.forwardRef(
   (e, t) => {
     const {
       min: o,
       max: n,
-      dir: i,
-      inverted: c,
-      onSlideStart: r,
-      onSlideMove: a,
-      onSlideEnd: l,
-      onStepKeyDown: S,
-      ...g
-    } = e, [s, u] = d.useState(null), b = A(t, (w) => u(w)), R = d.useRef(void 0), v = me(i), h = v === "ltr", f = h && !c || !h && c;
-    function D(w) {
-      const p = R.current || s.getBoundingClientRect(), I = [0, p.width], N = F(I, f ? [o, n] : [n, o]);
-      return R.current = p, N(w - p.left);
+      dir: r,
+      inverted: l,
+      onSlideStart: i,
+      onSlideMove: s,
+      onSlideEnd: d,
+      onStepKeyDown: w,
+      ...h
+    } = e, [a, u] = c.useState(null), v = C(t, (b) => u(b)), R = c.useRef(void 0), g = me(r), p = g === "ltr", f = p && !l || !p && l;
+    function D(b) {
+      const S = R.current || a.getBoundingClientRect(), A = [0, S.width], V = F(A, f ? [o, n] : [n, o]);
+      return R.current = S, V(b - S.left);
     }
     return /* @__PURE__ */ m(
       Z,
@@ -143,130 +142,130 @@ var [Z, ee] = J(M, {
         children: /* @__PURE__ */ m(
           te,
           {
-            dir: v,
+            dir: g,
             "data-orientation": "horizontal",
-            ...g,
-            ref: b,
+            ...h,
+            ref: v,
             style: {
-              ...g.style,
+              ...h.style,
               "--radix-slider-thumb-transform": "translateX(-50%)"
             },
-            onSlideStart: (w) => {
-              const p = D(w.clientX);
-              r == null || r(p);
+            onSlideStart: (b) => {
+              const S = D(b.clientX);
+              i?.(S);
             },
-            onSlideMove: (w) => {
-              const p = D(w.clientX);
-              a == null || a(p);
+            onSlideMove: (b) => {
+              const S = D(b.clientX);
+              s?.(S);
             },
             onSlideEnd: () => {
-              R.current = void 0, l == null || l();
+              R.current = void 0, d?.();
             },
-            onStepKeyDown: (w) => {
-              const I = q[f ? "from-left" : "from-right"].includes(w.key);
-              S == null || S({ event: w, direction: I ? -1 : 1 });
+            onStepKeyDown: (b) => {
+              const A = q[f ? "from-left" : "from-right"].includes(b.key);
+              w?.({ event: b, direction: A ? -1 : 1 });
             }
           }
         )
       }
     );
   }
-), we = d.forwardRef(
+), be = c.forwardRef(
   (e, t) => {
     const {
       min: o,
       max: n,
-      inverted: i,
-      onSlideStart: c,
-      onSlideMove: r,
-      onSlideEnd: a,
-      onStepKeyDown: l,
-      ...S
-    } = e, g = d.useRef(null), s = A(t, g), u = d.useRef(void 0), b = !i;
-    function R(v) {
-      const h = u.current || g.current.getBoundingClientRect(), f = [0, h.height], w = F(f, b ? [n, o] : [o, n]);
-      return u.current = h, w(v - h.top);
+      inverted: r,
+      onSlideStart: l,
+      onSlideMove: i,
+      onSlideEnd: s,
+      onStepKeyDown: d,
+      ...w
+    } = e, h = c.useRef(null), a = C(t, h), u = c.useRef(void 0), v = !r;
+    function R(g) {
+      const p = u.current || h.current.getBoundingClientRect(), f = [0, p.height], b = F(f, v ? [n, o] : [o, n]);
+      return u.current = p, b(g - p.top);
     }
     return /* @__PURE__ */ m(
       Z,
       {
         scope: e.__scopeSlider,
-        startEdge: b ? "bottom" : "top",
-        endEdge: b ? "top" : "bottom",
+        startEdge: v ? "bottom" : "top",
+        endEdge: v ? "top" : "bottom",
         size: "height",
-        direction: b ? 1 : -1,
+        direction: v ? 1 : -1,
         children: /* @__PURE__ */ m(
           te,
           {
             "data-orientation": "vertical",
-            ...S,
-            ref: s,
+            ...w,
+            ref: a,
             style: {
-              ...S.style,
+              ...w.style,
               "--radix-slider-thumb-transform": "translateY(50%)"
             },
-            onSlideStart: (v) => {
-              const h = R(v.clientY);
-              c == null || c(h);
+            onSlideStart: (g) => {
+              const p = R(g.clientY);
+              l?.(p);
             },
-            onSlideMove: (v) => {
-              const h = R(v.clientY);
-              r == null || r(h);
+            onSlideMove: (g) => {
+              const p = R(g.clientY);
+              i?.(p);
             },
             onSlideEnd: () => {
-              u.current = void 0, a == null || a();
+              u.current = void 0, s?.();
             },
-            onStepKeyDown: (v) => {
-              const f = q[b ? "from-bottom" : "from-top"].includes(v.key);
-              l == null || l({ event: v, direction: f ? -1 : 1 });
+            onStepKeyDown: (g) => {
+              const f = q[v ? "from-bottom" : "from-top"].includes(g.key);
+              d?.({ event: g, direction: f ? -1 : 1 });
             }
           }
         )
       }
     );
   }
-), te = d.forwardRef(
+), te = c.forwardRef(
   (e, t) => {
     const {
       __scopeSlider: o,
       onSlideStart: n,
-      onSlideMove: i,
-      onSlideEnd: c,
-      onHomeKeyDown: r,
-      onEndKeyDown: a,
-      onStepKeyDown: l,
-      ...S
-    } = e, g = k(M, o);
+      onSlideMove: r,
+      onSlideEnd: l,
+      onHomeKeyDown: i,
+      onEndKeyDown: s,
+      onStepKeyDown: d,
+      ...w
+    } = e, h = T(M, o);
     return /* @__PURE__ */ m(
-      T.span,
+      B.span,
       {
-        ...S,
+        ...w,
         ref: t,
-        onKeyDown: C(e.onKeyDown, (s) => {
-          s.key === "Home" ? (r(s), s.preventDefault()) : s.key === "End" ? (a(s), s.preventDefault()) : G.concat(W).includes(s.key) && (l(s), s.preventDefault());
+        onKeyDown: _(e.onKeyDown, (a) => {
+          a.key === "Home" ? (i(a), a.preventDefault()) : a.key === "End" ? (s(a), a.preventDefault()) : G.concat(W).includes(a.key) && (d(a), a.preventDefault());
         }),
-        onPointerDown: C(e.onPointerDown, (s) => {
-          const u = s.target;
-          u.setPointerCapture(s.pointerId), s.preventDefault(), g.thumbs.has(u) ? u.focus() : n(s);
+        onPointerDown: _(e.onPointerDown, (a) => {
+          const u = a.target;
+          u.setPointerCapture(a.pointerId), a.preventDefault(), h.thumbs.has(u) ? u.focus() : n(a);
         }),
-        onPointerMove: C(e.onPointerMove, (s) => {
-          s.target.hasPointerCapture(s.pointerId) && i(s);
+        onPointerMove: _(e.onPointerMove, (a) => {
+          a.target.hasPointerCapture(a.pointerId) && r(a);
         }),
-        onPointerUp: C(e.onPointerUp, (s) => {
-          const u = s.target;
-          u.hasPointerCapture(s.pointerId) && (u.releasePointerCapture(s.pointerId), c(s));
+        onPointerUp: _(e.onPointerUp, (a) => {
+          const u = a.target;
+          u.hasPointerCapture(a.pointerId) && (u.releasePointerCapture(a.pointerId), l(a));
         })
       }
     );
   }
-), oe = "SliderTrack", ne = d.forwardRef(
+), oe = "SliderTrack", ne = c.forwardRef(
   (e, t) => {
-    const { __scopeSlider: o, ...n } = e, i = k(oe, o);
+    const { __scopeSlider: o, ...n } = e, r = T(oe, o);
     return /* @__PURE__ */ m(
-      T.span,
+      B.span,
       {
-        "data-disabled": i.disabled ? "" : void 0,
-        "data-orientation": i.orientation,
+        "data-disabled": r.disabled ? "" : void 0,
+        "data-orientation": r.orientation,
         ...n,
         ref: t
       }
@@ -274,79 +273,79 @@ var [Z, ee] = J(M, {
   }
 );
 ne.displayName = oe;
-var O = "SliderRange", re = d.forwardRef(
+var O = "SliderRange", re = c.forwardRef(
   (e, t) => {
-    const { __scopeSlider: o, ...n } = e, i = k(O, o), c = ee(O, o), r = d.useRef(null), a = A(t, r), l = i.values.length, S = i.values.map(
-      (u) => se(u, i.min, i.max)
-    ), g = l > 1 ? Math.min(...S) : 0, s = 100 - Math.max(...S);
+    const { __scopeSlider: o, ...n } = e, r = T(O, o), l = ee(O, o), i = c.useRef(null), s = C(t, i), d = r.values.length, w = r.values.map(
+      (u) => se(u, r.min, r.max)
+    ), h = d > 1 ? Math.min(...w) : 0, a = 100 - Math.max(...w);
     return /* @__PURE__ */ m(
-      T.span,
+      B.span,
       {
-        "data-orientation": i.orientation,
-        "data-disabled": i.disabled ? "" : void 0,
+        "data-orientation": r.orientation,
+        "data-disabled": r.disabled ? "" : void 0,
         ...n,
-        ref: a,
+        ref: s,
         style: {
           ...e.style,
-          [c.startEdge]: g + "%",
-          [c.endEdge]: s + "%"
+          [l.startEdge]: h + "%",
+          [l.endEdge]: a + "%"
         }
       }
     );
   }
 );
 re.displayName = O;
-var U = "SliderThumb", ie = d.forwardRef(
+var U = "SliderThumb", ie = c.forwardRef(
   (e, t) => {
-    const o = Se(e.__scopeSlider), [n, i] = d.useState(null), c = A(t, (a) => i(a)), r = d.useMemo(
-      () => n ? o().findIndex((a) => a.ref.current === n) : -1,
+    const o = he(e.__scopeSlider), [n, r] = c.useState(null), l = C(t, (s) => r(s)), i = c.useMemo(
+      () => n ? o().findIndex((s) => s.ref.current === n) : -1,
       [o, n]
     );
-    return /* @__PURE__ */ m(ye, { ...e, ref: c, index: r });
+    return /* @__PURE__ */ m(ye, { ...e, ref: l, index: i });
   }
-), ye = d.forwardRef(
+), ye = c.forwardRef(
   (e, t) => {
-    const { __scopeSlider: o, index: n, name: i, ...c } = e, r = k(U, o), a = ee(U, o), [l, S] = d.useState(null), g = A(t, (D) => S(D)), s = l ? r.form || !!l.closest("form") : !0, u = pe(l), b = r.values[n], R = b === void 0 ? 0 : se(b, r.min, r.max), v = xe(n, r.values.length), h = u == null ? void 0 : u[a.size], f = h ? _e(h, R, a.direction) : 0;
-    return d.useEffect(() => {
-      if (l)
-        return r.thumbs.add(l), () => {
-          r.thumbs.delete(l);
+    const { __scopeSlider: o, index: n, name: r, ...l } = e, i = T(U, o), s = ee(U, o), [d, w] = c.useState(null), h = C(t, (D) => w(D)), a = d ? i.form || !!d.closest("form") : !0, u = Se(d), v = i.values[n], R = v === void 0 ? 0 : se(v, i.min, i.max), g = xe(n, i.values.length), p = u?.[s.size], f = p ? Ee(p, R, s.direction) : 0;
+    return c.useEffect(() => {
+      if (d)
+        return i.thumbs.add(d), () => {
+          i.thumbs.delete(d);
         };
-    }, [l, r.thumbs]), /* @__PURE__ */ j(
+    }, [d, i.thumbs]), /* @__PURE__ */ j(
       "span",
       {
         style: {
           transform: "var(--radix-slider-thumb-transform)",
           position: "absolute",
-          [a.startEdge]: `calc(${R}% + ${f}px)`
+          [s.startEdge]: `calc(${R}% + ${f}px)`
         },
         children: [
           /* @__PURE__ */ m(L.ItemSlot, { scope: e.__scopeSlider, children: /* @__PURE__ */ m(
-            T.span,
+            B.span,
             {
               role: "slider",
-              "aria-label": e["aria-label"] || v,
-              "aria-valuemin": r.min,
-              "aria-valuenow": b,
-              "aria-valuemax": r.max,
-              "aria-orientation": r.orientation,
-              "data-orientation": r.orientation,
-              "data-disabled": r.disabled ? "" : void 0,
-              tabIndex: r.disabled ? void 0 : 0,
-              ...c,
-              ref: g,
-              style: b === void 0 ? { display: "none" } : e.style,
-              onFocus: C(e.onFocus, () => {
-                r.valueIndexToChangeRef.current = n;
+              "aria-label": e["aria-label"] || g,
+              "aria-valuemin": i.min,
+              "aria-valuenow": v,
+              "aria-valuemax": i.max,
+              "aria-orientation": i.orientation,
+              "data-orientation": i.orientation,
+              "data-disabled": i.disabled ? "" : void 0,
+              tabIndex: i.disabled ? void 0 : 0,
+              ...l,
+              ref: h,
+              style: v === void 0 ? { display: "none" } : e.style,
+              onFocus: _(e.onFocus, () => {
+                i.valueIndexToChangeRef.current = n;
               })
             }
           ) }),
-          s && /* @__PURE__ */ m(
+          a && /* @__PURE__ */ m(
             ae,
             {
-              name: i ?? (r.name ? r.name + (r.values.length > 1 ? "[]" : "") : void 0),
-              form: r.form,
-              value: b
+              name: r ?? (i.name ? i.name + (i.values.length > 1 ? "[]" : "") : void 0),
+              form: i.form,
+              value: v
             },
             n
           )
@@ -356,23 +355,23 @@ var U = "SliderThumb", ie = d.forwardRef(
   }
 );
 ie.displayName = U;
-var Re = "RadioBubbleInput", ae = d.forwardRef(
+var Re = "RadioBubbleInput", ae = c.forwardRef(
   ({ __scopeSlider: e, value: t, ...o }, n) => {
-    const i = d.useRef(null), c = A(i, n), r = he(t);
-    return d.useEffect(() => {
-      const a = i.current;
-      if (!a) return;
-      const l = window.HTMLInputElement.prototype, g = Object.getOwnPropertyDescriptor(l, "value").set;
-      if (r !== t && g) {
-        const s = new Event("input", { bubbles: !0 });
-        g.call(a, t), a.dispatchEvent(s);
+    const r = c.useRef(null), l = C(r, n), i = pe(t);
+    return c.useEffect(() => {
+      const s = r.current;
+      if (!s) return;
+      const d = window.HTMLInputElement.prototype, h = Object.getOwnPropertyDescriptor(d, "value").set;
+      if (i !== t && h) {
+        const a = new Event("input", { bubbles: !0 });
+        h.call(s, t), s.dispatchEvent(a);
       }
-    }, [r, t]), /* @__PURE__ */ m(
-      T.input,
+    }, [i, t]), /* @__PURE__ */ m(
+      B.input,
       {
         style: { display: "none" },
         ...o,
-        ref: c,
+        ref: l,
         defaultValue: t
       }
     );
@@ -381,30 +380,30 @@ var Re = "RadioBubbleInput", ae = d.forwardRef(
 ae.displayName = Re;
 function Pe(e = [], t, o) {
   const n = [...e];
-  return n[o] = t, n.sort((i, c) => i - c);
+  return n[o] = t, n.sort((r, l) => r - l);
 }
 function se(e, t, o) {
-  const c = 100 / (o - t) * (e - t);
-  return X(c, [0, 100]);
+  const l = 100 / (o - t) * (e - t);
+  return X(l, [0, 100]);
 }
 function xe(e, t) {
   return t > 2 ? `Value ${e + 1} of ${t}` : t === 2 ? ["Minimum", "Maximum"][e] : void 0;
 }
 function De(e, t) {
   if (e.length === 1) return 0;
-  const o = e.map((i) => Math.abs(i - t)), n = Math.min(...o);
+  const o = e.map((r) => Math.abs(r - t)), n = Math.min(...o);
   return o.indexOf(n);
 }
-function _e(e, t, o) {
-  const n = e / 2, c = F([0, 50], [0, n]);
-  return (n - c(t) * o) * o;
+function Ee(e, t, o) {
+  const n = e / 2, l = F([0, 50], [0, n]);
+  return (n - l(t) * o) * o;
 }
-function Ee(e) {
+function _e(e) {
   return e.slice(0, -1).map((t, o) => e[o + 1] - t);
 }
 function Ce(e, t) {
   if (t > 0) {
-    const o = Ee(e);
+    const o = _e(e);
     return Math.min(...o) >= t;
   }
   return !0;
@@ -416,49 +415,49 @@ function F(e, t) {
     return t[0] + n * (o - e[0]);
   };
 }
-function Ae(e) {
+function Me(e) {
   return (String(e).split(".")[1] || "").length;
 }
-function Me(e, t) {
+function Ae(e, t) {
   const o = Math.pow(10, t);
   return Math.round(e * o) / o;
 }
-var Ie = Q, Be = ne, Ke = re, Te = ie;
+var Ke = Q, Ie = ne, Be = re, Te = ie;
 function je({
   className: e,
   defaultValue: t,
   value: o,
   min: n = 0,
-  max: i = 100,
-  ...c
+  max: r = 100,
+  ...l
 }) {
-  const r = d.useMemo(
-    () => Array.isArray(o) ? o : Array.isArray(t) ? t : [n, i],
-    [o, t, n, i]
+  const i = c.useMemo(
+    () => Array.isArray(o) ? o : Array.isArray(t) ? t : [n, r],
+    [o, t, n, r]
   );
   return /* @__PURE__ */ j(
-    Ie,
+    Ke,
     {
       "data-slot": "slider",
       defaultValue: t,
       value: o,
       min: n,
-      max: i,
+      max: r,
       className: H(
         "relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
         e
       ),
-      ...c,
+      ...l,
       children: [
         /* @__PURE__ */ m(
-          Be,
+          Ie,
           {
             "data-slot": "slider-track",
             className: H(
               "bg-muted relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5"
             ),
             children: /* @__PURE__ */ m(
-              Ke,
+              Be,
               {
                 "data-slot": "slider-range",
                 className: H(
@@ -468,13 +467,13 @@ function je({
             )
           }
         ),
-        Array.from({ length: r.length }, (a, l) => /* @__PURE__ */ m(
+        Array.from({ length: i.length }, (s, d) => /* @__PURE__ */ m(
           Te,
           {
             "data-slot": "slider-thumb",
             className: "border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
           },
-          l
+          d
         ))
       ]
     }

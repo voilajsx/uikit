@@ -1,16 +1,16 @@
 import { jsx as a } from "react/jsx-runtime";
 import * as n from "react";
-import { u as k, c as l } from "./index-CPxmoWFw.js";
-import { c as F } from "./index-UFb2E87s.js";
-import { u as I } from "./index-B5MIi2tR.js";
-import { c as T, R as U, A as $, C as W, a as z } from "./index-f0dRS7uo.js";
-import { P as B, D as G } from "./index-DQ8UKqpy.js";
-import { P as O } from "./index-BS6MejTA.js";
-import { P as K } from "./index-D5Ppf2aB.js";
-import { c as j } from "./utils-qaFjX9_3.js";
-var E, b = "HoverCard", [_, fe] = F(b, [
-  T
-]), w = T(), [V, x] = _(b), y = (e) => {
+import { u as k, c as l } from "./index-C0UREtMP.js";
+import { c as F } from "./index-DFZozV_h.js";
+import { u as I } from "./index-DQH6odE9.js";
+import { c as H, R as U, A as $, C as W, a as z } from "./index-dhIqEbxW.js";
+import { P as B, D as G } from "./index-BY7PeRJA.js";
+import { P as T } from "./index-BCjJQGh8.js";
+import { P as K } from "./index-BVRIAMfe.js";
+import { c as j } from "./utils-CwJPJKOE.js";
+var x, S = "HoverCard", [O, fe] = F(S, [
+  H
+]), b = H(), [V, w] = O(S), _ = (e) => {
   const {
     __scopeHoverCard: o,
     children: t,
@@ -19,14 +19,14 @@ var E, b = "HoverCard", [_, fe] = F(b, [
     onOpenChange: c,
     openDelay: f = 700,
     closeDelay: v = 300
-  } = e, d = w(o), m = n.useRef(0), u = n.useRef(0), C = n.useRef(!1), p = n.useRef(!1), [h, r] = k({
+  } = e, d = b(o), m = n.useRef(0), u = n.useRef(0), C = n.useRef(!1), p = n.useRef(!1), [h, r] = k({
     prop: s,
     defaultProp: i ?? !1,
     onChange: c,
-    caller: b
+    caller: S
   }), P = n.useCallback(() => {
     clearTimeout(u.current), m.current = window.setTimeout(() => r(!0), f);
-  }, [f, r]), g = n.useCallback(() => {
+  }, [f, r]), L = n.useCallback(() => {
     clearTimeout(m.current), !C.current && !p.current && (u.current = window.setTimeout(() => r(!1), v));
   }, [v, r]), M = n.useCallback(() => r(!1), [r]);
   return n.useEffect(() => () => {
@@ -38,7 +38,7 @@ var E, b = "HoverCard", [_, fe] = F(b, [
       open: h,
       onOpenChange: r,
       onOpen: P,
-      onClose: g,
+      onClose: L,
       onDismiss: M,
       hasSelectionRef: C,
       isPointerDownOnContentRef: p,
@@ -46,18 +46,18 @@ var E, b = "HoverCard", [_, fe] = F(b, [
     }
   );
 };
-y.displayName = b;
-var N = "HoverCardTrigger", D = n.forwardRef(
+_.displayName = S;
+var y = "HoverCardTrigger", N = n.forwardRef(
   (e, o) => {
-    const { __scopeHoverCard: t, ...s } = e, i = x(N, t), c = w(t);
+    const { __scopeHoverCard: t, ...s } = e, i = w(y, t), c = b(t);
     return /* @__PURE__ */ a($, { asChild: !0, ...c, children: /* @__PURE__ */ a(
       K.a,
       {
         "data-state": i.open ? "open" : "closed",
         ...s,
         ref: o,
-        onPointerEnter: l(e.onPointerEnter, S(i.onOpen)),
-        onPointerLeave: l(e.onPointerLeave, S(i.onClose)),
+        onPointerEnter: l(e.onPointerEnter, R(i.onOpen)),
+        onPointerLeave: l(e.onPointerLeave, R(i.onClose)),
         onFocus: l(e.onFocus, i.onOpen),
         onBlur: l(e.onBlur, i.onClose),
         onTouchStart: l(e.onTouchStart, (f) => f.preventDefault())
@@ -65,30 +65,30 @@ var N = "HoverCardTrigger", D = n.forwardRef(
     ) });
   }
 );
-D.displayName = N;
-var H = "HoverCardPortal", [q, J] = _(H, {
+N.displayName = y;
+var E = "HoverCardPortal", [q, J] = O(E, {
   forceMount: void 0
-}), A = (e) => {
-  const { __scopeHoverCard: o, forceMount: t, children: s, container: i } = e, c = x(H, o);
-  return /* @__PURE__ */ a(q, { scope: o, forceMount: t, children: /* @__PURE__ */ a(O, { present: t || c.open, children: /* @__PURE__ */ a(B, { asChild: !0, container: i, children: s }) }) });
+}), D = (e) => {
+  const { __scopeHoverCard: o, forceMount: t, children: s, container: i } = e, c = w(E, o);
+  return /* @__PURE__ */ a(q, { scope: o, forceMount: t, children: /* @__PURE__ */ a(T, { present: t || c.open, children: /* @__PURE__ */ a(B, { asChild: !0, container: i, children: s }) }) });
 };
-A.displayName = H;
-var R = "HoverCardContent", L = n.forwardRef(
+D.displayName = E;
+var g = "HoverCardContent", A = n.forwardRef(
   (e, o) => {
-    const t = J(R, e.__scopeHoverCard), { forceMount: s = t.forceMount, ...i } = e, c = x(R, e.__scopeHoverCard);
-    return /* @__PURE__ */ a(O, { present: s || c.open, children: /* @__PURE__ */ a(
+    const t = J(g, e.__scopeHoverCard), { forceMount: s = t.forceMount, ...i } = e, c = w(g, e.__scopeHoverCard);
+    return /* @__PURE__ */ a(T, { present: s || c.open, children: /* @__PURE__ */ a(
       Q,
       {
         "data-state": c.open ? "open" : "closed",
         ...i,
-        onPointerEnter: l(e.onPointerEnter, S(c.onOpen)),
-        onPointerLeave: l(e.onPointerLeave, S(c.onClose)),
+        onPointerEnter: l(e.onPointerEnter, R(c.onOpen)),
+        onPointerLeave: l(e.onPointerLeave, R(c.onClose)),
         ref: o
       }
     ) });
   }
 );
-L.displayName = R;
+A.displayName = g;
 var Q = n.forwardRef((e, o) => {
   const {
     __scopeHoverCard: t,
@@ -97,20 +97,19 @@ var Q = n.forwardRef((e, o) => {
     onFocusOutside: c,
     onInteractOutside: f,
     ...v
-  } = e, d = x(R, t), m = w(t), u = n.useRef(null), C = I(o, u), [p, h] = n.useState(!1);
+  } = e, d = w(g, t), m = b(t), u = n.useRef(null), C = I(o, u), [p, h] = n.useState(!1);
   return n.useEffect(() => {
     if (p) {
       const r = document.body;
-      return E = r.style.userSelect || r.style.webkitUserSelect, r.style.userSelect = "none", r.style.webkitUserSelect = "none", () => {
-        r.style.userSelect = E, r.style.webkitUserSelect = E;
+      return x = r.style.userSelect || r.style.webkitUserSelect, r.style.userSelect = "none", r.style.webkitUserSelect = "none", () => {
+        r.style.userSelect = x, r.style.webkitUserSelect = x;
       };
     }
   }, [p]), n.useEffect(() => {
     if (u.current) {
       const r = () => {
         h(!1), d.isPointerDownOnContentRef.current = !1, setTimeout(() => {
-          var g;
-          ((g = document.getSelection()) == null ? void 0 : g.toString()) !== "" && (d.hasSelectionRef.current = !0);
+          document.getSelection()?.toString() !== "" && (d.hasSelectionRef.current = !0);
         });
       };
       return document.addEventListener("pointerup", r), () => {
@@ -157,12 +156,12 @@ var Q = n.forwardRef((e, o) => {
   );
 }), X = "HoverCardArrow", Y = n.forwardRef(
   (e, o) => {
-    const { __scopeHoverCard: t, ...s } = e, i = w(t);
+    const { __scopeHoverCard: t, ...s } = e, i = b(t);
     return /* @__PURE__ */ a(z, { ...i, ...s, ref: o });
   }
 );
 Y.displayName = X;
-function S(e) {
+function R(e) {
   return (o) => o.pointerType === "touch" ? void 0 : e();
 }
 function Z(e) {
@@ -172,7 +171,7 @@ function Z(e) {
   for (; t.nextNode(); ) o.push(t.currentNode);
   return o;
 }
-var ee = y, re = D, oe = A, te = L;
+var ee = _, re = N, oe = D, te = A;
 function ve({
   ...e
 }) {

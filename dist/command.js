@@ -1,10 +1,10 @@
 import { jsx as C, jsxs as ne } from "react/jsx-runtime";
-import { R as Se, P as Ie, O as Re, C as Ae } from "./index-BvW5efFZ.js";
+import { R as Se, P as Ie, O as Re, C as Ae } from "./index-Ba4eHUBD.js";
 import * as l from "react";
-import { P as A } from "./index-D5Ppf2aB.js";
-import { u as j } from "./index-B_PLZIoC.js";
-import { a as V } from "./index-B5MIi2tR.js";
-import { c as D } from "./utils-qaFjX9_3.js";
+import { P as A } from "./index-BVRIAMfe.js";
+import { u as j } from "./index-xqkGMOJ8.js";
+import { a as V } from "./index-DQH6odE9.js";
+import { c as D } from "./utils-CwJPJKOE.js";
 import { Dialog as De, DialogHeader as _e, DialogTitle as Me, DialogDescription as $e, DialogContent as Ne } from "./dialog.js";
 import { S as Pe } from "./search-CpUwRnG-.js";
 var pe = 1, Fe = 0.9, Ke = 0.8, je = 0.17, ee = 0.1, te = 0.999, Le = 0.9999, qe = 0.99, Ve = /[\\\/_+.#"@\[\(\{&]/, ze = /[\\\/_+.#"@\[\(\{&]/g, Oe = /[\s-]/, he = /[\s-]/g;
@@ -67,7 +67,7 @@ var q = '[cmdk-group=""]', re = '[cmdk-group-items=""]', Ge = '[cmdk-group-headi
     i.current.delete(t), s.current.delete(t), r.current.filtered.items.delete(t);
     let m = P();
     x(4, () => {
-      Y(), (m == null ? void 0 : m.getAttribute("id")) === t && X(), y.emit();
+      Y(), m?.getAttribute("id") === t && X(), y.emit();
     });
   }), group: (t) => (o.current.has(t) || o.current.set(t, /* @__PURE__ */ new Set()), () => {
     i.current.delete(t), o.current.delete(t);
@@ -98,11 +98,11 @@ var q = '[cmdk-group=""]', re = '[cmdk-group-items=""]', Ge = '[cmdk-group-headi
     }), d.sort((a, p) => p[1] - a[1]).forEach((a) => {
       var p;
       let h = (p = M.current) == null ? void 0 : p.querySelector(`${q}[${F}="${encodeURIComponent(a[0])}"]`);
-      h == null || h.parentElement.appendChild(h);
+      h?.parentElement.appendChild(h);
     });
   }
   function X() {
-    let t = L().find((m) => m.getAttribute("aria-disabled") !== "true"), d = t == null ? void 0 : t.getAttribute(F);
+    let t = L().find((m) => m.getAttribute("aria-disabled") !== "true"), d = t?.getAttribute(F);
     y.setState("value", d || void 0);
   }
   function Y() {
@@ -146,8 +146,8 @@ var q = '[cmdk-group=""]', re = '[cmdk-group-items=""]', Ge = '[cmdk-group-headi
     (d = f.current) != null && d.loop && (h = p + t < 0 ? a[a.length - 1] : p + t === a.length ? a[0] : a[p + t]), h && y.setState("value", h.getAttribute(F));
   }
   function ce(t) {
-    let d = P(), m = d == null ? void 0 : d.closest(q), a;
-    for (; m && !a; ) m = t > 0 ? et(m, q) : tt(m, q), a = m == null ? void 0 : m.querySelector(ge);
+    let d = P(), m = d?.closest(q), a;
+    for (; m && !a; ) m = t > 0 ? et(m, q) : tt(m, q), a = m?.querySelector(ge);
     a ? y.setState("value", a.getAttribute(F)) : Z(t);
   }
   let se = () => Q(L().length - 1), me = (t) => {
@@ -198,9 +198,9 @@ var q = '[cmdk-group=""]', re = '[cmdk-group-items=""]', Ge = '[cmdk-group-headi
   } }, l.createElement("label", { "cmdk-label": "", htmlFor: W.inputId, id: W.labelId, style: lt }, b), G(e, (t) => l.createElement(ke.Provider, { value: y }, l.createElement(xe.Provider, { value: W }, t))));
 }), Te = l.forwardRef((e, n) => {
   var r, s;
-  let o = j(), i = l.useRef(null), c = l.useContext(we), f = z(), b = Ee(e), u = (s = (r = b.current) == null ? void 0 : r.forceMount) != null ? s : c == null ? void 0 : c.forceMount;
+  let o = j(), i = l.useRef(null), c = l.useContext(we), f = z(), b = Ee(e), u = (s = (r = b.current) == null ? void 0 : r.forceMount) != null ? s : c?.forceMount;
   $(() => {
-    if (!u) return f.item(o, c == null ? void 0 : c.id);
+    if (!u) return f.item(o, c?.id);
   }, [u]);
   let v = Ce(o, i, [e.value, e.children, i], e.keywords), g = oe(), S = R((x) => x.value && x.value === v.current), w = R((x) => u || f.filter() === !1 ? !0 : x.search ? x.filtered.items.get(o) > 0 : !0);
   l.useEffect(() => {
@@ -230,7 +230,7 @@ var q = '[cmdk-group=""]', re = '[cmdk-group-items=""]', Ge = '[cmdk-group-headi
   return l.useEffect(() => {
     e.value != null && i.setState("search", e.value);
   }, [e.value]), l.createElement(A.input, { ref: n, ...s, "cmdk-input": "", autoComplete: "off", autoCorrect: "off", spellCheck: !1, "aria-autocomplete": "list", role: "combobox", "aria-expanded": !0, "aria-controls": b.listId, "aria-labelledby": b.labelId, "aria-activedescendant": f, id: b.inputId, type: "text", value: o ? e.value : c, onChange: (u) => {
-    o || i.setState("search", u.target.value), r == null || r(u.target.value);
+    o || i.setState("search", u.target.value), r?.(u.target.value);
   } });
 }), Xe = l.forwardRef((e, n) => {
   let { children: r, label: s = "Suggestions", ...o } = e, i = l.useRef(null), c = l.useRef(null), f = R((u) => u.selectedItemId), b = z();

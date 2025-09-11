@@ -1,13 +1,13 @@
 import { jsx as s, jsxs as L, Fragment as O } from "react/jsx-runtime";
 import * as i from "react";
-import { u as S } from "./index-B5MIi2tR.js";
-import { c as H } from "./index-UFb2E87s.js";
-import { u as G, c as N } from "./index-CPxmoWFw.js";
+import { u as S } from "./index-DQH6odE9.js";
+import { c as H } from "./index-DFZozV_h.js";
+import { u as G, c as N } from "./index-C0UREtMP.js";
 import { u as K } from "./index-BZPx6jYI.js";
-import { u as U } from "./index-CHDs-SiB.js";
-import { P as X } from "./index-BS6MejTA.js";
-import { P as _ } from "./index-D5Ppf2aB.js";
-import { c as $ } from "./utils-qaFjX9_3.js";
+import { u as U } from "./index-BGQepRFJ.js";
+import { P as X } from "./index-BCjJQGh8.js";
+import { P as _ } from "./index-BVRIAMfe.js";
+import { c as $ } from "./utils-CwJPJKOE.js";
 import { C as J } from "./check-DXouwtzp.js";
 var y = "Checkbox", [Q, de] = H(y), [V, E] = Q(y);
 function W(t) {
@@ -72,7 +72,7 @@ var w = "CheckboxTrigger", B = i.forwardRef(
       bubbleInput: C
     } = E(w, t), x = S(n, k), g = i.useRef(d);
     return i.useEffect(() => {
-      const r = e == null ? void 0 : e.form;
+      const r = e?.form;
       if (r) {
         const a = () => u(g.current);
         return r.addEventListener("reset", a), () => r.removeEventListener("reset", a);

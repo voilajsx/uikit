@@ -1,15 +1,15 @@
 import { jsx as r, jsxs as l } from "react/jsx-runtime";
-import { createContext as W, forwardRef as z, useState as m, useContext as X, useEffect as h } from "react";
-import { c as H } from "./index-DACAHwoB.js";
-import { c as n } from "./utils-qaFjX9_3.js";
-import { Button as q } from "./button.js";
-import { C as E } from "./chevron-down-BORJtX8F.js";
-import { X as F } from "./x-BxwubQiM.js";
-import { M as G } from "./menu-DBhEanGo.js";
-const L = W({
+import { createContext as T, forwardRef as C, useState as p, useContext as W, useEffect as m } from "react";
+import { c as E } from "./index-Bke1qZdk.js";
+import { c as n } from "./utils-CwJPJKOE.js";
+import { Button as X } from "./button.js";
+import { C as S } from "./chevron-down-BORJtX8F.js";
+import { X as q } from "./x-BxwubQiM.js";
+import { M as F } from "./menu-DBhEanGo.js";
+const H = T({
   tone: "clean",
   size: "xl"
-}), J = H(
+}), G = E(
   "w-full border-b transition-all duration-200 z-40",
   {
     variants: {
@@ -42,7 +42,7 @@ const L = W({
       position: "sticky"
     }
   }
-), K = H(
+), J = E(
   "mx-auto flex items-center justify-between",
   {
     variants: {
@@ -58,24 +58,24 @@ const L = W({
       size: "xl"
     }
   }
-), O = z(({
+), L = C(({
   className: c,
   tone: s = "clean",
   size: d = "xl",
   position: u = "sticky",
-  children: b,
-  ...y
-}, a) => /* @__PURE__ */ r(L.Provider, { value: { tone: s, size: d }, children: /* @__PURE__ */ r(
+  children: h,
+  ...b
+}, a) => /* @__PURE__ */ r(H.Provider, { value: { tone: s, size: d }, children: /* @__PURE__ */ r(
   "header",
   {
     ref: a,
-    className: n(J({ tone: s, position: u }), c),
-    ...y,
-    children: /* @__PURE__ */ r("div", { className: n(K({ size: d })), children: b })
+    className: n(G({ tone: s, position: u }), c),
+    ...b,
+    children: /* @__PURE__ */ r("div", { className: n(J({ size: d })), children: h })
   }
 ) }));
-O.displayName = "Header";
-const D = z(({
+L.displayName = "Header";
+const O = C(({
   className: c,
   children: s,
   ...d
@@ -88,41 +88,41 @@ const D = z(({
     children: s
   }
 ));
-D.displayName = "HeaderLogo";
-const A = z(({
+O.displayName = "HeaderLogo";
+const D = C(({
   navigation: c = [],
   currentPath: s = "",
   onNavigate: d,
   className: u,
-  ...b
-}, y) => {
-  const [a, v] = m(!1), [M, w] = m(/* @__PURE__ */ new Set()), [k, f] = m(null), [g, j] = m(!1), { tone: S } = X(L);
-  h(() => {
-    j(!0);
-  }, []), h(() => {
-    if (!g) return;
+  ...h
+}, b) => {
+  const [a, y] = p(!1), [z, v] = p(/* @__PURE__ */ new Set()), [w, f] = p(null), [x, A] = p(!1), { tone: M } = W(H);
+  m(() => {
+    A(!0);
+  }, []), m(() => {
+    if (!x) return;
     const e = () => {
-      window.innerWidth >= 768 && (v(!1), w(/* @__PURE__ */ new Set()));
+      window.innerWidth >= 768 && (y(!1), v(/* @__PURE__ */ new Set()));
     };
     return window.addEventListener("resize", e), () => window.removeEventListener("resize", e);
-  }, [g]), h(() => {
-    if (g)
+  }, [x]), m(() => {
+    if (x)
       return a ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset", () => {
         document.body.style.overflow = "unset";
       };
-  }, [a, g]), h(() => {
+  }, [a, x]), m(() => {
     const e = () => f(null);
-    if (k !== null)
+    if (w !== null)
       return document.addEventListener("click", e), () => document.removeEventListener("click", e);
-  }, [k]);
-  const V = (e) => {
-    const t = new Set(M);
-    t.has(e) ? t.delete(e) : t.add(e), w(t);
-  }, p = (e) => {
-    v(!1), w(/* @__PURE__ */ new Set()), f(null), e.href && d ? d(e.href, e) : e.onClick && e.onClick();
-  }, B = (e = !1) => {
+  }, [w]);
+  const j = (e) => {
+    const t = new Set(z);
+    t.has(e) ? t.delete(e) : t.add(e), v(t);
+  }, g = (e) => {
+    y(!1), v(/* @__PURE__ */ new Set()), f(null), e.href && d ? d(e.href, e) : e.onClick && e.onClick();
+  }, V = (e = !1) => {
     const t = "px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-md flex items-center gap-2";
-    switch (S) {
+    switch (M) {
       case "subtle":
         return n(
           t,
@@ -150,11 +150,11 @@ const A = z(({
           e ? "bg-muted text-foreground shadow-sm" : "text-foreground hover:text-foreground hover:bg-muted/50"
         );
     }
-  }, R = (e = !1) => n(
+  }, B = (e = !1) => n(
     "w-full flex items-center px-3 py-2 text-left transition-colors duration-200 rounded-lg",
     e ? "bg-secondary text-secondary-foreground" : "text-foreground hover:text-foreground hover:bg-muted"
-  ), T = () => {
-    switch (S) {
+  ), R = () => {
+    switch (M) {
       case "subtle":
         return "text-muted-foreground hover:text-foreground hover:bg-muted/50";
       case "brand":
@@ -166,22 +166,21 @@ const A = z(({
     }
   };
   return /* @__PURE__ */ l("div", { className: "flex items-center ml-auto", children: [
-    /* @__PURE__ */ r("nav", { className: n("hidden md:flex items-center space-x-1", u), ref: y, ...b, children: c.map((e) => {
-      var x;
-      const t = e.items && e.items.length > 0, i = k === e.key, N = e.href ? s === e.href : e.isActive;
+    /* @__PURE__ */ r("nav", { className: n("hidden md:flex items-center space-x-1", u), ref: b, ...h, children: c.map((e) => {
+      const t = e.items && e.items.length > 0, i = w === e.key, k = e.href ? s === e.href : e.isActive;
       return /* @__PURE__ */ l("div", { className: "relative", children: [
         /* @__PURE__ */ l(
           "button",
           {
             type: "button",
-            className: n(B(N), e.className),
+            className: n(V(k), e.className),
             onClick: (o) => {
-              o.stopPropagation(), t ? f(i ? null : e.key) : (f(null), p(e));
+              o.stopPropagation(), t ? f(i ? null : e.key) : (f(null), g(e));
             },
             children: [
               e.icon && /* @__PURE__ */ r(e.icon, { className: "h-4 w-4" }),
               /* @__PURE__ */ r("span", { children: e.label }),
-              t && /* @__PURE__ */ r(E, { className: n(
+              t && /* @__PURE__ */ r(S, { className: n(
                 "h-3 w-3 transition-transform duration-200",
                 i && "rotate-180"
               ) })
@@ -193,8 +192,8 @@ const A = z(({
           {
             className: "absolute top-full left-0 w-48 bg-background border border-border rounded-lg shadow-lg z-50 mt-1",
             onClick: (o) => o.stopPropagation(),
-            children: /* @__PURE__ */ r("div", { className: "py-1", children: (x = e.items) == null ? void 0 : x.map((o) => {
-              const C = o.href ? s === o.href : o.isActive;
+            children: /* @__PURE__ */ r("div", { className: "py-1", children: e.items?.map((o) => {
+              const N = o.href ? s === o.href : o.isActive;
               return /* @__PURE__ */ l(
                 "button",
                 {
@@ -202,10 +201,10 @@ const A = z(({
                   className: n(
                     "w-full px-3 py-2 text-left text-sm transition-colors flex items-center gap-2",
                     "hover:bg-muted hover:text-foreground focus:bg-muted focus:text-foreground focus:outline-none",
-                    C ? "bg-muted text-foreground font-medium" : "text-foreground"
+                    N ? "bg-muted text-foreground font-medium" : "text-foreground"
                   ),
                   onClick: () => {
-                    f(null), p(o);
+                    f(null), g(o);
                   },
                   children: [
                     o.icon && /* @__PURE__ */ r(o.icon, { className: "h-4 w-4" }),
@@ -221,48 +220,47 @@ const A = z(({
       ] }, e.key);
     }) }),
     /* @__PURE__ */ r(
-      q,
+      X,
       {
         variant: "ghost",
         size: "icon",
-        className: n("md:hidden", T()),
-        onClick: () => v(!a),
+        className: n("md:hidden", R()),
+        onClick: () => y(!a),
         "aria-label": a ? "Close menu" : "Open menu",
-        children: a ? /* @__PURE__ */ r(F, { className: "h-5 w-5" }) : /* @__PURE__ */ r(G, { className: "h-5 w-5" })
+        children: a ? /* @__PURE__ */ r(q, { className: "h-5 w-5" }) : /* @__PURE__ */ r(F, { className: "h-5 w-5" })
       }
     ),
     a && /* @__PURE__ */ r("div", { className: "fixed top-16 left-0 right-0 z-40 md:hidden bg-background border-b border-border/40 shadow-lg", children: /* @__PURE__ */ r("div", { className: "max-h-96 overflow-y-auto", children: /* @__PURE__ */ r("div", { className: "px-4 py-4 space-y-2", children: c.map((e) => {
-      var x;
-      const t = e.items && e.items.length > 0, i = M.has(e.key), N = e.href ? s === e.href : e.isActive;
+      const t = e.items && e.items.length > 0, i = z.has(e.key), k = e.href ? s === e.href : e.isActive;
       return /* @__PURE__ */ l("div", { className: "space-y-1", children: [
         /* @__PURE__ */ l(
           "button",
           {
             type: "button",
-            className: n(R(N), e.className),
-            onClick: () => t ? V(e.key) : p(e),
+            className: n(B(k), e.className),
+            onClick: () => t ? j(e.key) : g(e),
             children: [
               e.icon && /* @__PURE__ */ r(e.icon, { className: "h-4 w-4 mr-3 flex-shrink-0" }),
               /* @__PURE__ */ r("span", { className: "flex-1 text-sm", children: e.label }),
               e.badge && /* @__PURE__ */ r("span", { className: "text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded mr-2", children: e.badge }),
-              t && /* @__PURE__ */ r(E, { className: n(
+              t && /* @__PURE__ */ r(S, { className: n(
                 "h-4 w-4 transition-transform duration-200 flex-shrink-0",
                 i && "rotate-180"
               ) })
             ]
           }
         ),
-        t && i && /* @__PURE__ */ r("div", { className: "ml-6 space-y-1 border-l border-border/30 pl-4", children: (x = e.items) == null ? void 0 : x.map((o) => {
-          const C = o.href ? s === o.href : o.isActive;
+        t && i && /* @__PURE__ */ r("div", { className: "ml-6 space-y-1 border-l border-border/30 pl-4", children: e.items?.map((o) => {
+          const N = o.href ? s === o.href : o.isActive;
           return /* @__PURE__ */ l(
             "button",
             {
               type: "button",
               className: n(
                 "w-full flex items-center px-3 py-2 text-left transition-colors rounded-lg",
-                C ? "bg-secondary text-secondary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                N ? "bg-secondary text-secondary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted"
               ),
-              onClick: () => p(o),
+              onClick: () => g(o),
               children: [
                 o.icon && /* @__PURE__ */ r(o.icon, { className: "h-3 w-3 mr-3 flex-shrink-0" }),
                 /* @__PURE__ */ r("span", { className: "flex-1 text-sm", children: o.label }),
@@ -276,16 +274,16 @@ const A = z(({
     }) }) }) })
   ] });
 });
-A.displayName = "HeaderNav";
-const ee = Object.assign(O, {
-  Logo: D,
-  Nav: A
+D.displayName = "HeaderNav";
+const I = Object.assign(L, {
+  Logo: O,
+  Nav: D
 });
 export {
-  ee as Header,
-  D as HeaderLogo,
-  A as HeaderNav,
-  K as containerVariants,
-  J as headerVariants
+  I as Header,
+  O as HeaderLogo,
+  D as HeaderNav,
+  J as containerVariants,
+  G as headerVariants
 };
 //# sourceMappingURL=header.js.map

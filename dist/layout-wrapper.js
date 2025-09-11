@@ -1,7 +1,7 @@
-import { jsx as _, Fragment as E, jsxs as T } from "react/jsx-runtime";
+import { jsx as _, Fragment as E, jsxs as r } from "react/jsx-runtime";
 import { ThemeProvider as m } from "./theme-provider.js";
-import { AdminLayout as u } from "./admin.js";
-import { PageLayout as r } from "./page.js";
+import { AdminLayout as s } from "./admin.js";
+import { PageLayout as u } from "./page.js";
 import { AuthLayout as p } from "./auth.js";
 import { BlankLayout as O } from "./blank.js";
 import { PopupLayout as A } from "./popup.js";
@@ -14,7 +14,7 @@ function y(e, o = []) {
     return console.warn("Failed to parse JSON:", e), o;
   }
 }
-function l() {
+function L() {
   const e = d;
   return {
     // Theme system
@@ -71,14 +71,14 @@ function S({
   navigation: i,
   overrides: t = {}
 }) {
-  const a = { ...l(), ...t }, n = o || a.layout, s = i || a.navigation;
+  const a = { ...L(), ...t }, n = o || a.layout, l = i || a.navigation;
   return /* @__PURE__ */ _(
     m,
     {
       theme: a.theme,
       mode: a.mode,
       detectSystem: a.detectSystem,
-      children: I(e, n, s, a)
+      children: I(e, n, l, a)
     }
   );
 }
@@ -86,8 +86,8 @@ function I(e, o, i, t) {
   const a = typeof window < "u" ? window.location.pathname : "/", n = t.logo ? /* @__PURE__ */ _("img", { src: t.logo, alt: "Logo", className: "h-8 w-auto" }) : void 0;
   switch (o) {
     case "admin":
-      return /* @__PURE__ */ T(
-        u,
+      return /* @__PURE__ */ r(
+        s,
         {
           scheme: t.adminLayout.scheme,
           tone: t.adminLayout.tone,
@@ -96,46 +96,46 @@ function I(e, o, i, t) {
           position: t.adminLayout.position,
           children: [
             /* @__PURE__ */ _(
-              u.Header,
+              s.Header,
               {
                 title: t.title
               }
             ),
             /* @__PURE__ */ _(
-              u.Sidebar,
+              s.Sidebar,
               {
                 navigation: i,
                 currentPath: a,
-                onNavigate: L,
+                onNavigate: T,
                 logo: n
               }
             ),
-            /* @__PURE__ */ _(u.Content, { children: e })
+            /* @__PURE__ */ _(s.Content, { children: e })
           ]
         }
       );
     case "page":
-      return /* @__PURE__ */ T(
-        r,
+      return /* @__PURE__ */ r(
+        u,
         {
           scheme: t.pageLayout.scheme,
           tone: t.pageLayout.tone,
           size: t.pageLayout.size,
           children: [
             /* @__PURE__ */ _(
-              r.Header,
+              u.Header,
               {
                 navigation: i,
                 currentPath: a,
-                onNavigate: L,
+                onNavigate: T,
                 logo: n,
                 title: t.title,
                 position: t.pageLayout.position
               }
             ),
-            /* @__PURE__ */ _(r.Content, { children: e }),
+            /* @__PURE__ */ _(u.Content, { children: e }),
             /* @__PURE__ */ _(
-              r.Footer,
+              u.Footer,
               {
                 copyright: `© ${(/* @__PURE__ */ new Date()).getFullYear()} ${t.title}. All rights reserved.`
               }
@@ -158,7 +158,7 @@ function I(e, o, i, t) {
         }
       );
     case "blank":
-      return /* @__PURE__ */ T(
+      return /* @__PURE__ */ r(
         O,
         {
           scheme: t.blankLayout.scheme,
@@ -180,10 +180,7 @@ function I(e, o, i, t) {
           position: t.popupLayout.position,
           title: t.title,
           showClose: t.popupLayout.showClose,
-          onClose: () => {
-            var s;
-            return typeof window < "u" && ((s = window.close) == null ? void 0 : s.call(window));
-          },
+          onClose: () => typeof window < "u" && window.close?.(),
           children: e
         }
       );
@@ -192,7 +189,7 @@ function I(e, o, i, t) {
       return /* @__PURE__ */ _(E, { children: e });
   }
 }
-function L(e, o) {
+function T(e, o) {
   if (!(typeof window > "u")) {
     if (o.onClick) {
       o.onClick();
@@ -202,7 +199,7 @@ function L(e, o) {
   }
 }
 function w() {
-  return l();
+  return L();
 }
 export {
   S as LayoutWrapper,

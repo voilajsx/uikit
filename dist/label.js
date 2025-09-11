@@ -1,37 +1,36 @@
-import { jsx as o } from "react/jsx-runtime";
-import * as i from "react";
-import { P as n } from "./index-D5Ppf2aB.js";
-import { c as d } from "./utils-qaFjX9_3.js";
-var s = "Label", l = i.forwardRef((e, a) => /* @__PURE__ */ o(
-  n.label,
+import { jsx as r } from "react/jsx-runtime";
+import * as l from "react";
+import { P as i } from "./index-BVRIAMfe.js";
+import { c as n } from "./utils-CwJPJKOE.js";
+var s = "Label", o = l.forwardRef((t, a) => /* @__PURE__ */ r(
+  i.label,
   {
-    ...e,
+    ...t,
     ref: a,
-    onMouseDown: (t) => {
-      var r;
-      t.target.closest("button, input, select, textarea") || ((r = e.onMouseDown) == null || r.call(e, t), !t.defaultPrevented && t.detail > 1 && t.preventDefault());
+    onMouseDown: (e) => {
+      e.target.closest("button, input, select, textarea") || (t.onMouseDown?.(e), !e.defaultPrevented && e.detail > 1 && e.preventDefault());
     }
   }
 ));
-l.displayName = s;
-var u = l;
-function g({
-  className: e,
+o.displayName = s;
+var d = o;
+function c({
+  className: t,
   ...a
 }) {
-  return /* @__PURE__ */ o(
-    u,
+  return /* @__PURE__ */ r(
+    d,
     {
       "data-slot": "label",
-      className: d(
+      className: n(
         "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-        e
+        t
       ),
       ...a
     }
   );
 }
 export {
-  g as Label
+  c as Label
 };
 //# sourceMappingURL=label.js.map
