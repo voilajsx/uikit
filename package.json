@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "Cross-platform React components with beautiful themes and OKLCH color science",
   "type": "module",
   "keywords": [
