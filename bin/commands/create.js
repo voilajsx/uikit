@@ -352,7 +352,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   await fs.mkdir(stylesPath, { recursive: true });
   await fs.writeFile(path.join(stylesPath, 'globals.css'), '/* Themes will be bundled here */\n');
 
-  // Create index.html
+  // Create index.html with built-in SEO optimization
   const indexContent = `<!doctype html>
 <html lang="en">
   <head>
@@ -360,10 +360,55 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🎨 UIKit Theme Showcase</title>
+    
+    <!-- SEO Optimizations -->
+    <meta name="description" content="Professional React UI components with beautiful themes and OKLCH color science. Built with @voilajsx/uikit.">
+    <meta name="keywords" content="react, ui components, themes, design system, tailwind css, typescript">
+    <meta name="author" content="@voilajsx/uikit">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UIKit Theme Showcase">
+    <meta property="og:description" content="Professional React UI components with beautiful themes">
+    <meta property="og:site_name" content="@voilajsx/uikit">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UIKit Theme Showcase">
+    <meta name="twitter:description" content="Professional React UI components with beautiful themes">
+    
+    <!-- Performance -->
+    <meta name="robots" content="index,follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    
+    <!-- Theme color -->
+    <meta name="theme-color" content="#000000">
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "UIKit Theme Showcase",
+      "description": "Professional React UI components with beautiful themes",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "@voilajsx/uikit"
+      }
+    }
+    </script>
   </body>
 </html>`;
 
