@@ -116,7 +116,7 @@ const studioTheme = {
     popoverForeground: 'oklch(0.08 0.005 270)',
 
     // Studio color palette - 50% lighter for visibility
-    primary: 'rgb(93, 102, 122)',
+    primary: 'rgb(56, 61, 73)',
     primaryForeground: 'oklch(0.98 0.002 270)',
     secondary: 'oklch(0.85 0.003 270)',
     secondaryForeground: 'oklch(0.15 0.008 270)',
@@ -158,7 +158,7 @@ const studioTheme = {
     popover: 'oklch(0.20 0.01 270)',
     popoverForeground: 'oklch(0.95 0.005 270)',
 
-    primary: 'rgb(130, 140, 160)',
+    primary: 'rgb(78, 84, 96)',
     primaryForeground: 'oklch(0.08 0.005 270)',
     secondary: 'oklch(0.10 0.008 270)',
     secondaryForeground: 'oklch(0.94 0.005 270)',

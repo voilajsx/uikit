@@ -1,174 +1,226 @@
-# @voilajsx/uikit - Voila JSX UI Kit
+@voilajsx/uikit
+A comprehensive React UI component library with a powerful theming system, featuring zero-touch CSS hijacking, automatic gradients, design tokens, and professional theme presets. Built on Tailwind CSS and Radix UI, @voilajsx/uikit leverages OKLCH color science for vibrant, accessible designs across web, React Native, Tauri, Expo, and Chrome extensions.
+Why @voilajsx/uikit?
+@voilajsx/uikit is designed to streamline UI development with a focus on flexibility, accessibility, and developer experience. Key benefits include:
 
-A comprehensive React UI component library with **enhanced theming system** featuring zero-touch CSS hijacking, automatic gradients, design tokens, and professional theme presets. Built on top of Shadcn/ui and Radix UI primitives with complete theme transformation capabilities.
+Cross-Platform Support: Build consistent UIs for web, mobile (React Native, Expo), desktop (Tauri), and Chrome extensions using a single library.
+Enhanced Theming System: Five professional themes (base, elegant, metro, studio, vivid) with semantic colors, automatic gradients, and design tokens for effortless customization.
+OKLCH Color Science: Modern, perceptually uniform colors ensure vibrant, accessible designs with optimal contrast in light and dark modes.
+CLI-Driven Workflow: Powerful CLI tools (create, bundle, serve, build, deploy) simplify project setup, theme management, development, and deployment.
+Accessible Components: Built on Radix UI primitives, components like Button, Card, and Dialog are accessible and customizable.
+Tailwind CSS Integration: Leverages Tailwind’s utility-first approach for rapid styling with minimal CSS overhead.
+Developer-Friendly: TypeScript support, hot-reloading, and bundle analysis ensure a smooth development experience.
 
-## 🚀 Quick Start
+Whether you’re building a single-page app, a multi-page site, or a cross-platform application, @voilajsx/uikit provides the tools and flexibility to deliver professional, themeable UIs with minimal effort.
+Installation
+For the best experience, install @voilajsx/uikit globally to access the uikit CLI from anywhere:
+npm install -g @voilajsx/uikit
 
-Get your project up and running with `@voilajsx/uikit` in no time!
+For project-specific usage, install locally:
+npm install @voilajsx/uikit
 
-### 📦 Installation
+Install required peer dependencies:
+npm install react react-dom @fontsource/libre-baskerville @fontsource/montserrat @fontsource/dm-serif-display @fontsource/caveat
 
-To add `@voilajsx/uikit` to your project, use npm or yarn:
+Optional font dependencies (depending on custom themes):
+npm install @fontsource/jetbrains-mono @fontsource/orbitron @fontsource/poppins @fontsource/rajdhani @fontsource/source-code-pro @fontsource/merriweather @fontsource/crimson-text @fontsource/amatic-sc
 
-```bash
-npm install @voilajsx/uikit lucide-react # lucide-react for icons
-# or
-yarn add @voilajsx/uikit lucide-react
-```
+Note: Global installation enables direct uikit <command> usage (e.g., uikit create myapp). Without global installation, use npx uikit <command>.
+Getting Started
+Create a new project with a single command. The CLI scaffolds different boilerplates based on your needs:
+# Create a single-page theme showcase (default)
+npx uikit create myapp
+
+# Create a Single-Page Application (SPA) with React Router
+npx uikit create myapp --spa
+
+# Create a Multi-Page Application (MPA) with routing and pages
+npx uikit create myapp --multi
+
+# Specify a default theme (e.g., elegant)
+npx uikit create myapp --spa --theme elegant
+
+This creates a project directory with all necessary dependencies, a development environment, and themeable components.
+CLI Commands
+The @voilajsx/uikit CLI streamlines your development workflow with the following commands. Use uikit <command> if installed globally, or npx uikit <command> otherwise.
 
 
 
-### 💡 Core Setup & Usage
+Command
+Description
+Options
 
-Every project using `@voilajsx/uikit` needs to be wrapped with the `ThemeProvider` and import the global styles.
 
-1.  **Wrap your application** with `ThemeProvider` in your root file (e.g., `src/App.jsx` or `src/main.jsx`):
 
-    ```jsx
-    // src/App.jsx (or similar)
-    import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
-    import '@voilajsx/uikit/styles'; // Import global styles
+uikit create <name>
+Scaffolds a new project with a chosen boilerplate.
+--spa: Single-page app with routing.--multi: Multi-page app with routing and pages.--single: Single-page theme showcase (default).--theme <theme>: Default theme (base, elegant, metro, studio, vivid; default: base).
 
-    function App() {
-      return (
-        <ThemeProvider theme="default" mode="light">
-          {/* Your main application content goes here */}
-          <div className="min-h-screen bg-background text-foreground p-8">
-            {/* Example: A simple button */}
-            <h1 className="text-3xl font-bold mb-4">Hello Voila UI Kit!</h1>
-            {/* More components will go here */}
-          </div>
-        </ThemeProvider>
-      );
-    }
 
-    export default App;
-    ```
+uikit bundle
+Bundles theme presets into a single, optimized CSS file (src/styles/globals.css).
+--output <path>: Output file path.--watch: Watch for theme changes.--verbose: Enable detailed logging.
 
-2.  **Use Components**: Import individual components from their respective paths.
 
-    ```jsx
-    // src/components/MyComponent.jsx
-    import { Button } from '@voilajsx/uikit/button';
-    import { Card, CardContent } from '@voilajsx/uikit/card';
+uikit serve
+Starts a development server with hot-reloading.
+--port <number>: Port (default: 5173).--restart: Kill existing processes on port.--open: Open browser automatically.
 
-    function MyComponent() {
-      return (
-        <Card className="bg-card text-card-foreground p-4">
-          <CardContent>
-            <p>This is a Card!</p>
-            <Button className="mt-4">Click Me</Button>
-          </CardContent>
-        </Card>
-      );
-    }
 
-    export default MyComponent;
-    ```
+uikit build
+Creates a production-ready build.
+--outDir <dir>: Output directory (default: dist).--analyze: Analyze bundle size.
 
-### ✨ Key Principles
 
-- **Semantic Colors**: **NEVER** use hardcoded colors (e.g., `bg-white`, `text-blue-500`). **ALWAYS** use our semantic color variables (e.g., `bg-background`, `text-foreground`, `bg-primary`, `text-muted-foreground`) to ensure full theme compatibility.
-- **Layouts First**: Start by choosing the right layout component (`AdminLayout`, `PageLayout`, `AuthLayout`, `BlankLayout`, `PopupLayout`) for your application's pattern.
-- **Zero-Touch Enhancement**: Standard shadcn components are automatically enhanced with gradients, custom fonts, and design tokens without changing your code.
+uikit deploy
+Generates a static site for deployment.
+--base <path>: Base path (default: /).--github: Optimize for GitHub Pages.
 
-## 🎨 Enhanced Theming System
 
-Our **zero-touch theming system** transforms standard shadcn components with advanced design capabilities:
+Examples:
+# Create an SPA with the vivid theme
+npx uikit create myapp --spa --theme vivid
 
-### ✨ Automatic Enhancement Features
-- **Gradient Transformation**: `bg-primary` automatically becomes beautiful gradients
-- **Design Tokens**: Each theme includes custom fonts, spacing, shadows, and radius
-- **CSS Layer Hijacking**: Components enhance without code changes
-- **Professional Themes**: 5 complete design systems (Aurora, Neon, Ruby, Studio, Metro)
+# Bundle themes with verbose logging
+npx uikit bundle --verbose --watch
 
-### 🚀 Theme Bundler CLI
+# Start a development server on port 3000
+npx uikit serve --port 3000 --open
 
-Generate optimized theme CSS for your projects:
+# Build for production with bundle analysis
+npx uikit build --analyze
 
-```bash
-# Bundle themes from your project's theme directory
-npx voila-bundle
+# Deploy for GitHub Pages
+npx uikit deploy --github
 
-# Watch mode for development
-npx voila-bundle --watch
+Note: The legacy npx voila-bundle command is deprecated. Use npx uikit bundle instead.
+Theming
+@voilajsx/uikit offers a flexible theming system with five professional presets and support for custom themes.
+Available Themes
 
-# Custom output location  
-npx voila-bundle --output=src/styles/themes.css
-```
+Base: Metallic black with System UI fonts, professional styling, and gradients.
+Elegant: Professional blue with Montserrat and DM Serif Display fonts, solid colors with hover effects.
+Metro: Nice green with clean typography, sharp edges, and gradients.
+Studio: Black and orange with artistic fonts, bold styling, and gradients.
+Vivid: Luxurious purple with slight orange, using Libre Baskerville, Playfair Display, and Caveat fonts, with enhanced shadows and gradients.
 
-**Supported Theme Directories:**
-- `src/themes/presets/`
-- `src/web/assets/themes/presets/` 
-- `themes/presets/`
+ThemeProvider
+Wrap your application in the ThemeProvider to apply a global theme and mode:
+import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
+import '@voilajsx/uikit/styles';
 
-### 🎯 Theme Switching
-
-```jsx
-import { useTheme } from '@voilajsx/uikit';
-
-function ThemeControls() {
-  const { theme, setTheme, mode, setMode } = useTheme();
-  
+function App() {
   return (
-    <div>
-      <button onClick={() => setTheme('aurora')}>Aurora Theme</button>
-      <button onClick={() => setTheme('neon')}>Neon Theme</button>
-      <button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
-        Toggle {mode === 'light' ? 'Dark' : 'Light'} Mode
-      </button>
+    <ThemeProvider theme="elegant" mode="light" forceConfig={true}>
+      <MyComponent />
+    </ThemeProvider>
+  );
+}
+
+function MyComponent() {
+  const { theme, mode, setTheme, toggleMode, availableThemes } = useTheme();
+  return (
+    <div className="bg-background text-foreground">
+      <p>Current theme: {theme} ({mode} mode)</p>
+      <select onChange={(e) => setTheme(e.target.value)} value={theme}>
+        {availableThemes.map((t) => (
+          <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
+        ))}
+      </select>
+      <button onClick={toggleMode}>{mode === 'dark' ? '☀️ Light' : '🌙 Dark'}</button>
     </div>
   );
 }
-```
 
-### 🎨 Custom Theme Creation
+Custom Themes
+Create custom themes in src/themes/presets/:
 
-Create custom themes with enhanced design tokens:
-
-```js
-// src/themes/presets/my-theme.js
-export const myTheme = {
+Define a Theme:// src/themes/presets/my-theme.js
+export default {
   id: 'my-theme',
-  name: 'My Theme',
-  description: 'Custom theme description',
-  
-  // Enhanced design tokens
-  design: {
-    fontPrimary: "'Inter', system-ui, sans-serif",
-    fontDisplay: "'Cal Sans', 'Inter', sans-serif", 
-    radiusEnhance: '1rem',
-    spacingEnhance: '1.2',
-    shadowEnhance: '0 8px 24px rgb(0 0 0 / 0.12)',
-    gradientPrimary: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  },
-  
+  name: 'My Custom Theme',
   light: {
-    background: 'oklch(98% 0.01 240)',
-    foreground: 'oklch(15% 0.01 240)',
-    primary: 'oklch(60% 0.15 240)',
-    // ... more OKLCH colors
+    background: '#FFFFFF',
+    foreground: '#111111',
+    primary: '#3B82F6',
+    primaryForeground: '#FFFFFF',
+    secondary: '#6B7280',
+    secondaryForeground: '#FFFFFF',
+    accent: '#10B981',
+    accentForeground: '#FFFFFF',
+    muted: '#E5E7EB',
+    mutedForeground: '#6B7280'
   },
-  
   dark: {
-    background: 'oklch(12% 0.01 240)',
-    foreground: 'oklch(92% 0.01 240)',
-    // ... dark variant colors
-  }
+    background: '#111111',
+    foreground: '#FFFFFF',
+    primary: '#60A5FA',
+    primaryForeground: '#FFFFFF',
+    secondary: '#9CA3AF',
+    secondaryForeground: '#FFFFFF',
+    accent: '#34D399',
+    accentForeground: '#FFFFFF',
+    muted: '#374151',
+    mutedForeground: '#9CA3AF'
+  },
+  design: {
+    fontPrimary: 'Inter',
+    radiusEnhance: '1rem',
+    shadowEnhance: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+  },
+  customStyles: `
+    .theme-my-theme {
+      font-family: Inter, sans-serif;
+      --radius: 1rem;
+    }
+    .theme-my-theme .bg-primary {
+      background: linear-gradient(135deg, var(--color-primary), #1E40AF);
+    }
+  `
 };
 
-export default myTheme;
-```
 
-Then bundle with: `npx voila-bundle`
+Bundle the Theme:npx uikit bundle
 
-## 📚 Documentation
 
-For detailed usage, available components, design guidelines, and LLM code generation rules, please refer to the comprehensive [LLM Code Generation Guide v1.0](./UIKIT_LLM_GUIDE.md).
-
-## 📄 License
-
-This project is licensed under the MIT License.
+Use the Theme:setTheme('my-theme');
 
 
 
+Font Loading
+Fonts are not bundled in the CSS to avoid duplication. Include theme-specific fonts via src/styles/fonts.css:
+/* src/styles/fonts.css */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Playfair+Display&family=Caveat&family=Montserrat&family=DM+Serif+Display&display=swap');
+
+Import in your application:
+/* src/styles/globals.css */
+@import './fonts.css';
+/* Theme declarations bundled here */
+
+Supported fonts:
+
+Libre Baskerville, Playfair Display, Caveat (vivid theme)
+Montserrat, DM Serif Display (elegant theme)
+System UI (base theme)
+Optional: JetBrains Mono, Orbitron, Poppins, Rajdhani, Source Code Pro, Merriweather, Crimson Text, Amatic SC
+
+Core Concepts
+
+Semantic Colors: Use classes like bg-primary, text-foreground, bg-background to ensure compatibility with all themes. Avoid hardcoded colors.
+Layouts: Use components like AdminLayout, AuthLayout, PageLayout, PopupLayout, and BlankLayout for consistent page structures.
+Components: Leverage Radix UI-based components (e.g., Button, Card, Dialog, Accordion) for accessible, customizable UI elements.
+Cross-Platform: Adapt components for web, React Native, Tauri, or Expo using the platform and adapters exports.
+
+Migration from Old Themes
+Deprecated themes (aurora, default, ruby, neon) are no longer supported. The CLI may emit warnings if detected. Update to base, elegant, metro, studio, or vivid.
+License
+This project is licensed under the MIT License. See LICENSE for details.
+Resources
+
+Documentation
+GitHub Repository
+Issue Tracker
+Quick Start Guide
+LLM Usage Guide
+
+Built with @voilajsx/uikit ✨

@@ -107,7 +107,7 @@ const metroTheme = {
     popoverForeground: 'oklch(0.09 0.01 240)',
 
     // Metro color palette - 50% lighter for visibility
-    primary: '#2d7a70',
+    primary: '#1B4942',
     primaryForeground: 'oklch(0.98 0.003 240)',
     secondary: '#FAA533',
     secondaryForeground: '#000000',
@@ -149,7 +149,7 @@ const metroTheme = {
     popover: 'oklch(0.20 0.015 220)',
     popoverForeground: 'oklch(0.95 0.01 220)',
 
-    primary: '#4fa399',
+    primary: '#2F625C',
     primaryForeground: 'oklch(0.05 0.005 220)',
     secondary: '#FAA533',
     secondaryForeground: '#000000',

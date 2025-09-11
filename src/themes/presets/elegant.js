@@ -93,7 +93,7 @@ const elegantTheme = {
     popoverForeground: '#1F2937',
 
     // Blue accent system with yellow secondary - 50% lighter for visibility
-    primary: '#4A90E2',
+    primary: '#2C5688',
     primaryForeground: '#FFFFFF',
     secondary: '#FAA533',
     secondaryForeground: '#FFFFFF',
@@ -139,7 +139,7 @@ const elegantTheme = {
     popoverForeground: '#F8FAFC',
 
     // Dark blue accents with yellow secondary - 50% lighter for visibility
-    primary: '#60A5FA',
+    primary: '#3A6498',
     primaryForeground: '#0F172A',
     secondary: '#FAA533',
     secondaryForeground: '#000000',

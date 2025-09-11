@@ -1,0 +1,148 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@voilajsx/uikit/button';
+import { AuthLayout } from '@voilajsx/uikit/auth';
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Github } from 'lucide-react';
+
+const LoginPage: React.FC = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    rememberMe: false
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Login attempt:', formData);
+    // Handle login logic here
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  return (
+    <AuthLayout 
+      scheme="hero" 
+      tone="clean" 
+      size="md"
+      title="Welcome back"
+      subtitle="Sign in to your account to continue"
+      imageUrl="https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg"
+      imageAlt="Mountains with clouds and forest fog"
+      imageOverlay="dark"
+    >
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Email Field */}
+        <div className="space-y-2">
+          <label htmlFor="email" className="text-sm font-medium">
+            Email
+          </label>
+          <div className="relative">
+            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="w-full pl-10 pr-3 py-2 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+              required
+            />
+          </div>
+        </div>
+
+        {/* Password Field */}
+        <div className="space-y-2">
+          <label htmlFor="password" className="text-sm font-medium">
+            Password
+          </label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <input
+              id="password"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleInputChange}
+              className="w-full pl-10 pr-10 py-2 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+              required
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="absolute right-1 top-1 h-8 w-8 p-0"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </Button>
+          </div>
+        </div>
+
+        {/* Remember Me & Forgot Password */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <input
+              id="rememberMe"
+              name="rememberMe"
+              type="checkbox"
+              checked={formData.rememberMe}
+              onChange={handleInputChange}
+              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+            />
+            <label htmlFor="rememberMe" className="text-sm">
+              Remember me
+            </label>
+          </div>
+          <Button variant="link" size="sm" className="px-0">
+            Forgot password?
+          </Button>
+        </div>
+
+        {/* Submit Button */}
+        <Button type="submit" className="w-full">
+          Sign in
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </form>
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">
+            Or continue with
+          </span>
+        </div>
+      </div>
+
+      {/* Social Login */}
+      <Button variant="outline" className="w-full">
+        <Github className="mr-2 h-4 w-4" />
+        Continue with GitHub
+      </Button>
+
+      {/* Sign Up Link */}
+      <div className="text-center">
+        <p className="text-sm text-muted-foreground">
+          Don't have an account?{' '}
+          <Link to="/dashboard" className="font-medium text-primary hover:underline">
+            Sign up
+          </Link>
+        </p>
+      </div>
+    </AuthLayout>
+  );
+};
+
+export default LoginPage;

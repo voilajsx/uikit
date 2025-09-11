@@ -103,9 +103,9 @@ async function generateTemplate(projectPath, templateType, options) {
 async function generateSinglePageTemplate(srcPath, theme = 'base') {
   // Main App component
   const appContent = `import React from 'react';
-import { Button } from './components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
-import { ThemeProvider, useTheme } from './themes';
+import { Button } from '@voilajsx/uikit/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
+import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
 
 const UIKitShowcase: React.FC = () => {
   const { theme, mode, setTheme, setMode, availableThemes, toggleMode } = useTheme();
@@ -336,6 +336,7 @@ export default App;`;
   // Main entry point
   const mainContent = `import React from 'react';
 import ReactDOM from 'react-dom/client';
+import '@voilajsx/uikit/styles';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -370,29 +371,111 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 }
 
 /**
- * Generate SPA template
+ * Generate SPA template with routing
  */
 async function generateSPATemplate(srcPath, theme = 'base') {
-  // TODO: Implement SPA template
-  console.log('📝 SPA template generation - Coming soon!');
-  // For now, generate single-page template
-  await generateSinglePageTemplate(srcPath, theme);
+  const templatesPath = path.join(__dirname, '../templates/spa');
+  
+  // Read and process App.tsx template
+  const appTemplate = await fs.readFile(path.join(templatesPath, 'App.tsx.template'), 'utf8');
+  const appContent = appTemplate.replace(/{{THEME}}/g, theme);
+  await fs.writeFile(path.join(srcPath, 'App.tsx'), appContent);
+
+  // Read and copy main.tsx template
+  const mainTemplate = await fs.readFile(path.join(templatesPath, 'main.tsx.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, 'main.tsx'), mainTemplate);
+
+  // Read and copy index.html template
+  const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, '../index.html'), indexTemplate);
+
+  console.log('✅ Generated SPA template with React Router navigation');
 }
 
 /**
  * Generate multi-page template
  */
-async function generateMultiPageTemplate(srcPath, theme = 'base') {
-  // TODO: Implement multi-page template with routing
-  console.log('📝 Multi-page template generation - Coming soon!');
-  // For now, generate single-page template
-  await generateSinglePageTemplate(srcPath, theme);
+async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
+  const templatesPath = path.join(__dirname, '../templates/multi');
+  const projectName = path.basename(path.dirname(srcPath));
+  
+  // Read and process App.tsx template
+  const appTemplate = await fs.readFile(path.join(templatesPath, 'App.tsx.template'), 'utf8');
+  const appContent = appTemplate
+    .replace(/{{DEFAULT_THEME}}/g, theme)
+    .replace(/{{DEFAULT_MODE}}/g, 'light');
+  await fs.writeFile(path.join(srcPath, 'App.tsx'), appContent);
+
+  // Read and copy router.tsx template
+  const routerTemplate = await fs.readFile(path.join(templatesPath, 'router.tsx.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, 'router.tsx'), routerTemplate);
+
+  // Read and copy main.tsx template
+  const mainTemplate = await fs.readFile(path.join(templatesPath, 'main.tsx.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, 'main.tsx'), mainTemplate);
+
+  // Read and copy index.html template
+  const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, '../index.html'), indexTemplate);
+
+  // Create pages directory and copy all page templates
+  const pagesPath = path.join(srcPath, 'pages');
+  await fs.mkdir(pagesPath, { recursive: true });
+
+  const pageFiles = ['Home.tsx.template', 'Components.tsx.template', 'Themes.tsx.template', 'About.tsx.template', 'Contact.tsx.template', 'Login.tsx.template', 'Dashboard.tsx.template', 'ErrorPage.tsx.template'];
+  
+  for (const pageFile of pageFiles) {
+    const pageTemplate = await fs.readFile(path.join(templatesPath, 'pages', pageFile), 'utf8');
+    const pageContent = pageTemplate.replace(/{{THEME}}/g, theme);
+    const outputFileName = pageFile.replace('.template', '');
+    await fs.writeFile(path.join(pagesPath, outputFileName), pageContent);
+  }
+
+  // Create styles directory and placeholder
+  const stylesPath = path.join(srcPath, 'styles');
+  await fs.mkdir(stylesPath, { recursive: true });
+  await fs.writeFile(path.join(stylesPath, 'globals.css'), '/* Themes will be bundled here */\n');
+
+  // Create components directory and copy header/footer components
+  const componentsPath = path.join(srcPath, 'components');
+  await fs.mkdir(componentsPath, { recursive: true });
+
+  const componentFiles = ['Header.tsx.template', 'Footer.tsx.template', 'index.ts.template'];
+  
+  for (const componentFile of componentFiles) {
+    try {
+      const componentTemplate = await fs.readFile(path.join(templatesPath, 'components', componentFile), 'utf8');
+      const componentContent = componentTemplate
+        .replace(/{{PROJECT_NAME}}/g, projectName)
+        .replace(/{{CURRENT_YEAR}}/g, new Date().getFullYear().toString())
+        .replace(/{{THEME}}/g, theme);
+      const outputFileName = componentFile.replace('.template', '');
+      await fs.writeFile(path.join(componentsPath, outputFileName), componentContent);
+    } catch (error) {
+      console.warn(`⚠️ Warning: Could not find component template ${componentFile}`);
+    }
+  }
+
+  console.log('✅ Generated multi-page template with ultra-simple App.tsx, routing, pages, and configurable components');
 }
 
 /**
  * Generate package.json
  */
 async function generatePackageJson(projectPath, name, templateType) {
+  const baseDependencies = {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@voilajsx/uikit": "latest",
+    "lucide-react": "latest"
+  };
+
+  // Add React Router for SPA and multi-page templates
+  if (templateType === 'spa' || templateType === 'multi') {
+    baseDependencies["react-router-dom"] = "^6.22.0";
+    baseDependencies["@remix-run/router"] = "^1.23.0";
+  }
+
   const packageJson = {
     name: name,
     private: true,
@@ -406,12 +489,7 @@ async function generatePackageJson(projectPath, name, templateType) {
       "serve": "npx uikit serve",
       "deploy": "npx uikit deploy"
     },
-    dependencies: {
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-      "@voilajsx/uikit": "latest",
-      "lucide-react": "latest"
-    },
+    dependencies: baseDependencies,
     devDependencies: {
       "@types/react": "^18.2.66",
       "@types/react-dom": "^18.2.22",

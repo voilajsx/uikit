@@ -96,13 +96,13 @@ const baseTheme = {
     popoverForeground: '#1F2937',
 
     // Simple interactive colors - 50% lighter for visibility
-    primary: '#9CA3AF',
+    primary: '#5D626B',
     primaryForeground: '#FFFFFF',
-    secondary: '#F3F4F6',
+    secondary: '#E5E7EB',
     secondaryForeground: '#1F2937',
     muted: '#F9FAFB',
     mutedForeground: '#6B7280',
-    accent: '#E5E7EB',
+    accent: '#F3F4F6',
     accentForeground: '#1F2937',
 
     // State colors
@@ -142,13 +142,13 @@ const baseTheme = {
     popoverForeground: '#F9FAFB',
 
     // Dark interactive colors
-    primary: '#D1D5DB',
+    primary: '#7E8084',
     primaryForeground: '#111827',
-    secondary: '#374151',
+    secondary: '#4B5563',
     secondaryForeground: '#F9FAFB',
     muted: '#1F2937',
     mutedForeground: '#9CA3AF',
-    accent: '#4B5563',
+    accent: '#374151',
     accentForeground: '#F9FAFB',
 
     // State colors
