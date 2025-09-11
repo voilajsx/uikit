@@ -40,12 +40,11 @@ export async function deployProject(options) {
       await deployToGitHubPages(distPath, options);
     } else {
       console.log('\n🚀 Deploy to any static host:');
+      console.log('  • Netlify: Drag dist/ folder to netlify.com/drop');
+      console.log('  • Vercel: npx vercel --prod');
+      console.log('  • Surge: npx surge dist/');
+      console.log('  • GitHub Pages: Upload dist/ contents');
     }
-    
-    console.log('  • Netlify: Drag dist/ folder to netlify.com/drop');
-    console.log('  • Vercel: npx vercel --prod');
-    console.log('  • Surge: npx surge dist/');
-    console.log('  • GitHub Pages: Upload dist/ contents');
 
   } catch (error) {
     console.error('❌ Deploy generation failed:', error.message);

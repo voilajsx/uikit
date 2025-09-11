@@ -556,6 +556,55 @@ async function generateConfigFiles(projectPath) {
   
   const tsNodeConfig = await fs.readFile(path.join(templatesPath, 'tsconfig.node.json'), 'utf8');
   await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), tsNodeConfig);
+  
+  // Generate .gitignore
+  const gitignoreContent = `# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+build/
+coverage/
+.nyc_output
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+
+# Temporary files
+.tmp/
+.cache/
+`;
+  
+  await fs.writeFile(path.join(projectPath, '.gitignore'), gitignoreContent);
 }
 
 /**
