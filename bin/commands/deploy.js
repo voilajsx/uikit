@@ -342,13 +342,53 @@ async function deployToGitHubPages(distPath, options) {
       }
     };
 
-    // Add custom domain support if CNAME exists
+    // Check for existing CNAME in gh-pages branch
+    let cnameContent = null;
     try {
-      await fs.access('CNAME');
-      await fs.copyFile('CNAME', path.join(distPath, 'CNAME'));
-      console.log('✅ Added CNAME for custom domain');
+      // Temporarily clone gh-pages branch to check for CNAME
+      const tempDir = path.join(process.cwd(), '.temp-gh-pages');
+      await fs.mkdir(tempDir, { recursive: true });
+      await new Promise((resolve, reject) => {
+        const gitClone = spawn('git', ['clone', '--branch', 'gh-pages', '--single-branch', '.', tempDir], {
+          stdio: 'inherit',
+          cwd: process.cwd()
+        });
+        gitClone.on('close', (code) => {
+          if (code === 0) resolve();
+          else reject(new Error('Failed to clone gh-pages branch'));
+        });
+        gitClone.on('error', reject);
+      });
+
+      // Read existing CNAME if it exists
+      const existingCnamePath = path.join(tempDir, 'CNAME');
+      try {
+        cnameContent = await fs.readFile(existingCnamePath, 'utf8');
+        console.log('✅ Found existing CNAME in gh-pages branch');
+      } catch {
+        // No existing CNAME in gh-pages
+      }
+
+      // Clean up temporary directory
+      await fs.rm(tempDir, { recursive: true, force: true });
     } catch {
-      // No CNAME file, that's fine
+      console.log('⚠️  Could not check for existing CNAME in gh-pages branch');
+    }
+
+    // Use project root CNAME if no existing CNAME in gh-pages
+    if (!cnameContent) {
+      try {
+        const projectCnamePath = path.join(process.cwd(), 'CNAME');
+        cnameContent = await fs.readFile(projectCnamePath, 'utf8');
+        await fs.writeFile(path.join(distPath, 'CNAME'), cnameContent);
+        console.log('✅ Copied project root CNAME to dist');
+      } catch {
+        console.log('⚠️  No CNAME file found in project root');
+      }
+    } else {
+      // Write existing gh-pages CNAME to dist
+      await fs.writeFile(path.join(distPath, 'CNAME'), cnameContent);
+      console.log('✅ Preserved existing CNAME from gh-pages branch');
     }
 
     await new Promise((resolve, reject) => {
@@ -379,7 +419,7 @@ async function deployToGitHubPages(distPath, options) {
           const match = repoUrl.match(/github\.com[/:](.*?)\.git/);
           if (match) {
             const [, repoPath] = match;
-            console.log(`\n🌐 Site URL: https://${repoPath.split('/')[0]}.github.io/${repoName}/`);
+            console.log(`\n🌐 Site URL: https://${cnameContent || `${repoPath.split('/')[0]}.github.io/${repoName}/`}`);
           }
         }
       }
