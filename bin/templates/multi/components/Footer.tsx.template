@@ -16,7 +16,7 @@ const footerNavigation: NavigationItem[] = [
 export const Footer: React.FC = () => {
   const navigate = useNavigate();
   
-  const handleNavigation = (href: string, item: NavigationItem) => {
+  const handleNavigation = (href: string) => {
     navigate(href);
   };
 
@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
           {footerNavigation.map((item) => (
             <button
               key={item.key}
-              onClick={() => item.href && handleNavigation(item.href, item)}
+              onClick={() => item.href && handleNavigation(item.href)}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {item.label}

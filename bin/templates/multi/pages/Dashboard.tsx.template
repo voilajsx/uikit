@@ -15,9 +15,6 @@ import {
   Download,
   Filter,
   Home,
-  Settings,
-  Bell,
-  User,
   Layout,
   Palette,
   BookOpen,
@@ -47,7 +44,7 @@ const DashboardPage: React.FC = () => {
     { key: 'contact', label: 'Contact', href: '/contact', icon: Mail },
   ];
 
-  const handleNavigation = (href: string, item: NavigationItem) => {
+  const handleNavigation = (href: string) => {
     navigate(href);
   };
 

@@ -36,10 +36,8 @@ export async function deployProject(options) {
     console.log(`📁 Output: ${distPath} (${buildSize})`);
     
     if (options.github) {
-      console.log('\n🚀 GitHub Pages deployment:');
-      console.log('  1. Push your code to GitHub');
-      console.log('  2. Enable Pages in repository settings');
-      console.log('  3. Set source to "GitHub Actions" or upload dist/ manually');
+      console.log('\n🚀 Deploying to GitHub Pages...');
+      await deployToGitHubPages(distPath, options);
     } else {
       console.log('\n🚀 Deploy to any static host:');
     }
@@ -246,4 +244,220 @@ function formatBytes(bytes) {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+/**
+ * Deploy to GitHub Pages using gh-pages package
+ */
+async function deployToGitHubPages(distPath, options) {
+  try {
+    // Validate git repository setup
+    await validateGitRepository();
+    
+    // Check if gh-pages is available
+    await checkGhPagesInstalled();
+    
+    console.log('📤 Publishing to gh-pages branch...');
+    
+    // Use gh-pages to deploy
+    const ghPages = await import('gh-pages');
+    
+    const deployOptions = {
+      dotfiles: true, // Include .nojekyll
+      message: `Deploy UIKit site - ${new Date().toISOString()}`,
+      user: {
+        name: 'UIKit Deploy',
+        email: 'deploy@voilajsx.com'
+      }
+    };
+
+    // Add custom domain support if CNAME exists
+    try {
+      await fs.access('CNAME');
+      await fs.copyFile('CNAME', path.join(distPath, 'CNAME'));
+      console.log('✅ Added CNAME for custom domain');
+    } catch {
+      // No CNAME file, that's fine
+    }
+
+    await new Promise((resolve, reject) => {
+      ghPages.publish(distPath, deployOptions, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+
+    console.log('✅ Successfully deployed to GitHub Pages!');
+    console.log('\n📋 GitHub Pages Setup:');
+    console.log('  1. Go to your repository settings');
+    console.log('  2. Navigate to Pages section');  
+    console.log('  3. Set source to "Deploy from a branch"');
+    console.log('  4. Select "gh-pages" branch and "/ (root)" folder');
+    console.log('  5. Your site will be available shortly');
+    
+    // Try to determine the GitHub Pages URL
+    try {
+      const packageJson = JSON.parse(await fs.readFile('package.json', 'utf8'));
+      const repoUrl = packageJson.repository?.url;
+      if (repoUrl) {
+        const match = repoUrl.match(/github\.com[/:](.*?)\.git/);
+        if (match) {
+          const [, repoPath] = match;
+          const siteName = packageJson.name || repoPath.split('/')[1];
+          console.log(`\n🌐 Site URL: https://${repoPath.split('/')[0]}.github.io/${siteName}/`);
+        }
+      }
+    } catch {
+      // Could not determine URL
+    }
+    
+  } catch (error) {
+    console.error('❌ GitHub Pages deployment failed:', error.message);
+    console.log('\n📋 Manual deployment options:');
+    console.log('  1. Install gh-pages: npm install -g gh-pages');
+    console.log('  2. Run: gh-pages -d dist --dotfiles');
+    console.log('  3. Or upload dist/ contents manually to gh-pages branch');
+    throw error;
+  }
+}
+
+/**
+ * Check if gh-pages is installed
+ */
+async function checkGhPagesInstalled() {
+  try {
+    await import('gh-pages');
+  } catch (error) {
+    console.log('📦 Installing gh-pages for GitHub Pages deployment...');
+    
+    await new Promise((resolve, reject) => {
+      const install = spawn('npm', ['install', '-g', 'gh-pages'], {
+        stdio: 'inherit',
+        cwd: process.cwd()
+      });
+
+      install.on('close', (code) => {
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error(`gh-pages installation failed with code ${code}`));
+        }
+      });
+
+      install.on('error', (error) => {
+        reject(new Error(`gh-pages installation failed: ${error.message}`));
+      });
+    });
+  }
+}
+
+/**
+ * Validate git repository setup for GitHub Pages deployment
+ */
+async function validateGitRepository() {
+  try {
+    // Check if git is initialized
+    await fs.access('.git');
+  } catch (error) {
+    throw new Error(`Git repository not initialized. Run these commands first:
+
+📋 Setup Steps:
+  1. git init
+  2. git add .
+  3. git commit -m "Initial commit"  
+  4. Create repository on GitHub
+  5. git remote add origin https://github.com/username/repository.git
+  6. git push -u origin main
+  7. npx uikit deploy --github
+
+🔗 Need help? Visit: https://docs.github.com/en/get-started/quickstart/create-a-repo`);
+  }
+
+  // Check if remote origin exists
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const gitRemote = spawn('git', ['remote', 'get-url', 'origin'], {
+        stdio: ['ignore', 'pipe', 'pipe'],
+        cwd: process.cwd()
+      });
+
+      let stdout = '';
+      let stderr = '';
+      
+      gitRemote.stdout?.on('data', (data) => {
+        stdout += data.toString();
+      });
+      
+      gitRemote.stderr?.on('data', (data) => {
+        stderr += data.toString();
+      });
+
+      gitRemote.on('close', (code) => {
+        if (code === 0 && stdout.trim()) {
+          resolve(stdout.trim());
+        } else {
+          reject(new Error(stderr || 'No remote origin'));
+        }
+      });
+
+      gitRemote.on('error', (error) => {
+        reject(error);
+      });
+    });
+
+    // Validate it's a GitHub URL
+    if (!result.includes('github.com')) {
+      console.log('⚠️  Warning: Remote origin is not a GitHub repository');
+      console.log(`   Current origin: ${result}`);
+      console.log('   GitHub Pages deployment requires a GitHub repository');
+    } else {
+      console.log(`✅ Git repository validated: ${result}`);
+    }
+
+  } catch (error) {
+    throw new Error(`Git remote origin not configured. Run these commands:
+
+📋 Setup Steps:
+  1. Create repository on GitHub
+  2. git remote add origin https://github.com/username/repository.git
+  3. git push -u origin main
+  4. npx uikit deploy --github
+
+🔗 Current remotes: Run 'git remote -v' to see configured remotes`);
+  }
+
+  // Check if there are committed changes
+  try {
+    await new Promise((resolve, reject) => {
+      const gitLog = spawn('git', ['log', '--oneline', '-1'], {
+        stdio: ['ignore', 'pipe', 'pipe'],
+        cwd: process.cwd()
+      });
+
+      gitLog.on('close', (code) => {
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error('No commits found'));
+        }
+      });
+
+      gitLog.on('error', (error) => {
+        reject(error);
+      });
+    });
+  } catch (error) {
+    throw new Error(`No commits found in repository. Run these commands:
+
+📋 Setup Steps:
+  1. git add .
+  2. git commit -m "Initial commit"
+  3. git push -u origin main
+  4. npx uikit deploy --github
+
+💡 Tip: Ensure your project files are committed before deploying`);
+  }
 }

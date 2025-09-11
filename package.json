@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "Cross-platform React components with beautiful themes and OKLCH color science",
   "type": "module",
   "keywords": [
@@ -387,7 +387,8 @@
     "react-hook-form": "^7.58.1",
     "sonner": "^2.0.5",
     "tailwind-merge": "^2.6.0",
-    "zod": "^3.25.67"
+    "zod": "^3.25.67",
+    "gh-pages": "^6.2.0"
   },
   "devDependencies": {
     "@shadcn/ui": "^0.0.4",

@@ -87,6 +87,7 @@ npx uikit serve     # Start dev server
 npx uikit build     # Production build  
 npx uikit bundle    # Rebuild themes
 npx uikit deploy    # Static site deploy
+npx uikit deploy --github  # Deploy to GitHub Pages
 ```
 
 ## Theme System
