@@ -1,6 +1,9 @@
-@voilajsx/uikit - COMPLETE LLM Usage Guide v2.1
-🎯 QUICK START (30 SECONDS)
-STEP 1: Required Setup (COPY-PASTE EVERY PROJECT)
+# @voilajsx/uikit - COMPLETE LLM Usage Guide v2.1
+
+## 🎯 QUICK START (30 SECONDS)
+
+### STEP 1: Required Setup (COPY-PASTE EVERY PROJECT)
+```jsx
 import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
 import '@voilajsx/uikit/styles'; // ← CRITICAL: Must import this
 
@@ -11,19 +14,25 @@ function App() {
     </ThemeProvider>
   );
 }
+```
 
-STEP 2: Component Selection (FOLLOW THIS DECISION TREE)
+### STEP 2: Component Selection (FOLLOW THIS DECISION TREE)
+```
 What are you building?
 ├── Dashboard/Admin Panel → AdminLayout
 ├── Company Website → PageLayout
 ├── Login/Signup Page → AuthLayout
 ├── Error/About Page → BlankLayout
 └── Chrome Extension/Popup → PopupLayout
+```
 
+---
 
-📋 COMPONENT PATTERNS (ONLY 2 TYPES)
-🏗️ COMPOUND LAYOUTS (Use Child Components)
-AdminLayout & PageLayout ONLY
+## 📋 COMPONENT PATTERNS (ONLY 2 TYPES)
+
+### 🏗️ COMPOUND LAYOUTS (Use Child Components)
+**AdminLayout & PageLayout ONLY**
+```jsx
 // ✅ CORRECT - Use child components
 <AdminLayout scheme="sidebar" tone="subtle">
   <AdminLayout.Header title="Dashboard" position="sticky" />
@@ -37,9 +46,11 @@ AdminLayout & PageLayout ONLY
 <AdminLayout>
   <YourContent /> {/* This breaks */}
 </AdminLayout>
+```
 
-📄 SINGLE LAYOUTS (Direct Children)
-AuthLayout, BlankLayout, PopupLayout
+### 📄 SINGLE LAYOUTS (Direct Children)
+**AuthLayout, BlankLayout, PopupLayout**
+```jsx
 // ✅ CORRECT - Pass content directly
 <AuthLayout scheme="card" tone="clean">
   <LoginForm />
@@ -49,39 +60,53 @@ AuthLayout, BlankLayout, PopupLayout
 <AuthLayout>
   <AuthLayout.Content>Form</AuthLayout.Content> {/* No such thing */}
 </AuthLayout>
+```
 
+---
 
-🎨 PROPS SYSTEM (3 CORE PROPS EVERYWHERE)
-Standard Props (Same for ALL components)
+## 🎨 PROPS SYSTEM (3 CORE PROPS EVERYWHERE)
+
+### Standard Props (Same for ALL components)
+```jsx
 <AnyLayout
   scheme="specific-to-component"  // Layout structure
   tone="clean|subtle|brand|contrast"  // Visual emphasis
   size="sm|md|lg|xl|full"        // Component size
 >
+```
 
-Scheme Options by Component
+### Scheme Options by Component
+```jsx
 AdminLayout: scheme = 'sidebar|compact';
 PageLayout: scheme = 'base|sidebar';
 AuthLayout: scheme = 'simple|card|split|hero';
 BlankLayout: scheme = 'simple|card';
 PopupLayout: scheme = 'modal|drawer|floating';
+```
 
-Size Configurations (Exact Measurements)
+### Size Configurations (Exact Measurements)
+```jsx
 size = 'sm'; // Sidebars: 192px, Content: max-w-2xl, Padding: 16px
 size = 'md'; // Sidebars: 224px, Content: max-w-4xl, Padding: 20px
 size = 'lg'; // Sidebars: 256px, Content: max-w-6xl, Padding: 24px (DEFAULT)
 size = 'xl'; // Sidebars: 288px, Content: max-w-7xl, Padding: 28px
 size = 'full'; // Sidebars: 320px, Content: max-w-full, Padding: 32px
+```
 
-Tone Visual Guide
+### Tone Visual Guide
+```jsx
 tone = 'clean'; // Pure white/light backgrounds (websites, auth)
 tone = 'subtle'; // Light gray backgrounds (admin panels, professional)
 tone = 'brand'; // Primary colored backgrounds (headers, CTAs, emphasis)
 tone = 'contrast'; // Dark/bold backgrounds (footers, high contrast areas)
+```
 
+---
 
-🧩 ALL UI COMPONENTS (38 TOTAL)
-Form & Input Components
+## 🧩 ALL UI COMPONENTS (38 TOTAL)
+
+### Form & Input Components
+```jsx
 import { Button } from '@voilajsx/uikit/button';
 import { Input } from '@voilajsx/uikit/input';
 import { Textarea } from '@voilajsx/uikit/textarea';
@@ -160,8 +185,10 @@ import {
     onCancel={() => router.back()}
   />
 </div>;
+```
 
-Display & Layout Components
+### Display & Layout Components
+```jsx
 import {
   Card,
   CardHeader,
@@ -201,8 +228,10 @@ import {
   </CardHeader>
   <CardContent className="text-muted-foreground">Content here</CardContent>
 </Card>;
+```
 
-Navigation & Menu Components
+### Navigation & Menu Components
+```jsx
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -244,8 +273,10 @@ import { Toggle } from '@voilajsx/uikit/toggle';
     <DropdownMenuItem className="text-foreground">Item 1</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>;
+```
 
-Overlay & Modal Components
+### Overlay & Modal Components
+```jsx
 import {
   Dialog,
   DialogTrigger,
@@ -289,8 +320,10 @@ import {
     <p className="text-muted-foreground">Dialog content</p>
   </DialogContent>
 </Dialog>;
+```
 
-Data & Table Components
+### Data & Table Components
+```jsx
 import {
   Table,
   TableHeader,
@@ -370,8 +403,10 @@ import { Toaster } from '@voilajsx/uikit/sonner';
     },
   ]}
 />;
+```
 
-NEW: Motion & Animation Components
+### NEW: Motion & Animation Components
+```jsx
 import {
   Motion,
   LoadingSpinner,
@@ -408,10 +443,14 @@ import {
 
 // Loading spinner
 <LoadingSpinner size="md" />
+```
 
+---
 
-🧭 NAVIGATION SYSTEM (COMPLETE GUIDE)
-Basic Navigation Structure
+## 🧭 NAVIGATION SYSTEM (COMPLETE GUIDE)
+
+### Basic Navigation Structure
+```jsx
 const navigation = [
   {
     key: 'unique-id', // REQUIRED: Unique identifier
@@ -424,8 +463,10 @@ const navigation = [
     className: 'custom-css', // Additional styling (optional)
   },
 ];
+```
 
-Advanced Navigation with Submenus
+### Advanced Navigation with Submenus
+```jsx
 const navigation = [
   {
     key: 'dashboard',
@@ -455,8 +496,10 @@ const navigation = [
     ],
   },
 ];
+```
 
-Navigation Handler Function
+### Navigation Handler Function
+```jsx
 const handleNavigation = (href, item) => {
   if (item.onClick) {
     item.onClick(); // Execute custom function
@@ -467,10 +510,14 @@ const handleNavigation = (href, item) => {
     // router.push(href); // Next.js
   }
 };
+```
 
+---
 
-📍 BREADCRUMBS SYSTEM
-AdminLayout.Header Breadcrumbs
+## 📍 BREADCRUMBS SYSTEM
+
+### AdminLayout.Header Breadcrumbs
+```jsx
 <AdminLayout.Header
   title="User Management"
   position="sticky"
@@ -481,8 +528,10 @@ AdminLayout.Header Breadcrumbs
   ]}
   actions={<Button>Edit User</Button>}
 />
+```
 
-PageLayout.Content Breadcrumbs
+### PageLayout.Content Breadcrumbs
+```jsx
 <PageLayout.Content
   title="User Profile"
   breadcrumbs={[
@@ -494,8 +543,10 @@ PageLayout.Content Breadcrumbs
 >
   <UserProfileContent />
 </PageLayout.Content>
+```
 
-Breadcrumb Structure
+### Breadcrumb Structure
+```jsx
 const breadcrumbs = [
   {
     label: 'Home', // REQUIRED: Display text
@@ -509,10 +560,14 @@ const breadcrumbs = [
     label: 'iPhone 15', // Current page - no href
   },
 ];
+```
 
+---
 
-🎨 COLOR SYSTEM (COMPLETE REFERENCE)
-✅ Semantic Color Classes (ALWAYS USE)
+## 🎨 COLOR SYSTEM (COMPLETE REFERENCE)
+
+### ✅ Semantic Color Classes (ALWAYS USE)
+```jsx
 // Background Colors
 className = 'bg-background'; // Main page background
 className = 'bg-card'; // Card/panel backgrounds
@@ -534,28 +589,33 @@ className = 'text-destructive'; // Error text
 className = 'border-border'; // Standard borders
 className = 'border-input'; // Input field borders
 className = 'border-primary'; // Primary colored borders
+```
 
-Semantic Colors and Themes
-Semantic color classes (e.g., bg-primary, text-foreground) adapt to the selected theme:
+### Semantic Colors and Themes
+Semantic color classes (e.g., `bg-primary`, `text-foreground`) adapt to the selected theme:
+- `base`: Metallic black gradients for `bg-primary`
+- `vivid`: Luxurious purple with slight orange for `bg-primary`
+- `metro`: Nice green gradients for `bg-primary`
+- `elegant`: Professional blue gradients for `bg-primary`
+- `studio`: Black with orange accents for `bg-primary`
 
-base: Metallic black gradients for bg-primary
-vivid: Luxurious purple with slight orange for bg-primary
-metro: Nice green gradients for bg-primary
-elegant: Professional blue gradients for bg-primary
-studio: Black with orange accents for bg-primary
-
-❌ Hardcoded Colors (NEVER USE)
+### ❌ Hardcoded Colors (NEVER USE)
+```jsx
 // These break in dark mode and don't match themes
 className = 'bg-white text-black';
 className = 'bg-blue-500 text-white';
 className = 'border-gray-200';
 className = 'bg-red-500';
 className = 'text-green-600';
+```
 
+---
 
-🎯 ENHANCED THEME SYSTEM (ZERO-TOUCH MAGIC)
-🪄 Automatic Enhancement Features
-The power of @voilajsx/uikit is that standard shadcn components automatically become beautiful without changing your code:
+## 🎯 ENHANCED THEME SYSTEM (ZERO-TOUCH MAGIC)
+
+### 🪄 Automatic Enhancement Features
+The power of `@voilajsx/uikit` is that standard shadcn components automatically become beautiful without changing your code:
+```jsx
 // ✨ This standard code:
 <Button className="bg-primary text-primary-foreground">Click Me</Button>
 
@@ -565,25 +625,26 @@ The power of @voilajsx/uikit is that standard shadcn components automatically be
 // metro: Nice green gradient, clean typography, sharp edges
 // elegant: Professional blue gradient, luxury spacing, elegant shadows
 // studio: Black and orange gradient, artistic fonts, bold styling
+```
 
 What happens automatically:
+- **Gradients**: `bg-primary` becomes theme-specific gradients
+- **Typography**: Custom fonts per theme (e.g., Inter, System UI)
+- **Spacing**: Theme-specific padding and margins
+- **Shadows**: Theme-appropriate shadow effects
+- **Borders**: Theme-adjusted rounded corners
 
-Gradients: bg-primary becomes theme-specific gradients
-Typography: Custom fonts per theme (e.g., Inter, System UI)
-Spacing: Theme-specific padding and margins
-Shadows: Theme-appropriate shadow effects
-Borders: Theme-adjusted rounded corners
+### Theme Migration Note
+Previous versions of `@voilajsx/uikit` used themes named `aurora`, `default`, `ruby`, and `neon`. These have been replaced:
+- `aurora` → `vivid` (luxurious purple with slight orange)
+- `default` → `base` (metallic black)
+- `ruby` → `elegant` (professional blue)
+- `neon` → `studio` (black and orange)
+- `metro` remains `metro` (nice green)
+Update your code to use the new theme names to ensure compatibility.
 
-Theme Migration Note
-Previous versions of @voilajsx/uikit used themes named aurora, default, ruby, and neon. These have been replaced:
-
-aurora → vivid (luxurious purple with slight orange)
-default → base (metallic black)
-ruby → elegant (professional blue)
-neon → studio (black and orange)
-metro remains metro (nice green)Update your code to use the new theme names to ensure compatibility.
-
-Level 1: Global Theme (Set Once in ThemeProvider)
+### Level 1: Global Theme (Set Once in ThemeProvider)
+```jsx
 <ThemeProvider theme="base" mode="dark">
   {/* Affects ALL components globally with enhanced design tokens */}
 </ThemeProvider>
@@ -598,8 +659,10 @@ theme = 'studio';  // Black and orange with artistic fonts
 // Available Modes:
 mode = 'light'; // Light color scheme
 mode = 'dark';  // Dark color scheme with enhanced contrast
+```
 
-🎨 Theme Switching (Dynamic Changes)
+### 🎨 Theme Switching (Dynamic Changes)
+```jsx
 import { useTheme } from '@voilajsx/uikit';
 
 function ThemeControls() {
@@ -619,9 +682,11 @@ function ThemeControls() {
     </div>
   );
 }
+```
 
-🚀 Theme Bundler CLI (For Custom Themes)
+### 🚀 Theme Bundler CLI (For Custom Themes)
 Generate optimized CSS for custom themes:
+```bash
 # Bundle themes from your project directory
 npx voila-bundle
 
@@ -630,15 +695,17 @@ npx voila-bundle --watch
 
 # Custom output location
 npx voila-bundle --output=src/styles/themes.css
+```
 
 Supported directories for custom themes:
+- `src/themes/presets/`
+- `src/web/assets/themes/presets/`
+- `themes/presets/`
 
-src/themes/presets/
-src/web/assets/themes/presets/
-themes/presets/
+The default presets include `base`, `vivid`, `metro`, `elegant`, and `studio`.
 
-The default presets include base, vivid, metro, elegant, and studio.
-Level 2: Component Tone (Per Component)
+### Level 2: Component Tone (Per Component)
+```jsx
 <AdminLayout tone="subtle">      // Professional gray backgrounds
 <Header tone="brand">            // Primary colored backgrounds
 <Footer tone="contrast">         // High contrast/dark backgrounds
@@ -649,10 +716,14 @@ tone="clean"     // Pure, minimal, white/light backgrounds
 tone="subtle"    // Muted, professional, gray backgrounds
 tone="brand"     // Primary colored, branded elements
 tone="contrast"  // High emphasis, dark/bold backgrounds
+```
 
+---
 
-🚀 COMPLETE USAGE EXAMPLES
-1. Enhanced Login Form (NEW Form Components)
+## 🚀 COMPLETE USAGE EXAMPLES
+
+### 1. Enhanced Login Form (NEW Form Components)
+```jsx
 import { AuthLayout } from '@voilajsx/uikit/auth';
 import {
   ValidatedInput,
@@ -739,8 +810,10 @@ function EnhancedLoginPage() {
     </ThemeProvider>
   );
 }
+```
 
-2. Interactive Dashboard with Motion (NEW Motion Components)
+### 2. Interactive Dashboard with Motion (NEW Motion Components)
+```jsx
 import { AdminLayout } from '@voilajsx/uikit/admin';
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 import { Button } from '@voilajsx/uikit/button';
@@ -887,8 +960,10 @@ function AnimatedDashboard() {
     </ThemeProvider>
   );
 }
+```
 
-3. Advanced Data Table with Full Features (NEW DataTable)
+### 3. Advanced Data Table with Full Features (NEW DataTable)
+```jsx
 import { PageLayout } from '@voilajsx/uikit/page';
 import { DataTable } from '@voilajsx/uikit/data-table';
 import { Badge } from '@voilajsx/uikit/badge';
@@ -1091,10 +1166,14 @@ function UserManagementPage() {
     </ThemeProvider>
   );
 }
+```
 
+---
 
-🔧 NEW COMPONENTS INTEGRATION PATTERNS
-Form Component Integration
+## 🔧 NEW COMPONENTS INTEGRATION PATTERNS
+
+### Form Component Integration
+```jsx
 // ✅ RECOMMENDED: Use ValidatedInput for forms with validation needs
 const [formData, setFormData] = useState({ email: '', password: '' });
 
@@ -1125,8 +1204,10 @@ const form = useForm();
     )}
   />
 </Form>;
+```
 
-Motion Component Integration
+### Motion Component Integration
+```jsx
 // ✅ Page transitions
 <Motion preset="fadeIn" duration="normal">
   <PageContent />
@@ -1146,8 +1227,10 @@ Motion Component Integration
 
 // ✅ Loading states
 {loading && <LoadingSpinner size="lg" />}
+```
 
-DataTable Integration
+### DataTable Integration
+```jsx
 // ✅ Basic usage with minimal props
 <DataTable
   data={users}
@@ -1170,10 +1253,14 @@ DataTable Integration
   exportable
   onExport={handleExport}
 />
+```
 
+---
 
-🏗️ SECTION COMPONENTS (Advanced Usage)
-Header Component (Standalone)
+## 🏗️ SECTION COMPONENTS (Advanced Usage)
+
+### Header Component (Standalone)
+```jsx
 import { Header, HeaderLogo, HeaderNav } from '@voilajsx/uikit/header';
 
 <Header tone="clean" size="xl" position="sticky">
@@ -1186,8 +1273,10 @@ import { Header, HeaderLogo, HeaderNav } from '@voilajsx/uikit/header';
     onNavigate={handleNavigation}
   />
 </Header>;
+```
 
-Footer Component (Standalone)
+### Footer Component (Standalone)
+```jsx
 import { Footer } from '@voilajsx/uikit/footer';
 
 <Footer tone="contrast" size="xl" position="relative">
@@ -1195,8 +1284,10 @@ import { Footer } from '@voilajsx/uikit/footer';
     <p className="text-sm text-muted-foreground">© 2025 Company</p>
   </div>
 </Footer>;
+```
 
-Container Component (Content with Sidebar)
+### Container Component (Content with Sidebar)
+```jsx
 import { Container } from '@voilajsx/uikit/container';
 
 <Container
@@ -1209,10 +1300,14 @@ import { Container } from '@voilajsx/uikit/container';
 >
   <MainContent />
 </Container>;
+```
 
+---
 
-📐 COMPOUND COMPONENT PROPS (DETAILED)
-AdminLayout Props
+## 📐 COMPOUND COMPONENT PROPS (DETAILED)
+
+### AdminLayout Props
+```jsx
 // AdminLayout Root
 <AdminLayout
   scheme="sidebar|compact"              // Layout structure (base: 'sidebar')
@@ -1247,8 +1342,10 @@ AdminLayout Props
 <AdminLayout.Content>
   {/* Your admin content here */}
 </AdminLayout.Content>
+```
 
-PageLayout Props
+### PageLayout Props
+```jsx
 // PageLayout Root
 <PageLayout
   scheme="base|sidebar"                // Layout structure (base: 'base')
@@ -1291,10 +1388,14 @@ PageLayout Props
 >
   {/* Custom footer content (optional) */}
 </PageLayout.Footer>
+```
 
+---
 
-🔧 INTEGRATION EXAMPLES
-React Router Integration
+## 🔧 INTEGRATION EXAMPLES
+
+### React Router Integration
+```jsx
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function App() {
@@ -1319,8 +1420,10 @@ function App() {
     </AdminLayout>
   );
 }
+```
 
-Next.js Integration
+### Next.js Integration
+```jsx
 import { useRouter } from 'next/router';
 
 function App() {
@@ -1344,8 +1447,10 @@ function App() {
     </PageLayout>
   );
 }
+```
 
-State Management Integration
+### State Management Integration
+```jsx
 import { useStore } from '@/store';
 
 function Dashboard() {
@@ -1374,10 +1479,14 @@ function Dashboard() {
     </AdminLayout>
   );
 }
+```
 
+---
 
-🆕 NEW COMPONENTS DEEP DIVE
-ValidatedInput Advanced Features
+## 🆕 NEW COMPONENTS DEEP DIVE
+
+### ValidatedInput Advanced Features
+```jsx
 // Email validation with custom pattern
 <ValidatedInput
   type="email"
@@ -1412,8 +1521,10 @@ ValidatedInput Advanced Features
   value={phone}
   onChange={setPhone}
 />
+```
 
-DataTable Advanced Configuration
+### DataTable Advanced Configuration
+```jsx
 // The `virtualized` prop enables virtualization for large datasets, improving performance by rendering only visible rows. Requires a fixed `height` prop.
 const advancedColumns = [
   {
@@ -1543,8 +1654,10 @@ const advancedColumns = [
   exportFormats={['csv', 'json', 'excel']}
   onExport={(format, data) => handleExport(format, data)}
 />;
+```
 
-Motion Component Advanced Patterns
+### Motion Component Advanced Patterns
+```jsx
 // Page transition animations
 function PageTransition({ children, pathname }) {
   return (
@@ -1631,11 +1744,16 @@ function SubmitButton({ loading, onSubmit }) {
     </Hover>
   );
 }
+```
 
+---
 
-✅❌ DOS AND DON'TS (UPDATED FOR NEW COMPONENTS)
-🎯 NEW COMPONENT USAGE
-✅ DO - Enhanced Form Components
+## ✅❌ DOS AND DON'TS (UPDATED FOR NEW COMPONENTS)
+
+### 🎯 **NEW COMPONENT USAGE**
+
+#### ✅ DO - Enhanced Form Components
+```jsx
 <ValidatedInput
   type="email"
   required
@@ -1651,8 +1769,10 @@ function SubmitButton({ loading, onSubmit }) {
   loading={isSubmitting}
   onCancel={() => router.back()}
 />
+```
 
-❌ DON'T - Wrong Form Patterns
+#### ❌ DON'T - Wrong Form Patterns
+```jsx
 // Don't use basic Input for validated forms
 <Input type="email" required /> // No validation feedback
 
@@ -1660,8 +1780,10 @@ function SubmitButton({ loading, onSubmit }) {
 <div className="flex gap-2">
   <button type="submit">Submit</button>
 </div> // Use FormActions instead
+```
 
-✅ DO - Motion Components
+#### ✅ DO - Motion Components
+```jsx
 <Motion preset="fadeIn" duration="normal">
   <Content />
 </Motion>
@@ -1673,13 +1795,17 @@ function SubmitButton({ loading, onSubmit }) {
 <Hover effect="scale">
   <Card />
 </Hover>
+```
 
-❌ DON'T - Complex Animation Libraries
+#### ❌ DON'T - Complex Animation Libraries
+```jsx
 import { motion } from 'framer-motion' // Use Motion instead
 import anime from 'animejs' // Use Motion instead
 className="animate-bounce" // Use Motion presets
+```
 
-✅ DO - DataTable Configuration
+#### ✅ DO - DataTable Configuration
+```jsx
 <DataTable
   data={users}
   columns={columns}
@@ -1700,8 +1826,10 @@ const columns = [
     filterType: 'text',
   },
 ];
+```
 
-❌ DON'T - Basic Table for Complex Data
+#### ❌ DON'T - Basic Table for Complex Data
+```jsx
 <Table>
   <TableRow>
     <TableCell>{user.name}</TableCell>
@@ -1709,9 +1837,12 @@ const columns = [
 </Table> // Missing search, filter, pagination
 
 <input placeholder="Search..." /> // Use DataTable's built-in search
+```
 
-🔄 COMPONENT SELECTION UPDATED
-✅ DO - Choose Right Component for Task
+### 🔄 **COMPONENT SELECTION UPDATED**
+
+#### ✅ DO - Choose Right Component for Task
+```jsx
 // Forms with validation → ValidatedInput
 <ValidatedInput type="email" required label="Email" />
 
@@ -1733,92 +1864,90 @@ const columns = [
 
 // Interactive elements → Hover
 <Hover effect="scale"><Button /></Hover>
+```
 
-❌ DON'T - Wrong Component Choice
+#### ❌ DON'T - Wrong Component Choice
+```jsx
 <Input required /> // Use ValidatedInput for forms
 <Table> + custom search/filter // Use DataTable for complex data
 <div className="animate-pulse"> // Use LoadingSpinner
 // Complex CSS animations // Use Motion components
+```
 
+---
 
-🚨 CRITICAL REMINDERS (UPDATED)
-🎯 Core Rules (Never Break These)
+## 🚨 CRITICAL REMINDERS (UPDATED)
 
-✅ ALWAYS import styles: import '@voilajsx/uikit/styles'
-✅ ALWAYS wrap in ThemeProvider: <ThemeProvider theme="base">
-✅ ALWAYS use semantic colors: bg-background text-foreground
-✅ ALWAYS use individual imports: import { Button } from '@voilajsx/uikit/button' (avoid barrel imports for tree-shaking)
-✅ NEVER use hardcoded colors: bg-white text-black
-✅ COMPOUND layouts need child components: <AdminLayout><AdminLayout.Header/></AdminLayout>
-✅ SINGLE layouts take direct children: <AuthLayout><LoginForm/></AuthLayout>
-✅ FORMS use ValidatedInput for validation: <ValidatedInput required />
-✅ ANIMATIONS use Motion components: <Motion preset="fadeIn" />
-✅ TABLES use DataTable for complex data: <DataTable searchable filterable />
+### 🎯 **Core Rules** (Never Break These)
+1. **✅ ALWAYS** import styles: `import '@voilajsx/uikit/styles'`
+2. **✅ ALWAYS** wrap in ThemeProvider: `<ThemeProvider theme="base">`
+3. **✅ ALWAYS** use semantic colors: `bg-background text-foreground`
+4. **✅ ALWAYS** use individual imports: `import { Button } from '@voilajsx/uikit/button'` (avoid barrel imports for tree-shaking)
+5. **✅ NEVER** use hardcoded colors: `bg-white text-black`
+6. **✅ COMPOUND** layouts need child components: `<AdminLayout><AdminLayout.Header/></AdminLayout>`
+7. **✅ SINGLE** layouts take direct children: `<AuthLayout><LoginForm/></AuthLayout>`
+8. **✅ FORMS** use ValidatedInput for validation: `<ValidatedInput required />`
+9. **✅ ANIMATIONS** use Motion components: `<Motion preset="fadeIn" />`
+10. **✅ TABLES** use DataTable for complex data: `<DataTable searchable filterable />`
 
-🔍 Quality Checklist (Every Component)
+### 🔍 **Quality Checklist** (Every Component)
+- [ ] File header with description and @module/@file
+- [ ] Correct component pattern (compound vs single)
+- [ ] Semantic colors only (no hardcoded colors)
+- [ ] Standard navigation structure (key + label)
+- [ ] Appropriate scheme/tone/size props
+- [ ] Individual imports (not barrel imports)
+- [ ] ValidatedInput for form validation
+- [ ] Motion components for animations
+- [ ] DataTable for complex data operations
 
- File header with description and @module/@file
- Correct component pattern (compound vs single)
- Semantic colors only (no hardcoded colors)
- Standard navigation structure (key + label)
- Appropriate scheme/tone/size props
- Individual imports (not barrel imports)
- ValidatedInput for form validation
- Motion components for animations
- DataTable for complex data operations
+### ⚡ **Success Factors** (High Quality Code)
+- **Consistency**: Uniform patterns across files
+- **Documentation**: Clear headers and comments
+- **Semantic Colors**: Theme-compatible styling
+- **Type Safety**: Proper TypeScript usage
+- **Performance**: Optimized imports for tree-shaking
+- **Validation**: Built-in form validation
+- **Animation**: Smooth, performant CSS animations
+- **Data Management**: Professional table features
 
-⚡ Success Factors (High Quality Code)
+---
 
-Consistency: Uniform patterns across files
-Documentation: Clear headers and comments
-Semantic Colors: Theme-compatible styling
-Type Safety: Proper TypeScript usage
-Performance: Optimized imports for tree-shaking
-Validation: Built-in form validation
-Animation: Smooth, performant CSS animations
-Data Management: Professional table features
+## ✅ SUCCESS CHECKLIST (UPDATED)
 
+### Required Setup
+- [ ] `import '@voilajsx/uikit/styles'` in root file
+- [ ] Wrap app in `<ThemeProvider theme="base" mode="light">`
+- [ ] Choose correct layout: AdminLayout/PageLayout/AuthLayout/BlankLayout/PopupLayout
 
-✅ SUCCESS CHECKLIST (UPDATED)
-Required Setup
+### Component Patterns
+- [ ] Use compound pattern for AdminLayout & PageLayout (with .Header, .Content, etc.)
+- [ ] Use single pattern for AuthLayout, BlankLayout & PopupLayout (direct children)
+- [ ] Set appropriate scheme, tone, size props on all layouts
 
- import '@voilajsx/uikit/styles' in root file
- Wrap app in <ThemeProvider theme="base" mode="light">
- Choose correct layout: AdminLayout/PageLayout/AuthLayout/BlankLayout/PopupLayout
+### NEW: Enhanced Components
+- [ ] Use ValidatedInput for forms requiring validation
+- [ ] Use Motion/Reveal/Hover for animations
+- [ ] Use DataTable for complex data operations
+- [ ] Use LoadingSpinner for loading states
+- [ ] Use FormActions for consistent form buttons
 
-Component Patterns
+### Styling
+- [ ] Use ONLY semantic colors (bg-background, text-foreground, border-border)
+- [ ] NEVER use hardcoded colors (bg-white, text-black, border-gray-200)
+- [ ] Apply semantic classes to all UI components
 
- Use compound pattern for AdminLayout & PageLayout (with .Header, .Content, etc.)
- Use single pattern for AuthLayout, BlankLayout & PopupLayout (direct children)
- Set appropriate scheme, tone, size props on all layouts
+### Navigation & Data
+- [ ] Structure navigation with required key + label properties
+- [ ] Configure DataTable columns with proper types and features
+- [ ] Implement onNavigate handler for routing integration
+- [ ] Use appropriate animation presets for user experience
 
-NEW: Enhanced Components
-
- Use ValidatedInput for forms requiring validation
- Use Motion/Reveal/Hover for animations
- Use DataTable for complex data operations
- Use LoadingSpinner for loading states
- Use FormActions for consistent form buttons
-
-Styling
-
- Use ONLY semantic colors (bg-background, text-foreground, border-border)
- NEVER use hardcoded colors (bg-white, text-black, border-gray-200)
- Apply semantic classes to all UI components
-
-Navigation & Data
-
- Structure navigation with required key + label properties
- Configure DataTable columns with proper types and features
- Implement onNavigate handler for routing integration
- Use appropriate animation presets for user experience
-
-Integration & Testing
-
- Connect to your routing system (React Router, Next.js, etc.)
- Test form validation with ValidatedInput components
- Test DataTable sorting, filtering, and pagination
- Test animations and loading states
- Verify responsive behavior on mobile/desktop
+### Integration & Testing
+- [ ] Connect to your routing system (React Router, Next.js, etc.)
+- [ ] Test form validation with ValidatedInput components
+- [ ] Test DataTable sorting, filtering, and pagination
+- [ ] Test animations and loading states
+- [ ] Verify responsive behavior on mobile/desktop
 
 Following this complete guide ensures 100% successful UIKit implementation with all new enhanced components.
