@@ -544,20 +544,79 @@ Built with **@voilajsx/uikit** ✨
  * Generate config files (Vite, TypeScript, etc.)
  */
 async function generateConfigFiles(projectPath) {
-  const templatesPath = path.join(path.dirname(__dirname), 'templates');
+  const templatesPath = path.join(__dirname, '../templates');
   
-  // Copy Vite config
-  const viteConfig = await fs.readFile(path.join(templatesPath, 'vite.config.ts'), 'utf8');
-  await fs.writeFile(path.join(projectPath, 'vite.config.ts'), viteConfig);
+  try {
+    // Copy Vite config
+    const viteConfig = await fs.readFile(path.join(templatesPath, 'vite.config.ts'), 'utf8');
+    await fs.writeFile(path.join(projectPath, 'vite.config.ts'), viteConfig);
+    
+    // Copy TypeScript configs
+    const tsConfig = await fs.readFile(path.join(templatesPath, 'tsconfig.json'), 'utf8');
+    await fs.writeFile(path.join(projectPath, 'tsconfig.json'), tsConfig);
+    
+    const tsNodeConfig = await fs.readFile(path.join(templatesPath, 'tsconfig.node.json'), 'utf8');
+    await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), tsNodeConfig);
+  } catch (error) {
+    console.warn('⚠️ Warning: Could not copy some config files:', error.message);
+    
+    // Generate minimal configs directly
+    const minimalViteConfig = `import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
+})`;
+
+    const minimalTsConfig = `{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}`;
+
+    const minimalTsNodeConfig = `{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["vite.config.ts"]
+}`;
+
+    await fs.writeFile(path.join(projectPath, 'vite.config.ts'), minimalViteConfig);
+    await fs.writeFile(path.join(projectPath, 'tsconfig.json'), minimalTsConfig);
+    await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), minimalTsNodeConfig);
+  }
   
-  // Copy TypeScript configs
-  const tsConfig = await fs.readFile(path.join(templatesPath, 'tsconfig.json'), 'utf8');
-  await fs.writeFile(path.join(projectPath, 'tsconfig.json'), tsConfig);
-  
-  const tsNodeConfig = await fs.readFile(path.join(templatesPath, 'tsconfig.node.json'), 'utf8');
-  await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), tsNodeConfig);
-  
-  // Generate .gitignore
+  // Always generate .gitignore (moved outside try/catch to ensure it runs)
+  console.log('🔧 Generating .gitignore...');
   const gitignoreContent = `# Logs
 logs
 *.log
