@@ -509,8 +509,8 @@ async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
  */
 async function generatePackageJson(projectPath, name, templateType) {
   const baseDependencies = {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "@voilajsx/uikit": "latest",
     "lucide-react": "latest"
   };
@@ -521,8 +521,8 @@ async function generatePackageJson(projectPath, name, templateType) {
   }
 
   const baseDevDependencies = {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.2.2",
     "vite": "^6.3.6"

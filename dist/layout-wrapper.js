@@ -1,12 +1,12 @@
 import { jsx as _, Fragment as E, jsxs as r } from "react/jsx-runtime";
 import { ThemeProvider as m } from "./theme-provider.js";
-import { AdminLayout as s } from "./admin.js";
-import { PageLayout as u } from "./page.js";
+import { AdminLayout as u } from "./admin.js";
+import { PageLayout as s } from "./page.js";
 import { AuthLayout as p } from "./auth.js";
 import { BlankLayout as O } from "./blank.js";
 import { PopupLayout as A } from "./popup.js";
-const d = {};
-function y(e, o = []) {
+const y = {};
+function d(e, o = []) {
   if (!e) return o;
   try {
     return JSON.parse(e);
@@ -15,7 +15,7 @@ function y(e, o = []) {
   }
 }
 function L() {
-  const e = d;
+  const e = y;
   return {
     // Theme system
     theme: e.VITE__LAYOUT__THEME || "base",
@@ -25,7 +25,7 @@ function L() {
     layout: e.VITE__LAYOUT__TYPE || "admin",
     title: e.VITE__LAYOUT__TITLE || e.VITE__APP__NAME || "Platform",
     logo: e.VITE__LAYOUT__LOGO,
-    navigation: y(e.VITE__LAYOUT__NAVIGATION, []),
+    navigation: d(e.VITE__LAYOUT__NAVIGATION, []),
     // Admin layout
     adminLayout: {
       scheme: e.VITE__LAYOUT__ADMIN__SCHEME || "sidebar",
@@ -87,7 +87,7 @@ function I(e, o, i, t) {
   switch (o) {
     case "admin":
       return /* @__PURE__ */ r(
-        s,
+        u,
         {
           scheme: t.adminLayout.scheme,
           tone: t.adminLayout.tone,
@@ -96,13 +96,13 @@ function I(e, o, i, t) {
           position: t.adminLayout.position,
           children: [
             /* @__PURE__ */ _(
-              s.Header,
+              u.Header,
               {
                 title: t.title
               }
             ),
             /* @__PURE__ */ _(
-              s.Sidebar,
+              u.Sidebar,
               {
                 navigation: i,
                 currentPath: a,
@@ -110,20 +110,20 @@ function I(e, o, i, t) {
                 logo: n
               }
             ),
-            /* @__PURE__ */ _(s.Content, { children: e })
+            /* @__PURE__ */ _(u.Content, { children: e })
           ]
         }
       );
     case "page":
       return /* @__PURE__ */ r(
-        u,
+        s,
         {
           scheme: t.pageLayout.scheme,
           tone: t.pageLayout.tone,
           size: t.pageLayout.size,
           children: [
             /* @__PURE__ */ _(
-              u.Header,
+              s.Header,
               {
                 navigation: i,
                 currentPath: a,
@@ -133,9 +133,9 @@ function I(e, o, i, t) {
                 position: t.pageLayout.position
               }
             ),
-            /* @__PURE__ */ _(u.Content, { children: e }),
+            /* @__PURE__ */ _(s.Content, { children: e }),
             /* @__PURE__ */ _(
-              u.Footer,
+              s.Footer,
               {
                 copyright: `© ${(/* @__PURE__ */ new Date()).getFullYear()} ${t.title}. All rights reserved.`
               }

@@ -363,9 +363,4 @@ const AuthLayoutComponent = forwardRef<HTMLDivElement, AuthLayoutProps>(({
 
 AuthLayoutComponent.displayName = 'AuthLayout';
 
-/**
- * AuthLayout with standardized props - READY TO SHIP
- */
-const AuthLayout = AuthLayoutComponent;
-
-export { AuthLayout };
+export { AuthLayoutComponent as AuthLayout };

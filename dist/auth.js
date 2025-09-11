@@ -1,5 +1,5 @@
-import { jsx as e, jsxs as a, Fragment as k } from "react/jsx-runtime";
-import { forwardRef as C } from "react";
+import { jsx as e, jsxs as a, Fragment as j } from "react/jsx-runtime";
+import { forwardRef as k } from "react";
 import { c as b } from "./index-Bke1qZdk.js";
 import { c as d } from "./utils-CwJPJKOE.js";
 const x = b(
@@ -47,7 +47,7 @@ const x = b(
       scheme: "card"
     }
   }
-), N = C(({
+), C = k(({
   scheme: l = "card",
   tone: t = "clean",
   size: n = "md",
@@ -60,14 +60,14 @@ const x = b(
   // Split scheme props
   splitContent: u,
   // Hero scheme props
-  imageUrl: y,
-  imageAlt: w = "Authentication background",
+  imageUrl: N,
+  imageAlt: y = "Authentication background",
   imageOverlay: f = "dark",
   // Card scheme props
   cardContent: p,
   children: v
 }, o) => {
-  const I = y || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjA3MCIgaGVpZ2h0PSIxMzgwIiB2aWV3Qm94PSIwIDAgMjA3MCAxMzgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMjA3MCIgaGVpZ2h0PSIxMzgwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGC5bmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjM2Y4MWJhIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkNmM5YyIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=", j = {
+  const w = N || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjA3MCIgaGVpZ2h0PSIxMzgwIiB2aWV3Qm94PSIwIDAgMjA3MCAxMzgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMjA3MCIgaGVpZ2h0PSIxMzgwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGC5bmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjM2Y4MWJhIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJkNmM5YyIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=", I = {
     light: "bg-gradient-to-br from-white/50 via-white/25 to-white/50",
     dark: "bg-gradient-to-br from-black/40 via-black/25 to-black/40",
     none: ""
@@ -112,7 +112,7 @@ const x = b(
     /* @__PURE__ */ e("div", { className: "hidden lg:flex lg:w-1/2 relative overflow-hidden", children: u ? (
       // Custom split content
       /* @__PURE__ */ e("div", { className: "relative z-10 flex flex-col justify-center p-8 lg:p-12 w-full", children: u })
-    ) : /* @__PURE__ */ a(k, { children: [
+    ) : /* @__PURE__ */ a(j, { children: [
       /* @__PURE__ */ e("div", { className: "absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" }),
       /* @__PURE__ */ e("div", { className: "absolute inset-0 opacity-10", children: /* @__PURE__ */ e(
         "div",
@@ -139,12 +139,12 @@ const x = b(
       {
         className: "absolute inset-0 bg-cover bg-center bg-no-repeat",
         style: {
-          backgroundImage: `url('${I}')`
+          backgroundImage: `url('${w}')`
         },
         role: "img",
-        "aria-label": w,
+        "aria-label": y,
         children: [
-          f !== "none" && /* @__PURE__ */ e("div", { className: d("absolute inset-0", j[f]) }),
+          f !== "none" && /* @__PURE__ */ e("div", { className: d("absolute inset-0", I[f]) }),
           /* @__PURE__ */ e("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" })
         ]
       }
@@ -170,9 +170,8 @@ const x = b(
     l
   ] }) }) }) });
 });
-N.displayName = "AuthLayout";
-const Z = N;
+C.displayName = "AuthLayout";
 export {
-  Z as AuthLayout
+  C as AuthLayout
 };
 //# sourceMappingURL=auth.js.map
