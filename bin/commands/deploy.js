@@ -254,13 +254,24 @@ async function deployToGitHubPages(distPath, options) {
     // Validate git repository setup
     await validateGitRepository();
     
-    // Check if gh-pages is available
-    await checkGhPagesInstalled();
+    // gh-pages is now bundled with UIKit
     
     console.log('📤 Publishing to gh-pages branch...');
     
     // Use gh-pages to deploy
-    const ghPages = await import('gh-pages');
+    let ghPages;
+    try {
+      ghPages = await import('gh-pages');
+    } catch (error) {
+      throw new Error(`gh-pages module not available. This can happen when:
+
+📋 Solutions:
+  1. Use local UIKit: npx uikit deploy --github (recommended)
+  2. Install locally: npm install gh-pages
+  3. Install globally: npm install -g gh-pages
+
+💡 Note: Running 'npx uikit' ensures gh-pages is available from UIKit dependencies.`);
+    }
     
     const deployOptions = {
       dotfiles: true, // Include .nojekyll
@@ -317,40 +328,9 @@ async function deployToGitHubPages(distPath, options) {
   } catch (error) {
     console.error('❌ GitHub Pages deployment failed:', error.message);
     console.log('\n📋 Manual deployment options:');
-    console.log('  1. Install gh-pages: npm install -g gh-pages');
-    console.log('  2. Run: gh-pages -d dist --dotfiles');
-    console.log('  3. Or upload dist/ contents manually to gh-pages branch');
+    console.log('  1. Run: npx gh-pages -d dist --dotfiles');
+    console.log('  2. Or upload dist/ contents manually to gh-pages branch');
     throw error;
-  }
-}
-
-/**
- * Check if gh-pages is installed
- */
-async function checkGhPagesInstalled() {
-  try {
-    await import('gh-pages');
-  } catch (error) {
-    console.log('📦 Installing gh-pages for GitHub Pages deployment...');
-    
-    await new Promise((resolve, reject) => {
-      const install = spawn('npm', ['install', '-g', 'gh-pages'], {
-        stdio: 'inherit',
-        cwd: process.cwd()
-      });
-
-      install.on('close', (code) => {
-        if (code === 0) {
-          resolve();
-        } else {
-          reject(new Error(`gh-pages installation failed with code ${code}`));
-        }
-      });
-
-      install.on('error', (error) => {
-        reject(new Error(`gh-pages installation failed: ${error.message}`));
-      });
-    });
   }
 }
 
