@@ -602,16 +602,21 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
   const projectName = path.basename(path.dirname(srcPath));
 
   // Helper function to recursively copy directory structure
-  async function copyDirectory(sourceDir, targetDir) {
+  async function copyDirectory(sourceDir, targetDir, excludeDirs = []) {
     await fs.mkdir(targetDir, { recursive: true });
     const entries = await fs.readdir(sourceDir, { withFileTypes: true });
 
     for (const entry of entries) {
+      // Skip excluded directories
+      if (entry.isDirectory() && excludeDirs.includes(entry.name)) {
+        continue;
+      }
+
       const sourcePath = path.join(sourceDir, entry.name);
       const targetPath = path.join(targetDir, entry.name);
 
       if (entry.isDirectory()) {
-        await copyDirectory(sourcePath, targetPath);
+        await copyDirectory(sourcePath, targetPath, excludeDirs);
       } else if (entry.name.endsWith('.template')) {
         // Process template file
         const template = await fs.readFile(sourcePath, 'utf8');
@@ -629,8 +634,8 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
     }
   }
 
-  // Copy all template files and directories
-  await copyDirectory(templatesPath, srcPath);
+  // Copy all template files and directories except docs
+  await copyDirectory(templatesPath, srcPath, ['docs']);
 
   // Copy root level files
   const rootFiles = ['App.tsx.template', 'main.tsx.template', 'index.html.template',
@@ -654,6 +659,20 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
     } catch (error) {
       console.warn(`⚠️ Warning: Could not process root file ${file}: ${error.message}`);
     }
+  }
+
+  // Copy documentation to project root
+  const docsSourcePath = path.join(templatesPath, 'docs');
+  const docsTargetPath = path.join(srcPath, '../docs');
+  try {
+    await fs.access(docsSourcePath);
+    await fs.mkdir(docsTargetPath, { recursive: true });
+    const docsFiles = await fs.readdir(docsSourcePath);
+    for (const file of docsFiles) {
+      await fs.copyFile(path.join(docsSourcePath, file), path.join(docsTargetPath, file));
+    }
+  } catch (error) {
+    // Docs directory doesn't exist, skip copying
   }
 
   console.log('✅ Generated FBCA template with auto-discovery routing, feature organization, and SEO support');
