@@ -28,6 +28,85 @@ What are you building?
 
 ---
 
+## 🏗️ FBCA PROJECT TEMPLATE (Feature-Based Architecture)
+
+### When to Use FBCA
+Use `--fbca` flag when building applications that need:
+- **Feature isolation** - Each business feature is self-contained
+- **Auto-discovery routing** - Routes generated from file structure
+- **Scalable architecture** - Easy to add new features without touching existing code
+- **Team collaboration** - Multiple developers can work on different features
+
+### Quick FBCA Setup
+```bash
+npx uikit create myapp --fbca --theme elegant
+cd myapp && npm run dev
+```
+
+### FBCA File Structure
+```
+src/
+├── features/
+│   ├── auth/                     # Authentication feature
+│   │   └── pages/
+│   │       ├── login.tsx         # Route: /auth/login
+│   │       └── register.tsx      # Route: /auth/register
+│   ├── dashboard/                # Dashboard feature
+│   │   └── pages/
+│   │       ├── root.tsx          # Route: /dashboard
+│   │       └── settings.tsx      # Route: /dashboard/settings
+│   └── main/                     # Main feature (special case)
+│       └── pages/
+│           └── root.tsx          # Route: / (homepage)
+├── shared/
+│   ├── components/               # Reusable UI components
+│   └── hooks/                    # Custom React hooks (SEO, etc.)
+└── lib/
+    └── page-router.tsx           # Auto-discovery routing system
+```
+
+### FBCA Routing Conventions
+```jsx
+// File-based routing patterns:
+root.tsx           → /feature (feature root)
+[param].tsx        → /feature/:param (dynamic routes)
+nested/page.tsx    → /feature/nested/page
+main/pages/root.tsx → / (homepage - special case)
+```
+
+### FBCA Features Included
+- **Auto-discovery routing** with Vite glob imports
+- **SEO management** with custom useSEO hook
+- **Lazy loading** with React Suspense
+- **Feature isolation** with clear boundaries
+- **Shared components** for reusable UI
+- **TypeScript support** with full type safety
+
+### Example FBCA Usage
+```jsx
+// src/features/products/pages/[id].tsx
+import { useSEO } from '@/shared/hooks/useSEO';
+import { ProductCard } from '@/shared/components/ProductCard';
+
+export default function ProductDetailsPage() {
+  const { id } = useParams(); // Auto-available from React Router
+
+  useSEO({
+    title: `Product ${id}`,
+    description: `Details for product ${id}`,
+  });
+
+  return (
+    <div>
+      <h1>Product {id}</h1>
+      <ProductCard productId={id} />
+    </div>
+  );
+}
+```
+
+---
+
 ## 📋 COMPONENT PATTERNS (ONLY 2 TYPES)
 
 ### 🏗️ COMPOUND LAYOUTS (Use Child Components)

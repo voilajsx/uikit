@@ -1,0 +1,241 @@
+# {{PROJECT_NAME}}
+
+**A modern React application built with @voilajsx/uikit**
+
+## 🚀 Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 🎨 UIKit Features
+
+This project is built with [@voilajsx/uikit](https://github.com/voilajsx/uikit) - a complete React UI framework with:
+
+- **37 UI Components** - Forms, tables, navigation, overlays
+- **5 Professional Themes** - Base, Elegant, Metro, Studio, Vivid
+- **5 Layout Systems** - Admin, Auth, Page, Popup, Blank
+- **Theme System** - Light/dark mode with semantic colors
+- **TypeScript Support** - Full type safety out of the box
+
+## 🏗️ Project Structure
+
+```
+{{PROJECT_NAME}}/
+├── src/
+│   ├── components/          # Reusable UI components
+│   ├── pages/              # Application pages
+│   ├── styles/             # Global styles and themes
+│   ├── App.tsx             # Main application component
+│   └── main.tsx            # Application entry point
+├── public/                 # Static assets
+├── package.json            # Dependencies and scripts
+└── README.md              # This file
+```
+
+## 🎯 Development Commands
+
+```bash
+npm run dev         # Start development server (localhost:5173)
+npm run build       # Build for production
+npm run preview     # Preview production build
+npm run lint        # Run ESLint
+```
+
+## 🎨 Theme Customization
+
+Change your theme by updating the ThemeProvider in `src/App.tsx`:
+
+```jsx
+<ThemeProvider theme="elegant" mode="light">
+  <App />
+</ThemeProvider>
+```
+
+Available themes: `base` | `elegant` | `metro` | `studio` | `vivid`
+Available modes: `light` | `dark`
+
+## 📦 Built With
+
+- **[React 19](https://react.dev)** - UI library
+- **[TypeScript](https://typescriptlang.org)** - Type safety
+- **[Vite](https://vitejs.dev)** - Build tool and dev server
+- **[Tailwind CSS](https://tailwindcss.com)** - Utility-first CSS
+- **[@voilajsx/uikit](https://github.com/voilajsx/uikit)** - UI components and layouts
+- **[React Router](https://reactrouter.com)** - Client-side routing (if applicable)
+- **[Lucide React](https://lucide.dev)** - Icon library
+
+## 🔧 Configuration
+
+### Theme Configuration
+Customize your theme colors and design tokens in `src/styles/index.css` or create custom theme presets.
+
+### Tailwind Configuration
+Extend Tailwind configuration in `tailwind.config.js` for custom utilities and components.
+
+### TypeScript Configuration
+TypeScript settings can be modified in `tsconfig.json` for stricter or more lenient type checking.
+
+## 📱 Responsive Design
+
+This application is built mobile-first with responsive breakpoints:
+
+- **sm**: 640px+ (tablets)
+- **md**: 768px+ (small laptops)
+- **lg**: 1024px+ (laptops)
+- **xl**: 1280px+ (desktops)
+- **2xl**: 1536px+ (large screens)
+
+## 🎨 Component Usage
+
+Import UIKit components individually for optimal tree-shaking:
+
+```jsx
+import { Button } from '@voilajsx/uikit/button';
+import { Card, CardContent, CardHeader } from '@voilajsx/uikit/card';
+import { Input } from '@voilajsx/uikit/input';
+
+function MyComponent() {
+  return (
+    <Card className="bg-card border-border">
+      <CardHeader>
+        <h2 className="text-foreground">Welcome</h2>
+      </CardHeader>
+      <CardContent>
+        <Input className="bg-background border-border" />
+        <Button className="bg-primary text-primary-foreground">
+          Submit
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+## 🎯 Best Practices
+
+### Semantic Colors
+Always use semantic color classes that adapt to themes and modes:
+
+```jsx
+// ✅ Good - adapts to themes and dark mode
+className="bg-background text-foreground border-border"
+
+// ❌ Bad - breaks in dark mode and different themes
+className="bg-white text-black border-gray-200"
+```
+
+### Component Imports
+Use individual imports for better tree-shaking:
+
+```jsx
+// ✅ Good - only imports what you use
+import { Button } from '@voilajsx/uikit/button';
+
+// ❌ Bad - imports entire library
+import { Button } from '@voilajsx/uikit';
+```
+
+### TypeScript
+Leverage TypeScript for better development experience:
+
+```jsx
+interface UserCardProps {
+  user: {
+    name: string;
+    email: string;
+    role: 'admin' | 'user';
+  };
+}
+
+function UserCard({ user }: UserCardProps) {
+  // Component implementation with full type safety
+}
+```
+
+## 📚 Resources
+
+- **[UIKit Documentation](https://docs.anthropic.com/en/docs/claude-code/claude_code_docs_map.md)** - Complete component reference
+- **[UIKit LLM Guide](https://github.com/voilajsx/uikit/blob/main/docs/UIKIT_LLM_GUIDE.md)** - Comprehensive usage guide
+- **[React Documentation](https://react.dev)** - React framework guide
+- **[Vite Documentation](https://vitejs.dev)** - Build tool documentation
+- **[Tailwind CSS](https://tailwindcss.com)** - Utility-first CSS framework
+
+## 🔗 Quick Links
+
+- **[Component Library](https://github.com/voilajsx/uikit)** - All 37 UIKit components
+- **[Theme Examples](https://github.com/voilajsx/uikit/tree/main/examples)** - Theme showcase
+- **[GitHub Issues](https://github.com/voilajsx/uikit/issues)** - Report bugs or request features
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **[@voilajsx/uikit](https://github.com/voilajsx/uikit)** - For the amazing UI component library
+- **[Shadcn/ui](https://ui.shadcn.com)** - For the foundational component architecture
+- **[Radix UI](https://radix-ui.com)** - For the accessible component primitives
+- **[Tailwind CSS](https://tailwindcss.com)** - For the utility-first CSS framework
+
+---
+
+**Built with ❤️ using [@voilajsx/uikit](https://github.com/voilajsx/uikit)** ✨
+
+## 💻 Development
+
+### Project Setup
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd {{PROJECT_NAME}}
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+### Environment Variables
+Create a `.env.local` file for environment-specific variables:
+
+```bash
+VITE_API_URL=http://localhost:3000/api
+VITE_APP_TITLE={{PROJECT_NAME}}
+```
+
+### Code Quality
+This project includes:
+- **ESLint** - Code linting and formatting
+- **TypeScript** - Static type checking
+- **Prettier** - Code formatting (if configured)
+
+Run quality checks:
+```bash
+npm run lint          # Check for linting issues
+npm run lint:fix      # Fix auto-fixable issues
+npm run type-check    # Run TypeScript checks
+```
+
+---
+
+> **Need Help?** Check out the [UIKit LLM Guide](https://github.com/voilajsx/uikit/blob/main/docs/UIKIT_LLM_GUIDE.md) for detailed examples and best practices.

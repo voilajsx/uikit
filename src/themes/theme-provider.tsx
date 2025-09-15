@@ -10,7 +10,7 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
  * @llm-rule Pre-bundled themes - CSS included in package
  * Simple selection from 8 built-in themes
  */
-export type Theme = 'base' | 'elegant' | 'metro' | 'studio' | 'vivid';
+export type Theme = string;
 
 /**
  * @llm-rule System color scheme preference
@@ -111,10 +111,11 @@ const TONE_CLASSES: Record<Tone, string> = {
  */
 export const AVAILABLE_THEMES: Theme[] = [
   'base',      // Clean default - showcases base system (DEFAULT)
-  'elegant',   // Minimal blue - clean & professional 
+  'elegant',   // Minimal blue - clean & professional
   'metro',     // Dark teal - admin dashboards
   'studio',    // Designer grays - creative tools
-  'vivid'      // Premium cursive - luxury/creative portfolios
+  'vivid',     // Premium cursive - luxury/creative portfolios
+  'stylist'    // Fashion & design industry theme with pink and orange accents
 ];
 
 // Theme context

@@ -1,0 +1,68 @@
+/**
+ * Main Styles Entry Point
+ * Includes Tailwind CSS and custom styles for FBCA architecture
+ */
+
+/* Tailwind CSS base - Required for UIKit */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* UIKit base styles - REQUIRED */
+@import '@voilajsx/uikit/styles';
+
+/* Custom component styles */
+@layer components {
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  .voila-heading {
+    @apply font-bold tracking-tight;
+  }
+
+  .voila-subheading {
+    @apply font-medium tracking-wide;
+  }
+
+  .voila-brand-logo {
+    @apply font-bold tracking-tight;
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .animate-gradient {
+    animation: gradient 3s ease-in-out infinite;
+  }
+
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+}
+
+/* Global custom styles */
+:root {
+  --scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: var(--scroll-behavior);
+}
+
+/* Ensure images are responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Custom focus styles for better accessibility */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}

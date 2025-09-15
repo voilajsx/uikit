@@ -73,12 +73,54 @@ Choose your app structure:
 # Theme showcase (37 components demo)
 npx uikit create myapp
 
-# Single-page app with routing  
+# Single-page app with routing
 npx uikit create myapp --spa --theme metro
 
 # Multi-page app with layouts
 npx uikit create myapp --multi --theme vivid
+
+# Feature-based component architecture
+npx uikit create myapp --fbca --theme elegant
 ```
+
+## FBCA Architecture
+
+**Feature-Based Component Architecture (FBCA)** organizes code by business features instead of technical layers, making large applications easier to maintain and scale.
+
+### Key Features
+- **Auto-discovery routing** - Routes are automatically generated from your file structure
+- **Feature isolation** - Each feature has its own components, pages, and logic
+- **Convention over configuration** - Minimal setup, maximum productivity
+- **SEO-friendly** - Built-in SEO management with custom hooks
+- **Modern React** - Uses React Router, lazy loading, and Suspense
+
+### File Structure
+```
+src/
+├── features/
+│   ├── auth/
+│   │   └── pages/
+│   │       ├── login.tsx         # /auth/login
+│   │       └── signup.tsx        # /auth/signup
+│   ├── gallery/
+│   │   └── pages/
+│   │       ├── root.tsx          # /gallery
+│   │       └── [animal].tsx      # /gallery/:animal
+│   └── main/
+│       └── pages/
+│           └── root.tsx          # / (home page)
+├── shared/
+│   ├── components/               # Reusable components
+│   └── hooks/                    # Custom hooks (SEO, etc.)
+└── lib/
+    └── page-router.tsx           # Auto-discovery router
+```
+
+### Routing Convention
+- `root.tsx` → Root path of the feature
+- `[param].tsx` → Dynamic parameter routes
+- Nested folders → Nested routes
+- Feature name → URL prefix (except `main` which maps to `/`)
 
 ## Development Commands
 
@@ -236,7 +278,7 @@ npm install @voilajsx/uikit react react-dom
 
 - [Documentation](https://voilajsx.github.io/uikit)
 - [GitHub Repository](https://github.com/voilajsx/uikit)
-- [LLM Usage Guide](https://github.com/voilajsx/uikit/blob/main/UIKIT_LLM_GUIDE.md)
+- [LLM Usage Guide](https://github.com/voilajsx/uikit/blob/main/docs/UIKIT_LLM_GUIDE.md)
 
 ---
 

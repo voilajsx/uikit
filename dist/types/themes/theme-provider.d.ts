@@ -8,7 +8,7 @@ import React, { ReactNode } from 'react';
  * @llm-rule Pre-bundled themes - CSS included in package
  * Simple selection from 8 built-in themes
  */
-export type Theme = 'base' | 'elegant' | 'metro' | 'studio' | 'vivid';
+export type Theme = string;
 /**
  * @llm-rule System color scheme preference
  * light: Light system theme

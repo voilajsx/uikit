@@ -20,7 +20,7 @@ export async function createProject(name, options) {
 
   try {
     // Determine template type
-    const templateType = options.spa ? 'spa' : options.multi ? 'multi' : 'single';
+    const templateType = options.spa ? 'spa' : options.multi ? 'multi' : options.fbca ? 'fbca' : 'single';
     
     // Validate project name
     if (!name || !/^[a-zA-Z0-9-_]+$/.test(name)) {
@@ -44,12 +44,16 @@ export async function createProject(name, options) {
 
     // Generate project files based on template
     await generateTemplate(projectPath, templateType, options);
+
+    // Generate config files (skip for FBCA as it has its own config templates)
+    if (templateType !== 'fbca') {
+      await generateConfigFiles(projectPath);
+    }
     
-    // Generate config files
-    await generateConfigFiles(projectPath);
-    
-    // Generate package.json
-    await generatePackageJson(projectPath, name, templateType);
+    // Generate package.json (skip for FBCA as it has its own template)
+    if (templateType !== 'fbca') {
+      await generatePackageJson(projectPath, name, templateType);
+    }
     
     // Create README
     await generateReadme(projectPath, name, templateType);
@@ -93,6 +97,9 @@ async function generateTemplate(projectPath, templateType, options) {
       break;
     case 'multi':
       await generateMultiPageTemplate(srcPath, options.theme);
+      break;
+    case 'fbca':
+      await generateFBCATemplate(srcPath, options.theme);
       break;
   }
 }
@@ -357,7 +364,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🎨 UIKit Theme Showcase</title>
     
@@ -383,7 +390,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
     <!-- Theme color -->
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#6366F1">
   </head>
   <body>
     <div id="root"></div>
@@ -413,6 +420,33 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 </html>`;
 
   await fs.writeFile(path.join(srcPath, '../index.html'), indexContent);
+
+  // Copy documentation
+  const templatesPath = path.join(__dirname, '../templates');
+  const docsSourcePath = path.join(templatesPath, 'docs');
+  const docsTargetPath = path.join(srcPath, '../docs');
+  try {
+    await fs.access(docsSourcePath);
+    await fs.mkdir(docsTargetPath, { recursive: true });
+    const docsFiles = await fs.readdir(docsSourcePath);
+    for (const file of docsFiles) {
+      await fs.copyFile(path.join(docsSourcePath, file), path.join(docsTargetPath, file));
+    }
+  } catch (error) {
+    // Docs directory doesn't exist, skip copying
+  }
+
+  // Copy public assets
+  const publicSourcePath = path.join(templatesPath, 'favicon.svg');
+  const publicTargetPath = path.join(srcPath, '../public');
+  try {
+    await fs.mkdir(publicTargetPath, { recursive: true });
+    await fs.copyFile(publicSourcePath, path.join(publicTargetPath, 'favicon.svg'));
+    const heroSourcePath = path.join(templatesPath, 'hero.svg');
+    await fs.copyFile(heroSourcePath, path.join(publicTargetPath, 'hero.svg'));
+  } catch (error) {
+    // Assets don't exist, skip copying
+  }
 }
 
 /**
@@ -433,6 +467,34 @@ async function generateSPATemplate(srcPath, theme = 'base') {
   // Read and copy index.html template
   const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
   await fs.writeFile(path.join(srcPath, '../index.html'), indexTemplate);
+
+  // Copy public assets
+  const publicSourcePath = path.join(templatesPath, 'public');
+  const publicTargetPath = path.join(srcPath, '../public');
+  try {
+    await fs.access(publicSourcePath);
+    await fs.mkdir(publicTargetPath, { recursive: true });
+    const publicFiles = await fs.readdir(publicSourcePath);
+    for (const file of publicFiles) {
+      await fs.copyFile(path.join(publicSourcePath, file), path.join(publicTargetPath, file));
+    }
+  } catch (error) {
+    // Public directory doesn't exist, skip copying
+  }
+
+  // Copy documentation
+  const docsSourcePath = path.join(templatesPath, 'docs');
+  const docsTargetPath = path.join(srcPath, '../docs');
+  try {
+    await fs.access(docsSourcePath);
+    await fs.mkdir(docsTargetPath, { recursive: true });
+    const docsFiles = await fs.readdir(docsSourcePath);
+    for (const file of docsFiles) {
+      await fs.copyFile(path.join(docsSourcePath, file), path.join(docsTargetPath, file));
+    }
+  } catch (error) {
+    // Docs directory doesn't exist, skip copying
+  }
 
   console.log('✅ Generated SPA template with React Router navigation');
 }
@@ -501,7 +563,100 @@ async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
     }
   }
 
+  // Copy public assets
+  const publicSourcePath = path.join(templatesPath, 'public');
+  const publicTargetPath = path.join(srcPath, '../public');
+  try {
+    await fs.access(publicSourcePath);
+    await fs.mkdir(publicTargetPath, { recursive: true });
+    const publicFiles = await fs.readdir(publicSourcePath);
+    for (const file of publicFiles) {
+      await fs.copyFile(path.join(publicSourcePath, file), path.join(publicTargetPath, file));
+    }
+  } catch (error) {
+    // Public directory doesn't exist, skip copying
+  }
+
+  // Copy documentation
+  const docsSourcePath = path.join(templatesPath, 'docs');
+  const docsTargetPath = path.join(srcPath, '../docs');
+  try {
+    await fs.access(docsSourcePath);
+    await fs.mkdir(docsTargetPath, { recursive: true });
+    const docsFiles = await fs.readdir(docsSourcePath);
+    for (const file of docsFiles) {
+      await fs.copyFile(path.join(docsSourcePath, file), path.join(docsTargetPath, file));
+    }
+  } catch (error) {
+    // Docs directory doesn't exist, skip copying
+  }
+
   console.log('✅ Generated multi-page template with ultra-simple App.tsx, routing, pages, and configurable components');
+}
+
+/**
+ * Generate FBCA template with auto-discovery routing
+ */
+async function generateFBCATemplate(srcPath, theme = 'elegant') {
+  const templatesPath = path.join(__dirname, '../templates/fbca');
+  const projectName = path.basename(path.dirname(srcPath));
+
+  // Helper function to recursively copy directory structure
+  async function copyDirectory(sourceDir, targetDir) {
+    await fs.mkdir(targetDir, { recursive: true });
+    const entries = await fs.readdir(sourceDir, { withFileTypes: true });
+
+    for (const entry of entries) {
+      const sourcePath = path.join(sourceDir, entry.name);
+      const targetPath = path.join(targetDir, entry.name);
+
+      if (entry.isDirectory()) {
+        await copyDirectory(sourcePath, targetPath);
+      } else if (entry.name.endsWith('.template')) {
+        // Process template file
+        const template = await fs.readFile(sourcePath, 'utf8');
+        const content = template
+          .replace(/{{DEFAULT_THEME}}/g, theme)
+          .replace(/{{DEFAULT_MODE}}/g, 'light')
+          .replace(/{{PROJECT_NAME}}/g, projectName);
+
+        const outputFileName = entry.name.replace('.template', '');
+        await fs.writeFile(targetPath.replace('.template', ''), content);
+      } else {
+        // Copy non-template files as-is
+        await fs.copyFile(sourcePath, targetPath);
+      }
+    }
+  }
+
+  // Copy all template files and directories
+  await copyDirectory(templatesPath, srcPath);
+
+  // Copy root level files
+  const rootFiles = ['App.tsx.template', 'main.tsx.template', 'index.html.template',
+                     'vite.config.ts.template', 'tsconfig.json.template', 'tsconfig.node.json.template', 'package.json.template'];
+
+  for (const file of rootFiles) {
+    try {
+      const filePath = path.join(templatesPath, file);
+      const template = await fs.readFile(filePath, 'utf8');
+      const content = template
+        .replace(/{{DEFAULT_THEME}}/g, theme)
+        .replace(/{{DEFAULT_MODE}}/g, 'light')
+        .replace(/{{PROJECT_NAME}}/g, projectName);
+
+      const outputFileName = file.replace('.template', '');
+      const targetPath = file.includes('index.html') || file.includes('package.json') ||
+                        file.includes('vite.config') || file.includes('tsconfig')
+                        ? path.join(srcPath, '..', outputFileName)
+                        : path.join(srcPath, outputFileName);
+      await fs.writeFile(targetPath, content);
+    } catch (error) {
+      console.warn(`⚠️ Warning: Could not process root file ${file}: ${error.message}`);
+    }
+  }
+
+  console.log('✅ Generated FBCA template with auto-discovery routing, feature organization, and SEO support');
 }
 
 /**
@@ -515,8 +670,8 @@ async function generatePackageJson(projectPath, name, templateType) {
     "lucide-react": "latest"
   };
 
-  // Add React Router for SPA and multi-page templates
-  if (templateType === 'spa' || templateType === 'multi') {
+  // Add React Router for SPA, multi-page, and FBCA templates
+  if (templateType === 'spa' || templateType === 'multi' || templateType === 'fbca') {
     baseDependencies["react-router-dom"] = "^7.8.2";
   }
 
@@ -528,8 +683,8 @@ async function generatePackageJson(projectPath, name, templateType) {
     "vite": "^6.3.6"
   };
 
-  // Add React Router types for SPA and multi-page templates
-  if (templateType === 'spa' || templateType === 'multi') {
+  // Add React Router types for SPA, multi-page, and FBCA templates
+  if (templateType === 'spa' || templateType === 'multi' || templateType === 'fbca') {
     baseDevDependencies["@types/react-router-dom"] = "^5.3.3";
   }
 
@@ -560,35 +715,45 @@ async function generatePackageJson(projectPath, name, templateType) {
  * Generate README.md
  */
 async function generateReadme(projectPath, name, templateType) {
-  const readme = `# ${name}
+  const templatesPath = path.join(__dirname, '../templates');
+  const readmeTemplatePath = path.join(templatesPath, 'README.md.template');
 
-A UIKit project showcasing the enhanced theming system.
+  try {
+    // Read the README template
+    const template = await fs.readFile(readmeTemplatePath, 'utf8');
+
+    // Replace template variables
+    const content = template
+      .replace(/{{PROJECT_NAME}}/g, name)
+      .replace(/{{TEMPLATE_TYPE}}/g, templateType);
+
+    // Write README.md to project directory
+    await fs.writeFile(path.join(projectPath, 'README.md'), content);
+  } catch (error) {
+    console.warn('⚠️ Failed to generate README from template, using fallback');
+
+    // Fallback README if template is missing
+    const fallbackReadme = `# ${name}
+
+A modern React application built with @voilajsx/uikit
 
 ## 🚀 Quick Start
 
 \`\`\`bash
+npm install
 npm run dev
 \`\`\`
 
-## 🎨 UIKit Commands
-
-\`\`\`bash
-npm run bundle    # Bundle themes
-npm run serve     # Start dev server  
-npm run build     # Production build
-npm run deploy    # Static site generation
-\`\`\`
-
-## 📚 Learn More
+## 📚 Resources
 
 - [UIKit Documentation](https://github.com/voilajsx/uikit)
-- [Quick Start Guide](https://github.com/voilajsx/uikit/blob/main/UIKIT_QUICK_START.md)
-- [LLM Usage Guide](https://github.com/voilajsx/uikit/blob/main/UIKIT_LLM_GUIDE.md)
+- [LLM Usage Guide](https://github.com/voilajsx/uikit/blob/main/docs/UIKIT_LLM_GUIDE.md)
 
 Built with **@voilajsx/uikit** ✨
 `;
 
-  await fs.writeFile(path.join(projectPath, 'README.md'), readme);
+    await fs.writeFile(path.join(projectPath, 'README.md'), fallbackReadme);
+  }
 }
 
 /**

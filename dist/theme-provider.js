@@ -31,20 +31,22 @@ const A = {
   "base",
   // Clean default - showcases base system (DEFAULT)
   "elegant",
-  // Minimal blue - clean & professional 
+  // Minimal blue - clean & professional
   "metro",
   // Dark teal - admin dashboards
   "studio",
   // Designer grays - creative tools
-  "vivid"
+  "vivid",
   // Premium cursive - luxury/creative portfolios
+  "stylist"
+  // Fashion & design industry theme with pink and orange accents
 ], p = S(void 0);
-function P(t, n, a, i = !1, c = "uikit-theme") {
+function P(t, n, a, c = !1, i = "uikit-theme") {
   if (typeof window > "u")
     return { theme: t, mode: n };
-  if (i)
+  if (c)
     return console.log(`🎨 Config priority: ${t} (${n} mode)`), { theme: t, mode: n };
-  if (c === null) {
+  if (i === null) {
     if (a) {
       const o = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       return console.log(`🎨 System preference (no storage): ${t} (${o} mode)`), { theme: t, mode: o };
@@ -52,7 +54,7 @@ function P(t, n, a, i = !1, c = "uikit-theme") {
     return console.log(`🎨 Props only (no storage): ${t} (${n} mode)`), { theme: t, mode: n };
   }
   try {
-    const r = localStorage.getItem(c);
+    const r = localStorage.getItem(i);
     if (r) {
       const o = JSON.parse(r);
       if (m.includes(o.theme) && ["light", "dark"].includes(o.mode))
@@ -70,38 +72,38 @@ function P(t, n, a, i = !1, c = "uikit-theme") {
 function g(t, n) {
   if (typeof window > "u") return;
   const a = document.documentElement;
-  a.classList.remove("light", "dark"), m.forEach((i) => {
-    a.classList.remove(`theme-${i}`);
+  a.classList.remove("light", "dark"), m.forEach((c) => {
+    a.classList.remove(`theme-${c}`);
   }), a.classList.add(n), a.classList.add(`theme-${t}`);
 }
 function H({
   children: t,
   theme: n = "base",
   mode: a = "light",
-  detectSystem: i = !0,
-  forceConfig: c = !1,
+  detectSystem: c = !0,
+  forceConfig: i = !1,
   // 🔧 NEW: Force config over storage
   storageKey: r = "uikit-theme"
   // 🔧 NEW: Configurable storage key
 }) {
   const [o, d] = E(() => {
-    const e = P(n, a, i, c, r);
+    const e = P(n, a, c, i, r);
     return g(e.theme, e.mode), e;
   });
   u(() => {
     if (typeof window > "u") return;
     const { theme: e, mode: s } = o;
-    if (g(e, s), r && !c)
+    if (g(e, s), r && !i)
       try {
         localStorage.setItem(r, JSON.stringify({ theme: e, mode: s }));
       } catch (l) {
         console.warn("Failed to save theme preferences:", l);
       }
     console.log(`🎨 Applied theme: ${e} (${s} mode)`);
-  }, [o, r, c]), u(() => {
-    if (!i || typeof window > "u") return;
+  }, [o, r, i]), u(() => {
+    if (!c || typeof window > "u") return;
     const e = window.matchMedia("(prefers-color-scheme: dark)"), s = (l) => {
-      if (!c)
+      if (!i)
         try {
           (r ? localStorage.getItem(r) : null) || d((y) => ({
             ...y,
@@ -112,7 +114,7 @@ function H({
         }
     };
     return e.addEventListener("change", s), () => e.removeEventListener("change", s);
-  }, [i, c, r]);
+  }, [c, i, r]);
   const f = (e) => {
     if (!m.includes(e)) {
       console.warn(`Invalid theme: ${e}. Available themes:`, m);

@@ -32,6 +32,7 @@ program
   .argument('<name>', 'project name')
   .option('--spa', 'create single page application template')
   .option('--multi', 'create multi-page template with routing')
+  .option('--fbca', 'create feature-based component architecture template')
   .option('--single', 'create single-page theme showcase (default)')
   .option('--theme <theme>', 'default theme (base|elegant|metro|studio|vivid)', 'default')
   .action(async (name, options) => {
