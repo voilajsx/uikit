@@ -599,10 +599,11 @@ async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
  */
 async function generateFBCATemplate(srcPath, theme = 'elegant') {
   const templatesPath = path.join(__dirname, '../templates/fbca');
-  const projectName = path.basename(path.dirname(srcPath));
+  const projectPath = path.dirname(srcPath);  // Get project root instead of src
+  const projectName = path.basename(projectPath);
 
   // Helper function to recursively copy directory structure
-  async function copyDirectory(sourceDir, targetDir, excludeDirs = []) {
+  async function copyDirectory(sourceDir, targetDir, excludeDirs = [], excludeFiles = []) {
     await fs.mkdir(targetDir, { recursive: true });
     const entries = await fs.readdir(sourceDir, { withFileTypes: true });
 
@@ -612,11 +613,16 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
         continue;
       }
 
+      // Skip excluded files
+      if (entry.isFile() && excludeFiles.includes(entry.name)) {
+        continue;
+      }
+
       const sourcePath = path.join(sourceDir, entry.name);
       const targetPath = path.join(targetDir, entry.name);
 
       if (entry.isDirectory()) {
-        await copyDirectory(sourcePath, targetPath, excludeDirs);
+        await copyDirectory(sourcePath, targetPath, excludeDirs, excludeFiles);
       } else if (entry.name.endsWith('.template')) {
         // Process template file
         const template = await fs.readFile(sourcePath, 'utf8');
@@ -634,36 +640,64 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
     }
   }
 
-  // Copy all template files and directories except docs
-  await copyDirectory(templatesPath, srcPath, ['docs']);
+  // First, copy root-level config files directly to project root
+  const rootConfigFiles = [
+    'package.json.template',
+    'tsconfig.json.template',
+    'tsconfig.node.json.template',
+    'vite.config.ts.template'
+  ];
 
-  // Copy root level files
-  const rootFiles = ['App.tsx.template', 'main.tsx.template', 'index.html.template',
-                     'vite.config.ts.template', 'tsconfig.json.template', 'tsconfig.node.json.template', 'package.json.template'];
-
-  for (const file of rootFiles) {
+  for (const configFile of rootConfigFiles) {
     try {
-      const filePath = path.join(templatesPath, file);
-      const template = await fs.readFile(filePath, 'utf8');
+      const sourcePath = path.join(templatesPath, configFile);
+      const template = await fs.readFile(sourcePath, 'utf8');
       const content = template
         .replace(/{{DEFAULT_THEME}}/g, theme)
         .replace(/{{DEFAULT_MODE}}/g, 'light')
         .replace(/{{PROJECT_NAME}}/g, projectName);
 
-      const outputFileName = file.replace('.template', '');
-      const targetPath = file.includes('index.html') || file.includes('package.json') ||
-                        file.includes('vite.config') || file.includes('tsconfig')
-                        ? path.join(srcPath, '..', outputFileName)
-                        : path.join(srcPath, outputFileName);
-      await fs.writeFile(targetPath, content);
+      const outputFileName = configFile.replace('.template', '');
+      await fs.writeFile(path.join(projectPath, outputFileName), content);
     } catch (error) {
-      console.warn(`⚠️ Warning: Could not process root file ${file}: ${error.message}`);
+      console.warn(`⚠️ Warning: Could not copy root config file ${configFile}`);
     }
+  }
+
+  // Copy the web directory contents to src/web, excluding root config files
+  const webTemplatesPath = path.join(templatesPath, 'src', 'web');
+  const webTargetPath = path.join(srcPath, 'web');
+  try {
+    await copyDirectory(webTemplatesPath, webTargetPath, ['docs'], rootConfigFiles);
+
+    // index.html stays in src/web - it's handled by copyDirectory above
+  } catch (error) {
+    console.warn('⚠️ Warning: Could not copy web directory structure');
+  }
+
+  // Copy the api directory if it exists
+  const apiTemplatesPath = path.join(templatesPath, 'src', 'api');
+  const apiTargetPath = path.join(srcPath, 'api');
+  try {
+    await fs.access(apiTemplatesPath);
+    await copyDirectory(apiTemplatesPath, apiTargetPath);
+  } catch (error) {
+    // API directory doesn't exist, skip copying
+  }
+
+  // Copy public directory if it exists
+  const publicSourcePath = path.join(templatesPath, 'public');
+  const publicTargetPath = path.join(projectPath, 'public');
+  try {
+    await fs.access(publicSourcePath);
+    await copyDirectory(publicSourcePath, publicTargetPath);
+  } catch (error) {
+    // Public directory doesn't exist, skip copying
   }
 
   // Copy documentation to project root
   const docsSourcePath = path.join(templatesPath, 'docs');
-  const docsTargetPath = path.join(srcPath, '../docs');
+  const docsTargetPath = path.join(projectPath, 'docs');
   try {
     await fs.access(docsSourcePath);
     await fs.mkdir(docsTargetPath, { recursive: true });

@@ -94,12 +94,14 @@ export async function startServer(options) {
 async function validateProject() {
   const packageJsonPath = path.join(process.cwd(), 'package.json');
   const indexHtmlPath = path.join(process.cwd(), 'index.html');
-  
+  const fbcaIndexHtmlPath = path.join(process.cwd(), 'src/web/index.html');
+
   if (!fs.existsSync(packageJsonPath)) {
     throw new Error('No package.json found. Run this command in a project directory.');
   }
 
-  if (!fs.existsSync(indexHtmlPath)) {
+  // Check for index.html in standard location or FBCA location
+  if (!fs.existsSync(indexHtmlPath) && !fs.existsSync(fbcaIndexHtmlPath)) {
     throw new Error('No index.html found. This doesn\'t appear to be a Vite project.');
   }
 

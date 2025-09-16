@@ -126,10 +126,33 @@ src/
 
 ```bash
 npx uikit serve     # Start dev server
-npx uikit build     # Production build  
+npx uikit build     # Production build
 npx uikit bundle    # Rebuild themes
 npx uikit deploy    # Static site deploy
 npx uikit deploy --github  # Deploy to GitHub Pages
+```
+
+## Code Generation
+
+**Generate complete features** (recommended for FBCA projects):
+```bash
+npx uikit generate feature blog
+# Creates: hooks/useBlog.ts + components/Blog.tsx + pages/root.tsx
+```
+
+**Generate individual elements:**
+```bash
+# Pages (auto-routed)
+npx uikit generate page dashboard     # → /dashboard
+npx uikit generate page blog/new      # → /blog/new
+
+# Components (shared vs feature-specific)
+npx uikit generate component button   # → shared/components/
+npx uikit generate component blog/card # → blog/components/
+
+# Hooks (shared vs feature-specific)
+npx uikit generate hook auth          # → shared/hooks/
+npx uikit generate hook blog/posts    # → blog/hooks/
 ```
 
 ## Theme System

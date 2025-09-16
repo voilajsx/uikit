@@ -684,6 +684,32 @@ export function useSEO(options: SEOOptions) {
 
 ## 🔧 Adding New Features
 
+### Using Generate Commands (Recommended)
+
+**Generate a complete feature** (hook + component + page):
+```bash
+uikit generate feature blog
+# Creates: blog/hooks/useBlog.ts + blog/components/Blog.tsx + blog/pages/root.tsx
+```
+
+**Generate individual elements:**
+```bash
+# Pages
+uikit generate page dashboard        # → main/pages/dashboard.tsx (route: /dashboard)
+uikit generate page blog/new        # → blog/pages/new.tsx (route: /blog/new)
+uikit generate page shop/cart/items # → shop/pages/cart/items.tsx (route: /shop/cart/items)
+
+# Components
+uikit generate component button      # → shared/components/Button.tsx (shared)
+uikit generate component blog/card   # → blog/components/Card.tsx (feature-specific)
+
+# Hooks
+uikit generate hook auth            # → shared/hooks/useSharedAuth.ts (shared)
+uikit generate hook blog/posts      # → blog/hooks/usePosts.ts (feature-specific)
+```
+
+### Manual Creation (Alternative)
+
 ### Step 1: Create Feature Structure
 ```bash
 mkdir -p src/features/blog/{components,pages}

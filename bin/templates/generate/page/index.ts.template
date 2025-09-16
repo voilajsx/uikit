@@ -1,0 +1,2 @@
+export { {{FeatureName}}Page } from './pages/root';
+export { default as {{FeatureName}}PageDefault } from './pages/root';

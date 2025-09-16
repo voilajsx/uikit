@@ -1,0 +1,2 @@
+export { {{FeatureName}} } from './{{FeatureName}}';
+export type { {{FeatureName}}Props, {{FeatureName}}Data, {{FeatureName}}State } from './types';

@@ -75,6 +75,22 @@ program
     await buildProject(options);
   });
 
+// Generate command
+program
+  .command('generate')
+  .alias('g')
+  .description('Generate a new frontend feature or page')
+  .argument('<type>', 'feature type (page|component|feature)')
+  .argument('<name>', 'feature name')
+  .option('--page', 'generate page component with routing')
+  .option('--component', 'generate reusable component')
+  .option('--feature', 'generate complete feature with pages and components')
+  .option('--theme <theme>', 'UIKit theme to use (base|elegant|metro|studio|vivid)', 'base')
+  .action(async (type, name, options) => {
+    const { generateFeature } = await import('./commands/generate.js');
+    await generateFeature(type, name, options);
+  });
+
 // Deploy command
 program
   .command('deploy')
