@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@voilajsx/uikit/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
@@ -568,17 +568,29 @@ const Logo: React.FC = () => (
   </div>
 );
 
+// Component to handle scroll to top on route change
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 const SPAContent: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const handleNavigation = (href: string, item: NavigationItem) => {
     navigate(href);
   };
 
   return (
     <PageLayout scheme="default" tone="subtle" size="xl">
-      <PageLayout.Header 
+      <ScrollToTop />
+      <PageLayout.Header
         navigation={navigationItems}
         currentPath={location.pathname}
         onNavigate={handleNavigation}
@@ -586,7 +598,7 @@ const SPAContent: React.FC = () => {
         actions={<ThemeActions />}
         position="sticky"
       />
-      
+
       <PageLayout.Content>
         <Routes>
           <Route path="/" element={<HomePage />} />

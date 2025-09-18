@@ -2,7 +2,7 @@ import { ThemeProvider as s, useTheme as l } from "./theme-provider.js";
 const e = {
   id: "base",
   name: "Base",
-  description: "Clean default configuration showcasing the base system with minimal styling",
+  description: "Clean sky blue theme with modern styling and professional appearance",
   // Base theme with system fonts only
   customStyles: `
     /* Base theme - Only 4 unified classes */
@@ -71,86 +71,86 @@ const e = {
       box-shadow: 0 0 0 4px rgb(from var(--color-foreground) r g b / 0.1);
     }
   `,
-  // Use default colors with minimal modifications
+  // Sky blue themed colors
   light: {
-    // Base clean colors
+    // Base clean colors with sky blue tint
     background: "#FFFFFF",
-    foreground: "#1F2937",
-    card: "#F9FAFB",
-    cardForeground: "#1F2937",
+    foreground: "#1E293B",
+    card: "#F8FAFC",
+    cardForeground: "#1E293B",
     popover: "#FFFFFF",
-    popoverForeground: "#1F2937",
-    // Simple interactive colors - 50% lighter for visibility
-    primary: "#5D626B",
+    popoverForeground: "#1E293B",
+    // Sky blue interactive colors
+    primary: "#0EA5E9",
     primaryForeground: "#FFFFFF",
-    secondary: "#E5E7EB",
-    secondaryForeground: "#1F2937",
-    muted: "#F9FAFB",
-    mutedForeground: "#6B7280",
-    accent: "#F3F4F6",
-    accentForeground: "#1F2937",
+    secondary: "#F5E6D3",
+    secondaryForeground: "#92400E",
+    muted: "#F0F9FF",
+    mutedForeground: "#64748B",
+    accent: "#E0F2FE",
+    accentForeground: "#0C4A6E",
     // State colors
     destructive: "#DC2626",
     destructiveForeground: "#FFFFFF",
-    // Border colors
-    border: "#E5E7EB",
-    input: "#D1D5DB",
-    ring: "#374151",
-    // Chart colors - simple grayscale progression
-    chart1: "#374151",
-    chart2: "#6B7280",
-    chart3: "#9CA3AF",
-    chart4: "#D1D5DB",
-    chart5: "#F3F4F6",
+    // Border colors with sky blue tint
+    border: "#E2E8F0",
+    input: "#CBD5E1",
+    ring: "#0EA5E9",
+    // Chart colors - sky blue progression
+    chart1: "#0EA5E9",
+    chart2: "#38BDF8",
+    chart3: "#7DD3FC",
+    chart4: "#BAE6FD",
+    chart5: "#E0F2FE",
     // Sidebar colors
-    sidebar: "#F9FAFB",
-    sidebarForeground: "#1F2937",
-    sidebarPrimary: "#374151",
+    sidebar: "#F8FAFC",
+    sidebarForeground: "#1E293B",
+    sidebarPrimary: "#0EA5E9",
     sidebarPrimaryForeground: "#FFFFFF",
-    sidebarAccent: "#E5E7EB",
-    sidebarAccentForeground: "#6B7280",
-    sidebarBorder: "#E5E7EB",
-    sidebarRing: "#374151"
+    sidebarAccent: "#F5E6D3",
+    sidebarAccentForeground: "#92400E",
+    sidebarBorder: "#E2E8F0",
+    sidebarRing: "#0EA5E9"
   },
   dark: {
-    // Dark clean colors
-    background: "#111827",
-    foreground: "#F9FAFB",
-    card: "#1F2937",
-    cardForeground: "#F9FAFB",
-    popover: "#1F2937",
-    popoverForeground: "#F9FAFB",
-    // Dark interactive colors
-    primary: "#7E8084",
-    primaryForeground: "#111827",
-    secondary: "#4B5563",
-    secondaryForeground: "#F9FAFB",
-    muted: "#1F2937",
-    mutedForeground: "#9CA3AF",
-    accent: "#374151",
-    accentForeground: "#F9FAFB",
+    // Dark colors with sky blue accents
+    background: "#0F172A",
+    foreground: "#F1F5F9",
+    card: "#1E293B",
+    cardForeground: "#F1F5F9",
+    popover: "#1E293B",
+    popoverForeground: "#F1F5F9",
+    // Sky blue interactive colors for dark mode
+    primary: "#38BDF8",
+    primaryForeground: "#0F172A",
+    secondary: "#44403C",
+    secondaryForeground: "#FEF7ED",
+    muted: "#1E293B",
+    mutedForeground: "#94A3B8",
+    accent: "#334155",
+    accentForeground: "#F1F5F9",
     // State colors
     destructive: "#EF4444",
     destructiveForeground: "#FFFFFF",
-    // Border colors
-    border: "#374151",
-    input: "#4B5563",
-    ring: "#D1D5DB",
-    // Chart colors - bright grayscale for dark mode
-    chart1: "#F9FAFB",
-    chart2: "#D1D5DB",
-    chart3: "#9CA3AF",
-    chart4: "#6B7280",
-    chart5: "#4B5563",
+    // Border colors with sky blue tint
+    border: "#334155",
+    input: "#475569",
+    ring: "#38BDF8",
+    // Chart colors - sky blue progression for dark mode
+    chart1: "#38BDF8",
+    chart2: "#0EA5E9",
+    chart3: "#0284C7",
+    chart4: "#0369A1",
+    chart5: "#075985",
     // Sidebar colors
-    sidebar: "#1F2937",
-    sidebarForeground: "#F9FAFB",
-    sidebarPrimary: "#D1D5DB",
-    sidebarPrimaryForeground: "#111827",
-    sidebarAccent: "#374151",
-    sidebarAccentForeground: "#9CA3AF",
-    sidebarBorder: "#4B5563",
-    sidebarRing: "#D1D5DB"
+    sidebar: "#1E293B",
+    sidebarForeground: "#F1F5F9",
+    sidebarPrimary: "#38BDF8",
+    sidebarPrimaryForeground: "#0F172A",
+    sidebarAccent: "#44403C",
+    sidebarAccentForeground: "#FEF7ED",
+    sidebarBorder: "#475569",
+    sidebarRing: "#38BDF8"
   }
 }, r = {
   id: "elegant",

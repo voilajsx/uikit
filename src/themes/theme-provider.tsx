@@ -110,12 +110,11 @@ const TONE_CLASSES: Record<Tone, string> = {
  * All themes ship as CSS with the package
  */
 export const AVAILABLE_THEMES: Theme[] = [
-  'base',      // Clean default - showcases base system (DEFAULT)
+  'base',      // Sky blue theme - clean & professional (DEFAULT)
   'elegant',   // Minimal blue - clean & professional
   'metro',     // Dark teal - admin dashboards
   'studio',    // Designer grays - creative tools
-  'vivid',     // Premium cursive - luxury/creative portfolios
-  'stylist'    // Fashion & design industry theme with pink and orange accents
+  'vivid'      // Premium cursive - luxury/creative portfolios
 ];
 
 // Theme context
