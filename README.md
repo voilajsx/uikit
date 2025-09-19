@@ -67,8 +67,6 @@ cd myapp && npm run dev
 
 **Done.** Your app is running with routing, layouts, and the elegant theme.
 
-📖 **For detailed setup guides:** [Quick-Start Documentation](docs/quickstart/)
-
 ## Framework Architecture
 
 **@voilajsx/uikit** is built on **ShadCN components** and **Tailwind CSS v4** with three key additions:
@@ -153,6 +151,8 @@ uikit bundle
 
 ## 3. Project Scaffolding
 Generate complete project structures with pre-configured routing, layouts, and development workflows. Choose from 4 templates optimized for different application types - from simple showcases to enterprise-scale feature-based architectures.
+
+📖 **For detailed setup guides:** [Quick-Start Documentation](docs/quickstart/)
 
 ### UIKit CLI Templates
 
