@@ -1,6 +1,6 @@
 # VoilaJSX UIKit 🎨
 
-[![npm version](https://img.shields.io/npm/v/@voilajsx/appkit.svg)](https://www.npmjs.com/package/@voilajsx/appkit)
+[![npm version](https://img.shields.io/npm/v/@voilajsx/uikit.svg)](https://www.npmjs.com/package/@voilajsx/uikit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 [![AI Ready](https://img.shields.io/badge/AI-Optimized-purple.svg)](https://github.com/voilajsx/appkit)
@@ -11,41 +11,47 @@ Create visually stunning applications in seconds with 37 components, 5 layouts, 
 
 ## Why Choose @voilajsx/uikit?
 
-- **Design Unification Across Teams**: Standardized components and layouts ensure consistent design language, streamlining collaboration and reducing visual discrepancies.
-- **Seamless Theme Switching and Dark Mode**: Effortlessly switch between 5 professional themes (`base`, `elegant`, `metro`, `studio`, `vivid`) with built-in light and dark mode support for enhanced user experience.
-- **Pre-Designed Layouts for Rapid Prototyping**: Choose from 5 layouts (`Admin`, `Auth`, `Page`, `Popup`, `Blank`) to scaffold applications quickly, enabling developers to focus on functionality rather than structure.
-- **AI-Ready with LLM Guide**: Optimized for AI-driven development with clear documentation and a dedicated LLM usage guide, ensuring predictable code generation and minimal errors.
-- **SEO-Ready**: Built-in SEO management with custom hooks and auto-discovery routing for enhanced search engine visibility.
-- **GitHub Pages Deployment Ready**: Simplified deployment with a single command (`uikit deploy --github`), making it ideal for rapid prototyping and production.
+**🚀 For Rapid Development**
 
-## What You Get
+- **30-second setup**: From `npm install` to running app with routing, themes, and layouts
+- **37 ready-to-use components**: Skip building basic UI - focus on your unique features
+- **5 production layouts**: Admin dashboards, auth flows, marketing pages - all pre-built
 
-🎨 **5 Professional Themes**: From minimal `base` to luxurious `vivid`, each theme leverages OKLCH color science for perfect accessibility.  
-🏗️ **5 Layout Systems**: Pre-built `Admin`, `Auth`, `Page`, `Popup`, and `Blank` layouts for diverse application needs.  
-🧩 **37 UI Components**: Comprehensive set including forms, tables, navigation, and overlays, built on Tailwind CSS and Radix UI.  
-⚡ **Instant Setup**: Go from concept to running app in 30 seconds with minimal configuration.  
-🎯 **Developer-Centric**: Full TypeScript support, hot reload, and a minimal API for maximum productivity.
+**🎨 For Design Consistency**
 
-```bash
-# Install globally
-npm install -g @voilajsx/uikit
+- **5 professional themes**: Switch from minimal to luxury instantly - no design skills needed
+- **OKLCH color science**: Perfect accessibility and contrast ratios automatically
+- **Dark mode included**: Every theme works in light and dark mode out of the box
 
-# Create your app
-uikit create myapp --spa --theme elegant
-cd myapp && npm run dev
-```
+**⚡ For Developer Experience**
 
-## What You Get
+- **AI-optimized**: Generate consistent code with LLMs - predictable patterns, fewer errors
+- **TypeScript-first**: Full type safety with intelligent autocomplete
+- **Zero configuration**: Works immediately, customize only what you need
 
-🎨 **5 Professional Themes** - From minimal to luxury, pick your style  
-🏗️ **5 Layout Systems** - Admin, Auth, Page, Popup, Blank  
-🧩 **37 UI Components** - Forms, tables, navigation, overlays  
-⚡ **Instant Setup** - From idea to running app in 30 seconds  
-🎯 **Developer First** - TypeScript, hot reload, minimal API
+**🏢 For Team Productivity**
 
-Built on Tailwind CSS + Radix UI with OKLCH color science for perfect accessibility.
+- **Standardized components**: No more "how should this button look?" debates
+- **Feature-based architecture**: Scale to enterprise with FBCA project structure
+- **Instant deployment**: `uikit deploy --github` for immediate production hosting
+
+**🔧 For Maintainability**
+
+- **Semantic colors**: Themes switch automatically - no hardcoded styles to break
+- **Convention over configuration**: Predictable file structure, minimal decisions
+- **Future-proof**: Built on Tailwind CSS v4 and Radix UI - modern foundation
 
 ## Quick Start
+
+**Two Ways to Use UIKit:**
+
+**📦 As a Library** - Install UIKit components into your existing React projects (Next.js, Vite, CRA, NestJS with React frontend, etc.):
+```bash
+npm install @voilajsx/uikit
+```
+Import components directly: `import { Button, Card } from '@voilajsx/uikit'`
+
+**🚀 Complete Project Setup** - Use UIKit CLI to scaffold entire applications with routing, layouts, and themes pre-configured:
 
 ```bash
 # Step 1: Install UIKit CLI globally
@@ -61,317 +67,274 @@ cd myapp && npm run dev
 
 **Done.** Your app is running with routing, layouts, and the elegant theme.
 
-## Framework Overview
+📖 **For detailed setup guides:** [Quick-Start Documentation](docs/quickstart/)
 
-**@voilajsx/uikit** is a complete React framework with three main parts:
+## Framework Architecture
 
-### 1. Components (37 total)
+**@voilajsx/uikit** is built on **ShadCN components** and **Tailwind CSS v4** with three key additions:
 
+## 1. Composite UI System
+Build complete interfaces with our three-tier component system - from individual form controls to full page layouts. Mix and match components, sections, and layouts to create any interface quickly without starting from scratch.
+
+📖 **Learn more:** [Composite UI System Guide](docs/UIKIT_COMPOSITE_UI_SYSTEM.md)
+
+### Components (37 Total)
+
+| Category            | Components                                                                | Description                   |
+| ------------------- | ------------------------------------------------------------------------- | ----------------------------- |
+| **Form & Input**    | Button, Input, Textarea, Label, Checkbox, RadioGroup, Switch, Slider, Select | Form controls with validation |
+| **Display & Layout** | Card, Badge, Avatar, Separator, Progress, Skeleton, Alert, Breadcrumb, Tabs, Accordion | Information presentation      |
+| **Navigation & Menu** | DropdownMenu, Menubar, Pagination, Command, Collapsible, Toggle        | User navigation               |
+| **Overlay & Modal**  | Dialog, Sheet, Popover, HoverCard, Tooltip                              | User interactions             |
+| **Data & Table**     | Table, DataTable, Calendar, Toaster                                     | Data management               |
+| **Motion & Animation** | Motion, LoadingSpinner, Reveal, Hover                                  | Visual effects                |
+
+### Section Components (3 Standalone)
+
+| Component   | Purpose                    | Usage                        | Props                    |
+| ----------- | -------------------------- | ---------------------------- | ------------------------ |
+| **Header**  | Standalone header sections | Independent navigation bars  | tone, size, position     |
+| **Footer**  | Standalone footer sections | Independent footer content   | tone, size, position     |
+| **Container** | Content with sidebar     | Flexible content containers  | tone, size, sidebar      |
+
+### Layouts (5 Production-Ready)
+
+| Layout          | Use Case              | Components                       | Routing            |
+| --------------- | --------------------- | -------------------------------- | ------------------ |
+| **AdminLayout** | Dashboards, SaaS apps | Sidebar, Header, Content, Footer | Built-in nav state |
+| **PageLayout**  | Marketing sites       | Header, Content, Footer          | Static pages       |
+| **AuthLayout**  | Login/signup flows    | Centered forms, hero images      | Auth routing       |
+| **PopupLayout** | Browser extensions    | Compact, focused content         | Extension routing  |
+| **BlankLayout** | Custom pages          | Clean slate                      | Manual routing     |
+
+
+## 2. Advanced Theming System
+Switch between 5 professional themes instantly or generate custom themes with perfect accessibility. Built on OKLCH color science with automatic light/dark mode support and semantic color variables that work across all components.
+
+📖 **Learn more:** [Theme System Guide](docs/UIKIT_THEME_GUIDE.md)
+
+**Note**: Instead of hardcoded colors like `bg-white` or `text-black`, use semantic color classes like `bg-background`, `text-foreground`, `border-border`. These automatically adapt to your selected theme and work perfectly in both light and dark modes.
+
+### 5 Professional Themes
+
+| Theme       | Style                | Font Family      | Best For              |
+| ----------- | -------------------- | ---------------- | --------------------- |
+| **base**    | Clean metallic black | System UI        | Minimalist apps       |
+| **elegant** | Professional blue    | Montserrat       | Business applications |
+| **metro**   | Modern green         | Clean typography | Admin dashboards      |
+| **studio**  | Bold black/orange    | Artistic fonts   | Creative portfolios   |
+| **vivid**   | Luxury purple/orange | Serif fonts      | Premium products      |
+
+### Custom Theme Generation
+
+```bash
+# Generate custom theme automatically
+uikit generate theme <name>
+
+# Bundle themes to CSS
+uikit bundle
+```
+
+**What Happens Automatically:**
+1. **Creates theme preset** with generic values for 29 semantic colors (light + dark modes)
+2. **Compiles globals.css** with optimized CSS variables
+3. **Updates main.tsx** to use your new theme instantly
+4. **Theme visible immediately** - ready to customize for your brand needs
+
+**Development Workflow:**
+- **Customize preset**: Modify the generic values in `src/themes/presets/theme-<name>.js` to match your brand
+- **Rebundle**: Run `uikit bundle` to regenerate CSS
+- **See changes instantly**: Theme updates appear immediately in your app
+
+**Best Practices:**
+- **Avoid custom CSS files** - work within the preset system for consistency
+- **No separate stylesheets** - keeps theme coherence undisturbed
+- **Easy maintenance** - all theme changes in one centralized file
+
+## 3. Project Scaffolding
+Generate complete project structures with pre-configured routing, layouts, and development workflows. Choose from 4 templates optimized for different application types - from simple showcases to enterprise-scale feature-based architectures.
+
+### UIKit CLI Templates
+
+| Template   | Command                        | Structure        | Routing                | Best For                    |
+| ---------- | ------------------------------ | ---------------- | ---------------------- | --------------------------- |
+| **Single** | `uikit create app`             | Basic showcase   | None                   | Component demos, learning   |
+| **SPA**    | `uikit create app --spa`       | Single-page app  | React Router           | Marketing sites, portfolios |
+| **Multi**  | `uikit create app --multi`     | Multi-layout app | React Router + layouts | Business apps, SaaS         |
+| **FBCA**   | `uikit create app --fbca`      | Feature-based    | Auto-discovery routing | Enterprise, large apps      |
+
+### When to Use Each Template
+
+**Single** - Very basic template for building from scratch with just one page. Use when you want to start minimal and build up manually.
+
+**SPA** - Single page code that visually reflects multiple pages. Use when you want the simplicity of one page but with navigation between views.
+
+**Multi** - True page isolation with different layouts and basic router included. Use when your requirements need actual separate pages for better organization.
+
+**FBCA** - Comprehensive large-scale applications with feature segregation and auto-discovery page router (Next.js style file-based routing). Use when your application is enterprise-grade with features like auth (login/register), user management, etc. organized in separate folders.
+
+
+## UIKit CLI Commands
+
+📖 **Complete CLI reference:** [CLI Commands Guide](docs/UIKIT_CLI_GUIDE.md)
+
+```bash
+# Project Creation
+uikit create myapp                    # Single template (component showcase)
+uikit create myapp --spa              # SPA with React Router
+uikit create myapp --multi            # Multi-layout application
+uikit create myapp --fbca             # Feature-based architecture
+
+# Code Generation (for FBCA projects)
+uikit generate page dashboard         # Generate new page component
+uikit generate component button       # Generate reusable component
+uikit generate hook useAuth           # Generate custom React hook
+uikit generate feature blog           # Generate complete feature (page + component + hook)
+
+# Theme Management
+uikit generate theme brand            # Generate custom theme
+uikit bundle                          # Process themes to CSS
+uikit bundle --watch                  # Watch mode for development
+
+# Development & Deployment
+uikit serve                           # Start development server
+uikit build                           # Production build
+uikit deploy                          # Static site deployment
+uikit deploy --github                 # Deploy to GitHub Pages
+```
+
+## Example Codes
+
+📖 **AI-powered development:** [LLM Usage Guide](docs/UIKIT_LLM_GUIDE.md)
+
+**Note**: As mentioned above, UIKit is built on ShadCN components but with our own import paths. Instead of `@/components/ui/button`, use `@voilajsx/uikit/button`. The semantic color classes like `bg-background`, `text-foreground`, `border-border` etc. work exactly the same and automatically adapt to your selected theme.
+
+### UI Component Examples
+
+#### Card Component
 ```jsx
-import { Button, Card, DataTable, AdminLayout } from '@voilajsx/uikit';
+import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 
-function Dashboard() {
-  return (
-    <AdminLayout>
-      <Card>
-        <Button>Click me</Button>
-        <DataTable data={users} />
-      </Card>
-    </AdminLayout>
-  );
-}
+<Card variant="default" size="md">
+  <CardHeader>
+    <CardTitle>Product Title</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p>Product description here</p>
+  </CardContent>
+</Card>
 ```
 
-### 2. Layouts (5 types)
-
+#### Alert Component
 ```jsx
-<AdminLayout>     {/* Sidebar + header for dashboards */}
-<AuthLayout>      {/* Login/signup forms */}
-<PageLayout>      {/* Marketing pages with header/footer */}
-<PopupLayout>     {/* Browser extensions */}
-<BlankLayout>     {/* Clean pages */}
+import { Alert, AlertTitle, AlertDescription } from '@voilajsx/uikit/alert';
+
+<Alert variant="success">
+  <AlertTitle>Success!</AlertTitle>
+  <AlertDescription>
+    Your action was completed successfully.
+  </AlertDescription>
+</Alert>
 ```
 
-### 3. Themes (5 presets)
-
+#### Form Component
 ```jsx
-<ThemeProvider theme="elegant" mode="dark">
-  <App />
-</ThemeProvider>
-```
+import { Button, Input, Label } from '@voilajsx/uikit';
 
-**Themes:** `base` • `elegant` • `metro` • `studio` • `vivid`
-
-## Project Types
-
-Choose your app structure:
-
-```bash
-# Theme showcase (37 components demo)
-uikit create myapp
-
-# Single-page app with routing
-uikit create myapp --spa --theme metro
-
-# Multi-page app with layouts
-uikit create myapp --multi --theme vivid
-
-# Feature-based component architecture
-uikit create myapp --fbca --theme elegant
-```
-
-## FBCA Architecture
-
-**Feature-Based Component Architecture (FBCA)** organizes code by business features instead of technical layers, making large applications easier to maintain and scale.
-
-### Key Features
-
-- **Auto-discovery routing** - Routes are automatically generated from your file structure
-- **Feature isolation** - Each feature has its own components, pages, and logic
-- **Convention over configuration** - Minimal setup, maximum productivity
-- **SEO-friendly** - Built-in SEO management with custom hooks
-- **Modern React** - Uses React Router, lazy loading, and Suspense
-
-### File Structure
-
-```
-src/
-├── features/
-│   ├── auth/
-│   │   └── pages/
-│   │       ├── login.tsx         # /auth/login
-│   │       └── signup.tsx        # /auth/signup
-│   ├── gallery/
-│   │   └── pages/
-│   │       ├── index.tsx         # /gallery
-│   │       └── [animal].tsx      # /gallery/:animal
-│   └── main/
-│       └── pages/
-│           └── index.tsx         # / (home page)
-├── shared/
-│   ├── components/               # Reusable components
-│   └── hooks/                    # Custom hooks (SEO, etc.)
-└── lib/
-    └── page-router.tsx           # Auto-discovery router
-```
-
-### Routing Convention
-
-- `index.tsx` → Root path of the feature
-- `[param].tsx` → Dynamic parameter routes
-- Nested folders → Nested routes
-- Feature name → URL prefix (except `main` which maps to `/`)
-
-## Development Commands
-
-```bash
-uikit serve     # Start dev server
-uikit build     # Production build
-uikit bundle    # Rebuild themes
-uikit deploy    # Static site deploy
-uikit deploy --github  # Deploy to GitHub Pages
-```
-
-## Code Generation
-
-**Generate custom themes** (recommended):
-
-```bash
-uikit generate theme brand
-# Creates complete theme with 29 semantic colors, auto-updates main.tsx
-```
-
-**Generate complete features** (for FBCA projects):
-
-```bash
-uikit generate feature blog
-# Creates: hooks/useBlog.ts + components/Blog.tsx + pages/index.tsx
-```
-
-**Generate individual elements:**
-
-```bash
-# Pages (auto-routed)
-uikit generate page dashboard     # → /dashboard
-uikit generate page blog/new      # → /blog/new
-
-# Components (shared vs feature-specific)
-uikit generate component button   # → shared/components/
-uikit generate component blog/card # → blog/components/
-
-# Hooks (shared vs feature-specific)
-uikit generate hook auth          # → shared/hooks/
-uikit generate hook blog/posts    # → blog/hooks/
-```
-
-## Theme System
-
-**5 professional themes** that work in light and dark mode:
-
-- **`base`** - Clean metallic black, System UI fonts
-- **`elegant`** - Professional blue, Montserrat fonts
-- **`metro`** - Modern green, clean typography
-- **`studio`** - Bold black/orange, artistic fonts
-- **`vivid`** - Luxury purple/orange, serif fonts
-
-### Basic Usage
-
-```jsx
-// main.tsx - Theme setup (automatically included in templates)
-import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ThemeProvider theme="elegant" mode="dark" forceConfig={true}>
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>
-);
-
-// App.tsx - Theme switching component
-import { useTheme } from '@voilajsx/uikit/theme-provider';
-
-function ThemeSwitcher() {
-  const { theme, setTheme, toggleMode } = useTheme();
-  return (
-    <div>
-      <select onChange={(e) => setTheme(e.target.value)}>
-        <option value="base">Base</option>
-        <option value="elegant">Elegant</option>
-        <option value="metro">Metro</option>
-        <option value="studio">Studio</option>
-        <option value="vivid">Vivid</option>
-      </select>
-      <button onClick={toggleMode}>Toggle Dark Mode</button>
-    </div>
-  );
-}
-```
-
-### Custom Themes
-
-**Option A: Generate automatically (recommended)**
-
-```bash
-uikit generate theme brand
-# Creates complete theme with 29 semantic colors
-# Auto-updates main.tsx with new theme
-# Works with SPA/Multi/FBCA project structures
-```
-
-**Option B: Create manually**
-
-```javascript
-// src/themes/presets/my-theme.js (or src/web/themes/presets/ for FBCA)
-export default {
-  id: 'my-theme',
-  name: 'My Custom Theme',
-  light: {
-    background: '#FFFFFF',
-    foreground: '#111111',
-    primary: '#3B82F6',
-    // ... 26 more semantic colors
-  },
-  dark: {
-    background: '#111111',
-    foreground: '#FFFFFF',
-    primary: '#60A5FA',
-    // ... 26 more semantic colors
-  },
-};
-```
-
-```bash
-uikit bundle  # Generate CSS from themes
-```
-
-## Component Examples
-
-### Forms & Inputs
-
-```jsx
-import { Button, Input, Label, Card, Form } from '@voilajsx/uikit';
-
-function LoginForm() {
-  return (
-    <Card>
-      <Form>
-        <Label>Email</Label>
-        <Input type="email" />
-        <Button>Sign In</Button>
-      </Form>
-    </Card>
-  );
-}
-```
-
-### Data Tables
-
-```jsx
-import { DataTable } from '@voilajsx/uikit';
-
-function UserList() {
-  return (
-    <DataTable
-      data={users}
-      columns={[
-        { key: 'name', label: 'Name' },
-        { key: 'email', label: 'Email' },
-        { key: 'role', label: 'Role' },
-      ]}
-    />
-  );
-}
+<div className="space-y-4">
+  <div>
+    <Label>Email</Label>
+    <Input variant="default" size="md" placeholder="Enter email" />
+  </div>
+  <Button variant="default" size="md">Submit</Button>
+</div>
 ```
 
 ### Layout Examples
 
 ```jsx
-// Admin dashboard
-<AdminLayout>
-  <AdminLayout.Sidebar navigation={nav} />
+// Admin Dashboard
+<AdminLayout scheme="sidebar" tone="subtle">
   <AdminLayout.Header title="Dashboard" />
+  <AdminLayout.Sidebar navigation={nav} />
   <AdminLayout.Content>
-    <DataTable data={users} />
+    <h1 className="text-foreground">Dashboard Content</h1>
   </AdminLayout.Content>
 </AdminLayout>
 
-// Auth pages
-<AuthLayout scheme="hero" imageUrl="/hero.jpg">
-  <LoginForm />
-</AuthLayout>
-
-// Marketing pages
-<PageLayout>
+// Marketing Page
+<PageLayout scheme="base" tone="clean">
   <PageLayout.Header logo="MyApp" navigation={nav} />
   <PageLayout.Content>
-    <Hero />
+    <h1 className="text-foreground">Welcome</h1>
   </PageLayout.Content>
   <PageLayout.Footer />
 </PageLayout>
+
+// Auth Page
+<AuthLayout scheme="card" tone="clean">
+  <h1 className="text-foreground">Login Form</h1>
+</AuthLayout>
 ```
 
-## Key Concepts
+### Theme Usage
 
-**Semantic Colors** - Use `bg-primary`, `text-foreground`, `bg-background` for theme compatibility  
-**TypeScript First** - Full type safety with IntelliSense  
-**Zero Config** - Works out of the box, customize when needed  
-**Accessible** - Built on Radix UI primitives
+```jsx
+import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
+import { Button } from '@voilajsx/uikit/button';
+import '@voilajsx/uikit/styles';
 
-## Installation
+// Setup (in main.tsx)
+<ThemeProvider theme="base" mode="light">
+  <App />
+</ThemeProvider>
 
-Only when using in existing projects:
+// Theme Switcher
+const { setTheme } = useTheme();
+<Button variant="outline" size="sm" onClick={() => setTheme('elegant')}>
+  Switch Theme
+</Button>
 
-```bash
-npm install @voilajsx/uikit react react-dom
+// Semantic Colors (still work with variants)
+<div className="bg-background text-foreground border-border">
+  <h1 className="text-primary">Heading</h1>
+  <p className="text-muted-foreground">Description</p>
+</div>
 ```
+
 
 ## Resources
 
-- [Documentation](https://voilajsx.github.io/uikit)
+### 📚 Documentation
+- [Quick-Start Guides](docs/quickstart/) - Template-specific setup instructions
+- [Composite UI System](docs/UIKIT_COMPOSITE_UI_SYSTEM.md) - Component architecture deep dive
+- [Theme System](docs/UIKIT_THEME_GUIDE.md) - Advanced theming and customization
+- [CLI Commands](docs/UIKIT_CLI_GUIDE.md) - Complete command reference
+- [LLM Usage Guide](docs/UIKIT_LLM_GUIDE.md) - AI-powered development patterns
+
+### 🔗 Links
+- [Live Documentation](https://voilajsx.github.io/uikit)
 - [GitHub Repository](https://github.com/voilajsx/uikit)
-- [LLM Usage Guide](https://github.com/voilajsx/uikit/blob/main/docs/UIKIT_LLM_GUIDE.md)
 
 ---
 
-**Built with @voilajsx/uikit** ✨
+## 📄 License
+
+MIT © [VoilaJSX](https://github.com/voilajsx) - See [LICENSE](LICENSE) for details.
+
+---
+
+<p align="center">
+  <strong>🚀 Built for the AI-first future of frontend development</strong><br>
+  <strong>Where beautiful applications are generated, not written</strong><br><br>
+  <a href="https://github.com/voilajsx/uikit">⭐ Star us on GitHub</a>
+</p>
+
+---
+
+### **🔖 Tags**
+
+`react` `typescript` `uikit` `ai-ready` `shadcn` `tailwind` `themes`
+`components` `layouts` `zero-config` `production-ready`
+`agentic-ai` `llm-optimized` `rapid-development` `design-system`
+`developer-experience`
