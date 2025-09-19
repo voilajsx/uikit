@@ -515,6 +515,38 @@ async function generateSPATemplate(srcPath, theme = 'base') {
     // Docs directory doesn't exist, skip copying
   }
 
+  // Copy hooks directory
+  const hooksSourcePath = path.join(templatesPath, 'hooks');
+  const hooksTargetPath = path.join(srcPath, 'hooks');
+  try {
+    await fs.access(hooksSourcePath);
+    await fs.mkdir(hooksTargetPath, { recursive: true });
+    const hookFiles = await fs.readdir(hooksSourcePath);
+    for (const file of hookFiles) {
+      const content = await fs.readFile(path.join(hooksSourcePath, file), 'utf8');
+      const targetFile = file.replace('.template', '');
+      await fs.writeFile(path.join(hooksTargetPath, targetFile), content);
+    }
+  } catch (error) {
+    // Hooks directory doesn't exist, skip copying
+  }
+
+  // Copy components directory
+  const componentsSourcePath = path.join(templatesPath, 'components');
+  const componentsTargetPath = path.join(srcPath, 'components');
+  try {
+    await fs.access(componentsSourcePath);
+    await fs.mkdir(componentsTargetPath, { recursive: true });
+    const componentFiles = await fs.readdir(componentsSourcePath);
+    for (const file of componentFiles) {
+      const content = await fs.readFile(path.join(componentsSourcePath, file), 'utf8');
+      const targetFile = file.replace('.template', '');
+      await fs.writeFile(path.join(componentsTargetPath, targetFile), content);
+    }
+  } catch (error) {
+    // Components directory doesn't exist, skip copying
+  }
+
   console.log('✅ Generated SPA template with React Router navigation');
 }
 
@@ -570,7 +602,7 @@ async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
   const componentsPath = path.join(srcPath, 'components');
   await fs.mkdir(componentsPath, { recursive: true });
 
-  const componentFiles = ['Header.tsx.template', 'Footer.tsx.template', 'index.ts.template'];
+  const componentFiles = ['Header.tsx.template', 'Footer.tsx.template', 'SEO.tsx.template', 'index.ts.template'];
   
   for (const componentFile of componentFiles) {
     try {
@@ -612,6 +644,22 @@ async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
     }
   } catch (error) {
     // Docs directory doesn't exist, skip copying
+  }
+
+  // Copy hooks directory
+  const hooksSourcePath = path.join(templatesPath, 'hooks');
+  const hooksTargetPath = path.join(srcPath, 'hooks');
+  try {
+    await fs.access(hooksSourcePath);
+    await fs.mkdir(hooksTargetPath, { recursive: true });
+    const hookFiles = await fs.readdir(hooksSourcePath);
+    for (const file of hookFiles) {
+      const content = await fs.readFile(path.join(hooksSourcePath, file), 'utf8');
+      const targetFile = file.replace('.template', '');
+      await fs.writeFile(path.join(hooksTargetPath, targetFile), content);
+    }
+  } catch (error) {
+    // Hooks directory doesn't exist, skip copying
   }
 
   console.log('✅ Generated multi-page template with ultra-simple App.tsx, routing, pages, and configurable components');
