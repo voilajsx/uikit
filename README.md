@@ -1,6 +1,30 @@
-# @voilajsx/uikit
+# VoilaJSX UIKit 🎨
 
-**React UI framework that gets out of your way.** Build beautiful applications with 37 components, 5 layouts, and 5 themes. Zero configuration, zero complexity.
+[![npm version](https://img.shields.io/npm/v/@voilajsx/appkit.svg)](https://www.npmjs.com/package/@voilajsx/appkit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![AI Ready](https://img.shields.io/badge/AI-Optimized-purple.svg)](https://github.com/voilajsx/appkit)
+
+> AI‑ready React component toolkit for rapid frontend development, powered by Tailwind CSS v4 and ShadCN.
+
+Create visually stunning applications in seconds with 37 components, 5 layouts, and 5 themes — all zero‑configuration and minimal complexity. Build instantly, customize effortlessly, and deploy in seconds.
+
+## Why Choose @voilajsx/uikit?
+
+- **Design Unification Across Teams**: Standardized components and layouts ensure consistent design language, streamlining collaboration and reducing visual discrepancies.
+- **Seamless Theme Switching and Dark Mode**: Effortlessly switch between 5 professional themes (`base`, `elegant`, `metro`, `studio`, `vivid`) with built-in light and dark mode support for enhanced user experience.
+- **Pre-Designed Layouts for Rapid Prototyping**: Choose from 5 layouts (`Admin`, `Auth`, `Page`, `Popup`, `Blank`) to scaffold applications quickly, enabling developers to focus on functionality rather than structure.
+- **AI-Ready with LLM Guide**: Optimized for AI-driven development with clear documentation and a dedicated LLM usage guide, ensuring predictable code generation and minimal errors.
+- **SEO-Ready**: Built-in SEO management with custom hooks and auto-discovery routing for enhanced search engine visibility.
+- **GitHub Pages Deployment Ready**: Simplified deployment with a single command (`uikit deploy --github`), making it ideal for rapid prototyping and production.
+
+## What You Get
+
+🎨 **5 Professional Themes**: From minimal `base` to luxurious `vivid`, each theme leverages OKLCH color science for perfect accessibility.  
+🏗️ **5 Layout Systems**: Pre-built `Admin`, `Auth`, `Page`, `Popup`, and `Blank` layouts for diverse application needs.  
+🧩 **37 UI Components**: Comprehensive set including forms, tables, navigation, and overlays, built on Tailwind CSS and Radix UI.  
+⚡ **Instant Setup**: Go from concept to running app in 30 seconds with minimal configuration.  
+🎯 **Developer-Centric**: Full TypeScript support, hot reload, and a minimal API for maximum productivity.
 
 ```bash
 # Install globally
@@ -42,6 +66,7 @@ cd myapp && npm run dev
 **@voilajsx/uikit** is a complete React framework with three main parts:
 
 ### 1. Components (37 total)
+
 ```jsx
 import { Button, Card, DataTable, AdminLayout } from '@voilajsx/uikit';
 
@@ -58,6 +83,7 @@ function Dashboard() {
 ```
 
 ### 2. Layouts (5 types)
+
 ```jsx
 <AdminLayout>     {/* Sidebar + header for dashboards */}
 <AuthLayout>      {/* Login/signup forms */}
@@ -67,6 +93,7 @@ function Dashboard() {
 ```
 
 ### 3. Themes (5 presets)
+
 ```jsx
 <ThemeProvider theme="elegant" mode="dark">
   <App />
@@ -98,6 +125,7 @@ uikit create myapp --fbca --theme elegant
 **Feature-Based Component Architecture (FBCA)** organizes code by business features instead of technical layers, making large applications easier to maintain and scale.
 
 ### Key Features
+
 - **Auto-discovery routing** - Routes are automatically generated from your file structure
 - **Feature isolation** - Each feature has its own components, pages, and logic
 - **Convention over configuration** - Minimal setup, maximum productivity
@@ -105,6 +133,7 @@ uikit create myapp --fbca --theme elegant
 - **Modern React** - Uses React Router, lazy loading, and Suspense
 
 ### File Structure
+
 ```
 src/
 ├── features/
@@ -127,6 +156,7 @@ src/
 ```
 
 ### Routing Convention
+
 - `index.tsx` → Root path of the feature
 - `[param].tsx` → Dynamic parameter routes
 - Nested folders → Nested routes
@@ -145,18 +175,21 @@ uikit deploy --github  # Deploy to GitHub Pages
 ## Code Generation
 
 **Generate custom themes** (recommended):
+
 ```bash
 uikit generate theme brand
 # Creates complete theme with 29 semantic colors, auto-updates main.tsx
 ```
 
 **Generate complete features** (for FBCA projects):
+
 ```bash
 uikit generate feature blog
 # Creates: hooks/useBlog.ts + components/Blog.tsx + pages/index.tsx
 ```
 
 **Generate individual elements:**
+
 ```bash
 # Pages (auto-routed)
 uikit generate page dashboard     # → /dashboard
@@ -176,12 +209,13 @@ uikit generate hook blog/posts    # → blog/hooks/
 **5 professional themes** that work in light and dark mode:
 
 - **`base`** - Clean metallic black, System UI fonts
-- **`elegant`** - Professional blue, Montserrat fonts  
+- **`elegant`** - Professional blue, Montserrat fonts
 - **`metro`** - Modern green, clean typography
 - **`studio`** - Bold black/orange, artistic fonts
 - **`vivid`** - Luxury purple/orange, serif fonts
 
 ### Basic Usage
+
 ```jsx
 // main.tsx - Theme setup (automatically included in templates)
 import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
@@ -217,6 +251,7 @@ function ThemeSwitcher() {
 ### Custom Themes
 
 **Option A: Generate automatically (recommended)**
+
 ```bash
 uikit generate theme brand
 # Creates complete theme with 29 semantic colors
@@ -225,6 +260,7 @@ uikit generate theme brand
 ```
 
 **Option B: Create manually**
+
 ```javascript
 // src/themes/presets/my-theme.js (or src/web/themes/presets/ for FBCA)
 export default {
@@ -241,7 +277,7 @@ export default {
     foreground: '#FFFFFF',
     primary: '#60A5FA',
     // ... 26 more semantic colors
-  }
+  },
 };
 ```
 
@@ -252,6 +288,7 @@ uikit bundle  # Generate CSS from themes
 ## Component Examples
 
 ### Forms & Inputs
+
 ```jsx
 import { Button, Input, Label, Card, Form } from '@voilajsx/uikit';
 
@@ -269,17 +306,18 @@ function LoginForm() {
 ```
 
 ### Data Tables
+
 ```jsx
 import { DataTable } from '@voilajsx/uikit';
 
 function UserList() {
   return (
-    <DataTable 
+    <DataTable
       data={users}
       columns={[
         { key: 'name', label: 'Name' },
         { key: 'email', label: 'Email' },
-        { key: 'role', label: 'Role' }
+        { key: 'role', label: 'Role' },
       ]}
     />
   );
@@ -287,6 +325,7 @@ function UserList() {
 ```
 
 ### Layout Examples
+
 ```jsx
 // Admin dashboard
 <AdminLayout>
@@ -297,7 +336,7 @@ function UserList() {
   </AdminLayout.Content>
 </AdminLayout>
 
-// Auth pages  
+// Auth pages
 <AuthLayout scheme="hero" imageUrl="/hero.jpg">
   <LoginForm />
 </AuthLayout>
