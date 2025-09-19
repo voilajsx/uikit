@@ -46,9 +46,11 @@ Create visually stunning applications in seconds with 37 components, 5 layouts, 
 **Two Ways to Use UIKit:**
 
 **📦 As a Library** - Install UIKit components into your existing React projects (Next.js, Vite, CRA, NestJS with React frontend, etc.):
+
 ```bash
 npm install @voilajsx/uikit
 ```
+
 Import components directly: `import { Button, Card } from '@voilajsx/uikit'`
 
 **🚀 Complete Project Setup** - Use UIKit CLI to scaffold entire applications with routing, layouts, and themes pre-configured:
@@ -72,28 +74,29 @@ cd myapp && npm run dev
 **@voilajsx/uikit** is built on **ShadCN components** and **Tailwind CSS v4** with three key additions:
 
 ## 1. Composite UI System
+
 Build complete interfaces with our three-tier component system - from individual form controls to full page layouts. Mix and match components, sections, and layouts to create any interface quickly without starting from scratch.
 
 📖 **Learn more:** [Composite UI System Guide](docs/UIKIT_COMPOSITE_UI_SYSTEM.md)
 
 ### Components (37 Total)
 
-| Category            | Components                                                                | Description                   |
-| ------------------- | ------------------------------------------------------------------------- | ----------------------------- |
-| **Form & Input**    | Button, Input, Textarea, Label, Checkbox, RadioGroup, Switch, Slider, Select | Form controls with validation |
-| **Display & Layout** | Card, Badge, Avatar, Separator, Progress, Skeleton, Alert, Breadcrumb, Tabs, Accordion | Information presentation      |
-| **Navigation & Menu** | DropdownMenu, Menubar, Pagination, Command, Collapsible, Toggle        | User navigation               |
-| **Overlay & Modal**  | Dialog, Sheet, Popover, HoverCard, Tooltip                              | User interactions             |
-| **Data & Table**     | Table, DataTable, Calendar, Toaster                                     | Data management               |
-| **Motion & Animation** | Motion, LoadingSpinner, Reveal, Hover                                  | Visual effects                |
+| Category               | Components                                                                             | Description                   |
+| ---------------------- | -------------------------------------------------------------------------------------- | ----------------------------- |
+| **Form & Input**       | Button, Input, Textarea, Label, Checkbox, RadioGroup, Switch, Slider, Select           | Form controls with validation |
+| **Display & Layout**   | Card, Badge, Avatar, Separator, Progress, Skeleton, Alert, Breadcrumb, Tabs, Accordion | Information presentation      |
+| **Navigation & Menu**  | DropdownMenu, Menubar, Pagination, Command, Collapsible, Toggle                        | User navigation               |
+| **Overlay & Modal**    | Dialog, Sheet, Popover, HoverCard, Tooltip                                             | User interactions             |
+| **Data & Table**       | Table, DataTable, Calendar, Toaster                                                    | Data management               |
+| **Motion & Animation** | Motion, LoadingSpinner, Reveal, Hover                                                  | Visual effects                |
 
 ### Section Components (3 Standalone)
 
-| Component   | Purpose                    | Usage                        | Props                    |
-| ----------- | -------------------------- | ---------------------------- | ------------------------ |
-| **Header**  | Standalone header sections | Independent navigation bars  | tone, size, position     |
-| **Footer**  | Standalone footer sections | Independent footer content   | tone, size, position     |
-| **Container** | Content with sidebar     | Flexible content containers  | tone, size, sidebar      |
+| Component     | Purpose                    | Usage                       | Props                |
+| ------------- | -------------------------- | --------------------------- | -------------------- |
+| **Header**    | Standalone header sections | Independent navigation bars | tone, size, position |
+| **Footer**    | Standalone footer sections | Independent footer content  | tone, size, position |
+| **Container** | Content with sidebar       | Flexible content containers | tone, size, sidebar  |
 
 ### Layouts (5 Production-Ready)
 
@@ -105,8 +108,8 @@ Build complete interfaces with our three-tier component system - from individual
 | **PopupLayout** | Browser extensions    | Compact, focused content         | Extension routing  |
 | **BlankLayout** | Custom pages          | Clean slate                      | Manual routing     |
 
-
 ## 2. Advanced Theming System
+
 Switch between 5 professional themes instantly or generate custom themes with perfect accessibility. Built on OKLCH color science with automatic light/dark mode support and semantic color variables that work across all components.
 
 📖 **Learn more:** [Theme System Guide](docs/UIKIT_THEME_GUIDE.md)
@@ -134,34 +137,38 @@ uikit bundle
 ```
 
 **What Happens Automatically:**
+
 1. **Creates theme preset** with generic values for 29 semantic colors (light + dark modes)
 2. **Compiles globals.css** with optimized CSS variables
 3. **Updates main.tsx** to use your new theme instantly
 4. **Theme visible immediately** - ready to customize for your brand needs
 
 **Development Workflow:**
+
 - **Customize preset**: Modify the generic values in `src/themes/presets/theme-<name>.js` to match your brand
 - **Rebundle**: Run `uikit bundle` to regenerate CSS
 - **See changes instantly**: Theme updates appear immediately in your app
 
 **Best Practices:**
+
 - **Avoid custom CSS files** - work within the preset system for consistency
 - **No separate stylesheets** - keeps theme coherence undisturbed
 - **Easy maintenance** - all theme changes in one centralized file
 
 ## 3. Project Scaffolding
+
 Generate complete project structures with pre-configured routing, layouts, and development workflows. Choose from 4 templates optimized for different application types - from simple showcases to enterprise-scale feature-based architectures.
 
 📖 **For detailed setup guides:** [Quick-Start Documentation](docs/quickstart/)
 
 ### UIKit CLI Templates
 
-| Template   | Command                        | Structure        | Routing                | Best For                    |
-| ---------- | ------------------------------ | ---------------- | ---------------------- | --------------------------- |
-| **Single** | `uikit create app`             | Basic showcase   | None                   | Component demos, learning   |
-| **SPA**    | `uikit create app --spa`       | Single-page app  | React Router           | Marketing sites, portfolios |
-| **Multi**  | `uikit create app --multi`     | Multi-layout app | React Router + layouts | Business apps, SaaS         |
-| **FBCA**   | `uikit create app --fbca`      | Feature-based    | Auto-discovery routing | Enterprise, large apps      |
+| Template   | Command                    | Structure        | Routing                | Best For                    |
+| ---------- | -------------------------- | ---------------- | ---------------------- | --------------------------- |
+| **Single** | `uikit create app`         | Basic showcase   | None                   | Component demos, learning   |
+| **SPA**    | `uikit create app --spa`   | Single-page app  | React Router           | Marketing sites, portfolios |
+| **Multi**  | `uikit create app --multi` | Multi-layout app | React Router + layouts | Business apps, SaaS         |
+| **FBCA**   | `uikit create app --fbca`  | Feature-based    | Auto-discovery routing | Enterprise, large apps      |
 
 ### When to Use Each Template
 
@@ -172,7 +179,6 @@ Generate complete project structures with pre-configured routing, layouts, and d
 **Multi** - True page isolation with different layouts and basic router included. Use when your requirements need actual separate pages for better organization.
 
 **FBCA** - Comprehensive large-scale applications with feature segregation and auto-discovery page router (Next.js style file-based routing). Use when your application is enterprise-grade with features like auth (login/register), user management, etc. organized in separate folders.
-
 
 ## UIKit CLI Commands
 
@@ -212,6 +218,7 @@ uikit deploy --github                 # Deploy to GitHub Pages
 ### UI Component Examples
 
 #### Card Component
+
 ```jsx
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 
@@ -222,22 +229,22 @@ import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
   <CardContent>
     <p>Product description here</p>
   </CardContent>
-</Card>
+</Card>;
 ```
 
 #### Alert Component
+
 ```jsx
 import { Alert, AlertTitle, AlertDescription } from '@voilajsx/uikit/alert';
 
 <Alert variant="success">
   <AlertTitle>Success!</AlertTitle>
-  <AlertDescription>
-    Your action was completed successfully.
-  </AlertDescription>
-</Alert>
+  <AlertDescription>Your action was completed successfully.</AlertDescription>
+</Alert>;
 ```
 
 #### Form Component
+
 ```jsx
 import { Button, Input, Label } from '@voilajsx/uikit';
 
@@ -246,8 +253,10 @@ import { Button, Input, Label } from '@voilajsx/uikit';
     <Label>Email</Label>
     <Input variant="default" size="md" placeholder="Enter email" />
   </div>
-  <Button variant="default" size="md">Submit</Button>
-</div>
+  <Button variant="default" size="md">
+    Submit
+  </Button>
+</div>;
 ```
 
 ### Layout Examples
@@ -302,19 +311,15 @@ const { setTheme } = useTheme();
 </div>
 ```
 
-
 ## Resources
 
 ### 📚 Documentation
+
 - [Quick-Start Guides](docs/quickstart/) - Template-specific setup instructions
 - [Composite UI System](docs/UIKIT_COMPOSITE_UI_SYSTEM.md) - Component architecture deep dive
 - [Theme System](docs/UIKIT_THEME_GUIDE.md) - Advanced theming and customization
 - [CLI Commands](docs/UIKIT_CLI_GUIDE.md) - Complete command reference
 - [LLM Usage Guide](docs/UIKIT_LLM_GUIDE.md) - AI-powered development patterns
-
-### 🔗 Links
-- [Live Documentation](https://voilajsx.github.io/uikit)
-- [GitHub Repository](https://github.com/voilajsx/uikit)
 
 ---
 
