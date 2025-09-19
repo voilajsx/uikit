@@ -17,12 +17,22 @@ const require = createRequire(import.meta.url);
 
 // Consumer project theme directories to search
 const webAssetsPath = path.resolve(process.cwd(), 'src/web/assets');
+const webThemesPath = path.resolve(process.cwd(), 'src/web/themes');
 const useWebAssets = fs.existsSync(webAssetsPath);
+const useWebThemes = fs.existsSync(webThemesPath);
 
 const THEME_SEARCH_PATHS = useWebAssets
   ? [
       'src/web/assets/themes/presets',
       'src/web/assets/themes',
+      'themes/presets',
+      'themes',
+    ]
+  : useWebThemes
+  ? [
+      'src/web/themes/presets',
+      'src/web/themes',
+      'src/web/styles/themes',
       'themes/presets',
       'themes',
     ]
@@ -348,8 +358,20 @@ async function bundleThemesCore(options = {}) {
 
     // Determine output path
     const webAssetsPath = path.resolve(process.cwd(), 'src/web/assets');
+    const webPath = path.resolve(process.cwd(), 'src/web');
     const useWebAssets = fs.existsSync(webAssetsPath);
-    const outputFile = output || (useWebAssets ? 'src/web/assets/styles/globals.css' : 'src/styles/globals.css');
+    const useWebStructure = fs.existsSync(webPath);
+
+    let defaultOutput;
+    if (useWebAssets) {
+      defaultOutput = 'src/web/assets/styles/globals.css';
+    } else if (useWebStructure) {
+      defaultOutput = 'src/web/styles/globals.css';
+    } else {
+      defaultOutput = 'src/styles/globals.css';
+    }
+
+    const outputFile = output || defaultOutput;
     const outputPath = path.resolve(process.cwd(), outputFile);
     const outputDir = path.dirname(outputPath);
 

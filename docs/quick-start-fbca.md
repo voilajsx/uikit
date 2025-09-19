@@ -15,9 +15,21 @@ FBCA (Feature-Based Component Architecture) organizes your application by busine
 
 ## ⚡ 30-Second Setup
 
-### Step 1: Create FBCA Project
+### Step 1: Install UIKit CLI Globally
 ```bash
-npx uikit create my-fbca-app --fbca --theme elegant
+# Install globally
+npm install -g @voilajsx/uikit
+
+# Check if you have the latest version
+npm list -g @voilajsx/uikit
+
+# Update if needed
+npm update -g @voilajsx/uikit
+```
+
+### Step 2: Create FBCA Project
+```bash
+uikit create my-fbca-app --fbca --theme elegant
 cd my-fbca-app && npm run dev
 ```
 

@@ -1,391 +1,723 @@
 # Quick Start: SPA (Single Page Application)
 
-**Build modern single-page applications with all components in one file - perfect for demos, prototypes, and small applications.**
+**Build modern single-page applications with React Router and UIKit components.**
 
 ## 🎯 What is SPA Template?
 
-The SPA template provides a **single-file architecture** where all page components are defined in one `App.tsx` file with React Router navigation. This approach is ideal for quickly building functional applications without complex file organization.
+The SPA template provides a complete single-page application setup with React Router, navigation, and UIKit components. Perfect for applications that need client-side routing without complex layouts.
 
 **Perfect for:**
-- Component showcases and demos
-- Rapid prototyping
-- Small marketing sites
-- Learning React Router
-- Applications that prioritize simplicity over scalability
+- Marketing websites with multiple pages
+- Portfolio sites
+- Documentation sites
+- Content-heavy applications
+- Applications with simple navigation
 
 ## ⚡ 30-Second Setup
 
-### Step 1: Create SPA Project
+### Step 1: Install UIKit CLI Globally
 ```bash
-npx uikit create my-spa-app --spa --theme studio
+# Install globally
+npm install -g @voilajsx/uikit
+
+# Check if you have the latest version
+npm list -g @voilajsx/uikit
+
+# Update if needed
+npm update -g @voilajsx/uikit
+```
+
+### Step 2: Create SPA Project
+```bash
+uikit create my-spa-app --spa --theme elegant
 cd my-spa-app && npm run dev
 ```
 
 This creates a complete SPA with:
-- ✅ Single-file architecture (everything in App.tsx)
-- ✅ React Router with ScrollToTop functionality
-- ✅ UIKit PageLayout with navigation
-- ✅ Multiple demo pages (Home, Components, Themes, Docs)
-- ✅ Theme switching and responsive design
+- ✅ React Router v6 setup
+- ✅ Navigation with active states
+- ✅ Clean page transitions
+- ✅ Responsive design
+- ✅ Theme integration
 
 ### Step 2: Project Structure
 ```
 src/
-├── App.tsx                 # ALL components and pages in one file
-├── main.tsx               # Entry point with CSS import
-├── index.css              # Tailwind CSS v4+ and UIKit styles
-└── (generated files)
+├── components/
+│   ├── Layout.tsx           # Main layout wrapper
+│   └── Navigation.tsx       # Navigation component
+├── pages/
+│   ├── Home.tsx            # Homepage
+│   ├── About.tsx           # About page
+│   ├── Services.tsx        # Services page
+│   └── Contact.tsx         # Contact page
+├── App.tsx                 # Router setup
+├── main.tsx               # Entry point
+└── index.css              # Global styles
 ```
 
-## 🧭 Single-File Architecture
+## 🧭 React Router Integration
 
-### Complete App.tsx Structure
-The SPA template puts everything in one file for simplicity:
-
+### Router Setup (App.tsx)
 ```jsx
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '@voilajsx/uikit/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
-import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
-import { PageLayout } from '@voilajsx/uikit/page';
-import type { NavigationItem } from '@voilajsx/uikit';
-import { Home, Layout, Palette, BookOpen } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import Contact from './pages/Contact';
+import '@voilajsx/uikit/styles';
 
-// ScrollToTop component - automatically scrolls to top on route change
-const ScrollToTop: React.FC = () => {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
-};
-
-// Page Components - all defined in same file
-const HomePage: React.FC = () => {
-  const { theme } = useTheme();
-  // ... page content
-};
-
-const ComponentsPage: React.FC = () => {
-  // ... component showcase
-};
-
-const ThemesPage: React.FC = () => {
-  // ... theme switching demo
-};
-
-const DocsPage: React.FC = () => {
-  // ... documentation content
-};
-
-// Main App function
 function App() {
   return (
-    <ThemeProvider theme="studio" mode="light">
+    <ThemeProvider theme="elegant" mode="light">
       <Router>
-        <SPAContent />
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </Layout>
       </Router>
     </ThemeProvider>
   );
 }
+
+export default App;
 ```
 
-### Navigation & Layout with PageLayout
-The SPA template uses UIKit's PageLayout component for consistent navigation:
-
+### Layout Component with Navigation
 ```jsx
-// Navigation configuration
-const navigationItems: NavigationItem[] = [
-  { key: 'home', label: 'Home', href: '/', icon: Home },
-  { key: 'components', label: 'Components', href: '/components', icon: Layout },
-  { key: 'themes', label: 'Themes', href: '/themes', icon: Palette },
-  { key: 'docs', label: 'Docs', href: '/docs', icon: BookOpen },
+import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@voilajsx/uikit/button';
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink
+} from '@voilajsx/uikit/navigation-menu';
+
+const navigation = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Services', path: '/services' },
+  { name: 'Contact', path: '/contact' },
 ];
 
-// Theme switching component
-const ThemeActions: React.FC = () => {
-  const { theme, mode, setTheme, availableThemes, toggleMode } = useTheme();
-
-  return (
-    <div className="flex items-center gap-3">
-      <select
-        value={theme}
-        onChange={(e) => setTheme(e.target.value as any)}
-        className="bg-background border border-input rounded px-3 py-2 text-sm"
-      >
-        {availableThemes.map(themeId => (
-          <option key={themeId} value={themeId}>
-            {themeId.charAt(0).toUpperCase() + themeId.slice(1)}
-          </option>
-        ))}
-      </select>
-
-      <Button onClick={toggleMode} variant="outline" size="sm">
-        {mode === 'dark' ? '☀️' : '🌙'}
-      </Button>
-    </div>
-  );
-};
-
-// Main content wrapper
-const SPAContent: React.FC = () => {
+function Layout({ children }) {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleNavigation = (href: string, item: NavigationItem) => {
-    navigate(href);
-  };
 
   return (
-    <PageLayout scheme="default" tone="subtle" size="xl">
-      <ScrollToTop />
-      <PageLayout.Header
-        navigation={navigationItems}
-        currentPath={location.pathname}
-        onNavigate={handleNavigation}
-        logo={<Logo />}
-        actions={<ThemeActions />}
-        position="sticky"
-      />
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-card border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <Link to="/" className="flex items-center">
+              <div className="text-2xl font-bold text-foreground">
+                MyApp
+              </div>
+            </Link>
 
-      <PageLayout.Content>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/components" element={<ComponentsPage />} />
-          <Route path="/themes" element={<ThemesPage />} />
-          <Route path="/docs" element={<DocsPage />} />
-        </Routes>
-      </PageLayout.Content>
+            {/* Navigation */}
+            <NavigationMenu>
+              <NavigationMenuList className="space-x-1">
+                {navigation.map((item) => (
+                  <NavigationMenuItem key={item.name}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        to={item.path}
+                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                          location.pathname === item.path
+                            ? 'bg-primary text-primary-foreground'
+                            : 'text-foreground hover:bg-muted hover:text-foreground'
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
 
-      <PageLayout.Footer
-        copyright="@voilajsx/uikit SPA Template • React Router Navigation"
-      />
-    </PageLayout>
+            {/* CTA Button */}
+            <Button className="bg-primary text-primary-foreground">
+              Get Started
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1">
+        {children}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-card border-t border-border mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-muted-foreground">
+            © 2025 MyApp. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </div>
   );
-};
+}
+
+export default Layout;
 ```
 
-## 📄 Single-File Page Examples
+## 📄 Page Examples
 
-### HomePage Component (inside App.tsx)
+### Homepage with Hero Section
 ```jsx
-const HomePage: React.FC = () => {
-  const { theme } = useTheme();
+import { Button } from '@voilajsx/uikit/button';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent
+} from '@voilajsx/uikit/card';
+import { Badge } from '@voilajsx/uikit/badge';
+import { ArrowRight, Star, Users, Zap } from 'lucide-react';
 
-  const themeDescriptions = {
-    base: 'Clean default configuration showcasing the base system',
-    elegant: 'Fresh sky blue theme with clean design',
-    metro: 'Dark teal theme with bright yellow accents',
-    studio: 'Sophisticated neutral theme with golden accents',
-    vivid: 'Premium cursive theme with sophisticated typography'
-  };
+const features = [
+  {
+    icon: Zap,
+    title: 'Lightning Fast',
+    description: 'Optimized for speed and performance'
+  },
+  {
+    icon: Users,
+    title: 'Team Collaboration',
+    description: 'Work together seamlessly'
+  },
+  {
+    icon: Star,
+    title: 'Premium Quality',
+    description: 'Enterprise-grade reliability'
+  }
+];
 
+function Home() {
   return (
-    <div className="space-y-12">
+    <div className="bg-background">
       {/* Hero Section */}
-      <section className="text-center py-16 bg-gradient-to-b from-background to-muted/20 rounded-lg">
-        <div className="space-y-6">
-          <h1 className="voila-heading text-4xl md:text-6xl mb-6 text-accent">
-            Beautiful UI Components
-          </h1>
-          <p className="voila-subheading text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Professional React components with stunning themes, powered by OKLCH color science
-          </p>
-          <div className="inline-flex items-center gap-3 text-sm text-muted-foreground bg-muted/50 backdrop-blur px-6 py-3 rounded-full border">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-            {themeDescriptions[theme as keyof typeof themeDescriptions]}
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Button size="lg" asChild>
-              <Link to="/components">Explore Components</Link>
-            </Button>
-            <Button variant="secondary" size="lg" asChild>
-              <Link to="/themes">Browse Themes</Link>
-            </Button>
+      <section className="bg-gradient-to-b from-background to-muted/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <Badge className="mb-4 bg-primary/10 text-primary">
+              ✨ New Release
+            </Badge>
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
+              Build Amazing
+              <span className="text-primary"> Applications</span>
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Create beautiful, responsive web applications with our modern toolkit.
+              Fast, reliable, and easy to use.
+            </p>
+            <div className="flex justify-center gap-4">
+              <Button size="lg" className="bg-primary text-primary-foreground">
+                Get Started
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="lg" className="border-border">
+                View Demo
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features showcase */}
-      <section className="space-y-6">
-        <div className="text-center">
-          <h2 className="voila-heading text-3xl mb-4">What's Included</h2>
-          <p className="text-lg text-muted-foreground">Everything you need for modern React development</p>
-        </div>
+      {/* Features Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Why Choose Our Platform?
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Everything you need to build modern applications, all in one place.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Feature cards showcasing UIKit capabilities */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <Card key={index} className="bg-card border-border">
+                <CardHeader>
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <feature.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-foreground">
+                    {feature.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
     </div>
   );
-};
+}
+
+export default Home;
 ```
 
-### ComponentsPage Component (inside App.tsx)
+### About Page with Team Section
 ```jsx
-const ComponentsPage: React.FC = () => {
-  return (
-    <div className="space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="voila-heading text-4xl">Component Library</h1>
-        <p className="voila-subheading text-muted-foreground max-w-3xl mx-auto">
-          Explore our comprehensive collection of production-ready React components
-        </p>
-      </div>
+import {
+  Card,
+  CardHeader,
+  CardContent
+} from '@voilajsx/uikit/card';
+import { Avatar, AvatarImage, AvatarFallback } from '@voilajsx/uikit/avatar';
+import { Badge } from '@voilajsx/uikit/badge';
 
-      {/* Component showcase with live examples */}
-      <div className="space-y-8">
-        {/* Buttons Section */}
-        <Card>
+const team = [
+  {
+    name: 'Sarah Johnson',
+    role: 'CEO & Founder',
+    image: 'https://avatar.vercel.sh/sarah',
+    bio: 'Passionate about building products that make a difference.'
+  },
+  {
+    name: 'Mike Chen',
+    role: 'CTO',
+    image: 'https://avatar.vercel.sh/mike',
+    bio: 'Full-stack engineer with 10+ years experience.'
+  },
+  {
+    name: 'Emily Davis',
+    role: 'Head of Design',
+    image: 'https://avatar.vercel.sh/emily',
+    bio: 'Creating beautiful and intuitive user experiences.'
+  }
+];
+
+function About() {
+  return (
+    <div className="bg-background py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold text-foreground mb-6">
+            About Our Company
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            We're a team of passionate individuals dedicated to creating
+            innovative solutions that empower businesses to grow and succeed.
+          </p>
+        </div>
+
+        {/* Mission Section */}
+        <Card className="bg-card border-border mb-16">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center">
-                🔘
-              </div>
-              Buttons
-            </CardTitle>
-            <CardDescription>Interactive elements with multiple variants and sizes</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex flex-wrap gap-3">
-              <Button size="lg">Primary</Button>
-              <Button variant="secondary" size="lg">Secondary</Button>
-              <Button variant="outline" size="lg">Outline</Button>
-              <Button variant="ghost" size="lg">Ghost</Button>
+            <div className="text-center">
+              <Badge className="mb-4 bg-primary/10 text-primary">
+                Our Mission
+              </Badge>
+              <h2 className="text-2xl font-bold text-foreground">
+                Empowering the Future of Technology
+              </h2>
             </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-center text-muted-foreground text-lg">
+              We believe technology should be accessible, powerful, and intuitive.
+              Our mission is to bridge the gap between complex technology and
+              everyday users, making powerful tools available to everyone.
+            </p>
           </CardContent>
         </Card>
 
-        {/* Additional component demos */}
+        {/* Team Section */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-foreground mb-4">
+            Meet Our Team
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            The talented people behind our success
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {team.map((member, index) => (
+            <Card key={index} className="bg-card border-border">
+              <CardContent className="pt-6 text-center">
+                <Avatar className="w-20 h-20 mx-auto mb-4">
+                  <AvatarImage src={member.image} alt={member.name} />
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    {member.name.split(' ').map(n => n[0]).join('')}
+                  </AvatarFallback>
+                </Avatar>
+                <h3 className="text-xl font-bold text-foreground mb-2">
+                  {member.name}
+                </h3>
+                <Badge className="mb-3 bg-secondary text-secondary-foreground">
+                  {member.role}
+                </Badge>
+                <p className="text-muted-foreground">
+                  {member.bio}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
-};
+}
+
+export default About;
 ```
 
-## 🔧 Key Features of SPA Template
-
-### 1. **ScrollToTop Functionality**
-Automatically scrolls to top when navigating between pages:
-
+### Contact Page with Form
 ```jsx
-const ScrollToTop: React.FC = () => {
-  const { pathname } = useLocation();
+import { useState } from 'react';
+import { Button } from '@voilajsx/uikit/button';
+import { Input } from '@voilajsx/uikit/input';
+import { Textarea } from '@voilajsx/uikit/textarea';
+import { Label } from '@voilajsx/uikit/label';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent
+} from '@voilajsx/uikit/card';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
 
-  return null;
-};
-```
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    // Handle form submission
+  };
 
-### 2. **Tailwind CSS v4+ Integration**
-The `main.tsx` imports a modern CSS setup:
+  const handleChange = (field) => (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: e.target.value
+    }));
+  };
 
-```jsx
-// main.tsx
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';  // ← Tailwind v4+ and UIKit styles
-import App from './App';
-```
-
-### 3. **Theme Switching Built-in**
-Live theme switching with all 5 UIKit themes:
-
-```jsx
-const ThemeActions: React.FC = () => {
-  const { theme, mode, setTheme, toggleMode } = useTheme();
-  // Theme selector dropdown and light/dark toggle
-};
-```
-
-### 4. **Responsive Navigation**
-Uses UIKit's PageLayout for consistent navigation across all screen sizes with sticky header positioning.
-
-## 🎨 Customizing Your SPA
-
-### Adding New Pages
-To add new pages to your SPA, simply:
-
-1. **Define a new component** in App.tsx:
-```jsx
-const ServicesPage: React.FC = () => {
   return (
-    <div className="space-y-8">
-      <h1 className="voila-heading text-4xl">Our Services</h1>
-      {/* Your page content */}
+    <div className="bg-background py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold text-foreground mb-6">
+            Get in Touch
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Have a question or want to work together? We'd love to hear from you.
+            Send us a message and we'll respond as soon as possible.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Contact Info */}
+          <div className="space-y-6">
+            <Card className="bg-card border-border">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Mail className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground">Email</h3>
+                    <p className="text-muted-foreground">hello@company.com</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card border-border">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Phone className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground">Phone</h3>
+                    <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card border-border">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <MapPin className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground">Office</h3>
+                    <p className="text-muted-foreground">
+                      123 Business Ave<br />
+                      Suite 100<br />
+                      City, State 12345
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Contact Form */}
+          <div className="lg:col-span-2">
+            <Card className="bg-card border-border">
+              <CardHeader>
+                <CardTitle className="text-foreground">
+                  Send us a message
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <Label htmlFor="name" className="text-foreground">
+                      Name
+                    </Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={handleChange('name')}
+                      className="bg-background border-border text-foreground"
+                      placeholder="Your name"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="email" className="text-foreground">
+                      Email
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange('email')}
+                      className="bg-background border-border text-foreground"
+                      placeholder="your.email@example.com"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="message" className="text-foreground">
+                      Message
+                    </Label>
+                    <Textarea
+                      id="message"
+                      value={formData.message}
+                      onChange={handleChange('message')}
+                      className="bg-background border-border text-foreground min-h-[120px]"
+                      placeholder="Tell us about your project..."
+                      required
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-primary text-primary-foreground"
+                  >
+                    Send Message
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}
+
+export default Contact;
 ```
 
-2. **Add to navigation items**:
+## 🧭 Advanced Navigation Patterns
+
+### Mobile-Responsive Navigation
 ```jsx
-const navigationItems: NavigationItem[] = [
-  // ... existing items
-  { key: 'services', label: 'Services', href: '/services', icon: Briefcase },
-];
+import { useState } from 'react';
+import { Button } from '@voilajsx/uikit/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from '@voilajsx/uikit/sheet';
+import { Menu, X } from 'lucide-react';
+
+function MobileNavigation({ navigation, currentPath }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden text-foreground"
+        >
+          <Menu className="h-6 w-6" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="bg-background border-border">
+        <div className="flex flex-col space-y-4 mt-8">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                currentPath === item.path
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-foreground hover:bg-muted'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
 ```
 
-3. **Add to Routes**:
+### Breadcrumb Navigation
 ```jsx
-<Routes>
-  {/* ... existing routes */}
-  <Route path="/services" element={<ServicesPage />} />
-</Routes>
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from '@voilajsx/uikit/breadcrumb';
+import { useLocation } from 'react-router-dom';
+
+function BreadcrumbNav() {
+  const location = useLocation();
+  const pathnames = location.pathname.split('/').filter((x) => x);
+
+  return (
+    <Breadcrumb className="mb-6">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/" className="text-muted-foreground">
+            Home
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        {pathnames.map((name, index) => {
+          const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
+          const isLast = index === pathnames.length - 1;
+
+          return (
+            <BreadcrumbItem key={name}>
+              {isLast ? (
+                <span className="text-foreground capitalize">{name}</span>
+              ) : (
+                <BreadcrumbLink href={routeTo} className="text-muted-foreground">
+                  {name.charAt(0).toUpperCase() + name.slice(1)}
+                </BreadcrumbLink>
+              )}
+            </BreadcrumbItem>
+          );
+        })}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
 ```
 
-### Modifying Themes
-Switch themes by changing the ThemeProvider:
+## 📱 Responsive Design
 
+### Breakpoint Utilities
 ```jsx
-// Change from 'studio' to any available theme
-<ThemeProvider theme="elegant" mode="light">
+// Use Tailwind's responsive classes with UIKit components
+function ResponsiveCard() {
+  return (
+    <Card className="bg-card border-border w-full sm:w-auto">
+      <CardContent className="p-4 sm:p-6 lg:p-8">
+        <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
+          Responsive Title
+        </h3>
+        <p className="text-sm sm:text-base text-muted-foreground mt-2">
+          This content adapts to different screen sizes
+        </p>
+        <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-4">
+          <Button className="bg-primary text-primary-foreground">
+            Primary Action
+          </Button>
+          <Button variant="outline" className="border-border">
+            Secondary
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 ```
-
-Available themes: `base` | `elegant` | `metro` | `studio` | `vivid`
 
 ## ✅ SPA Best Practices
 
-### Single-File Organization
-- ✅ **Keep components together** - Easy to see entire app structure
-- ✅ **Use clear component names** - HomePage, ComponentsPage, etc.
-- ✅ **Group related functionality** - Theme switching, navigation config
-- ✅ **Add comments** - Separate sections with clear comments
+### Required Setup
+- [ ] Install and configure React Router v6
+- [ ] ThemeProvider setup in `main.tsx` (automatically included)
+- [ ] Create Layout component for consistent header/footer
+- [ ] Implement navigation with active states
 
-### When to Use SPA Template
-- ✅ **Component demos** - Showcasing UIKit components
-- ✅ **Rapid prototyping** - Quick proof of concepts
-- ✅ **Small websites** - Marketing sites, portfolios
-- ✅ **Learning projects** - Understanding React Router basics
+### Routing Guidelines
+- [ ] Use semantic URL structure (`/about`, `/services`, `/contact`)
+- [ ] Handle 404 pages with catch-all routes
+- [ ] Implement breadcrumb navigation for deep pages
+- [ ] Add loading states for page transitions
 
-### When to Move to Multi Template
-- ❌ **Team development** - Multiple developers working on pages
-- ❌ **Large applications** - More than 5-6 pages
-- ❌ **Complex features** - User authentication, data management
-- ❌ **Scalability needs** - App expected to grow significantly
+### SEO Considerations
+- [ ] Add proper `<title>` tags for each page
+- [ ] Implement meta descriptions
+- [ ] Use semantic HTML structure
+- [ ] Add Open Graph tags for social sharing
+
+### Performance
+- [ ] Implement lazy loading for heavy pages
+- [ ] Optimize images with proper sizing
+- [ ] Use React.memo for expensive components
+- [ ] Implement proper error boundaries
 
 ## 🚀 Next Steps
 
-When your SPA outgrows the single-file approach:
+Once you've mastered SPA routing:
 
-1. **Multi Template** - Organized page structure with separate files
-2. **FBCA Template** - Feature-based architecture for complex apps
-3. **Add state management** - Context API, Zustand, or Redux
-4. **Implement authentication** - Protected routes and user management
+1. **Multi Template** - Add pre-built layouts (AdminLayout, PageLayout)
+2. **FBCA Template** - Feature-based architecture for larger apps
+3. **State Management** - Add Redux, Zustand, or Context API
+4. **Authentication** - Implement protected routes
 
 ## 📚 Resources
 
 - [React Router Documentation](https://reactrouter.com/) - Official routing guide
-- [Multi Template Guide](quick-start-multi.md) - When you need organized files
-- [FBCA Template Guide](../fbca/docs/quick-start-fbca.md) - Advanced architecture
-- [UIKit Components](../uikit-dev-guide.md) - Complete component reference
+- [UIKit Components](../UIKIT_LLM_GUIDE.md) - Complete component reference
+- [Theme System](../UIKIT_LLM_GUIDE.md#theme-system) - Advanced theming
 
 ---
 

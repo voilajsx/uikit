@@ -1,6 +1,6 @@
 import { jsx as L } from "react/jsx-runtime";
-import { createContext as S, useState as E, useEffect as u, useContext as x } from "react";
-const A = {
+import { createContext as $, useState as S, useEffect as h, useContext as E } from "react";
+const x = {
   AdminLayout: "subtle",
   // Professional admin interfaces
   PageLayout: "clean",
@@ -21,13 +21,13 @@ const A = {
   // Clean admin headers
   PopupHeader: "brand"
   // Branded popup headers
-}, I = {
+}, A = {
   clean: "bg-background text-foreground border-border",
   subtle: "bg-muted/30 text-foreground border-border/50",
   brand: "bg-primary text-primary-foreground border-primary/20",
   contrast: "bg-foreground text-background border-foreground/20"
   // Automatically flips with mode
-}, m = [
+}, P = [
   "base",
   // Sky blue theme - clean & professional (DEFAULT)
   "elegant",
@@ -38,13 +38,13 @@ const A = {
   // Designer grays - creative tools
   "vivid"
   // Premium cursive - luxury/creative portfolios
-], p = S(void 0);
-function P(t, n, a, i = !1, c = "uikit-theme") {
+], g = $(void 0);
+function T(t, n, a, m = !1, s = "uikit-theme") {
   if (typeof window > "u")
     return { theme: t, mode: n };
-  if (i)
+  if (m)
     return console.log(`🎨 Config priority: ${t} (${n} mode)`), { theme: t, mode: n };
-  if (c === null) {
+  if (s === null) {
     if (a) {
       const o = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       return console.log(`🎨 System preference (no storage): ${t} (${o} mode)`), { theme: t, mode: o };
@@ -52,105 +52,103 @@ function P(t, n, a, i = !1, c = "uikit-theme") {
     return console.log(`🎨 Props only (no storage): ${t} (${n} mode)`), { theme: t, mode: n };
   }
   try {
-    const r = localStorage.getItem(c);
+    const r = localStorage.getItem(s);
     if (r) {
       const o = JSON.parse(r);
-      if (m.includes(o.theme) && ["light", "dark"].includes(o.mode))
+      if (o.theme && typeof o.theme == "string" && ["light", "dark"].includes(o.mode))
         return console.log(`🎨 Restored from storage: ${o.theme} (${o.mode} mode)`), o;
     }
     if (a) {
-      const d = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      return console.log(`🎨 System preference: ${t} (${d} mode)`), { theme: t, mode: d };
+      const i = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      return console.log(`🎨 System preference: ${t} (${i} mode)`), { theme: t, mode: i };
     }
     return console.log(`🎨 Props fallback: ${t} (${n} mode)`), { theme: t, mode: n };
   } catch (r) {
     return console.warn("Failed to load theme preferences, using defaults:", r), { theme: t, mode: n };
   }
 }
-function g(t, n) {
+function u(t, n) {
   if (typeof window > "u") return;
   const a = document.documentElement;
-  a.classList.remove("light", "dark"), m.forEach((i) => {
-    a.classList.remove(`theme-${i}`);
+  a.classList.remove("light", "dark"), Array.from(a.classList).filter(
+    (s) => s.startsWith("theme-")
+  ).forEach((s) => {
+    a.classList.remove(s);
   }), a.classList.add(n), a.classList.add(`theme-${t}`);
 }
-function H({
+function F({
   children: t,
   theme: n = "base",
   mode: a = "light",
-  detectSystem: i = !0,
-  forceConfig: c = !1,
+  detectSystem: m = !0,
+  forceConfig: s = !1,
   // 🔧 NEW: Force config over storage
   storageKey: r = "uikit-theme"
   // 🔧 NEW: Configurable storage key
 }) {
-  const [o, d] = E(() => {
-    const e = P(n, a, i, c, r);
-    return g(e.theme, e.mode), e;
+  const [o, i] = S(() => {
+    const e = T(n, a, m, s, r);
+    return u(e.theme, e.mode), e;
   });
-  u(() => {
+  h(() => {
     if (typeof window > "u") return;
-    const { theme: e, mode: s } = o;
-    if (g(e, s), r && !c)
+    const { theme: e, mode: c } = o;
+    if (u(e, c), r && !s)
       try {
-        localStorage.setItem(r, JSON.stringify({ theme: e, mode: s }));
-      } catch (l) {
-        console.warn("Failed to save theme preferences:", l);
+        localStorage.setItem(r, JSON.stringify({ theme: e, mode: c }));
+      } catch (d) {
+        console.warn("Failed to save theme preferences:", d);
       }
-    console.log(`🎨 Applied theme: ${e} (${s} mode)`);
-  }, [o, r, c]), u(() => {
-    if (!i || typeof window > "u") return;
-    const e = window.matchMedia("(prefers-color-scheme: dark)"), s = (l) => {
-      if (!c)
+    console.log(`🎨 Applied theme: ${e} (${c} mode)`);
+  }, [o, r, s]), h(() => {
+    if (!m || typeof window > "u") return;
+    const e = window.matchMedia("(prefers-color-scheme: dark)"), c = (d) => {
+      if (!s)
         try {
-          (r ? localStorage.getItem(r) : null) || d((y) => ({
+          (r ? localStorage.getItem(r) : null) || i((y) => ({
             ...y,
-            mode: l.matches ? "dark" : "light"
+            mode: d.matches ? "dark" : "light"
           }));
-        } catch (h) {
-          console.warn("Failed to handle system preference change:", h);
+        } catch (l) {
+          console.warn("Failed to handle system preference change:", l);
         }
     };
-    return e.addEventListener("change", s), () => e.removeEventListener("change", s);
-  }, [i, c, r]);
-  const f = (e) => {
-    if (!m.includes(e)) {
-      console.warn(`Invalid theme: ${e}. Available themes:`, m);
-      return;
-    }
-    d((s) => ({ ...s, theme: e }));
-  }, b = (e) => {
+    return e.addEventListener("change", c), () => e.removeEventListener("change", c);
+  }, [m, s, r]);
+  const p = (e) => {
+    i((c) => ({ ...c, theme: e }));
+  }, f = (e) => {
     if (e !== "light" && e !== "dark") {
       console.warn(`Invalid mode: ${e}. Expected 'light' or 'dark'.`);
       return;
     }
-    d((s) => ({ ...s, mode: e }));
-  }, k = () => {
-    d((e) => ({
+    i((c) => ({ ...c, mode: e }));
+  }, b = () => {
+    i((e) => ({
       ...e,
       mode: e.mode === "light" ? "dark" : "light"
     }));
-  }, v = (e) => I[e], $ = (e) => A[e] || "clean", w = {
+  }, k = (e) => A[e], v = (e) => x[e] || "clean", w = {
     theme: o.theme,
     mode: o.mode,
-    availableThemes: m,
-    setTheme: f,
-    setMode: b,
-    toggleMode: k,
-    getToneClasses: v,
-    getDefaultTone: $
+    availableThemes: P,
+    setTheme: p,
+    setMode: f,
+    toggleMode: b,
+    getToneClasses: k,
+    getDefaultTone: v
   };
-  return /* @__PURE__ */ L(p.Provider, { value: w, children: t });
+  return /* @__PURE__ */ L(g.Provider, { value: w, children: t });
 }
-function N() {
-  const t = x(p);
+function H() {
+  const t = E(g);
   if (!t)
     throw new Error("useTheme must be used within a ThemeProvider");
   return t;
 }
 export {
-  m as AVAILABLE_THEMES,
-  H as ThemeProvider,
-  N as useTheme
+  P as AVAILABLE_THEMES,
+  F as ThemeProvider,
+  H as useTheme
 };
 //# sourceMappingURL=theme-provider.js.map

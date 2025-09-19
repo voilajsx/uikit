@@ -3,7 +3,11 @@
 **React UI framework that gets out of your way.** Build beautiful applications with 37 components, 5 layouts, and 5 themes. Zero configuration, zero complexity.
 
 ```bash
-npx uikit create myapp --spa --theme elegant
+# Install globally
+npm install -g @voilajsx/uikit
+
+# Create your app
+uikit create myapp --spa --theme elegant
 cd myapp && npm run dev
 ```
 
@@ -20,8 +24,14 @@ Built on Tailwind CSS + Radix UI with OKLCH color science for perfect accessibil
 ## Quick Start
 
 ```bash
-# Create your app (no installation needed)
-npx uikit create myapp --multi --theme elegant
+# Step 1: Install UIKit CLI globally
+npm install -g @voilajsx/uikit
+
+# Check if you have the latest version
+npm list -g @voilajsx/uikit
+
+# Step 2: Create your app
+uikit create myapp --multi --theme elegant
 cd myapp && npm run dev
 ```
 
@@ -71,16 +81,16 @@ Choose your app structure:
 
 ```bash
 # Theme showcase (37 components demo)
-npx uikit create myapp
+uikit create myapp
 
 # Single-page app with routing
-npx uikit create myapp --spa --theme metro
+uikit create myapp --spa --theme metro
 
 # Multi-page app with layouts
-npx uikit create myapp --multi --theme vivid
+uikit create myapp --multi --theme vivid
 
 # Feature-based component architecture
-npx uikit create myapp --fbca --theme elegant
+uikit create myapp --fbca --theme elegant
 ```
 
 ## FBCA Architecture
@@ -125,34 +135,40 @@ src/
 ## Development Commands
 
 ```bash
-npx uikit serve     # Start dev server
-npx uikit build     # Production build
-npx uikit bundle    # Rebuild themes
-npx uikit deploy    # Static site deploy
-npx uikit deploy --github  # Deploy to GitHub Pages
+uikit serve     # Start dev server
+uikit build     # Production build
+uikit bundle    # Rebuild themes
+uikit deploy    # Static site deploy
+uikit deploy --github  # Deploy to GitHub Pages
 ```
 
 ## Code Generation
 
-**Generate complete features** (recommended for FBCA projects):
+**Generate custom themes** (recommended):
 ```bash
-npx uikit generate feature blog
+uikit generate theme brand
+# Creates complete theme with 29 semantic colors, auto-updates main.tsx
+```
+
+**Generate complete features** (for FBCA projects):
+```bash
+uikit generate feature blog
 # Creates: hooks/useBlog.ts + components/Blog.tsx + pages/index.tsx
 ```
 
 **Generate individual elements:**
 ```bash
 # Pages (auto-routed)
-npx uikit generate page dashboard     # → /dashboard
-npx uikit generate page blog/new      # → /blog/new
+uikit generate page dashboard     # → /dashboard
+uikit generate page blog/new      # → /blog/new
 
 # Components (shared vs feature-specific)
-npx uikit generate component button   # → shared/components/
-npx uikit generate component blog/card # → blog/components/
+uikit generate component button   # → shared/components/
+uikit generate component blog/card # → blog/components/
 
 # Hooks (shared vs feature-specific)
-npx uikit generate hook auth          # → shared/hooks/
-npx uikit generate hook blog/posts    # → blog/hooks/
+uikit generate hook auth          # → shared/hooks/
+uikit generate hook blog/posts    # → blog/hooks/
 ```
 
 ## Theme System
@@ -167,15 +183,19 @@ npx uikit generate hook blog/posts    # → blog/hooks/
 
 ### Basic Usage
 ```jsx
-import { ThemeProvider, useTheme } from '@voilajsx/uikit';
+// main.tsx - Theme setup (automatically included in templates)
+import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
 
-function App() {
-  return (
-    <ThemeProvider theme="elegant" mode="dark">
-      <MyApp />
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ThemeProvider theme="elegant" mode="dark" forceConfig={true}>
+      <App />
     </ThemeProvider>
-  );
-}
+  </React.StrictMode>
+);
+
+// App.tsx - Theme switching component
+import { useTheme } from '@voilajsx/uikit/theme-provider';
 
 function ThemeSwitcher() {
   const { theme, setTheme, toggleMode } = useTheme();
@@ -195,8 +215,18 @@ function ThemeSwitcher() {
 ```
 
 ### Custom Themes
+
+**Option A: Generate automatically (recommended)**
+```bash
+uikit generate theme brand
+# Creates complete theme with 29 semantic colors
+# Auto-updates main.tsx with new theme
+# Works with SPA/Multi/FBCA project structures
+```
+
+**Option B: Create manually**
 ```javascript
-// src/themes/presets/my-theme.js
+// src/themes/presets/my-theme.js (or src/web/themes/presets/ for FBCA)
 export default {
   id: 'my-theme',
   name: 'My Custom Theme',
@@ -204,19 +234,19 @@ export default {
     background: '#FFFFFF',
     foreground: '#111111',
     primary: '#3B82F6',
-    // ... more colors
+    // ... 26 more semantic colors
   },
   dark: {
     background: '#111111',
     foreground: '#FFFFFF',
     primary: '#60A5FA',
-    // ... more colors
+    // ... 26 more semantic colors
   }
 };
 ```
 
 ```bash
-npx uikit bundle  # Rebuild CSS
+uikit bundle  # Generate CSS from themes
 ```
 
 ## Component Examples

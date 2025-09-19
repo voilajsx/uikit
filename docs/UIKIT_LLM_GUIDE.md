@@ -763,7 +763,22 @@ function ThemeControls() {
 }
 ```
 
-### 🚀 Theme Bundler CLI (For Custom Themes)
+### 🚀 Theme Generation & Bundling CLI
+
+#### Generate Custom Themes (Recommended)
+Create complete custom themes automatically:
+```bash
+# Generate new custom theme with complete color system
+npx uikit generate theme brand
+
+# What this creates:
+# - Theme file with 29 semantic colors (light + dark modes)
+# - Auto-detects project structure (SPA/Multi/FBCA)
+# - Updates main.tsx with theme and imports
+# - Ready for bundling and use
+```
+
+#### Bundle Themes to CSS
 Generate optimized CSS for custom themes:
 ```bash
 # Bundle themes from your project directory
@@ -776,8 +791,16 @@ npx uikit bundle --watch
 npx uikit bundle --output=src/styles/themes.css
 ```
 
-Supported directories for custom themes:
-- `src/themes/presets/`
+#### Project Structure Support
+**SPA/Multi projects:**
+- Themes: `src/themes/presets/`
+- CSS output: `src/styles/globals.css`
+
+**FBCA projects:**
+- Themes: `src/web/themes/presets/`
+- CSS output: `src/web/styles/globals.css`
+
+**Legacy directories also supported:**
 - `src/web/assets/themes/presets/`
 - `themes/presets/`
 
@@ -1996,7 +2019,7 @@ const columns = [
 
 ### Required Setup
 - [ ] `import '@voilajsx/uikit/styles'` in root file
-- [ ] Wrap app in `<ThemeProvider theme="base" mode="light">`
+- [ ] ThemeProvider setup in `main.tsx` (automatically included in templates)
 - [ ] Choose correct layout: AdminLayout/PageLayout/AuthLayout/BlankLayout/PopupLayout
 
 ### Component Patterns

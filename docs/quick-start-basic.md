@@ -14,27 +14,60 @@ Basic UIKit usage is about using individual components to build custom layouts a
 
 ## ⚡ 30-Second Setup
 
-### Step 1: Create Basic Project
+### Step 1: Install UIKit CLI Globally
 ```bash
-npx uikit create my-basic-app
+# Install globally
+npm install -g @voilajsx/uikit
+
+# Check if you have the latest version
+npm list -g @voilajsx/uikit
+
+# Update if needed
+npm update -g @voilajsx/uikit
+```
+
+### Step 2: Create Basic Project
+```bash
+uikit create my-basic-app
 cd my-basic-app && npm run dev
 ```
 
 This creates a **component showcase** - perfect for exploring all 37 components and 5 themes.
 
-### Step 2: Essential Imports (Copy-Paste Every File)
+### Step 3: Essential Setup (Already Done in Templates)
+The templates automatically include the required setup in `main.tsx`:
+
 ```jsx
-// CRITICAL: Must be in your root App.jsx/tsx
+// main.tsx - Theme setup (automatically included)
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
-import '@voilajsx/uikit/styles';  // ← REQUIRED: Theme styles
+import App from './App';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ThemeProvider theme="base" mode="light" forceConfig={true}>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
+);
+```
+
+Your `App.tsx` stays clean:
+```jsx
+// App.tsx - Just your components
+import { Button } from '@voilajsx/uikit/button';
 
 function App() {
   return (
-    <ThemeProvider theme="base" mode="light">
-      {/* Your app goes here */}
-    </ThemeProvider>
+    <div className="p-8">
+      <Button>Hello UIKit!</Button>
+    </div>
   );
 }
+
+export default App;
 ```
 
 ## 🧩 Core Component Patterns
@@ -369,7 +402,7 @@ function CustomDashboard() {
 
 ### Required Setup
 - [ ] Import `'@voilajsx/uikit/styles'` in root file
-- [ ] Wrap app in `<ThemeProvider theme="base" mode="light">`
+- [ ] ThemeProvider setup in `main.tsx` (automatically included in templates)
 - [ ] Use individual component imports for tree-shaking
 
 ### Styling Guidelines

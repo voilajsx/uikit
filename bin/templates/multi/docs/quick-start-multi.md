@@ -15,9 +15,21 @@ The Multi template provides pre-built layout components that handle complex UI p
 
 ## ⚡ 30-Second Setup
 
-### Step 1: Create Multi Project
+### Step 1: Install UIKit CLI Globally
 ```bash
-npx uikit create my-multi-app --multi --theme elegant
+# Install globally
+npm install -g @voilajsx/uikit
+
+# Check if you have the latest version
+npm list -g @voilajsx/uikit
+
+# Update if needed
+npm update -g @voilajsx/uikit
+```
+
+### Step 2: Create Multi Project
+```bash
+uikit create my-multi-app --multi --theme elegant
 cd my-multi-app && npm run dev
 ```
 

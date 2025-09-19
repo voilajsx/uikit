@@ -57,7 +57,7 @@ export interface ThemeContextValue {
 export interface ThemeProviderProps {
     /** REQUIRED: Child components */
     children: ReactNode;
-    /** RECOMMENDED: Theme from pre-bundled options (default: "default") */
+    /** RECOMMENDED: Theme from pre-bundled options (default: "base") */
     theme?: Theme;
     /** RECOMMENDED: System color mode (default: "light") */
     mode?: Mode;

@@ -15,12 +15,34 @@ A UIKit theme is a complete design system that includes:
 
 ## ⚡ Quick Start: Create Your First Theme
 
-### Step 1: Create Theme File
-Create your theme preset file in the project:
+### Option A: Automatic Generation (Recommended)
+Generate a complete theme with one command:
+
+```bash
+# Generate a new custom theme automatically
+npx uikit generate theme brand
+
+# This creates:
+# - Theme file with complete color system (29 semantic colors)
+# - Light and dark mode variants
+# - Proper project structure (SPA/Multi/FBCA support)
+# - Auto-updates main.tsx with theme and imports
+```
+
+**What happens automatically:**
+- ✅ Creates theme file in correct location (`src/themes/presets/` or `src/web/themes/presets/`)
+- ✅ Generates complete color system with all 29 required colors
+- ✅ Updates `main.tsx` with new theme and `forceConfig={true}`
+- ✅ Adds globals.css import for bundled themes
+- ✅ Works with SPA, Multi-page, and FBCA project structures
+
+### Option B: Manual Creation
+Create your theme preset file manually in the project:
 
 ```bash
 # Create themes directory if it doesn't exist
 mkdir -p src/themes/presets
+# For FBCA projects: mkdir -p src/web/themes/presets
 ```
 
 ```javascript
@@ -338,12 +360,19 @@ light: {
 
 ### 1. Setup Development Environment
 ```bash
+# Generate your custom theme (auto-detects SPA/Multi/FBCA structure)
+npx uikit generate theme brand
+
 # Start theme bundling in watch mode
 npx uikit bundle --watch
 
 # In another terminal, start your app
 npm run dev
 ```
+
+**Project Structure Support:**
+- **SPA/Multi projects**: Themes in `src/themes/presets/`, CSS in `src/styles/globals.css`
+- **FBCA projects**: Themes in `src/web/themes/presets/`, CSS in `src/web/styles/globals.css`
 
 ### 2. Iterative Design Process
 1. **Modify theme file** - Update colors/design tokens
@@ -493,10 +522,20 @@ const fontTheme = {
 
 ### CLI Commands Reference
 ```bash
+# Theme Generation
+npx uikit generate theme <name>  # Generate new custom theme (recommended)
+npx uikit generate theme brand   # Example: create "brand" theme
+
+# Theme Bundling
 npx uikit bundle                 # Generate CSS from themes
 npx uikit bundle --watch         # Watch mode for development
 npx uikit bundle --verbose       # Detailed logging
 npx uikit bundle --output <path> # Custom output location
+
+# Complete Workflow
+npx uikit generate theme brand   # 1. Generate theme
+npx uikit bundle                 # 2. Bundle to CSS
+npm run dev                      # 3. Start development
 ```
 
 ---

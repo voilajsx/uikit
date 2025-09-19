@@ -15,9 +15,21 @@ The SPA template provides a complete single-page application setup with React Ro
 
 ## ⚡ 30-Second Setup
 
-### Step 1: Create SPA Project
+### Step 1: Install UIKit CLI Globally
 ```bash
-npx uikit create my-spa-app --spa --theme elegant
+# Install globally
+npm install -g @voilajsx/uikit
+
+# Check if you have the latest version
+npm list -g @voilajsx/uikit
+
+# Update if needed
+npm update -g @voilajsx/uikit
+```
+
+### Step 2: Create SPA Project
+```bash
+uikit create my-spa-app --spa --theme elegant
 cd my-spa-app && npm run dev
 ```
 
@@ -670,7 +682,7 @@ function ResponsiveCard() {
 
 ### Required Setup
 - [ ] Install and configure React Router v6
-- [ ] Wrap app in `<ThemeProvider>` and `<Router>`
+- [ ] ThemeProvider setup in `main.tsx` (automatically included)
 - [ ] Create Layout component for consistent header/footer
 - [ ] Implement navigation with active states
 

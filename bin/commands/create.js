@@ -347,7 +347,7 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider theme="base" mode="light">
+    <ThemeProvider theme="base" mode="light" forceConfig={true}>
       <App />
     </ThemeProvider>
   </React.StrictMode>

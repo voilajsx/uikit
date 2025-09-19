@@ -449,31 +449,60 @@ async function generateThemeFeature(name, options) {
     process.exit(1);
   }
 
-  // Determine theme directory - check multiple possible locations
+  // Determine theme directory based on project structure
   let themesPath;
-  const possiblePaths = [
-    'src/themes/presets',
-    'src/web/assets/themes/presets',
-    'themes/presets',
-  ];
+  const isWebStructure = await fs.access(path.join(currentDir, 'src/web')).then(() => true).catch(() => false);
 
-  // Try to find existing themes directory
-  for (const possiblePath of possiblePaths) {
-    const fullPath = path.join(currentDir, possiblePath);
-    try {
-      await fs.access(fullPath);
-      themesPath = fullPath;
-      break;
-    } catch {
-      // Directory doesn't exist, continue searching
+  if (isWebStructure) {
+    // FBCA structure - check for existing themes in web directory
+    const possiblePaths = [
+      'src/web/themes/presets',
+      'src/web/assets/themes/presets',
+    ];
+
+    // Try to find existing themes directory
+    for (const possiblePath of possiblePaths) {
+      const fullPath = path.join(currentDir, possiblePath);
+      try {
+        await fs.access(fullPath);
+        themesPath = fullPath;
+        break;
+      } catch {
+        // Directory doesn't exist, continue searching
+      }
     }
-  }
 
-  // If no existing themes directory, create the preferred one
-  if (!themesPath) {
-    themesPath = path.join(currentDir, 'src/themes/presets');
-    await fs.mkdir(themesPath, { recursive: true });
-    console.log(`📁 Created themes directory: ${themesPath}`);
+    // If no existing themes directory, create the preferred one for FBCA
+    if (!themesPath) {
+      themesPath = path.join(currentDir, 'src/web/themes/presets');
+      await fs.mkdir(themesPath, { recursive: true });
+      console.log(`📁 Created themes directory: ${themesPath}`);
+    }
+  } else {
+    // SPA/Multi structure - check for existing themes in src directory
+    const possiblePaths = [
+      'src/themes/presets',
+      'themes/presets',
+    ];
+
+    // Try to find existing themes directory
+    for (const possiblePath of possiblePaths) {
+      const fullPath = path.join(currentDir, possiblePath);
+      try {
+        await fs.access(fullPath);
+        themesPath = fullPath;
+        break;
+      } catch {
+        // Directory doesn't exist, continue searching
+      }
+    }
+
+    // If no existing themes directory, create the preferred one for SPA/Multi
+    if (!themesPath) {
+      themesPath = path.join(currentDir, 'src/themes/presets');
+      await fs.mkdir(themesPath, { recursive: true });
+      console.log(`📁 Created themes directory: ${themesPath}`);
+    }
   }
 
   // Check if theme already exists
@@ -498,8 +527,19 @@ async function generateThemeFeature(name, options) {
     console.log(`📁 Created: ${relativePath}`);
 
     // Auto-update main.tsx with CSS import and theme setting
-    const stylesGlobalPath = path.join(currentDir, 'src/styles/globals.css');
-    const mainTsxPath = path.join(currentDir, 'src/main.tsx');
+    // Use the same project structure detection from above
+    let stylesGlobalPath, mainTsxPath;
+
+    if (isWebStructure) {
+      // FBCA structure
+      stylesGlobalPath = path.join(currentDir, 'src/web/styles/globals.css');
+      mainTsxPath = path.join(currentDir, 'src/web/main.tsx');
+    } else {
+      // SPA/Multi structure
+      stylesGlobalPath = path.join(currentDir, 'src/styles/globals.css');
+      mainTsxPath = path.join(currentDir, 'src/main.tsx');
+    }
+
     const hasStylesGlobal = await fs.access(stylesGlobalPath).then(() => true).catch(() => false);
 
     try {
@@ -507,14 +547,30 @@ async function generateThemeFeature(name, options) {
       let mainContent = await fs.readFile(mainTsxPath, 'utf8');
       let updated = false;
 
-      // Add CSS import if globals.css exists and not already imported
-      if (hasStylesGlobal && !mainContent.includes('./styles/globals.css')) {
-        mainContent = mainContent.replace(
-          /(import [^\n]*\.css[^\n]*;\n)/,
-          `$1import './styles/globals.css';\n`
-        );
-        console.log(`✅ Added import './styles/globals.css' to main.tsx`);
-        updated = true;
+      // Add CSS import for globals.css (will be created by bundle command)
+      const cssImportPath = './styles/globals.css';
+      if (!mainContent.includes(cssImportPath)) {
+        // Simple approach: find the index.css import line and add globals.css after it
+        const indexCssImport = "import './styles/index.css';";
+        if (mainContent.includes(indexCssImport)) {
+          mainContent = mainContent.replace(
+            indexCssImport,
+            `${indexCssImport}\nimport '${cssImportPath}';`
+          );
+          console.log(`✅ Added import '${cssImportPath}' to main.tsx`);
+          updated = true;
+        } else {
+          // Fallback: add after any CSS import
+          const cssImportRegex = /(import\s+['"'][^'"]*\.css['"];)/;
+          if (cssImportRegex.test(mainContent)) {
+            mainContent = mainContent.replace(
+              cssImportRegex,
+              `$1\nimport '${cssImportPath}';`
+            );
+            console.log(`✅ Added import '${cssImportPath}' to main.tsx`);
+            updated = true;
+          }
+        }
       }
 
       // Update theme in ThemeProvider if it exists
@@ -522,10 +578,21 @@ async function generateThemeFeature(name, options) {
         const oldThemeMatch = mainContent.match(/theme="([^"]+)"/);
         if (oldThemeMatch) {
           const oldTheme = oldThemeMatch[1];
+
+          // Update theme
           mainContent = mainContent.replace(
             /theme="[^"]+"/,
             `theme="${name}"`
           );
+
+          // Add forceConfig if not present
+          if (!mainContent.includes('forceConfig')) {
+            mainContent = mainContent.replace(
+              /<ThemeProvider([^>]+)>/,
+              `<ThemeProvider$1 forceConfig={true}>`
+            );
+          }
+
           console.log(`✅ Updated theme from "${oldTheme}" to "${name}" in main.tsx`);
           updated = true;
         }
@@ -538,10 +605,10 @@ async function generateThemeFeature(name, options) {
             `$1import { ThemeProvider } from '@voilajsx/uikit/theme-provider';\n`
           );
 
-          // Wrap App with ThemeProvider
+          // Wrap App with ThemeProvider (with forceConfig to override storage)
           mainContent = mainContent.replace(
             /(<React\.StrictMode>\s*<App[^>]*\/>\s*<\/React\.StrictMode>)/,
-            `<React.StrictMode>\n    <ThemeProvider theme="${name}" mode="light">\n      <App />\n    </ThemeProvider>\n  </React.StrictMode>`
+            `<React.StrictMode>\n    <ThemeProvider theme="${name}" mode="light" forceConfig={true}>\n      <App />\n    </ThemeProvider>\n  </React.StrictMode>`
           );
           console.log(`✅ Added ThemeProvider with theme "${name}" to main.tsx`);
           updated = true;

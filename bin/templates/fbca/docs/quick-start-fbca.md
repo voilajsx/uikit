@@ -15,9 +15,21 @@ FBCA (Feature-Based Component Architecture) organizes your application by busine
 
 ## ⚡ 30-Second Setup
 
-### Step 1: Create FBCA Project
+### Step 1: Install UIKit CLI Globally
 ```bash
-npx uikit create my-fbca-app --fbca --theme elegant
+# Install globally
+npm install -g @voilajsx/uikit
+
+# Check if you have the latest version
+npm list -g @voilajsx/uikit
+
+# Update if needed
+npm update -g @voilajsx/uikit
+```
+
+### Step 2: Create FBCA Project
+```bash
+uikit create my-fbca-app --fbca --theme elegant
 cd my-fbca-app && npm run dev
 ```
 
@@ -32,41 +44,40 @@ This creates a complete FBCA application with:
 ### Step 2: Project Structure
 ```
 src/
-└── web/                              # Frontend application
-    ├── features/
-    │   ├── auth/                     # Authentication feature
-    │   │   ├── components/           # Auth-specific components
-    │   │   │   ├── LoginForm.tsx
-    │   │   │   └── RegisterForm.tsx
-    │   │   └── pages/
-    │   │       ├── login.tsx         # Route: /auth/login
-    │   │       └── register.tsx      # Route: /auth/register
-    │   ├── gallery/                  # Gallery feature
-    │   │   ├── components/
-    │   │   │   ├── ImageCard.tsx
-    │   │   │   └── ImageGrid.tsx
-    │   │   └── pages/
-    │   │       ├── index.tsx         # Route: /gallery
-    │   │       ├── [animal].tsx      # Route: /gallery/:animal
-    │   │       └── favorites.tsx     # Route: /gallery/favorites
-    │   └── main/                     # Main feature (special case)
-    │       ├── components/
-    │       │   ├── Hero.tsx
-    │       │   └── Features.tsx
-    │       └── pages/
-    │           └── index.tsx         # Route: / (homepage)
-    ├── shared/
-    │   ├── components/               # Reusable UI components
-    │   │   ├── Header.tsx
-    │   │   ├── Footer.tsx
-    │   │   └── Navigation.tsx
-    │   ├── hooks/                    # Custom React hooks
-    │   │   ├── useSEO.ts
-    │   │   └── useAuth.ts
-    │   └── utils/                    # Utility functions
-    │       └── helpers.ts
-    └── lib/
-        └── page-router.tsx           # Auto-discovery router
+├── features/
+│   ├── auth/                         # Authentication feature
+│   │   ├── components/               # Auth-specific components
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── RegisterForm.tsx
+│   │   └── pages/
+│   │       ├── login.tsx             # Route: /auth/login
+│   │       └── register.tsx          # Route: /auth/register
+│   ├── gallery/                      # Gallery feature
+│   │   ├── components/
+│   │   │   ├── ImageCard.tsx
+│   │   │   └── ImageGrid.tsx
+│   │   └── pages/
+│   │       ├── index.tsx             # Route: /gallery
+│   │       ├── [animal].tsx          # Route: /gallery/:animal
+│   │       └── favorites.tsx         # Route: /gallery/favorites
+│   └── main/                         # Main feature (special case)
+│       ├── components/
+│       │   ├── Hero.tsx
+│       │   └── Features.tsx
+│       └── pages/
+│           └── index.tsx             # Route: / (homepage)
+├── shared/
+│   ├── components/                   # Reusable UI components
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   └── Navigation.tsx
+│   ├── hooks/                        # Custom React hooks
+│   │   ├── useSEO.ts
+│   │   └── useAuth.ts
+│   └── utils/                        # Utility functions
+│       └── helpers.ts
+└── lib/
+    └── page-router.tsx               # Auto-discovery router
 ```
 
 ## 🗺️ Auto-Discovery Routing System
@@ -76,19 +87,18 @@ The FBCA template uses file-based routing that automatically discovers routes fr
 
 ```jsx
 // File paths → Routes
-src/web/features/main/pages/index.tsx         → /
-src/web/features/auth/pages/login.tsx         → /auth/login
-src/web/features/auth/pages/register.tsx      → /auth/register
-src/web/features/gallery/pages/index.tsx      → /gallery
-src/web/features/gallery/pages/[animal].tsx   → /gallery/:animal
-src/web/features/gallery/pages/favorites.tsx  → /gallery/favorites
-src/web/features/blog/pages/[slug].tsx        → /blog/:slug
-src/web/features/blog/pages/[...slug].tsx     → /blog/* (catch-all)
-src/web/features/blog/pages/new.tsx           → /blog/new
+features/main/pages/index.tsx         → /
+features/auth/pages/login.tsx         → /auth/login
+features/auth/pages/register.tsx      → /auth/register
+features/gallery/pages/index.tsx      → /gallery
+features/gallery/pages/[animal].tsx   → /gallery/:animal
+features/gallery/pages/favorites.tsx  → /gallery/favorites
+features/blog/pages/[slug].tsx        → /blog/:slug
+features/blog/pages/new.tsx           → /blog/new
 ```
 
 ### Router Implementation
-The auto-discovery router (located at `src/web/lib/page-router.tsx`) uses Vite's glob imports:
+The auto-discovery router (located at `src/lib/page-router.tsx`) uses Vite's glob imports:
 
 ```jsx
 import { lazy, Suspense } from 'react';
@@ -146,11 +156,11 @@ function pathToRoute(filePath) {
   const feature = segments[0];
   const fileName = filePath.split('/').pop().replace(/\.(tsx|jsx)$/, '');
 
-  if (feature === 'main' && fileName === 'root') {
+  if (feature === 'main' && fileName === 'index') {
     return '/';
   }
 
-  if (fileName === 'root') {
+  if (fileName === 'index') {
     return `/${feature}`;
   }
 
@@ -167,7 +177,7 @@ export default PageRouter;
 
 ### Main Feature (Homepage)
 ```jsx
-// src/web/features/main/pages/index.tsx
+// src/features/main/pages/index.tsx
 import { useSEO } from '@/shared/hooks/useSEO';
 import { Hero } from '../components/Hero';
 import { Features } from '../components/Features';
@@ -238,7 +248,7 @@ export function Hero() {
 
 ### Authentication Feature
 ```jsx
-// src/web/features/auth/pages/login.tsx
+// src/features/auth/pages/login.tsx
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSEO } from '@/shared/hooks/useSEO';
@@ -373,7 +383,7 @@ export function LoginForm({ onSubmit, loading = false }: LoginFormProps) {
 
 ### Gallery Feature with Dynamic Routes
 ```jsx
-// src/web/features/gallery/pages/index.tsx
+// src/features/gallery/pages/index.tsx
 import { useSEO } from '@/shared/hooks/useSEO';
 import { ImageGrid } from '../components/ImageGrid';
 import { Header } from '@/shared/components/Header';
@@ -442,7 +452,7 @@ export default function GalleryPage() {
 ```
 
 ```jsx
-// src/web/features/gallery/pages/[animal].tsx
+// src/features/gallery/pages/[animal].tsx
 import { useParams } from 'react-router-dom';
 import { useSEO } from '@/shared/hooks/useSEO';
 import { ImageGrid } from '../components/ImageGrid';
@@ -686,32 +696,6 @@ export function useSEO(options: SEOOptions) {
 
 ## 🔧 Adding New Features
 
-### Using Generate Commands (Recommended)
-
-**Generate a complete feature** (hook + component + page):
-```bash
-uikit generate feature blog
-# Creates: blog/hooks/useBlog.ts + blog/components/Blog.tsx + blog/pages/index.tsx
-```
-
-**Generate individual elements:**
-```bash
-# Pages
-uikit generate page dashboard        # → main/pages/dashboard.tsx (route: /dashboard)
-uikit generate page blog/new        # → blog/pages/new.tsx (route: /blog/new)
-uikit generate page shop/cart/items # → shop/pages/cart/items.tsx (route: /shop/cart/items)
-
-# Components
-uikit generate component button      # → shared/components/Button.tsx (shared)
-uikit generate component blog/card   # → blog/components/Card.tsx (feature-specific)
-
-# Hooks
-uikit generate hook auth            # → shared/hooks/useSharedAuth.ts (shared)
-uikit generate hook blog/posts      # → blog/hooks/usePosts.ts (feature-specific)
-```
-
-### Manual Creation (Alternative)
-
 ### Step 1: Create Feature Structure
 ```bash
 mkdir -p src/features/blog/{components,pages}
@@ -719,7 +703,7 @@ mkdir -p src/features/blog/{components,pages}
 
 ### Step 2: Create Feature Pages
 ```jsx
-// src/web/features/blog/pages/index.tsx
+// src/features/blog/pages/index.tsx
 import { useSEO } from '@/shared/hooks/useSEO';
 
 export default function BlogPage() {
@@ -738,7 +722,7 @@ export default function BlogPage() {
 ```
 
 ```jsx
-// src/web/features/blog/pages/[slug].tsx
+// src/features/blog/pages/[slug].tsx
 import { useParams } from 'react-router-dom';
 import { useSEO } from '@/shared/hooks/useSEO';
 
@@ -765,42 +749,8 @@ export default function BlogPostPage() {
 The routing system will automatically discover:
 - `/blog` → `blog/pages/index.tsx`
 - `/blog/:slug` → `blog/pages/[slug].tsx`
-- `/docs/*` → `docs/pages/[...slug].tsx` (catch-all)
 
 No route configuration needed!
-
-### Catch-All Routes Example
-```jsx
-// src/web/features/docs/pages/[...slug].tsx - Handles /docs/anything/nested
-import { useParams } from 'react-router-dom';
-import { useSEO } from '@/shared/hooks/useSEO';
-
-export default function DocsPage() {
-  const { '*': catchAll } = useParams();
-  const paths = catchAll?.split('/') || [];
-
-  useSEO({
-    title: `Docs: ${paths.join(' / ')}`,
-    description: `Documentation for ${paths.join(' and ')}`,
-  });
-
-  return (
-    <div className="min-h-screen bg-background p-8">
-      <h1 className="text-3xl font-bold text-foreground mb-4">Documentation</h1>
-      <p className="text-muted-foreground mb-6">
-        Showing docs for: {paths.join(' → ')}
-      </p>
-      <ul className="space-y-2">
-        {paths.map((path, index) => (
-          <li key={index} className="text-foreground">
-            Section {index + 1}: <strong>{path}</strong>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-```
 
 ## 🧩 Shared Components
 
@@ -872,7 +822,6 @@ export function Header() {
 
 ### Routing Conventions
 - [ ] Use `index.tsx` for feature root pages (e.g., `/gallery`)
-- [ ] Use `[...slug].tsx` for catch-all routes (e.g., `/docs/*`)
 - [ ] Use `[param].tsx` for dynamic routes (e.g., `/gallery/:animal`)
 - [ ] Nest folders for sub-routes (e.g., `admin/users.tsx` → `/admin/users`)
 - [ ] `main` feature maps to homepage (`/`)

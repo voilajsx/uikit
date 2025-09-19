@@ -22,7 +22,7 @@ const packageJson = JSON.parse(
 
 program
   .name('uikit')
-  .description('🎨 UIKit CLI - Tools for @voilajsx/uikit development')
+  .description('🎨 UIKit CLI - Create projects, generate themes, and build apps')
   .version(packageJson.version);
 
 // Create command
@@ -43,7 +43,7 @@ program
 // Bundle command
 program
   .command('bundle')
-  .description('Bundle themes into CSS')
+  .description('Bundle custom themes into CSS (supports SPA/Multi/FBCA)')
   .option('--output <path>', 'output file path')
   .option('--watch', 'watch for changes and rebuild')
   .option('--verbose', 'verbose logging')
@@ -79,13 +79,12 @@ program
 program
   .command('generate')
   .alias('g')
-  .description('Generate a new frontend feature or page')
-  .argument('<type>', 'feature type (page|component|hook|feature|theme)')
-  .argument('<name>', 'feature name')
+  .description('Generate features, components, or custom themes')
+  .argument('<type>', 'type (page|component|hook|feature|theme)')
+  .argument('<name>', 'name (e.g., auth, brand, my-component)')
   .option('--page', 'generate page component with routing')
   .option('--component', 'generate reusable component')
   .option('--feature', 'generate complete feature with pages and components')
-  .option('--theme-template', 'generate custom theme file with brand colors')
   .option('--theme <theme>', 'UIKit theme to use (base|elegant|metro|studio|vivid)', 'base')
   .action(async (type, name, options) => {
     const { generateFeature } = await import('./commands/generate.js');
