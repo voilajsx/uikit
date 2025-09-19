@@ -6,6 +6,7 @@ import { useTheme } from '@voilajsx/uikit/theme-provider';
 import { PageLayout } from '@voilajsx/uikit/page';
 import type { NavigationItem } from '@voilajsx/uikit';
 import { Home, Layout, Palette, BookOpen } from 'lucide-react';
+import { SEO } from './components/SEO';
 
 // Page Components
 const HomePage: React.FC = () => {
@@ -20,8 +21,13 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-12">
-      {/* Hero Section */}
+    <>
+      <SEO
+        title="UIKit SPA Demo - Beautiful UI Components"
+        description="Professional React components with stunning themes, powered by OKLCH color science and cross-platform design"
+      />
+      <div className="space-y-12">
+        {/* Hero Section */}
       <section className="text-center py-16 bg-gradient-to-b from-background to-muted/20 rounded-lg">
         <div className="space-y-6">
           <h1 className="voila-heading text-4xl md:text-6xl mb-6 text-accent">
@@ -170,13 +176,19 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 
 const ComponentsPage: React.FC = () => {
   return (
-    <div className="space-y-8">
+    <>
+      <SEO
+        title="Components - UIKit SPA Demo"
+        description="Explore our comprehensive collection of production-ready React components, designed for consistency and accessibility"
+      />
+      <div className="space-y-8">
       <div className="text-center space-y-4">
         <h1 className="voila-heading text-4xl">Component Library</h1>
         <p className="voila-subheading text-muted-foreground max-w-3xl mx-auto">
@@ -412,7 +424,8 @@ const ComponentsPage: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </>
   );
 };
 
@@ -420,7 +433,12 @@ const ThemesPage: React.FC = () => {
   const { theme, setTheme, availableThemes } = useTheme();
 
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Themes - UIKit SPA Demo"
+        description="Explore 5 professional themes built with OKLCH color science for perfect accessibility and stunning design"
+      />
+      <div className="space-y-6">
       <h1 className="voila-heading">Themes</h1>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -464,13 +482,19 @@ const ThemesPage: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </>
   );
 };
 
 const DocsPage: React.FC = () => {
   return (
-    <div className="space-y-6">
+    <>
+      <SEO
+        title="Documentation - UIKit SPA Demo"
+        description="Complete documentation for UIKit components, themes, and SPA routing patterns"
+      />
+      <div className="space-y-6">
       <h1 className="voila-heading">Documentation</h1>
       
       <Card>
@@ -518,7 +542,8 @@ function App() {
           </code>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </>
   );
 };
 

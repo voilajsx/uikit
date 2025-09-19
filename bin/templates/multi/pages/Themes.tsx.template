@@ -3,6 +3,7 @@ import { Button } from '@voilajsx/uikit/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
 import { useTheme } from '@voilajsx/uikit/theme-provider';
 import { Palette, Sun, Moon, Sparkles } from 'lucide-react';
+import { SEO } from '../components';
 
 export const ThemesPage: React.FC = () => {
   const { theme, mode, setTheme, availableThemes, toggleMode } = useTheme();
@@ -36,7 +37,12 @@ export const ThemesPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <>
+      <SEO
+        title="Themes - UIKit Multi-Page Demo"
+        description="Interactive theme switching with OKLCH color science and comprehensive design tokens"
+      />
+      <div className="space-y-8">
       <div className="text-center space-y-4">
         <h1 className="voila-heading text-4xl">Theme System</h1>
         <p className="voila-subheading text-muted-foreground max-w-3xl mx-auto">
@@ -193,7 +199,8 @@ export const ThemesPage: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </>
   );
 };
 

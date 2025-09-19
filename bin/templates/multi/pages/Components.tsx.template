@@ -3,10 +3,16 @@ import { Button } from '@voilajsx/uikit/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
 import { Badge } from '@voilajsx/uikit/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@voilajsx/uikit/tabs';
+import { SEO } from '../components';
 
 export const ComponentsPage: React.FC = () => {
   return (
-    <div className="space-y-8">
+    <>
+      <SEO
+        title="Components - UIKit Multi-Page Demo"
+        description="Comprehensive showcase of UIKit's production-ready React components with examples and variations"
+      />
+      <div className="space-y-8">
       <div className="text-center space-y-4">
         <h1 className="voila-heading text-4xl">Component Library</h1>
         <p className="voila-subheading text-muted-foreground max-w-3xl mx-auto">
@@ -274,7 +280,8 @@ export const ComponentsPage: React.FC = () => {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+      </div>
+    </>
   );
 };
 

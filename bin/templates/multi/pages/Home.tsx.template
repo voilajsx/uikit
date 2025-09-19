@@ -4,6 +4,7 @@ import { Button } from '@voilajsx/uikit/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
 import { useTheme } from '@voilajsx/uikit/theme-provider';
 import { ArrowRight, Palette, Layout, BookOpen, Mail } from 'lucide-react';
+import { SEO } from '../components';
 
 export const HomePage: React.FC = () => {
   const { theme } = useTheme();
@@ -17,7 +18,12 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-12">
+    <>
+      <SEO
+        title="UIKit Multi-Page Demo - Home"
+        description="Professional React components with file-based routing, showcasing layouts, navigation, and code organization"
+      />
+      <div className="space-y-12">
       {/* Hero Section */}
       <section className="text-center py-16 bg-gradient-to-b from-background to-muted/20 rounded-lg">
         <div className="space-y-6">
@@ -179,7 +185,8 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 
