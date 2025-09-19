@@ -112,7 +112,7 @@ async function generateSinglePageTemplate(srcPath, theme = 'base') {
   const appContent = `import React from 'react';
 import { Button } from '@voilajsx/uikit/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
-import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
+import { useTheme } from '@voilajsx/uikit/theme-provider';
 
 const UIKitShowcase: React.FC = () => {
   const { theme, mode, setTheme, setMode, availableThemes, toggleMode } = useTheme();
@@ -330,9 +330,7 @@ const UIKitShowcase: React.FC = () => {
 
 function App() {
   return (
-    <ThemeProvider theme="base" mode="light" forceConfig={true}>
-      <UIKitShowcase />
-    </ThemeProvider>
+    <UIKitShowcase />
   );
 }
 
@@ -343,18 +341,35 @@ export default App;`;
   // Main entry point
   const mainContent = `import React from 'react';
 import ReactDOM from 'react-dom/client';
-import '@voilajsx/uikit/styles';
+import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
 import App from './App';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme="base" mode="light">
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );`;
 
   await fs.writeFile(path.join(srcPath, 'main.tsx'), mainContent);
 
-  // Create styles directory and placeholder
+  // Create index.css with proper Tailwind v4+ setup
+  const cssContent = `/**
+ * Main Styles Entry Point
+ * Tailwind CSS v4+ with UIKit integration
+ */
+
+/* Tailwind CSS v4+ - REQUIRED */
+@import "tailwindcss";
+
+/* UIKit base styles - REQUIRED */
+@import '@voilajsx/uikit/styles';`;
+
+  await fs.writeFile(path.join(srcPath, 'index.css'), cssContent);
+
+  // Create styles directory and globals.css for theme bundling (consistent with SPA/Multi)
   const stylesPath = path.join(srcPath, 'styles');
   await fs.mkdir(stylesPath, { recursive: true });
   await fs.writeFile(path.join(stylesPath, 'globals.css'), '/* Themes will be bundled here */\n');
@@ -454,7 +469,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
  */
 async function generateSPATemplate(srcPath, theme = 'base') {
   const templatesPath = path.join(__dirname, '../templates/spa');
-  
+
   // Read and process App.tsx template
   const appTemplate = await fs.readFile(path.join(templatesPath, 'App.tsx.template'), 'utf8');
   const appContent = appTemplate.replace(/{{THEME}}/g, theme);
@@ -463,6 +478,10 @@ async function generateSPATemplate(srcPath, theme = 'base') {
   // Read and copy main.tsx template
   const mainTemplate = await fs.readFile(path.join(templatesPath, 'main.tsx.template'), 'utf8');
   await fs.writeFile(path.join(srcPath, 'main.tsx'), mainTemplate);
+
+  // Read and copy index.css template
+  const cssTemplate = await fs.readFile(path.join(templatesPath, 'index.css.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, 'index.css'), cssTemplate);
 
   // Read and copy index.html template
   const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
@@ -520,6 +539,10 @@ async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
   // Read and copy main.tsx template
   const mainTemplate = await fs.readFile(path.join(templatesPath, 'main.tsx.template'), 'utf8');
   await fs.writeFile(path.join(srcPath, 'main.tsx'), mainTemplate);
+
+  // Read and copy index.css template
+  const cssTemplate = await fs.readFile(path.join(templatesPath, 'index.css.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, 'index.css'), cssTemplate);
 
   // Read and copy index.html template
   const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
@@ -733,7 +756,8 @@ async function generatePackageJson(projectPath, name, templateType) {
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.2.2",
-    "vite": "^6.3.6"
+    "vite": "^6.3.6",
+    "tailwindcss": "^4.0.0-alpha.32"
   };
 
   // Add React Router types for SPA, multi-page, and FBCA templates
@@ -883,6 +907,7 @@ export default defineConfig({
     await fs.writeFile(path.join(projectPath, 'tsconfig.json'), minimalTsConfig);
     await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), minimalTsNodeConfig);
   }
+
   
   // Always generate .gitignore (moved outside try/catch to ensure it runs)
   console.log('🔧 Generating .gitignore...');

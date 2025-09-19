@@ -34,7 +34,7 @@ program
   .option('--multi', 'create multi-page template with routing')
   .option('--fbca', 'create feature-based component architecture template')
   .option('--single', 'create single-page theme showcase (default)')
-  .option('--theme <theme>', 'default theme (base|elegant|metro|studio|vivid)', 'default')
+  .option('--theme <theme>', 'default theme (base|elegant|metro|studio|vivid)', 'base')
   .action(async (name, options) => {
     const { createProject } = await import('./commands/create.js');
     await createProject(name, options);
@@ -80,11 +80,12 @@ program
   .command('generate')
   .alias('g')
   .description('Generate a new frontend feature or page')
-  .argument('<type>', 'feature type (page|component|feature)')
+  .argument('<type>', 'feature type (page|component|hook|feature|theme)')
   .argument('<name>', 'feature name')
   .option('--page', 'generate page component with routing')
   .option('--component', 'generate reusable component')
   .option('--feature', 'generate complete feature with pages and components')
+  .option('--theme-template', 'generate custom theme file with brand colors')
   .option('--theme <theme>', 'UIKit theme to use (base|elegant|metro|studio|vivid)', 'base')
   .action(async (type, name, options) => {
     const { generateFeature } = await import('./commands/generate.js');

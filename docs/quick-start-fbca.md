@@ -45,7 +45,7 @@ src/
 │   │   │   ├── ImageCard.tsx
 │   │   │   └── ImageGrid.tsx
 │   │   └── pages/
-│   │       ├── root.tsx              # Route: /gallery
+│   │       ├── index.tsx             # Route: /gallery
 │   │       ├── [animal].tsx          # Route: /gallery/:animal
 │   │       └── favorites.tsx         # Route: /gallery/favorites
 │   └── main/                         # Main feature (special case)
@@ -53,7 +53,7 @@ src/
 │       │   ├── Hero.tsx
 │       │   └── Features.tsx
 │       └── pages/
-│           └── root.tsx              # Route: / (homepage)
+│           └── index.tsx             # Route: / (homepage)
 ├── shared/
 │   ├── components/                   # Reusable UI components
 │   │   ├── Header.tsx
@@ -75,10 +75,10 @@ The FBCA template uses file-based routing that automatically discovers routes fr
 
 ```jsx
 // File paths → Routes
-features/main/pages/root.tsx          → /
+features/main/pages/index.tsx         → /
 features/auth/pages/login.tsx         → /auth/login
 features/auth/pages/register.tsx      → /auth/register
-features/gallery/pages/root.tsx       → /gallery
+features/gallery/pages/index.tsx      → /gallery
 features/gallery/pages/[animal].tsx   → /gallery/:animal
 features/gallery/pages/favorites.tsx  → /gallery/favorites
 features/blog/pages/[slug].tsx        → /blog/:slug
@@ -133,7 +133,7 @@ function PageRouter() {
 
 function pathToRoute(filePath) {
   // Convert: ../features/auth/pages/login.tsx → /auth/login
-  // Convert: ../features/main/pages/root.tsx → /
+  // Convert: ../features/main/pages/index.tsx → /
   // Convert: ../features/gallery/pages/[animal].tsx → /gallery/:animal
 
   const segments = filePath
@@ -144,11 +144,11 @@ function pathToRoute(filePath) {
   const feature = segments[0];
   const fileName = filePath.split('/').pop().replace(/\.(tsx|jsx)$/, '');
 
-  if (feature === 'main' && fileName === 'root') {
+  if (feature === 'main' && fileName === 'index') {
     return '/';
   }
 
-  if (fileName === 'root') {
+  if (fileName === 'index') {
     return `/${feature}`;
   }
 
@@ -165,7 +165,7 @@ export default PageRouter;
 
 ### Main Feature (Homepage)
 ```jsx
-// src/features/main/pages/root.tsx
+// src/features/main/pages/index.tsx
 import { useSEO } from '@/shared/hooks/useSEO';
 import { Hero } from '../components/Hero';
 import { Features } from '../components/Features';
@@ -371,7 +371,7 @@ export function LoginForm({ onSubmit, loading = false }: LoginFormProps) {
 
 ### Gallery Feature with Dynamic Routes
 ```jsx
-// src/features/gallery/pages/root.tsx
+// src/features/gallery/pages/index.tsx
 import { useSEO } from '@/shared/hooks/useSEO';
 import { ImageGrid } from '../components/ImageGrid';
 import { Header } from '@/shared/components/Header';
@@ -691,7 +691,7 @@ mkdir -p src/features/blog/{components,pages}
 
 ### Step 2: Create Feature Pages
 ```jsx
-// src/features/blog/pages/root.tsx
+// src/features/blog/pages/index.tsx
 import { useSEO } from '@/shared/hooks/useSEO';
 
 export default function BlogPage() {
@@ -735,7 +735,7 @@ export default function BlogPostPage() {
 
 ### Step 3: Auto-Discovery Works!
 The routing system will automatically discover:
-- `/blog` → `blog/pages/root.tsx`
+- `/blog` → `blog/pages/index.tsx`
 - `/blog/:slug` → `blog/pages/[slug].tsx`
 
 No route configuration needed!
@@ -809,7 +809,7 @@ export function Header() {
 - [ ] Group related functionality within features
 
 ### Routing Conventions
-- [ ] Use `root.tsx` for feature root pages (e.g., `/gallery`)
+- [ ] Use `index.tsx` for feature root pages (e.g., `/gallery`)
 - [ ] Use `[param].tsx` for dynamic routes (e.g., `/gallery/:animal`)
 - [ ] Nest folders for sub-routes (e.g., `admin/users.tsx` → `/admin/users`)
 - [ ] `main` feature maps to homepage (`/`)

@@ -1,6 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
-import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
 import { PageLayout } from '@voilajsx/uikit/page';
 import { Header, Footer } from './components';
 import { AppRouter } from './router';
@@ -84,11 +83,9 @@ const LayoutWrapper: React.FC = () => {
 
 function App() {
   return (
-    <ThemeProvider theme="elegant" mode="light">
-      <Router>
-        <LayoutWrapper />
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <LayoutWrapper />
+    </Router>
   );
 }
 

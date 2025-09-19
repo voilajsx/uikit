@@ -53,11 +53,11 @@ src/
 │   │       └── register.tsx      # Route: /auth/register
 │   ├── dashboard/                # Dashboard feature
 │   │   └── pages/
-│   │       ├── root.tsx          # Route: /dashboard
+│   │       ├── index.tsx         # Route: /dashboard
 │   │       └── settings.tsx      # Route: /dashboard/settings
 │   └── main/                     # Main feature (special case)
 │       └── pages/
-│           └── root.tsx          # Route: / (homepage)
+│           └── index.tsx         # Route: / (homepage)
 ├── shared/
 │   ├── components/               # Reusable UI components
 │   └── hooks/                    # Custom React hooks (SEO, etc.)
@@ -68,10 +68,10 @@ src/
 ### FBCA Routing Conventions
 ```jsx
 // File-based routing patterns:
-root.tsx           → /feature (feature root)
+index.tsx          → /feature (feature root)
 [param].tsx        → /feature/:param (dynamic routes)
 nested/page.tsx    → /feature/nested/page
-main/pages/root.tsx → / (homepage - special case)
+main/pages/index.tsx → / (homepage - special case)
 ```
 
 ### FBCA Features Included

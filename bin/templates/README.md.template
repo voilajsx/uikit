@@ -22,10 +22,11 @@ npm run preview
 
 This project is built with [@voilajsx/uikit](https://github.com/voilajsx/uikit) - a complete React UI framework with:
 
-- **37 UI Components** - Forms, tables, navigation, overlays
+- **37 UI Components** - Forms, tables, navigation, overlays, and more
 - **5 Professional Themes** - Base, Elegant, Metro, Studio, Vivid
-- **5 Layout Systems** - Admin, Auth, Page, Popup, Blank
-- **Theme System** - Light/dark mode with semantic colors
+- **5 Layout Systems** - Admin, Auth, Page, Popup, Blank layouts
+- **ScrollToTop Navigation** - Automatic scroll-to-top on route changes
+- **Theme System** - Light/dark mode with semantic OKLCH colors
 - **TypeScript Support** - Full type safety out of the box
 
 ## 🏗️ Project Structure
@@ -33,15 +34,19 @@ This project is built with [@voilajsx/uikit](https://github.com/voilajsx/uikit) 
 ```
 {{PROJECT_NAME}}/
 ├── src/
-│   ├── components/          # Reusable UI components
-│   ├── pages/              # Application pages
-│   ├── styles/             # Global styles and themes
 │   ├── App.tsx             # Main application component
-│   └── main.tsx            # Application entry point
+│   ├── main.tsx            # Application entry point
+│   ├── index.css           # Tailwind CSS v4+ and UIKit styles
+│   └── (additional files based on template type)
 ├── public/                 # Static assets
 ├── package.json            # Dependencies and scripts
 └── README.md              # This file
 ```
+
+**Template-specific organization:**
+- **SPA**: All components in single `App.tsx` file - perfect for demos and prototypes
+- **Multi**: Organized `/pages` directory with separate page files - ideal for production apps
+- **FBCA**: Feature-based `/features` directory structure - advanced scalable architecture
 
 ## 🎯 Development Commands
 
@@ -70,7 +75,7 @@ Available modes: `light` | `dark`
 - **[React 19](https://react.dev)** - UI library
 - **[TypeScript](https://typescriptlang.org)** - Type safety
 - **[Vite](https://vitejs.dev)** - Build tool and dev server
-- **[Tailwind CSS](https://tailwindcss.com)** - Utility-first CSS
+- **[Tailwind CSS v4+](https://tailwindcss.com)** - Utility-first CSS framework
 - **[@voilajsx/uikit](https://github.com/voilajsx/uikit)** - UI components and layouts
 - **[React Router](https://reactrouter.com)** - Client-side routing (if applicable)
 - **[Lucide React](https://lucide.dev)** - Icon library
@@ -78,10 +83,24 @@ Available modes: `light` | `dark`
 ## 🔧 Configuration
 
 ### Theme Configuration
-Customize your theme colors and design tokens in `src/styles/index.css` or create custom theme presets.
+Switch themes by updating the ThemeProvider in `src/App.tsx`:
 
-### Tailwind Configuration
-Extend Tailwind configuration in `tailwind.config.js` for custom utilities and components.
+```jsx
+<ThemeProvider theme="studio" mode="light">
+  {/* Your app */}
+</ThemeProvider>
+```
+
+### Tailwind CSS v4+ Integration
+Styles are configured in `src/index.css` with modern Tailwind v4+ syntax:
+
+```css
+/* Tailwind CSS v4+ - REQUIRED */
+@import "tailwindcss";
+
+/* UIKit base styles - REQUIRED */
+@import '@voilajsx/uikit/styles';
+```
 
 ### TypeScript Configuration
 TypeScript settings can be modified in `tsconfig.json` for stricter or more lenient type checking.
@@ -169,7 +188,7 @@ function UserCard({ user }: UserCardProps) {
 - **[UIKit LLM Guide](https://github.com/voilajsx/uikit/blob/main/docs/UIKIT_LLM_GUIDE.md)** - Comprehensive usage guide
 - **[React Documentation](https://react.dev)** - React framework guide
 - **[Vite Documentation](https://vitejs.dev)** - Build tool documentation
-- **[Tailwind CSS](https://tailwindcss.com)** - Utility-first CSS framework
+- **[Tailwind CSS v4+](https://tailwindcss.com)** - Utility-first CSS framework framework
 
 ## 🔗 Quick Links
 
@@ -223,18 +242,18 @@ VITE_API_URL=http://localhost:3000/api
 VITE_APP_TITLE={{PROJECT_NAME}}
 ```
 
-### Code Quality
-This project includes:
-- **ESLint** - Code linting and formatting
-- **TypeScript** - Static type checking
-- **Prettier** - Code formatting (if configured)
+### UIKit CLI Commands
+If you have the UIKit CLI installed globally, you can use additional commands:
 
-Run quality checks:
 ```bash
-npm run lint          # Check for linting issues
-npm run lint:fix      # Fix auto-fixable issues
-npm run type-check    # Run TypeScript checks
+uikit serve           # Enhanced dev server with theme bundling
+uikit build           # Production build with SEO generation
+uikit bundle          # Standalone theme bundling
+uikit generate        # Code generation utilities
 ```
+
+### Code Quality
+This project includes TypeScript for static type checking. Additional linting and formatting tools may be configured based on your template choice.
 
 ---
 

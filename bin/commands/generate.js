@@ -18,6 +18,13 @@ export async function generateFeature(type, name, options) {
   console.log(`🎨 Generating ${type}: "${name}" with ${theme} theme...\n`);
 
   try {
+    // Handle theme generation separately (doesn't need features directory)
+    if (type === 'theme') {
+      await generateThemeFeature(name, options);
+      console.log(`✅ Generated ${type} "${name}" successfully!`);
+      return;
+    }
+
     // Validate feature name (allow forward slashes for nested paths)
     if (!name || !/^[a-zA-Z0-9-_/]+$/.test(name)) {
       console.error('❌ Invalid feature name. Use only letters, numbers, hyphens, underscores, and forward slashes.');
@@ -78,7 +85,7 @@ export async function generateFeature(type, name, options) {
     } else if (type === 'feature') {
       await generateFullFeature(featuresPath, name, options);
     } else {
-      console.error(`❌ Unknown type "${type}". Use: page, component, hook, or feature`);
+      console.error(`❌ Unknown type "${type}". Use: page, component, hook, feature, or theme`);
       process.exit(1);
     }
 
@@ -95,7 +102,7 @@ export async function generateFeature(type, name, options) {
  */
 async function generatePageFeature(featuresPath, name, options) {
   // Parse feature name and nested path
-  // Examples: "dashboard" → feature: dashboard, path: root.tsx
+  // Examples: "dashboard" → feature: dashboard, path: index.tsx
   //          "dashboard/new" → feature: dashboard, path: new.tsx
   //          "dashboard/new/apple" → feature: dashboard, path: new/apple.tsx
 
@@ -298,13 +305,13 @@ async function generateFullFeature(featuresPath, name, options) {
     const componentOptions = { ...options, componentName: componentName };
     await generateComponentFromTemplate(componentTemplatesPath, 'component.tsx.template', componentsPath, `${componentName}.tsx`, componentName, componentOptions);
 
-    // Generate page (root page for the feature)
+    // Generate page (index page for the feature)
     const pageTemplatesPath = path.join(__dirname, '../templates/generate/page');
-    await generateFromTemplate(pageTemplatesPath, 'page.tsx.template', pagesPath, 'root.tsx', name, options);
+    await generateFromTemplate(pageTemplatesPath, 'page.tsx.template', pagesPath, 'index.tsx', name, options);
 
     console.log(`📁 Created: src/web/features/${name}/hooks/${hookName}.ts`);
     console.log(`📁 Created: src/web/features/${name}/components/${componentName}.tsx`);
-    console.log(`📁 Created: src/web/features/${name}/pages/root.tsx`);
+    console.log(`📁 Created: src/web/features/${name}/pages/index.tsx`);
   } catch (error) {
     console.error(`❌ Failed to generate feature: ${error.message}`);
     throw error;
@@ -406,6 +413,186 @@ async function generateFromTemplate(templatesPath, templateFile, outputPath, out
       .replace(/\{\{FEATURE_NAME\}\}/g, featureName.toUpperCase())
       .replace(/\{\{componentName\}\}/g, featureName)
       .replace(/\{\{ComponentName\}\}/g, featureName.charAt(0).toUpperCase() + featureName.slice(1))
+      .replace(/\{\{projectName\}\}/g, projectName)
+      .replace(/\{\{theme\}\}/g, theme);
+
+    // Write output file
+    const outputFilePath = path.join(outputPath, outputFile);
+    await fs.writeFile(outputFilePath, processedContent, 'utf8');
+  } catch (error) {
+    console.error(`❌ Failed to generate ${outputFile} from template ${templateFile}:`, error.message);
+    throw error;
+  }
+}
+/**
+ * Generate a custom theme file
+ */
+async function generateThemeFeature(name, options) {
+  // Validate theme name
+  if (!name || !/^[a-zA-Z0-9-_]+$/.test(name)) {
+    console.error('❌ Invalid theme name. Use only letters, numbers, hyphens, and underscores.');
+    process.exit(1);
+  }
+
+  // Check if we're in a project directory
+  const currentDir = process.cwd();
+  const packageJsonPath = path.join(currentDir, 'package.json');
+
+  try {
+    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+    if (!packageJson.dependencies || !packageJson.dependencies['@voilajsx/uikit']) {
+      console.error('❌ Not in a UIKit project directory. Run this from project root.');
+      process.exit(1);
+    }
+  } catch {
+    console.error('❌ No package.json found. Run this from project root.');
+    process.exit(1);
+  }
+
+  // Determine theme directory - check multiple possible locations
+  let themesPath;
+  const possiblePaths = [
+    'src/themes/presets',
+    'src/web/assets/themes/presets',
+    'themes/presets',
+  ];
+
+  // Try to find existing themes directory
+  for (const possiblePath of possiblePaths) {
+    const fullPath = path.join(currentDir, possiblePath);
+    try {
+      await fs.access(fullPath);
+      themesPath = fullPath;
+      break;
+    } catch {
+      // Directory doesn't exist, continue searching
+    }
+  }
+
+  // If no existing themes directory, create the preferred one
+  if (!themesPath) {
+    themesPath = path.join(currentDir, 'src/themes/presets');
+    await fs.mkdir(themesPath, { recursive: true });
+    console.log(`📁 Created themes directory: ${themesPath}`);
+  }
+
+  // Check if theme already exists
+  const themeFileName = `theme-${name}.js`;
+  const themeFilePath = path.join(themesPath, themeFileName);
+
+  try {
+    await fs.access(themeFilePath);
+    console.error(`❌ Theme "${name}" already exists at ${themeFilePath}`);
+    process.exit(1);
+  } catch {
+    // Theme doesn't exist, good to proceed
+  }
+
+  try {
+    // Generate theme from template
+    const templatesPath = path.join(__dirname, '../templates/generate/theme');
+    await generateThemeFromTemplate(templatesPath, 'theme.js.template', themesPath, themeFileName, name, options);
+
+    // Get relative path for display
+    const relativePath = path.relative(currentDir, themeFilePath);
+    console.log(`📁 Created: ${relativePath}`);
+
+    // Auto-update main.tsx with CSS import and theme setting
+    const stylesGlobalPath = path.join(currentDir, 'src/styles/globals.css');
+    const mainTsxPath = path.join(currentDir, 'src/main.tsx');
+    const hasStylesGlobal = await fs.access(stylesGlobalPath).then(() => true).catch(() => false);
+
+    try {
+      // Read main.tsx
+      let mainContent = await fs.readFile(mainTsxPath, 'utf8');
+      let updated = false;
+
+      // Add CSS import if globals.css exists and not already imported
+      if (hasStylesGlobal && !mainContent.includes('./styles/globals.css')) {
+        mainContent = mainContent.replace(
+          /(import [^\n]*\.css[^\n]*;\n)/,
+          `$1import './styles/globals.css';\n`
+        );
+        console.log(`✅ Added import './styles/globals.css' to main.tsx`);
+        updated = true;
+      }
+
+      // Update theme in ThemeProvider if it exists
+      if (mainContent.includes('ThemeProvider')) {
+        const oldThemeMatch = mainContent.match(/theme="([^"]+)"/);
+        if (oldThemeMatch) {
+          const oldTheme = oldThemeMatch[1];
+          mainContent = mainContent.replace(
+            /theme="[^"]+"/,
+            `theme="${name}"`
+          );
+          console.log(`✅ Updated theme from "${oldTheme}" to "${name}" in main.tsx`);
+          updated = true;
+        }
+      } else {
+        // Add ThemeProvider if it doesn't exist
+        if (!mainContent.includes('ThemeProvider')) {
+          // Add import
+          mainContent = mainContent.replace(
+            /(import.*from.*;\n)$/m,
+            `$1import { ThemeProvider } from '@voilajsx/uikit/theme-provider';\n`
+          );
+
+          // Wrap App with ThemeProvider
+          mainContent = mainContent.replace(
+            /(<React\.StrictMode>\s*<App[^>]*\/>\s*<\/React\.StrictMode>)/,
+            `<React.StrictMode>\n    <ThemeProvider theme="${name}" mode="light">\n      <App />\n    </ThemeProvider>\n  </React.StrictMode>`
+          );
+          console.log(`✅ Added ThemeProvider with theme "${name}" to main.tsx`);
+          updated = true;
+        }
+      }
+
+      // Write updated content if changes were made
+      if (updated) {
+        await fs.writeFile(mainTsxPath, mainContent);
+      }
+
+    } catch (error) {
+      console.log(`⚠️  Could not auto-update main.tsx: ${error.message}`);
+    }
+
+    console.log(`\n🎨 Next steps:`);
+    console.log(`   1. Customize colors in ${relativePath}`);
+    console.log(`   2. Run "npx uikit bundle" to generate CSS`);
+    console.log(`\n🎉 Theme "${name}" is now active!`);
+
+  } catch (error) {
+    console.error(`❌ Failed to generate theme: ${error.message}`);
+    throw error;
+  }
+}
+
+/**
+ * Generate theme file from template with proper variable replacement
+ */
+async function generateThemeFromTemplate(templatesPath, templateFile, outputPath, outputFile, themeName, options) {
+  try {
+    // Read template file
+    const templatePath = path.join(templatesPath, templateFile);
+    const templateContent = await fs.readFile(templatePath, 'utf8');
+
+    // Get project name from package.json
+    const currentDir = process.cwd();
+    const packageJsonPath = path.join(currentDir, 'package.json');
+    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+    const projectName = packageJson.name || 'my-uikit-project';
+
+    // Determine theme
+    const theme = options && options.theme || 'base';
+
+    // Create theme name variations
+    const ThemeName = themeName.charAt(0).toUpperCase() + themeName.slice(1);
+
+    // Replace template variables
+    const processedContent = templateContent
+      .replace(/\{\{themeName\}\}/g, themeName)
+      .replace(/\{\{ThemeName\}\}/g, ThemeName)
       .replace(/\{\{projectName\}\}/g, projectName)
       .replace(/\{\{theme\}\}/g, theme);
 

@@ -65,7 +65,7 @@ export interface ThemeContextValue {
 export interface ThemeProviderProps {
   /** REQUIRED: Child components */
   children: ReactNode;
-  /** RECOMMENDED: Theme from pre-bundled options (default: "default") */
+  /** RECOMMENDED: Theme from pre-bundled options (default: "base") */
   theme?: Theme;
   /** RECOMMENDED: System color mode (default: "light") */
   mode?: Mode;
@@ -159,8 +159,8 @@ function getInitialThemeState(
     if (saved) {
       const parsed = JSON.parse(saved);
       
-      // Validate saved theme is still available
-      if (AVAILABLE_THEMES.includes(parsed.theme) && 
+      // Validate saved theme format (allow any theme name, just check mode)
+      if (parsed.theme && typeof parsed.theme === 'string' &&
           ['light', 'dark'].includes(parsed.mode)) {
         console.log(`🎨 Restored from storage: ${parsed.theme} (${parsed.mode} mode)`);
         return parsed;
@@ -195,8 +195,13 @@ function applyThemeImmediately(theme: Theme, mode: Mode) {
   
   // Remove existing theme and mode classes
   root.classList.remove('light', 'dark');
-  AVAILABLE_THEMES.forEach(t => {
-    root.classList.remove(`theme-${t}`);
+
+  // Remove all theme-* classes (including custom themes)
+  const classesToRemove = Array.from(root.classList).filter(className =>
+    className.startsWith('theme-')
+  );
+  classesToRemove.forEach(className => {
+    root.classList.remove(className);
   });
   
   // Add new classes immediately
@@ -294,15 +299,11 @@ export function ThemeProvider({
   }, [detectSystem, forceConfig, storageKey]);
 
   /**
-   * @llm-rule Set theme from pre-bundled options
-   * Only accepts valid theme names
+   * @llm-rule Set theme from pre-bundled options or custom themes
+   * Accepts built-in themes and custom themes (no validation needed for custom themes)
    */
   const setTheme = (newTheme: Theme) => {
-    if (!AVAILABLE_THEMES.includes(newTheme)) {
-      console.warn(`Invalid theme: ${newTheme}. Available themes:`, AVAILABLE_THEMES);
-      return;
-    }
-    
+    // Allow all themes - both built-in and custom
     setThemeState(prev => ({ ...prev, theme: newTheme }));
   };
 

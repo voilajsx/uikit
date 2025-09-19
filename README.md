@@ -104,11 +104,11 @@ src/
 │   │       └── signup.tsx        # /auth/signup
 │   ├── gallery/
 │   │   └── pages/
-│   │       ├── root.tsx          # /gallery
+│   │       ├── index.tsx         # /gallery
 │   │       └── [animal].tsx      # /gallery/:animal
 │   └── main/
 │       └── pages/
-│           └── root.tsx          # / (home page)
+│           └── index.tsx         # / (home page)
 ├── shared/
 │   ├── components/               # Reusable components
 │   └── hooks/                    # Custom hooks (SEO, etc.)
@@ -117,7 +117,7 @@ src/
 ```
 
 ### Routing Convention
-- `root.tsx` → Root path of the feature
+- `index.tsx` → Root path of the feature
 - `[param].tsx` → Dynamic parameter routes
 - Nested folders → Nested routes
 - Feature name → URL prefix (except `main` which maps to `/`)
@@ -137,7 +137,7 @@ npx uikit deploy --github  # Deploy to GitHub Pages
 **Generate complete features** (recommended for FBCA projects):
 ```bash
 npx uikit generate feature blog
-# Creates: hooks/useBlog.ts + components/Blog.tsx + pages/root.tsx
+# Creates: hooks/useBlog.ts + components/Blog.tsx + pages/index.tsx
 ```
 
 **Generate individual elements:**

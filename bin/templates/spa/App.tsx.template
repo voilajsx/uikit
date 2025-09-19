@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@voilajsx/uikit/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
-import { ThemeProvider, useTheme } from '@voilajsx/uikit/theme-provider';
+import { useTheme } from '@voilajsx/uikit/theme-provider';
 import { PageLayout } from '@voilajsx/uikit/page';
 import type { NavigationItem } from '@voilajsx/uikit';
 import { Home, Layout, Palette, BookOpen } from 'lucide-react';
@@ -617,11 +617,9 @@ const SPAContent: React.FC = () => {
 
 function App() {
   return (
-    <ThemeProvider theme="studio" mode="light">
-      <Router>
-        <SPAContent />
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <SPAContent />
+    </Router>
   );
 }
 

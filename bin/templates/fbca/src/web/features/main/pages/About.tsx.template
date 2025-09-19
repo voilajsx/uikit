@@ -107,7 +107,7 @@ export const AboutPage: React.FC = () => {
                     <div className="space-y-3">
                       <Badge variant="outline" className="mb-2">Main Feature Priority</Badge>
                       <div className="bg-muted/50 p-3 rounded text-sm font-mono space-y-1">
-                        <div>features/main/pages/root.tsx</div>
+                        <div>features/main/pages/index.tsx</div>
                         <div className="text-primary">→ /</div>
                       </div>
                       <div className="bg-muted/50 p-3 rounded text-sm font-mono space-y-1">
@@ -118,11 +118,11 @@ export const AboutPage: React.FC = () => {
                     <div className="space-y-3">
                       <Badge variant="outline" className="mb-2">Feature Routes</Badge>
                       <div className="bg-muted/50 p-3 rounded text-sm font-mono space-y-1">
-                        <div>features/auth/pages/root.tsx</div>
+                        <div>features/auth/pages/index.tsx</div>
                         <div className="text-primary">→ /auth</div>
                       </div>
                       <div className="bg-muted/50 p-3 rounded text-sm font-mono space-y-1">
-                        <div>features/gallery/pages/root.tsx</div>
+                        <div>features/gallery/pages/index.tsx</div>
                         <div className="text-primary">→ /gallery</div>
                       </div>
                     </div>
@@ -340,7 +340,7 @@ export const AboutPage: React.FC = () => {
                   <div className="bg-muted/50 p-4 rounded-lg font-mono text-sm space-y-1">
                     <div>mkdir src/features/blog</div>
                     <div>mkdir src/features/blog/pages</div>
-                    <div>touch src/features/blog/pages/root.tsx</div>
+                    <div>touch src/features/blog/pages/index.tsx</div>
                     <div className="text-green-600"># Route automatically available at /blog</div>
                   </div>
                 </div>
