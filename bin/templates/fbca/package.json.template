@@ -10,13 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@voilajsx/uikit": "latest",
+    "@tailwindcss/vite": "^4.1.13",
+    "@voilajsx/uikit": "^1.2.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.0.0",
-    "lucide-react": "latest"
+    "lucide-react": "latest",
+    "path": "^0.12.7",
+    "url": "^0.11.4"
   },
   "devDependencies": {
+    "@types/node": "^24.5.2",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
@@ -27,6 +31,6 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "typescript": "^5.7.2",
     "vite": "^6.3.6",
-    "tailwindcss": "^4.0.0-alpha.32"
+    "tailwindcss": "^4.1.13"
   }
 }

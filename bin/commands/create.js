@@ -344,6 +344,7 @@ import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
 import App from './App';
 import './index.css';
+import '@voilajsx/uikit/styles';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -362,10 +363,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
  */
 
 /* Tailwind CSS v4+ - REQUIRED */
-@import "tailwindcss";
-
-/* UIKit base styles - REQUIRED */
-@import '@voilajsx/uikit/styles';`;
+@import "tailwindcss";`;
 
   await fs.writeFile(path.join(srcPath, 'index.css'), cssContent);
 
@@ -788,10 +786,13 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
  */
 async function generatePackageJson(projectPath, name, templateType) {
   const baseDependencies = {
+    "@tailwindcss/vite": "^4.1.13",
+    "@voilajsx/uikit": "^1.2.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "@voilajsx/uikit": "latest",
-    "lucide-react": "latest"
+    "lucide-react": "latest",
+    "path": "^0.12.7",
+    "url": "^0.11.4"
   };
 
   // Add React Router for SPA, multi-page, and FBCA templates
@@ -800,12 +801,13 @@ async function generatePackageJson(projectPath, name, templateType) {
   }
 
   const baseDevDependencies = {
+    "@types/node": "^24.5.2",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.2.1",
-    "typescript": "^5.2.2",
+    "typescript": "^5.7.2",
     "vite": "^6.3.6",
-    "tailwindcss": "^4.0.0-alpha.32"
+    "tailwindcss": "^4.1.13"
   };
 
   // Add React Router types for SPA, multi-page, and FBCA templates
@@ -904,14 +906,37 @@ async function generateConfigFiles(projectPath) {
     // Generate minimal configs directly
     const minimalViteConfig = `import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'path'
+import tailwindcss from '@tailwindcss/vite'
+import { fileURLToPath } from 'url'
+
+// Get __dirname equivalent in ESM
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      '@': '/src',
+      "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    port: 5173,
+    host: true,
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          uikit: ['@voilajsx/uikit']
+        }
+      }
+    }
+  }
 })`;
 
     const minimalTsConfig = `{
