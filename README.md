@@ -51,7 +51,7 @@ Create visually stunning applications in seconds with 37 components, 5 layouts, 
 npm install @voilajsx/uikit
 ```
 
-Import components directly: `import { Button, Card } from '@voilajsx/uikit'`
+Import components directly: `import { Button } from '@voilajsx/uikit/button'` and `import { Card } from '@voilajsx/uikit/card'`
 
 **🚀 Complete Project Setup** - Use UIKit CLI to scaffold entire applications with routing, layouts, and themes pre-configured:
 
@@ -215,6 +215,8 @@ uikit deploy --github                 # Deploy to GitHub Pages
 
 **Note**: As mentioned above, UIKit is built on ShadCN components but with our own import paths. Instead of `@/components/ui/button`, use `@voilajsx/uikit/button`. The semantic color classes like `bg-background`, `text-foreground`, `border-border` etc. work exactly the same and automatically adapt to your selected theme.
 
+**Important**: Not all components have `variant` and `size` props. Use individual imports and check component documentation for available props. For layouts, PageLayout uses `scheme="default|sidebar"` (not "base").
+
 ### UI Component Examples
 
 #### Card Component
@@ -222,7 +224,7 @@ uikit deploy --github                 # Deploy to GitHub Pages
 ```jsx
 import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 
-<Card variant="default" size="md">
+<Card>
   <CardHeader>
     <CardTitle>Product Title</CardTitle>
   </CardHeader>
@@ -237,7 +239,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@voilajsx/uikit/card';
 ```jsx
 import { Alert, AlertTitle, AlertDescription } from '@voilajsx/uikit/alert';
 
-<Alert variant="success">
+<Alert variant="default">
   <AlertTitle>Success!</AlertTitle>
   <AlertDescription>Your action was completed successfully.</AlertDescription>
 </Alert>;
@@ -246,14 +248,16 @@ import { Alert, AlertTitle, AlertDescription } from '@voilajsx/uikit/alert';
 #### Form Component
 
 ```jsx
-import { Button, Input, Label } from '@voilajsx/uikit';
+import { Button } from '@voilajsx/uikit/button';
+import { Input } from '@voilajsx/uikit/input';
+import { Label } from '@voilajsx/uikit/label';
 
 <div className="space-y-4">
   <div>
     <Label>Email</Label>
-    <Input variant="default" size="md" placeholder="Enter email" />
+    <Input placeholder="Enter email" />
   </div>
-  <Button variant="default" size="md">
+  <Button variant="default" size="default">
     Submit
   </Button>
 </div>;
@@ -272,7 +276,7 @@ import { Button, Input, Label } from '@voilajsx/uikit';
 </AdminLayout>
 
 // Marketing Page
-<PageLayout scheme="base" tone="clean">
+<PageLayout scheme="default" tone="clean">
   <PageLayout.Header logo="MyApp" navigation={nav} />
   <PageLayout.Content>
     <h1 className="text-foreground">Welcome</h1>
@@ -300,7 +304,7 @@ import '@voilajsx/uikit/styles';
 
 // Theme Switcher
 const { setTheme } = useTheme();
-<Button variant="outline" size="sm" onClick={() => setTheme('elegant')}>
+<Button variant="outline" size="default" onClick={() => setTheme('elegant')}>
   Switch Theme
 </Button>
 
