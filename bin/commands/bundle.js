@@ -295,14 +295,31 @@ function readExistingGlobals(outputPath, verbose = false) {
 
   const content = fs.readFileSync(outputPath, 'utf8');
 
-  // Look for theme markers
-  const startMarker = '/* THEME_DECLARATIONS_PLACEHOLDER */';
+  // Look for theme markers - support both old and new formats
+  const oldStartMarker = '/* THEME_DECLARATIONS_PLACEHOLDER */';
+  const actualStartMarker = '/* 🎨 Bundled Themes for @voilajsx/uikit';
   const endMarker = '/* END_THEME_DECLARATIONS */';
 
-  const startIndex = content.indexOf(startMarker);
+  // Check for actual theme bundle start marker first
+  let startIndex = content.indexOf(actualStartMarker);
 
   if (startIndex === -1) {
-    // No existing themes - append to end
+    // Fall back to old placeholder marker
+    startIndex = content.indexOf(oldStartMarker);
+  }
+
+  if (startIndex === -1) {
+    // No existing themes - check if this looks like first-time usage
+    const hasThemeWillBundled = content.includes('/* Themes will be bundled here */');
+    if (hasThemeWillBundled) {
+      log(`📄 Found placeholder comment, replacing with themes`, true, verbose);
+      return {
+        beforeThemes: '',
+        afterThemes: '',
+      };
+    }
+
+    // No theme markers found - append to end
     log(`📄 No theme marker found, will append themes to end`, true, verbose);
     return {
       beforeThemes: content.trim() + '\n\n',
@@ -310,14 +327,31 @@ function readExistingGlobals(outputPath, verbose = false) {
     };
   }
 
-  const endIndex = content.indexOf(endMarker);
-  const actualEndIndex =
-    endIndex === -1
-      ? startIndex + startMarker.length
-      : endIndex + endMarker.length;
+  // Find the LAST end marker to handle multiple theme sections
+  let endIndex = -1;
+  let searchFrom = 0;
+  while (true) {
+    const nextIndex = content.indexOf(endMarker, searchFrom);
+    if (nextIndex === -1) break;
+    endIndex = nextIndex;
+    searchFrom = nextIndex + 1;
+  }
+
+  if (endIndex === -1) {
+    // No end marker found - replace from start marker to end of file
+    log(`📄 Found start marker but no end marker, replacing to end of file`, true, verbose);
+    return {
+      beforeThemes: content.substring(0, startIndex).trim() + '\n\n',
+      afterThemes: '',
+    };
+  }
+
+  // Both markers found - replace ALL theme sections between first start and last end
+  const actualEndIndex = endIndex + endMarker.length;
+  log(`📄 Found theme sections, replacing from first start to last end marker`, true, verbose);
 
   return {
-    beforeThemes: content.substring(0, startIndex + startMarker.length),
+    beforeThemes: content.substring(0, startIndex).trim() + '\n\n',
     afterThemes: content.substring(actualEndIndex),
   };
 }
