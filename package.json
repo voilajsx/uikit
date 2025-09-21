@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "description": "Cross-platform React components with beautiful themes and OKLCH color sciences",
   "type": "module",
   "keywords": [
@@ -268,7 +268,7 @@
     "dev": "vite",
     "build": "npm run clean && npm run build:lib && npm run build:css && npm run build:types",
     "build:lib": "vite build",
-    "build:css": "tailwindcss -i src/styles/globals.css -o dist/styles.css --minify",
+    "build:css": "tailwindcss -i src/styles/globals.css -o dist/styles-temp.css --minify && cat src/styles/fonts.css dist/styles-temp.css > dist/styles.css && rm dist/styles-temp.css",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
     "clean": "rm -rf dist",
     "preview": "vite preview",
@@ -404,6 +404,7 @@
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "glob": "^10.4.5",
+    "postcss-import": "^16.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.8",

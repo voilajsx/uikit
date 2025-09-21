@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename)
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // base: '/', // Uncomment this line to make the default asset loading to '/' rather than relative paths
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
