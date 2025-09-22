@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "description": "Cross-platform React components with beautiful themes and OKLCH color sciences",
   "type": "module",
   "keywords": [
@@ -266,9 +266,10 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "npm run clean && npm run build:lib && npm run build:css && npm run build:types",
+    "build": "npm run clean && npm run build:lib && npm run build:css && npm run build:fonts && npm run build:types",
     "build:lib": "vite build",
     "build:css": "tailwindcss -i src/styles/globals.css -o dist/styles-temp.css --minify && cat src/styles/fonts.css dist/styles-temp.css > dist/styles.css && rm dist/styles-temp.css",
+    "build:fonts": "cp -r src/fonts dist/",
     "build:types": "tsc --emitDeclarationOnly --outDir dist/types",
     "clean": "rm -rf dist",
     "preview": "vite preview",
@@ -284,18 +285,6 @@
     "postversion": "git push && git push --tags"
   },
   "peerDependencies": {
-    "@fontsource/amatic-sc": "^5.2.6",
-    "@fontsource/caveat": "^5.2.7",
-    "@fontsource/crimson-text": "^5.2.6",
-    "@fontsource/jetbrains-mono": "^5.2.6",
-    "@fontsource/libre-baskerville": "^5.2.6",
-    "@fontsource/merriweather": "^5.2.10",
-    "@fontsource/montserrat": "^5.2.7",
-    "@fontsource/orbitron": "^5.2.7",
-    "@fontsource/playfair-display": "^5.2.6",
-    "@fontsource/poppins": "^5.2.6",
-    "@fontsource/rajdhani": "^5.2.6",
-    "@fontsource/source-code-pro": "^5.2.6",
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0"
   },
@@ -305,56 +294,9 @@
     },
     "react-dom": {
       "optional": false
-    },
-    "@fontsource/jetbrains-mono": {
-      "optional": true
-    },
-    "@fontsource/orbitron": {
-      "optional": true
-    },
-    "@fontsource/poppins": {
-      "optional": true
-    },
-    "@fontsource/rajdhani": {
-      "optional": true
-    },
-    "@fontsource/source-code-pro": {
-      "optional": true
-    },
-    "@fontsource/playfair-display": {
-      "optional": true
-    },
-    "@fontsource/montserrat": {
-      "optional": true
-    },
-    "@fontsource/merriweather": {
-      "optional": true
-    },
-    "@fontsource/crimson-text": {
-      "optional": true
-    },
-    "@fontsource/libre-baskerville": {
-      "optional": true
-    },
-    "@fontsource/amatic-sc": {
-      "optional": true
-    },
-    "@fontsource/caveat": {
-      "optional": true
     }
   },
   "dependencies": {
-    "@fontsource/allura": "^5.2.7",
-    "@fontsource/berkshire-swash": "^5.2.6",
-    "@fontsource/dancing-script": "^5.2.6",
-    "@fontsource/dm-serif-display": "^5.2.6",
-    "@fontsource/great-vibes": "^5.2.7",
-    "@fontsource/pacifico": "^5.2.6",
-    "@fontsource/rubik": "^5.2.6",
-    "@fontsource/sacramento": "^5.2.6",
-    "@fontsource/source-serif-pro": "^5.2.5",
-    "@fontsource/space-grotesk": "^5.2.9",
-    "@fontsource/work-sans": "^5.2.6",
     "@hookform/resolvers": "^5.1.1",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-avatar": "^1.1.10",

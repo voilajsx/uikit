@@ -9,12 +9,13 @@
     "preview": "vite preview",
     "bundle": "npx uikit bundle",
     "serve": "npx uikit serve",
-    "deploy": "npx uikit deploy"
+    "deploy": "npx uikit deploy",
+    "deploy:gh": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@remix-run/router": "^1.23.0",
     "@tailwindcss/vite": "^4.1.13",
-    "@voilajsx/uikit": "^1.2.6",
+    "@voilajsx/uikit": "^1.2.9",
     "lucide-react": "latest",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -29,6 +30,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.7.2",
     "vite": "^6.3.6",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.1.13",
+    "gh-pages": "^6.3.0"
   }
 }

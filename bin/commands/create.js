@@ -45,18 +45,10 @@ export async function createProject(name, options) {
     // Generate project files based on template
     await generateTemplate(projectPath, templateType, options);
 
-    // Generate config files (skip for FBCA as it has its own config templates)
-    if (templateType !== 'fbca') {
-      await generateConfigFiles(projectPath);
-    }
-    
-    // Generate package.json (skip for FBCA as it has its own template)
-    if (templateType !== 'fbca') {
-      await generatePackageJson(projectPath, name, templateType);
-    }
-    
-    // Create README
-    await generateReadme(projectPath, name, templateType);
+    // All templates now handle their own config files, package.json, and README.md
+
+    // Generate .gitignore file
+    await generateGitignore(projectPath);
 
     console.log('✅ Generated project files');
 
@@ -108,334 +100,51 @@ async function generateTemplate(projectPath, templateType, options) {
  * Generate single-page theme showcase template
  */
 async function generateSinglePageTemplate(srcPath, theme = 'base') {
-  // Main App component
-  const appContent = `import React from 'react';
-import { Button } from '@voilajsx/uikit/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@voilajsx/uikit/card';
-import { useTheme } from '@voilajsx/uikit/theme-provider';
+  const templatesPath = path.join(__dirname, '../templates/single');
+  const projectName = path.basename(path.dirname(srcPath));
 
-const UIKitShowcase: React.FC = () => {
-  const { theme, mode, setTheme, setMode, availableThemes, toggleMode } = useTheme();
+  // Read and process App.tsx template
+  const appTemplate = await fs.readFile(path.join(templatesPath, 'src/App.tsx.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, 'App.tsx'), appTemplate);
 
-  const themeDescriptions = {
-    base: 'Clean default configuration showcasing the base system with Inter typography (default)',
-    elegant: 'Fresh sky blue theme with clean design',
-    metro: 'Dark teal theme with bright yellow accents',
-    studio: 'Sophisticated neutral theme with golden accents',
-    vivid: 'Premium cursive theme with sophisticated typography for luxury brands'
-  };
-
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="border-b border-border p-6">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center text-primary-foreground font-bold text-sm">
-              UI
-            </div>
-            <div>
-              <h3 className="voila-brand-logo text-xl font-bold">@voilajsx/uikit</h3>
-              <p className="text-xs text-muted-foreground">Professional React UI Components</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <select 
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as any)}
-              className="bg-background border border-input rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            >
-              {availableThemes.map(themeId => (
-                <option key={themeId} value={themeId}>
-                  {themeId.charAt(0).toUpperCase() + themeId.slice(1)}
-                </option>
-              ))}
-            </select>
-            
-            <Button onClick={toggleMode} variant="outline" size="sm">
-              {mode === 'dark' ? '☀️' : '🌙'}
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-6xl mx-auto p-6 space-y-8">
-        
-        {/* Hero */}
-        <section className="text-center py-8">
-          <div className="space-y-4">
-            <h1 className="voila-heading text-gradient-primary mb-3">
-              Beautiful UI Components
-            </h1>
-            <p className="voila-subheading text-accent mb-6">
-              {availableThemes.length} themes • {mode} mode • Professional React components
-            </p>
-            <div className="text-sm text-muted-foreground bg-muted px-4 py-2 rounded inline-block">
-              {themeDescriptions[theme as keyof typeof themeDescriptions]}
-            </div>
-          </div>
-        </section>
-
-        {/* Colors */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-primary text-primary-foreground p-4 rounded-lg text-center">
-            <div className="text-sm font-medium">Primary</div>
-          </div>
-          <div className="bg-secondary text-secondary-foreground p-4 rounded-lg text-center">
-            <div className="text-sm font-medium">Secondary</div>
-          </div>
-          <div className="bg-accent text-accent-foreground p-4 rounded-lg text-center">
-            <div className="text-sm font-medium">Accent</div>
-          </div>
-          <div className="bg-muted text-muted-foreground p-4 rounded-lg text-center">
-            <div className="text-sm font-medium">Muted</div>
-          </div>
-        </div>
-
-        {/* Components */}
-        <div className="space-y-6">
-          
-          {/* Buttons */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Buttons</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-3">
-                <Button size="lg">Primary</Button>
-                <Button variant="secondary" size="lg">Secondary</Button>
-                <Button variant="outline" size="lg">Outline</Button>
-                <Button variant="ghost" size="lg">Ghost</Button>
-                <Button variant="destructive" size="lg">Delete</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Feature Card</CardTitle>
-                <CardDescription>Standard card component</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Perfect for content areas</p>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Interactive</CardTitle>
-                <CardDescription>With actions</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button size="lg" className="w-full">Action</Button>
-              </CardContent>
-            </Card>
-            
-            <div className="bg-primary text-primary-foreground p-6 rounded-lg">
-              <h4 className="font-semibold mb-2">Primary Card</h4>
-              <p className="text-sm opacity-90">Custom background</p>
-            </div>
-          </div>
-
-          {/* Form Elements */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Form Elements</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input 
-                  type="text" 
-                  placeholder="Text input"
-                  className="p-3 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
-                />
-                <select className="p-3 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring">
-                  <option>Select option</option>
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                </select>
-              </div>
-              
-              <textarea 
-                placeholder="Textarea"
-                rows={3}
-                className="w-full p-3 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring resize-none"
-              />
-            </CardContent>
-          </Card>
-
-          {/* Chart Colors */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Chart Colors</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-5 gap-3">
-                <div className="text-center">
-                  <div className="w-full h-12 rounded mb-2 bg-chart1" />
-                  <div className="text-xs text-muted-foreground">chart1</div>
-                </div>
-                <div className="text-center">
-                  <div className="w-full h-12 rounded mb-2 bg-chart2" />
-                  <div className="text-xs text-muted-foreground">chart2</div>
-                </div>
-                <div className="text-center">
-                  <div className="w-full h-12 rounded mb-2 bg-chart3" />
-                  <div className="text-xs text-muted-foreground">chart3</div>
-                </div>
-                <div className="text-center">
-                  <div className="w-full h-12 rounded mb-2 bg-chart4" />
-                  <div className="text-xs text-muted-foreground">chart4</div>
-                </div>
-                <div className="text-center">
-                  <div className="w-full h-12 rounded mb-2 bg-chart5" />
-                  <div className="text-xs text-muted-foreground">chart5</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Typography Scale */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Typography</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <h1 className="text-3xl font-bold">Heading 1</h1>
-            <h2 className="text-2xl font-bold">Heading 2</h2>
-            <h3 className="text-xl font-bold">Heading 3</h3>
-            <p className="text-base">Body text - Lorem ipsum dolor sit amet consectetur.</p>
-            <p className="text-sm text-muted-foreground">Small text for captions and metadata.</p>
-            <code className="text-sm bg-muted px-2 py-1 rounded">Code snippet</code>
-          </CardContent>
-        </Card>
-
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-border p-6 mt-8">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-sm text-muted-foreground">
-            @voilajsx/uikit • {theme.charAt(0).toUpperCase() + theme.slice(1)} theme • {mode.charAt(0).toUpperCase() + mode.slice(1)} mode
-          </p>
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-function App() {
-  return (
-    <UIKitShowcase />
-  );
-}
-
-export default App;`;
-
-  await fs.writeFile(path.join(srcPath, 'App.tsx'), appContent);
-
-  // Main entry point
-  const mainContent = `import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from '@voilajsx/uikit/theme-provider';
-import App from './App';
-import './index.css';
-import '@voilajsx/uikit/styles';
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ThemeProvider theme="base" mode="light" forceConfig={true}>
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>
-);`;
-
+  // Read and process main.tsx template
+  const mainTemplate = await fs.readFile(path.join(templatesPath, 'src/main.tsx.template'), 'utf8');
+  const mainContent = mainTemplate.replace(/{{THEME}}/g, theme);
   await fs.writeFile(path.join(srcPath, 'main.tsx'), mainContent);
 
-  // Create index.css with proper Tailwind v4+ setup
-  const cssContent = `/**
- * Main Styles Entry Point
- * Tailwind CSS v4+ with UIKit integration
- */
+  // Read and copy index.css template
+  const cssTemplate = await fs.readFile(path.join(templatesPath, 'src/index.css.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, 'index.css'), cssTemplate);
 
-/* Tailwind CSS v4+ - REQUIRED */
-@import "tailwindcss";`;
+  // Copy utils folder
+  const utilsPath = path.join(srcPath, 'utils');
+  await fs.mkdir(utilsPath, { recursive: true });
+  const assetUtilTemplate = await fs.readFile(path.join(templatesPath, 'src/utils/asset.ts'), 'utf8');
+  await fs.writeFile(path.join(utilsPath, 'asset.ts'), assetUtilTemplate);
 
-  await fs.writeFile(path.join(srcPath, 'index.css'), cssContent);
-
-  // Create styles directory and globals.css for theme bundling (consistent with SPA/Multi)
-  const stylesPath = path.join(srcPath, 'styles');
-  await fs.mkdir(stylesPath, { recursive: true });
-  await fs.writeFile(path.join(stylesPath, 'globals.css'), '/* Themes will be bundled here */\n');
-
-  // Create index.html with built-in SEO optimization
-  const indexContent = `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎨 UIKit Theme Showcase</title>
-    
-    <!-- SEO Optimizations -->
-    <meta name="description" content="Professional React UI components with beautiful themes and OKLCH color science. Built with @voilajsx/uikit.">
-    <meta name="keywords" content="react, ui components, themes, design system, tailwind css, typescript">
-    <meta name="author" content="@voilajsx/uikit">
-    
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="UIKit Theme Showcase">
-    <meta property="og:description" content="Professional React UI components with beautiful themes">
-    <meta property="og:site_name" content="@voilajsx/uikit">
-    
-    <!-- Twitter Cards -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="UIKit Theme Showcase">
-    <meta name="twitter:description" content="Professional React UI components with beautiful themes">
-    
-    <!-- Performance -->
-    <meta name="robots" content="index,follow">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    
-    <!-- Theme color -->
-    <meta name="theme-color" content="#6366F1">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "UIKit Theme Showcase",
-      "description": "Professional React UI components with beautiful themes",
-      "applicationCategory": "DesignApplication",
-      "operatingSystem": "Web",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "@voilajsx/uikit"
-      }
-    }
-    </script>
-  </body>
-</html>`;
-
+  // Read and process index.html template
+  const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
+  const indexContent = indexTemplate.replace(/{{PROJECT_NAME}}/g, projectName);
   await fs.writeFile(path.join(srcPath, '../index.html'), indexContent);
 
+  // Copy public assets
+  const publicTargetPath = path.join(srcPath, '../public');
+  await fs.mkdir(publicTargetPath, { recursive: true });
+
+  try {
+    // Copy favicon.svg
+    const faviconSourcePath = path.join(templatesPath, 'public/favicon.svg');
+    await fs.copyFile(faviconSourcePath, path.join(publicTargetPath, 'favicon.svg'));
+
+    // Copy hero.svg if it exists
+    const heroSourcePath = path.join(templatesPath, 'public/hero.svg');
+    await fs.copyFile(heroSourcePath, path.join(publicTargetPath, 'hero.svg'));
+  } catch (error) {
+    // Assets don't exist, skip copying
+  }
+
+
   // Copy documentation
-  const templatesPath = path.join(__dirname, '../templates');
   const docsSourcePath = path.join(templatesPath, 'docs');
   const docsTargetPath = path.join(srcPath, '../docs');
   try {
@@ -449,17 +158,31 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     // Docs directory doesn't exist, skip copying
   }
 
-  // Copy public assets
-  const publicSourcePath = path.join(templatesPath, 'favicon.svg');
-  const publicTargetPath = path.join(srcPath, '../public');
-  try {
-    await fs.mkdir(publicTargetPath, { recursive: true });
-    await fs.copyFile(publicSourcePath, path.join(publicTargetPath, 'favicon.svg'));
-    const heroSourcePath = path.join(templatesPath, 'hero.svg');
-    await fs.copyFile(heroSourcePath, path.join(publicTargetPath, 'hero.svg'));
-  } catch (error) {
-    // Assets don't exist, skip copying
-  }
+  // Copy config files
+  const projectPath = path.dirname(srcPath);
+
+  // Copy vite.config.ts
+  const viteConfigTemplate = await fs.readFile(path.join(templatesPath, 'vite.config.ts.template'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'vite.config.ts'), viteConfigTemplate);
+
+  // Copy tsconfig.json
+  const tsConfigTemplate = await fs.readFile(path.join(templatesPath, 'tsconfig.json'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'tsconfig.json'), tsConfigTemplate);
+
+  // Copy tsconfig.node.json
+  const tsNodeConfigTemplate = await fs.readFile(path.join(templatesPath, 'tsconfig.node.json'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), tsNodeConfigTemplate);
+
+  // Copy package.json
+  const packageTemplate = await fs.readFile(path.join(templatesPath, 'package.json.template'), 'utf8');
+  const packageContent = packageTemplate.replace(/{{PROJECT_NAME}}/g, projectName);
+  await fs.writeFile(path.join(projectPath, 'package.json'), packageContent);
+
+  // Copy README.md
+  const readmeTemplate = await fs.readFile(path.join(templatesPath, 'README.md.template'), 'utf8');
+  const readmeContent = readmeTemplate.replace(/{{PROJECT_NAME}}/g, projectName);
+  await fs.writeFile(path.join(projectPath, 'README.md'), readmeContent);
+
 }
 
 /**
@@ -468,18 +191,55 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 async function generateSPATemplate(srcPath, theme = 'base') {
   const templatesPath = path.join(__dirname, '../templates/spa');
 
-  // Read and process App.tsx template
-  const appTemplate = await fs.readFile(path.join(templatesPath, 'App.tsx.template'), 'utf8');
-  const appContent = appTemplate.replace(/{{THEME}}/g, theme);
-  await fs.writeFile(path.join(srcPath, 'App.tsx'), appContent);
+  // Copy src folder structure recursively
+  const srcTemplatePath = path.join(templatesPath, 'src');
+  try {
+    await fs.access(srcTemplatePath);
+    const entries = await fs.readdir(srcTemplatePath, { withFileTypes: true });
 
-  // Read and copy main.tsx template
-  const mainTemplate = await fs.readFile(path.join(templatesPath, 'main.tsx.template'), 'utf8');
-  await fs.writeFile(path.join(srcPath, 'main.tsx'), mainTemplate);
+    for (const entry of entries) {
+      const sourcePath = path.join(srcTemplatePath, entry.name);
+      const targetPath = path.join(srcPath, entry.name);
 
-  // Read and copy index.css template
-  const cssTemplate = await fs.readFile(path.join(templatesPath, 'index.css.template'), 'utf8');
-  await fs.writeFile(path.join(srcPath, 'index.css'), cssTemplate);
+      if (entry.isDirectory()) {
+        // Copy directory recursively
+        await fs.mkdir(targetPath, { recursive: true });
+        const dirFiles = await fs.readdir(sourcePath);
+        for (const file of dirFiles) {
+          const sourceFile = path.join(sourcePath, file);
+          const targetFile = path.join(targetPath, file);
+          if (file.endsWith('.template')) {
+            const content = await fs.readFile(sourceFile, 'utf8');
+            const processedContent = content.replace(/{{THEME}}/g, theme);
+            await fs.writeFile(targetFile.replace('.template', ''), processedContent);
+          } else {
+            await fs.copyFile(sourceFile, targetFile);
+          }
+        }
+      } else if (entry.name.endsWith('.template')) {
+        // Process template file
+        const template = await fs.readFile(sourcePath, 'utf8');
+        const content = template.replace(/{{THEME}}/g, theme);
+        await fs.writeFile(targetPath.replace('.template', ''), content);
+      } else {
+        // Copy non-template files as-is
+        await fs.copyFile(sourcePath, targetPath);
+      }
+    }
+  } catch (error) {
+    console.warn('⚠️  No src folder found in SPA template, using legacy file structure');
+
+    // Fallback to old method if src folder doesn't exist
+    const appTemplate = await fs.readFile(path.join(templatesPath, 'App.tsx.template'), 'utf8');
+    const appContent = appTemplate.replace(/{{THEME}}/g, theme);
+    await fs.writeFile(path.join(srcPath, 'App.tsx'), appContent);
+
+    const mainTemplate = await fs.readFile(path.join(templatesPath, 'main.tsx.template'), 'utf8');
+    await fs.writeFile(path.join(srcPath, 'main.tsx'), mainTemplate);
+
+    const cssTemplate = await fs.readFile(path.join(templatesPath, 'index.css.template'), 'utf8');
+    await fs.writeFile(path.join(srcPath, 'index.css'), cssTemplate);
+  }
 
   // Read and copy index.html template
   const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
@@ -545,6 +305,32 @@ async function generateSPATemplate(srcPath, theme = 'base') {
     // Components directory doesn't exist, skip copying
   }
 
+  // Copy config files
+  const projectPath = path.dirname(srcPath);
+  const projectName = path.basename(projectPath);
+
+  // Copy vite.config.ts
+  const viteConfigTemplate = await fs.readFile(path.join(templatesPath, 'vite.config.ts.template'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'vite.config.ts'), viteConfigTemplate);
+
+  // Copy tsconfig.json
+  const tsConfigTemplate = await fs.readFile(path.join(templatesPath, 'tsconfig.json.template'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'tsconfig.json'), tsConfigTemplate);
+
+  // Copy tsconfig.node.json
+  const tsNodeConfigTemplate = await fs.readFile(path.join(templatesPath, 'tsconfig.node.json'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), tsNodeConfigTemplate);
+
+  // Copy package.json
+  const packageTemplate = await fs.readFile(path.join(templatesPath, 'package.json.template'), 'utf8');
+  const packageContent = packageTemplate.replace(/{{PROJECT_NAME}}/g, projectName);
+  await fs.writeFile(path.join(projectPath, 'package.json'), packageContent);
+
+  // Copy README.md
+  const readmeTemplate = await fs.readFile(path.join(templatesPath, 'README.md.template'), 'utf8');
+  const readmeContent = readmeTemplate.replace(/{{PROJECT_NAME}}/g, projectName);
+  await fs.writeFile(path.join(projectPath, 'README.md'), readmeContent);
+
   console.log('✅ Generated SPA template with React Router navigation');
 }
 
@@ -554,67 +340,98 @@ async function generateSPATemplate(srcPath, theme = 'base') {
 async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
   const templatesPath = path.join(__dirname, '../templates/multi');
   const projectName = path.basename(path.dirname(srcPath));
-  
-  // Read and process App.tsx template
-  const appTemplate = await fs.readFile(path.join(templatesPath, 'App.tsx.template'), 'utf8');
-  const appContent = appTemplate
-    .replace(/{{DEFAULT_THEME}}/g, theme)
-    .replace(/{{DEFAULT_MODE}}/g, 'light');
-  await fs.writeFile(path.join(srcPath, 'App.tsx'), appContent);
 
-  // Read and copy router.tsx template
-  const routerTemplate = await fs.readFile(path.join(templatesPath, 'router.tsx.template'), 'utf8');
-  await fs.writeFile(path.join(srcPath, 'router.tsx'), routerTemplate);
+  // Helper function to recursively copy directory structure
+  async function copyDirectory(sourceDir, targetDir) {
+    await fs.mkdir(targetDir, { recursive: true });
+    const entries = await fs.readdir(sourceDir, { withFileTypes: true });
 
-  // Read and copy main.tsx template
-  const mainTemplate = await fs.readFile(path.join(templatesPath, 'main.tsx.template'), 'utf8');
-  await fs.writeFile(path.join(srcPath, 'main.tsx'), mainTemplate);
+    for (const entry of entries) {
+      const sourcePath = path.join(sourceDir, entry.name);
+      const targetPath = path.join(targetDir, entry.name);
 
-  // Read and copy index.css template
-  const cssTemplate = await fs.readFile(path.join(templatesPath, 'index.css.template'), 'utf8');
-  await fs.writeFile(path.join(srcPath, 'index.css'), cssTemplate);
+      if (entry.isDirectory()) {
+        await copyDirectory(sourcePath, targetPath);
+      } else if (entry.name.endsWith('.template')) {
+        // Process template file
+        const template = await fs.readFile(sourcePath, 'utf8');
+        const content = template
+          .replace(/{{DEFAULT_THEME}}/g, theme)
+          .replace(/{{DEFAULT_MODE}}/g, 'light')
+          .replace(/{{PROJECT_NAME}}/g, projectName)
+          .replace(/{{CURRENT_YEAR}}/g, new Date().getFullYear().toString())
+          .replace(/{{THEME}}/g, theme);
 
-  // Read and copy index.html template
-  const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
-  await fs.writeFile(path.join(srcPath, '../index.html'), indexTemplate);
-
-  // Create pages directory and copy all page templates
-  const pagesPath = path.join(srcPath, 'pages');
-  await fs.mkdir(pagesPath, { recursive: true });
-
-  const pageFiles = ['Home.tsx.template', 'Components.tsx.template', 'Themes.tsx.template', 'About.tsx.template', 'Contact.tsx.template', 'Login.tsx.template', 'Dashboard.tsx.template', 'ErrorPage.tsx.template'];
-  
-  for (const pageFile of pageFiles) {
-    const pageTemplate = await fs.readFile(path.join(templatesPath, 'pages', pageFile), 'utf8');
-    const pageContent = pageTemplate.replace(/{{THEME}}/g, theme);
-    const outputFileName = pageFile.replace('.template', '');
-    await fs.writeFile(path.join(pagesPath, outputFileName), pageContent);
-  }
-
-  // Create styles directory and placeholder
-  const stylesPath = path.join(srcPath, 'styles');
-  await fs.mkdir(stylesPath, { recursive: true });
-  await fs.writeFile(path.join(stylesPath, 'globals.css'), '/* Themes will be bundled here */\n');
-
-  // Create components directory and copy header/footer components
-  const componentsPath = path.join(srcPath, 'components');
-  await fs.mkdir(componentsPath, { recursive: true });
-
-  const componentFiles = ['Header.tsx.template', 'Footer.tsx.template', 'SEO.tsx.template', 'index.ts.template'];
-  
-  for (const componentFile of componentFiles) {
-    try {
-      const componentTemplate = await fs.readFile(path.join(templatesPath, 'components', componentFile), 'utf8');
-      const componentContent = componentTemplate
-        .replace(/{{PROJECT_NAME}}/g, projectName)
-        .replace(/{{CURRENT_YEAR}}/g, new Date().getFullYear().toString())
-        .replace(/{{THEME}}/g, theme);
-      const outputFileName = componentFile.replace('.template', '');
-      await fs.writeFile(path.join(componentsPath, outputFileName), componentContent);
-    } catch (error) {
-      console.warn(`⚠️ Warning: Could not find component template ${componentFile}`);
+        const outputFileName = entry.name.replace('.template', '');
+        await fs.writeFile(targetPath.replace('.template', ''), content);
+      } else {
+        // Copy non-template files as-is
+        await fs.copyFile(sourcePath, targetPath);
+      }
     }
   }
+
+  // Copy src folder structure recursively
+  const srcTemplatePath = path.join(templatesPath, 'src');
+  try {
+    await fs.access(srcTemplatePath);
+    await copyDirectory(srcTemplatePath, srcPath);
+  } catch (error) {
+    console.warn('⚠️  No src folder found in multi template, using legacy file structure');
+
+    // Fallback to old method if src folder doesn't exist
+    const appTemplate = await fs.readFile(path.join(templatesPath, 'App.tsx.template'), 'utf8');
+    const appContent = appTemplate
+      .replace(/{{DEFAULT_THEME}}/g, theme)
+      .replace(/{{DEFAULT_MODE}}/g, 'light');
+    await fs.writeFile(path.join(srcPath, 'App.tsx'), appContent);
+
+    const routerTemplate = await fs.readFile(path.join(templatesPath, 'router.tsx.template'), 'utf8');
+    await fs.writeFile(path.join(srcPath, 'router.tsx'), routerTemplate);
+
+    const mainTemplate = await fs.readFile(path.join(templatesPath, 'main.tsx.template'), 'utf8');
+    await fs.writeFile(path.join(srcPath, 'main.tsx'), mainTemplate);
+
+    const cssTemplate = await fs.readFile(path.join(templatesPath, 'index.css.template'), 'utf8');
+    await fs.writeFile(path.join(srcPath, 'index.css'), cssTemplate);
+
+    // Create pages directory and copy all page templates
+    const pagesPath = path.join(srcPath, 'pages');
+    await fs.mkdir(pagesPath, { recursive: true });
+
+    const pageFiles = ['Home.tsx.template', 'Components.tsx.template', 'Themes.tsx.template', 'About.tsx.template', 'Contact.tsx.template', 'Login.tsx.template', 'Dashboard.tsx.template', 'ErrorPage.tsx.template'];
+
+    for (const pageFile of pageFiles) {
+      const pageTemplate = await fs.readFile(path.join(templatesPath, 'pages', pageFile), 'utf8');
+      const pageContent = pageTemplate.replace(/{{THEME}}/g, theme);
+      const outputFileName = pageFile.replace('.template', '');
+      await fs.writeFile(path.join(pagesPath, outputFileName), pageContent);
+    }
+
+    // Create components directory and copy header/footer components
+    const componentsPath = path.join(srcPath, 'components');
+    await fs.mkdir(componentsPath, { recursive: true });
+
+    const componentFiles = ['Header.tsx.template', 'Footer.tsx.template', 'SEO.tsx.template', 'index.ts.template'];
+
+    for (const componentFile of componentFiles) {
+      try {
+        const componentTemplate = await fs.readFile(path.join(templatesPath, 'components', componentFile), 'utf8');
+        const componentContent = componentTemplate
+          .replace(/{{PROJECT_NAME}}/g, projectName)
+          .replace(/{{CURRENT_YEAR}}/g, new Date().getFullYear().toString())
+          .replace(/{{THEME}}/g, theme);
+        const outputFileName = componentFile.replace('.template', '');
+        await fs.writeFile(path.join(componentsPath, outputFileName), componentContent);
+      } catch (error) {
+        console.warn(`⚠️ Warning: Could not find component template ${componentFile}`);
+      }
+    }
+  }
+
+  // Copy index.html template
+  const indexTemplate = await fs.readFile(path.join(templatesPath, 'index.html.template'), 'utf8');
+  await fs.writeFile(path.join(srcPath, '../index.html'), indexTemplate);
 
   // Copy public assets
   const publicSourcePath = path.join(templatesPath, 'public');
@@ -660,6 +477,31 @@ async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
     // Hooks directory doesn't exist, skip copying
   }
 
+  // Copy config files
+  const projectPath = path.dirname(srcPath);
+
+  // Copy vite.config.ts
+  const viteConfigTemplate = await fs.readFile(path.join(templatesPath, 'vite.config.ts.template'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'vite.config.ts'), viteConfigTemplate);
+
+  // Copy tsconfig.json
+  const tsConfigTemplate = await fs.readFile(path.join(templatesPath, 'tsconfig.json.template'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'tsconfig.json'), tsConfigTemplate);
+
+  // Copy tsconfig.node.json
+  const tsNodeConfigTemplate = await fs.readFile(path.join(templatesPath, 'tsconfig.node.json'), 'utf8');
+  await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), tsNodeConfigTemplate);
+
+  // Copy package.json
+  const packageTemplate = await fs.readFile(path.join(templatesPath, 'package.json.template'), 'utf8');
+  const packageContent = packageTemplate.replace(/{{PROJECT_NAME}}/g, projectName);
+  await fs.writeFile(path.join(projectPath, 'package.json'), packageContent);
+
+  // Copy README.md
+  const readmeTemplate = await fs.readFile(path.join(templatesPath, 'README.md.template'), 'utf8');
+  const readmeContent = readmeTemplate.replace(/{{PROJECT_NAME}}/g, projectName);
+  await fs.writeFile(path.join(projectPath, 'README.md'), readmeContent);
+
   console.log('✅ Generated multi-page template with ultra-simple App.tsx, routing, pages, and configurable components');
 }
 
@@ -698,7 +540,9 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
         const content = template
           .replace(/{{DEFAULT_THEME}}/g, theme)
           .replace(/{{DEFAULT_MODE}}/g, 'light')
-          .replace(/{{PROJECT_NAME}}/g, projectName);
+          .replace(/{{PROJECT_NAME}}/g, projectName)
+          .replace(/{{CURRENT_YEAR}}/g, new Date().getFullYear().toString())
+          .replace(/{{THEME}}/g, theme);
 
         const outputFileName = entry.name.replace('.template', '');
         await fs.writeFile(targetPath.replace('.template', ''), content);
@@ -782,255 +626,42 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
 }
 
 /**
- * Generate package.json
+ * Generate .gitignore file for new projects
  */
-async function generatePackageJson(projectPath, name, templateType) {
-  const baseDependencies = {
-    "@tailwindcss/vite": "^4.1.13",
-    "@voilajsx/uikit": "^1.2.6",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "lucide-react": "latest",
-    "path": "^0.12.7",
-    "url": "^0.11.4"
-  };
-
-  // Add React Router for SPA, multi-page, and FBCA templates
-  if (templateType === 'spa' || templateType === 'multi' || templateType === 'fbca') {
-    baseDependencies["react-router-dom"] = "^7.8.2";
-  }
-
-  const baseDevDependencies = {
-    "@types/node": "^24.5.2",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.2.1",
-    "typescript": "^5.7.2",
-    "vite": "^6.3.6",
-    "tailwindcss": "^4.1.13"
-  };
-
-  // Add React Router types for SPA, multi-page, and FBCA templates
-  if (templateType === 'spa' || templateType === 'multi' || templateType === 'fbca') {
-    baseDevDependencies["@types/react-router-dom"] = "^5.3.3";
-  }
-
-  const packageJson = {
-    name: name,
-    private: true,
-    version: "0.0.0",
-    type: "module",
-    scripts: {
-      "dev": "vite",
-      "build": "tsc && vite build",
-      "preview": "vite preview",
-      "bundle": "npx uikit bundle",
-      "serve": "npx uikit serve",
-      "deploy": "npx uikit deploy"
-    },
-    dependencies: baseDependencies,
-    devDependencies: baseDevDependencies
-  };
-
-  await fs.writeFile(
-    path.join(projectPath, 'package.json'),
-    JSON.stringify(packageJson, null, 2)
-  );
-}
-
-/**
- * Generate README.md
- */
-async function generateReadme(projectPath, name, templateType) {
-  const templatesPath = path.join(__dirname, '../templates');
-  const readmeTemplatePath = path.join(templatesPath, 'README.md.template');
-
-  try {
-    // Read the README template
-    const template = await fs.readFile(readmeTemplatePath, 'utf8');
-
-    // Replace template variables
-    const content = template
-      .replace(/{{PROJECT_NAME}}/g, name)
-      .replace(/{{TEMPLATE_TYPE}}/g, templateType);
-
-    // Write README.md to project directory
-    await fs.writeFile(path.join(projectPath, 'README.md'), content);
-  } catch (error) {
-    console.warn('⚠️ Failed to generate README from template, using fallback');
-
-    // Fallback README if template is missing
-    const fallbackReadme = `# ${name}
-
-A modern React application built with @voilajsx/uikit
-
-## 🚀 Quick Start
-
-\`\`\`bash
-npm install
-npm run dev
-\`\`\`
-
-## 📚 Resources
-
-- [UIKit Documentation](https://github.com/voilajsx/uikit)
-- [LLM Usage Guide](https://github.com/voilajsx/uikit/blob/main/docs/UIKIT_LLM_GUIDE.md)
-
-Built with **@voilajsx/uikit** ✨
-`;
-
-    await fs.writeFile(path.join(projectPath, 'README.md'), fallbackReadme);
-  }
-}
-
-/**
- * Generate config files (Vite, TypeScript, etc.)
- */
-async function generateConfigFiles(projectPath) {
-  const templatesPath = path.join(__dirname, '../templates');
-  
-  try {
-    // Copy Vite config
-    const viteConfig = await fs.readFile(path.join(templatesPath, 'vite.config.ts'), 'utf8');
-    await fs.writeFile(path.join(projectPath, 'vite.config.ts'), viteConfig);
-    
-    // Copy TypeScript configs
-    const tsConfig = await fs.readFile(path.join(templatesPath, 'tsconfig.json'), 'utf8');
-    await fs.writeFile(path.join(projectPath, 'tsconfig.json'), tsConfig);
-    
-    const tsNodeConfig = await fs.readFile(path.join(templatesPath, 'tsconfig.node.json'), 'utf8');
-    await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), tsNodeConfig);
-  } catch (error) {
-    console.warn('⚠️ Warning: Could not copy some config files:', error.message);
-    
-    // Generate minimal configs directly
-    const minimalViteConfig = `import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
-import tailwindcss from '@tailwindcss/vite'
-import { fileURLToPath } from 'url'
-
-// Get __dirname equivalent in ESM
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  server: {
-    port: 5173,
-    host: true,
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          uikit: ['@voilajsx/uikit']
-        }
-      }
-    }
-  }
-})`;
-
-    const minimalTsConfig = `{
-  "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
-}`;
-
-    const minimalTsNodeConfig = `{
-  "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
-  },
-  "include": ["vite.config.ts"]
-}`;
-
-    await fs.writeFile(path.join(projectPath, 'vite.config.ts'), minimalViteConfig);
-    await fs.writeFile(path.join(projectPath, 'tsconfig.json'), minimalTsConfig);
-    await fs.writeFile(path.join(projectPath, 'tsconfig.node.json'), minimalTsNodeConfig);
-  }
-
-  
+async function generateGitignore(projectPath) {
   // Always generate .gitignore (moved outside try/catch to ensure it runs)
   console.log('🔧 Generating .gitignore...');
-  const gitignoreContent = `# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+  // Read .gitignore template from shared templates directory
+  try {
+    const gitignoreTemplatePath = path.join(__dirname, '../templates/.gitignore');
+    const gitignoreContent = await fs.readFile(gitignoreTemplatePath, 'utf8');
+    await fs.writeFile(path.join(projectPath, '.gitignore'), gitignoreContent);
+  } catch (error) {
+    console.warn('⚠️ Warning: Could not copy .gitignore template, using fallback');
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+    // Fallback to minimal .gitignore if template is not available
+    const fallbackGitignore = `# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
 
 # Environment variables
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
-# Build outputs
-build/
-coverage/
-.nyc_output
+# Logs
+*.log
 
-# OS generated files
-Thumbs.db
-ehthumbs.db
-
-# Temporary files
-.tmp/
-.cache/
+# IDE files
+.vscode/
+.idea/
+.DS_Store
 `;
-  
-  await fs.writeFile(path.join(projectPath, '.gitignore'), gitignoreContent);
+    await fs.writeFile(path.join(projectPath, '.gitignore'), fallbackGitignore);
+  }
 }
 
 /**

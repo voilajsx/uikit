@@ -1,0 +1,105 @@
+# {{PROJECT_NAME}}
+
+**A modern React SPA built with @voilajsx/uikit**
+
+## 🚀 Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 🎨 UIKit SPA Features
+
+This Single Page Application is built with [@voilajsx/uikit](https://github.com/voilajsx/uikit) featuring:
+
+- **37 UI Components** - Forms, tables, navigation, overlays, and more
+- **5 Professional Themes** - Base, Elegant, Metro, Studio, Vivid
+- **5 Layout Systems** - Admin, Auth, Page, Popup, Blank layouts
+- **ScrollToTop Navigation** - Automatic scroll-to-top on route changes
+- **Theme System** - Light/dark mode with semantic OKLCH colors
+- **TypeScript Support** - Full type safety out of the box
+- **SEO Optimization** - Built-in SEO components and hooks
+
+## 🏗️ Project Structure
+
+```
+{{PROJECT_NAME}}/
+├── src/
+│   ├── App.tsx             # Main SPA component
+│   ├── main.tsx            # Application entry point
+│   ├── index.css           # Tailwind CSS v4+ and UIKit styles
+│   ├── components/         # Reusable components
+│   │   └── SEO.tsx         # SEO component
+│   ├── hooks/              # Custom hooks
+│   │   └── useSEO.ts       # SEO hook
+│   └── utils/
+│       └── asset.ts        # Asset utility for deployment paths
+├── public/                 # Static assets
+├── docs/                   # Documentation guides
+├── package.json            # Dependencies and scripts
+└── README.md              # This file
+```
+
+## 🎯 Development Commands
+
+```bash
+npm run dev         # Start development server (localhost:5173)
+npm run build       # Build for production
+npm run preview     # Preview production build
+npm run deploy:gh   # Deploy to GitHub Pages
+```
+
+## 🎨 Theme Customization
+
+Change your theme by updating the ThemeProvider in `src/main.tsx`:
+
+```jsx
+<ThemeProvider theme="elegant" mode="light">
+  <App />
+</ThemeProvider>
+```
+
+Available themes: `base` | `elegant` | `metro` | `studio` | `vivid`
+Available modes: `light` | `dark`
+
+## 📦 Built With
+
+- **[React 19](https://react.dev)** - UI library
+- **[TypeScript](https://typescriptlang.org)** - Type safety
+- **[Vite](https://vitejs.dev)** - Build tool and dev server
+- **[Tailwind CSS v4+](https://tailwindcss.com)** - Utility-first CSS framework
+- **[@voilajsx/uikit](https://github.com/voilajsx/uikit)** - UI components and layouts
+- **[Lucide React](https://lucide.dev)** - Icon library
+
+## 🌐 Asset Management
+
+Use the included asset utility for deployment-friendly paths:
+
+```jsx
+import { asset } from './utils/asset';
+
+// Works in both development and production deployments
+<img src={asset('/images/hero.jpg')} alt="Hero" />
+<link rel="icon" href={asset('/favicon.ico')} />
+```
+
+## 📚 Resources
+
+- **[UIKit Documentation](https://docs.anthropic.com/en/docs/claude-code/claude_code_docs_map.md)** - Complete component reference
+- **[UIKit LLM Guide](./docs/UIKIT_LLM_GUIDE.md)** - Comprehensive usage guide
+- **[React Documentation](https://react.dev)** - React framework guide
+- **[Vite Documentation](https://vitejs.dev)** - Build tool documentation
+
+---
+
+**Built with ❤️ using [@voilajsx/uikit](https://github.com/voilajsx/uikit)** ✨

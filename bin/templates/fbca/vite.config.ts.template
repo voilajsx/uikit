@@ -13,6 +13,7 @@ export default defineConfig({
   // base: '/', // Uncomment this line to make the default asset loading to '/' rather than relative paths
   plugins: [react(), tailwindcss()],
   root: 'src/web',
+  publicDir: '../../public',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "../.."),

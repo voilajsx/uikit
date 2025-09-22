@@ -10,7 +10,7 @@ import { PageRouter } from './lib/page-router';
 function App() {
   return (
     <ThemeProvider theme="{{DEFAULT_THEME}}" mode="{{DEFAULT_MODE}}" forceConfig={true}>
-      <Router>
+      <Router basename="/">
         <PageRouter />
       </Router>
     </ThemeProvider>
