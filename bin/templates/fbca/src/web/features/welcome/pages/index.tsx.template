@@ -250,3 +250,5 @@ router.get('/:name', asyncRoute(async (req, res) => {
     </PageLayout>
   );
 };
+
+export default WelcomePage;
