@@ -16,34 +16,44 @@ const __dirname = path.dirname(__filename);
  * Create a new UIKit project
  */
 export async function createProject(name, options) {
-  console.log(`🎨 Creating UIKit project "${name}"...\n`);
+  const isCurrentDir = name === '.';
+  const displayName = isCurrentDir ? 'current directory' : `"${name}"`;
+  console.log(`🎨 Creating UIKit project in ${displayName}...\n`);
 
   try {
     // Determine template type
     const templateType = options.spa ? 'spa' : options.multi ? 'multi' : options.fbca ? 'fbca' : 'single';
-    
-    // Validate project name
-    if (!name || !/^[a-zA-Z0-9-_]+$/.test(name)) {
-      console.error('❌ Invalid project name. Use only letters, numbers, hyphens, and underscores.');
-      process.exit(1);
-    }
 
-    // Check if directory exists
-    const projectPath = path.resolve(process.cwd(), name);
-    try {
-      await fs.access(projectPath);
-      console.error(`❌ Directory "${name}" already exists.`);
-      process.exit(1);
-    } catch {
-      // Directory doesn't exist, good to proceed
-    }
+    let projectPath;
 
-    // Create project directory
-    await fs.mkdir(projectPath, { recursive: true });
-    console.log(`✅ Created ${name}/`);
+    if (isCurrentDir) {
+      // Use current directory
+      projectPath = process.cwd();
+      console.log(`✅ Using current directory`);
+    } else {
+      // Validate project name
+      if (!name || !/^[a-zA-Z0-9-_]+$/.test(name)) {
+        console.error('❌ Invalid project name. Use only letters, numbers, hyphens, and underscores.');
+        process.exit(1);
+      }
+
+      // Check if directory exists
+      projectPath = path.resolve(process.cwd(), name);
+      try {
+        await fs.access(projectPath);
+        console.error(`❌ Directory "${name}" already exists.`);
+        process.exit(1);
+      } catch {
+        // Directory doesn't exist, good to proceed
+      }
+
+      // Create project directory
+      await fs.mkdir(projectPath, { recursive: true });
+      console.log(`✅ Created ${name}/`);
+    }
 
     // Generate project files based on template
-    await generateTemplate(projectPath, templateType, options);
+    await generateTemplate(projectPath, templateType, options, isCurrentDir);
 
     // All templates now handle their own config files, package.json, and README.md
 
@@ -76,22 +86,22 @@ export async function createProject(name, options) {
 /**
  * Generate template files based on type
  */
-async function generateTemplate(projectPath, templateType, options) {
+async function generateTemplate(projectPath, templateType, options, isCurrentDir = false) {
   const srcPath = path.join(projectPath, 'src');
   await fs.mkdir(srcPath, { recursive: true });
 
   switch (templateType) {
     case 'single':
-      await generateSinglePageTemplate(srcPath, options.theme);
+      await generateSinglePageTemplate(srcPath, options.theme, isCurrentDir);
       break;
     case 'spa':
-      await generateSPATemplate(srcPath, options.theme);
+      await generateSPATemplate(srcPath, options.theme, isCurrentDir);
       break;
     case 'multi':
-      await generateMultiPageTemplate(srcPath, options.theme);
+      await generateMultiPageTemplate(srcPath, options.theme, isCurrentDir);
       break;
     case 'fbca':
-      await generateFBCATemplate(srcPath, options.theme);
+      await generateFBCATemplate(srcPath, options.theme, isCurrentDir);
       break;
   }
 }
@@ -99,7 +109,7 @@ async function generateTemplate(projectPath, templateType, options) {
 /**
  * Generate single-page theme showcase template
  */
-async function generateSinglePageTemplate(srcPath, theme = 'base') {
+async function generateSinglePageTemplate(srcPath, theme = 'base', isCurrentDir = false) {
   const templatesPath = path.join(__dirname, '../templates/single');
   const projectName = path.basename(path.dirname(srcPath));
 
@@ -188,7 +198,7 @@ async function generateSinglePageTemplate(srcPath, theme = 'base') {
 /**
  * Generate SPA template with routing
  */
-async function generateSPATemplate(srcPath, theme = 'base') {
+async function generateSPATemplate(srcPath, theme = 'base', isCurrentDir = false) {
   const templatesPath = path.join(__dirname, '../templates/spa');
 
   // Copy src folder structure recursively
@@ -337,7 +347,7 @@ async function generateSPATemplate(srcPath, theme = 'base') {
 /**
  * Generate multi-page template
  */
-async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
+async function generateMultiPageTemplate(srcPath, theme = 'elegant', isCurrentDir = false) {
   const templatesPath = path.join(__dirname, '../templates/multi');
   const projectName = path.basename(path.dirname(srcPath));
 
@@ -508,7 +518,7 @@ async function generateMultiPageTemplate(srcPath, theme = 'elegant') {
 /**
  * Generate FBCA template with auto-discovery routing
  */
-async function generateFBCATemplate(srcPath, theme = 'elegant') {
+async function generateFBCATemplate(srcPath, theme = 'elegant', isCurrentDir = false) {
   const templatesPath = path.join(__dirname, '../templates/fbca');
   const projectPath = path.dirname(srcPath);  // Get project root instead of src
   const projectName = path.basename(projectPath);
@@ -554,12 +564,27 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
   }
 
   // First, copy root-level config files directly to project root
-  const rootConfigFiles = [
+  let rootConfigFiles = [
     'package.json.template',
     'tsconfig.json.template',
     'tsconfig.node.json.template',
     'vite.config.ts.template'
   ];
+
+  // Handle package.json for current directory
+  if (isCurrentDir) {
+    const packageJsonPath = path.join(projectPath, 'package.json');
+    try {
+      await fs.access(packageJsonPath);
+      // package.json exists, skip it from rootConfigFiles and update it separately
+      rootConfigFiles = rootConfigFiles.filter(file => file !== 'package.json.template');
+      console.log('🔄 Updating existing package.json with UIKit dependencies and scripts');
+      await updateExistingPackageJson(projectPath, templatesPath, theme, projectName);
+    } catch {
+      // package.json doesn't exist, keep it in rootConfigFiles so it gets created
+      console.log('📦 Creating package.json from template (no existing file found)');
+    }
+  }
 
   for (const configFile of rootConfigFiles) {
     try {
@@ -623,6 +648,62 @@ async function generateFBCATemplate(srcPath, theme = 'elegant') {
   }
 
   console.log('✅ Generated FBCA template with auto-discovery routing, feature organization, and SEO support');
+}
+
+/**
+ * Update existing package.json with UIKit dependencies and scripts
+ */
+async function updateExistingPackageJson(projectPath, templatesPath, theme, projectName) {
+  const packageJsonPath = path.join(projectPath, 'package.json');
+  const templatePath = path.join(templatesPath, 'package.json.template');
+
+  try {
+    // Read existing package.json
+    const existingPackage = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+
+    // Read template package.json
+    const templateContent = await fs.readFile(templatePath, 'utf8');
+    const templatePackage = JSON.parse(templateContent
+      .replace(/{{DEFAULT_THEME}}/g, theme)
+      .replace(/{{DEFAULT_MODE}}/g, 'light')
+      .replace(/{{PROJECT_NAME}}/g, projectName));
+
+    // Merge dependencies (only add missing ones)
+    if (!existingPackage.dependencies) existingPackage.dependencies = {};
+    if (!existingPackage.devDependencies) existingPackage.devDependencies = {};
+    if (!existingPackage.scripts) existingPackage.scripts = {};
+
+    // Add missing dependencies
+    for (const [dep, version] of Object.entries(templatePackage.dependencies || {})) {
+      if (!existingPackage.dependencies[dep]) {
+        existingPackage.dependencies[dep] = version;
+      }
+    }
+
+    // Add missing devDependencies
+    for (const [dep, version] of Object.entries(templatePackage.devDependencies || {})) {
+      if (!existingPackage.devDependencies[dep]) {
+        existingPackage.devDependencies[dep] = version;
+      }
+    }
+
+    // Add missing scripts
+    for (const [script, command] of Object.entries(templatePackage.scripts || {})) {
+      if (!existingPackage.scripts[script]) {
+        existingPackage.scripts[script] = command;
+      }
+    }
+
+    // Ensure type: "module" is set (override if needed)
+    existingPackage.type = 'module';
+
+    // Write updated package.json
+    await fs.writeFile(packageJsonPath, JSON.stringify(existingPackage, null, 2) + '\n');
+    console.log('✅ Updated package.json with UIKit dependencies and scripts');
+
+  } catch (error) {
+    console.warn('⚠️ Warning: Could not update package.json:', error.message);
+  }
 }
 
 /**
