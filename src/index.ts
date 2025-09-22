@@ -195,3 +195,7 @@ export { Container } from './components/sections/container';
 
 // Theme System
 export { ThemeProvider, useTheme, type Theme, type Mode } from './themes/theme-provider';
+
+// Hooks
+export { useApi, useBackendStatus } from './hooks';
+export type { ApiResponse, ApiOptions, UseApiReturn } from './hooks';
