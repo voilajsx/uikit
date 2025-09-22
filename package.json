@@ -1,6 +1,6 @@
 {
   "name": "@voilajsx/uikit",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "Cross-platform React components with beautiful themes and OKLCH color sciences",
   "type": "module",
   "keywords": [
@@ -115,6 +115,10 @@
     "./hover-card": {
       "import": "./dist/hover-card.js",
       "types": "./dist/types/components/ui/hover-card.d.ts"
+    },
+    "./hooks": {
+      "import": "./dist/hooks.js",
+      "types": "./dist/types/hooks/index.d.ts"
     },
     "./input": {
       "import": "./dist/input.js",

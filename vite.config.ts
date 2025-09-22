@@ -33,7 +33,10 @@ const getComponentEntries = () => {
   // Themes
   entries['theme-provider'] = resolve(__dirname, 'src/themes/theme-provider.tsx');
   entries['themes'] = resolve(__dirname, 'src/themes/index.ts');
-  
+
+  // Hooks
+  entries['hooks'] = resolve(__dirname, 'src/hooks/index.ts');
+
   // Utils and Lib
   entries['utils'] = resolve(__dirname, 'src/lib/utils.ts');
   entries['platform'] = resolve(__dirname, 'src/lib/platform.ts');

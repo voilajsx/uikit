@@ -51,4 +51,6 @@ export { Header, HeaderLogo, HeaderNav } from './components/sections/header';
 export { Footer } from './components/sections/footer';
 export { Container } from './components/sections/container';
 export { ThemeProvider, useTheme, type Theme, type Mode } from './themes/theme-provider';
+export { useApi, useBackendStatus } from './hooks';
+export type { ApiResponse, ApiOptions, UseApiReturn } from './hooks';
 //# sourceMappingURL=index.d.ts.map
